@@ -32,7 +32,6 @@ from sqlfluff.core.parser import (
     RegexParser,
     SegmentGenerator,
     Sequence,
-    StartsWith,
     StringLexer,
     StringParser,
     SymbolSegment,
@@ -2478,6 +2477,7 @@ class DeclareSegment(BaseSegment):
                                 "PRAGMA",
                                 Ref("FunctionSegment"),
                             ),
+                            Ref("SubtypeDefinitionSegment"),
                             Ref("CollectionTypeDefinitionSegment"),
                             Ref("RecordTypeDefinitionSegment"),
                             Ref("RefCursorTypeDefinitionSegment"),
@@ -2553,6 +2553,27 @@ class CollectionTypeDefinitionSegment(BaseSegment):
         Sequence("OF", Ref("DatatypeSegment"), optional=True),
         Sequence("NOT", "NULL", optional=True),
         Sequence("INDEX", "BY", Ref("DatatypeSegment"), optional=True),
+    )
+
+
+class SubtypeDefinitionSegment(BaseSegment):
+    """A `SUBTYPE` declaration.
+
+    https://docs.oracle.com/en/database/oracle/oracle-database/26/lnpls/SUBTYPE-statement.html
+    """
+
+    type = "subtype_definition"
+
+    match_grammar = Sequence(
+        StringParser("SUBTYPE", WordSegment, type="keyword"),
+        Ref("SingleIdentifierGrammar"),
+        "IS",
+        OneOf(
+            Ref("DatatypeSegment"),
+            Ref("ColumnTypeReferenceSegment"),
+            Ref("RowTypeReferenceSegment"),
+            Ref("ObjectReferenceSegment"),
+        ),
     )
 
 
@@ -2872,28 +2893,31 @@ class CreatePackageBodyStatementSegment(BaseSegment):
 
     type = "create_package_body_statement"
 
-    parse_grammar = StartsWith(
+    match_grammar = Sequence(
+        "CREATE",
+        Sequence("OR", "REPLACE", optional=True),
+        OneOf("EDITIONABLE", "NONEDITIONABLE", optional=True),
+        "PACKAGE",
+        "BODY",
+        Ref("IfNotExistsGrammar", optional=True),
+        Ref("PackageReferenceSegment"),
+        Ref("SharingClauseGrammar", optional=True),
+        AnyNumberOf(
+            Ref("DefaultCollationClauseGrammar"),
+            Ref("InvokerRightsClauseGrammar"),
+            Ref("AccessibleByClauseGrammar"),
+        ),
+        OneOf("IS", "AS"),
+        AnyNumberOf(Ref("DeclareSegment")),
         Sequence(
-            "CREATE",
-            Sequence("OR", "REPLACE", optional=True),
-            OneOf("EDITIONABLE", "NONEDITIONABLE", optional=True),
-            "PACKAGE",
-            "BODY",
-            Ref("IfNotExistsGrammar", optional=True),
-            Ref("PackageReferenceSegment"),
-            Ref("SharingClauseGrammar", optional=True),
-            AnyNumberOf(
-                Ref("DefaultCollationClauseGrammar"),
-                Ref("InvokerRightsClauseGrammar"),
-                Ref("AccessibleByClauseGrammar"),
-            ),
-            OneOf("IS", "AS"),
+            "BEGIN",
+            Ref("OneOrMoreStatementsGrammar"),
+            Ref("ExceptionBlockGrammar", optional=True),
+            optional=True,
         ),
-        terminator=Sequence(
-            "END",
-            Ref("PackageReferenceSegment", optional=True),
-            Ref("StatementTerminatorSegment"),
-        ),
+        "END",
+        Ref("PackageReferenceSegment", optional=True),
+        Ref("SemicolonSegment"),
     )
 
 

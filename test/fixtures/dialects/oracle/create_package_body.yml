@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 0c26399034de07c8c1df551ba8c6670411aea124f1686bd20e087c87439f43e9
+_hash: 329d13339d9e9c3967b00a91329bd65e7c9325533f80bb89cf475cc3a7d429a2
 file:
 - batch:
     statement:
@@ -17,7 +17,7 @@ file:
       - keyword: END
       - package_reference:
           naked_identifier: minimal_package
-    statement_terminator: ;
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /
 - batch:
@@ -35,7 +35,7 @@ file:
       - keyword: END
       - package_reference:
           naked_identifier: minimal_package
-    statement_terminator: ;
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /
 - batch:
@@ -52,7 +52,7 @@ file:
       - keyword: END
       - package_reference:
           naked_identifier: minimal_as
-    statement_terminator: ;
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /
 - batch:
@@ -74,7 +74,7 @@ file:
       - keyword: END
       - package_reference:
           naked_identifier: example
-    statement_terminator: ;
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /
 - batch:
@@ -108,7 +108,49 @@ file:
       - keyword: END
       - package_reference:
           naked_identifier: full_example
-    statement_terminator: ;
+      - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      create_package_body_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: PACKAGE
+      - keyword: BODY
+      - package_reference:
+          naked_identifier: pkg_subtype_example
+      - keyword: AS
+      - declare_segment:
+          subtype_definition:
+          - keyword: SUBTYPE
+          - naked_identifier: udt_Id
+          - keyword: IS
+          - object_reference:
+            - naked_identifier: api
+            - dot: .
+            - naked_identifier: pkg_Definition
+            - dot: .
+            - naked_identifier: udt_Id
+          statement_terminator: ;
+          create_procedure_statement:
+          - keyword: PROCEDURE
+          - function_name:
+              function_name_identifier: p_Test
+          - keyword: IS
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+          - statement_terminator: ;
+      - keyword: END
+      - package_reference:
+          naked_identifier: pkg_subtype_example
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /
 - batch:
@@ -157,7 +199,7 @@ file:
       - keyword: END
       - package_reference:
           naked_identifier: pkg_with_exception
-    statement_terminator: ;
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /
 - batch:
@@ -744,7 +786,7 @@ file:
       - keyword: END
       - package_reference:
           naked_identifier: emp_mgmt
-    statement_terminator: ;
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /
 - batch:
@@ -838,7 +880,7 @@ file:
       - keyword: END
       - package_reference:
           naked_identifier: test_package
-    statement_terminator: ;
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /
 - batch:

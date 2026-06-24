@@ -28,6 +28,18 @@ BEGIN
 END full_example;
 /
 
+-- Package body with SUBTYPE declaration and procedure implementation
+CREATE OR REPLACE PACKAGE BODY pkg_subtype_example AS
+   SUBTYPE udt_Id IS api.pkg_Definition.udt_Id;
+
+   PROCEDURE p_Test IS
+   BEGIN
+      NULL;
+   END;
+
+END pkg_subtype_example;
+/
+
 -- Package body with exception handler in initialization block
 -- (division by zero is intentional: demonstrates WHEN OTHERS handler)
 CREATE OR REPLACE PACKAGE BODY pkg_with_exception AS
