@@ -32,6 +32,7 @@ from sqlfluff.core.parser import (
     RegexParser,
     SegmentGenerator,
     Sequence,
+    StartsWith,
     StringLexer,
     StringParser,
     SymbolSegment,
@@ -2871,32 +2872,28 @@ class CreatePackageBodyStatementSegment(BaseSegment):
 
     type = "create_package_body_statement"
 
-    match_grammar = Sequence(
-        "CREATE",
-        Sequence("OR", "REPLACE", optional=True),
-        OneOf("EDITIONABLE", "NONEDITIONABLE", optional=True),
-        "PACKAGE",
-        "BODY",
-        Ref("IfNotExistsGrammar", optional=True),
-        Ref("PackageReferenceSegment"),
-        Ref("SharingClauseGrammar", optional=True),
-        AnyNumberOf(
-            Ref("DefaultCollationClauseGrammar"),
-            Ref("InvokerRightsClauseGrammar"),
-            Ref("AccessibleByClauseGrammar"),
-        ),
-        OneOf("IS", "AS"),
-        Ref("DeclareSegment", optional=True),
+    parse_grammar = StartsWith(
         Sequence(
-            "BEGIN",
-            Indent,
-            Ref("OneOrMoreStatementsGrammar"),
-            Ref("ExceptionBlockGrammar", optional=True),
-            Dedent,
-            optional=True,
+            "CREATE",
+            Sequence("OR", "REPLACE", optional=True),
+            OneOf("EDITIONABLE", "NONEDITIONABLE", optional=True),
+            "PACKAGE",
+            "BODY",
+            Ref("IfNotExistsGrammar", optional=True),
+            Ref("PackageReferenceSegment"),
+            Ref("SharingClauseGrammar", optional=True),
+            AnyNumberOf(
+                Ref("DefaultCollationClauseGrammar"),
+                Ref("InvokerRightsClauseGrammar"),
+                Ref("AccessibleByClauseGrammar"),
+            ),
+            OneOf("IS", "AS"),
         ),
-        "END",
-        Ref("PackageReferenceSegment", optional=True),
+        terminator=Sequence(
+            "END",
+            Ref("PackageReferenceSegment", optional=True),
+            Ref("StatementTerminatorSegment"),
+        ),
     )
 
 
