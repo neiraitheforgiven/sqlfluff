@@ -1892,6 +1892,41 @@ class ColumnReferenceSegment(ObjectReferenceSegment):
     type = "column_reference"
 
 
+class OracleFunctionNameIdentifierSegment(BaseSegment):
+    """Oracle function name identifier allowing reserved keywords.
+
+    In Oracle, reserved keywords (e.g. DELETING, DELETE) can be used as
+    procedure/function names in package bodies and as method names on objects.
+    This segment accepts both unreserved identifiers and reserved keywords.
+    """
+
+    type = "function_name_identifier"
+    match_grammar: Matchable = RegexParser(
+        r"[\p{L}\p{N}_]*[\p{L}][\p{L}\p{N}_#$]*",
+        IdentifierSegment,
+        type="function_name_identifier",
+        casefold=str.upper,
+    )
+
+
+class OracleSubprogramNameSegment(BaseSegment):
+    """Oracle subprogram (procedure/function/method) name allowing reserved keywords.
+
+    In Oracle, reserved keywords (e.g. DELETING, DELETE) can be used as
+    procedure/function names and method names. This segment accepts any valid
+    identifier including reserved keywords, without the anti_template restriction
+    of NakedIdentifierSegment.
+    """
+
+    type = "named_identifier"
+    match_grammar: Matchable = RegexParser(
+        r"[\p{L}\p{N}_]*[\p{L}][\p{L}\p{N}_#$]*",
+        IdentifierSegment,
+        type="named_identifier",
+        casefold=str.upper,
+    )
+
+
 class FunctionNameSegment(BaseSegment):
     """Function name, including any prefix bits, e.g. project or schema."""
 
@@ -1908,7 +1943,7 @@ class FunctionNameSegment(BaseSegment):
         # Base function name
         Delimited(
             OneOf(
-                Ref("FunctionNameIdentifierSegment"),
+                Ref("OracleFunctionNameIdentifierSegment"),
                 Ref("QuotedIdentifierSegment"),
                 terminators=[Ref("BracketedSegment")],
             ),
@@ -2719,7 +2754,11 @@ class BeginEndSegment(BaseSegment):
         Ref("ExceptionBlockGrammar", optional=True),
         Dedent,
         "END",
-        Ref("ObjectReferenceSegment", optional=True),
+        OneOf(
+            Ref("ObjectReferenceSegment"),
+            Ref("OracleSubprogramNameSegment"),
+            optional=True,
+        ),
     )
 
 
@@ -3191,11 +3230,19 @@ class ProcedureCallStatementSegment(BaseSegment):
     )
 
     match_grammar = Sequence(
-        Ref("SingleIdentifierGrammar", exclude=_block_closing_kw_exclusion),
+        # First identifier can be unreserved or (carefully) a reserved keyword
+        OneOf(
+            Ref("SingleIdentifierGrammar", exclude=_block_closing_kw_exclusion),
+            Ref("OracleSubprogramNameSegment", exclude=_block_closing_kw_exclusion),
+        ),
+        # Additional segments after dots are method names, which can be keywords
         AnyNumberOf(
             Sequence(
                 Ref("DotSegment"),
-                Ref("SingleIdentifierGrammar", exclude=_block_closing_kw_exclusion),
+                OneOf(
+                    Ref("SingleIdentifierGrammar", exclude=_block_closing_kw_exclusion),
+                    Ref("OracleSubprogramNameSegment", exclude=_block_closing_kw_exclusion),
+                ),
             ),
             max_times=2,
         ),
