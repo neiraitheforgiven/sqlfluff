@@ -2504,6 +2504,7 @@ class DeclareSegment(BaseSegment):
                                 Ref.keyword("CONSTANT", optional=True),
                                 OneOf(
                                     Ref("DatatypeSegment"),
+                                    Ref("ObjectReferenceSegment"),
                                     Ref("ColumnTypeReferenceSegment"),
                                     Ref("RowTypeReferenceSegment"),
                                 ),
@@ -3241,7 +3242,10 @@ class ProcedureCallStatementSegment(BaseSegment):
                 Ref("DotSegment"),
                 OneOf(
                     Ref("SingleIdentifierGrammar", exclude=_block_closing_kw_exclusion),
-                    Ref("OracleSubprogramNameSegment", exclude=_block_closing_kw_exclusion),
+                    Ref(
+                        "OracleSubprogramNameSegment",
+                        exclude=_block_closing_kw_exclusion,
+                    ),
                 ),
             ),
             max_times=2,
@@ -3745,7 +3749,13 @@ class IntoClauseSegment(BaseSegment):
 
     match_grammar = Sequence(
         "INTO",
-        Delimited(OneOf(Ref("SingleIdentifierGrammar"), Ref("BindVariableSegment"))),
+        Delimited(
+            OneOf(
+                Ref("SingleIdentifierGrammar"),
+                Ref("BindVariableSegment"),
+                Ref("CollectionElementReferenceSegment"),
+            )
+        ),
     )
 
 
@@ -3762,8 +3772,25 @@ class BulkCollectIntoClauseSegment(BaseSegment):
         "COLLECT",
         "INTO",
         ImplicitIndent,
-        Delimited(OneOf(Ref("SingleIdentifierGrammar"), Ref("BindVariableSegment"))),
+        Delimited(
+            OneOf(
+                Ref("SingleIdentifierGrammar"),
+                Ref("BindVariableSegment"),
+                Ref("CollectionElementReferenceSegment"),
+            )
+        ),
         Dedent,
+    )
+
+
+class CollectionElementReferenceSegment(BaseSegment):
+    """A collection element reference like `t_List(i)` or `pkg.t_List(i)`."""
+
+    type = "collection_element_reference"
+
+    match_grammar = Sequence(
+        Ref("ColumnReferenceSegment"),
+        Bracketed(Delimited(Ref("ExpressionSegment"))),
     )
 
 

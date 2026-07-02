@@ -145,3 +145,51 @@ def test_inmemory_subclauses_rejected(sql: str) -> None:
 def test_index_physical_attrs_rejected(sql: str) -> None:
     """Duplicate or mutually-exclusive index physical attributes must produce a parse violation."""
     assert _violations(sql) != [], f"Expected violations but got none for:\n{sql}"
+
+
+def test_package_qualified_collection_types_and_indexed_into_parse() -> None:
+    """Package-qualified collection types and indexed INTO targets should parse."""
+    sql = """
+CREATE OR REPLACE PACKAGE pkg_test AS
+    PROCEDURE AddRecordSet(
+        a_ObjectDefName VARCHAR2,
+        a_ColumnDefNames VARCHAR2
+    );
+END pkg_test;
+/
+CREATE OR REPLACE PACKAGE BODY pkg_test AS
+    PROCEDURE AddRecordSet(
+        a_ObjectDefName VARCHAR2,
+        a_ColumnDefNames VARCHAR2
+    ) IS
+        t_ColumnDefIdList api.pkg_Definition.udt_IdList;
+        t_ColumnDefNamesList api.pkg_Definition.udt_StringList;
+        t_ObjectDefId udt_Id;
+        t_RecordSetId udt_Id;
+    BEGIN
+        SELECT trim(regexp_substr(a_ColumnDefNames, '[^,]+', 1, level))
+        BULK COLLECT INTO t_ColumnDefNamesList
+        FROM dual
+        CONNECT BY level <= regexp_count(a_ColumnDefNames, ',') + 1;
+
+        FOR i IN 1..t_ColumnDefNamesList.count LOOP
+            BEGIN
+                SELECT ColumnDefId
+                INTO t_ColumnDefIdList(i)
+                FROM api.ColumnDefs
+                WHERE ObjectDefId = t_ObjectDefId
+                    AND lower(Name) = lower(t_ColumnDefNamesList(i));
+            EXCEPTION
+            WHEN no_data_found THEN
+                NULL;
+            END;
+        END LOOP;
+
+        t_RecordSetId := stage.pkg_RecordSetUpdate.New(t_ObjectDefId, 'WordInterface', NULL);
+        stage.pkg_RecordSetUpdate.ReplaceColumns(t_RecordSetId, t_ColumnDefIdList);
+    END AddRecordSet;
+END pkg_test;
+/
+"""
+
+    assert _violations(sql) == []
