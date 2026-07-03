@@ -147,6 +147,9 @@ class Rule_ST04(BaseRule):
         segments += self._rebuild_spacing(when_indent_str, after_else_comment)
         # The nested "WHEN", "ELSE" or "comments", with logical spacing
         segments += self._rebuild_spacing(when_indent_str, nested_clauses)
+        # Ensure the rebuilt block ends cleanly before the outer END keyword.
+        # Without this, an inline ELSE expression can run into END (e.g. ''end).
+        segments += [NewlineSegment(), WhitespaceSegment(end_indent_str)]
         fixes.append(LintFix.create_after(case1_last_when, segments, source=segments))
 
         # Delete the outer "else" clause.

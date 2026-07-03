@@ -272,7 +272,18 @@ class Rule_CP01(BaseRule):
         May be overridden by subclasses, which is useful when the parse tree
         structure varies from this simple base case.
         """
-        return LintFix.replace(segment, [segment.edit(fixed_raw)])
+        try:
+            return LintFix.replace(segment, [segment.edit(fixed_raw)])
+        except NotImplementedError:
+            # Some anchors are composite segments (e.g. function_name_identifier)
+            # and cannot be edited directly. In that case, patch the first raw
+            # child segment carrying the token text.
+            for raw_seg in segment.raw_segments:
+                try:
+                    return LintFix.replace(raw_seg, [raw_seg.edit(fixed_raw)])
+                except NotImplementedError:
+                    continue
+            raise
 
     def _init_capitalisation_policy(self, context: RuleContext):
         """Called first time rule is evaluated to fetch & cache the policy."""
