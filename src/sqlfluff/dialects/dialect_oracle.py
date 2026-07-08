@@ -150,6 +150,11 @@ oracle_dialect.add(
             Ref("NakedIdentifierSegment"),
             Ref("DotSegment"),
             OneOf("NEXTVAL", "CURRVAL"),
+            Sequence(
+                Ref("AtSignSegment"),
+                Ref("DatabaseLinkReferenceSegment"),
+                optional=True,
+            ),
             allow_gaps=False,
         ),
         # 2-part: sequence.{NEXTVAL|CURRVAL}
@@ -157,6 +162,11 @@ oracle_dialect.add(
             Ref("NakedIdentifierSegment"),
             Ref("DotSegment"),
             OneOf("NEXTVAL", "CURRVAL"),
+            Sequence(
+                Ref("AtSignSegment"),
+                Ref("DatabaseLinkReferenceSegment"),
+                optional=True,
+            ),
             allow_gaps=False,
         ),
     ),
@@ -257,6 +267,15 @@ oracle_dialect.add(
     ),
     UnpivotNullsGrammar=Sequence(OneOf("INCLUDE", "EXCLUDE"), "NULLS"),
     StatementAndDelimiterGrammar=Sequence(
+        Sequence(
+            Ref("RawLessThanSegment"),
+            Ref("RawLessThanSegment"),
+            Ref("SingleIdentifierGrammar"),
+            Ref("RawGreaterThanSegment"),
+            Ref("RawGreaterThanSegment"),
+            optional=True,
+            allow_gaps=False,
+        ),
         # PlsqlStatementSegment extends StatementSegment with ProcedureCallStatementSegment.
         # Using it here (rather than plain StatementSegment) means bare procedure-call
         # syntax is only tried inside PL/SQL block bodies (BEGIN/END, loops, IF, etc.)
@@ -308,6 +327,7 @@ oracle_dialect.add(
         ),
     ),
     IterationBoundsGrammar=OneOf(
+        Ref("ExpressionSegment"),
         Ref("NumericLiteralSegment"),
         Ref("SingleIdentifierGrammar"),
         Sequence(
@@ -631,6 +651,7 @@ oracle_dialect.add(
 )
 
 oracle_dialect.replace(
+    CharCharacterSetGrammar=OneOf("BYTE", "CHAR"),
     ColumnConstraintDefaultGrammar=OneOf(
         ansi_dialect.get_grammar("ColumnConstraintDefaultGrammar"),
         Ref("SequencePseudocolumnGrammar"),
@@ -1891,6 +1912,34 @@ class ColumnReferenceSegment(ObjectReferenceSegment):
 
     type = "column_reference"
 
+    match_grammar = OneOf(
+        Sequence(
+            Ref("NakedIdentifierSegment"),
+            Ref("DotSegment"),
+            Ref("NakedIdentifierSegment"),
+            Ref("DotSegment"),
+            OneOf("NEXTVAL", "CURRVAL"),
+            Sequence(
+                Ref("AtSignSegment"),
+                Ref("DatabaseLinkReferenceSegment"),
+                optional=True,
+            ),
+            allow_gaps=False,
+        ),
+        Sequence(
+            Ref("NakedIdentifierSegment"),
+            Ref("DotSegment"),
+            OneOf("NEXTVAL", "CURRVAL"),
+            Sequence(
+                Ref("AtSignSegment"),
+                Ref("DatabaseLinkReferenceSegment"),
+                optional=True,
+            ),
+            allow_gaps=False,
+        ),
+        ObjectReferenceSegment.match_grammar,
+    )
+
 
 class OracleFunctionNameIdentifierSegment(BaseSegment):
     """Oracle function name identifier allowing reserved keywords.
@@ -1949,7 +1998,7 @@ class FunctionNameSegment(BaseSegment):
             ),
             delimiter=Ref("AtSignSegment"),
         ),
-        allow_gaps=False,
+        allow_gaps=True,
     )
 
 
@@ -2503,7 +2552,7 @@ class DeclareSegment(BaseSegment):
                                 Ref("SingleIdentifierGrammar"),
                                 Ref.keyword("CONSTANT", optional=True),
                                 OneOf(
-                                    Ref("DatatypeSegment"),
+                                    Ref("PlsqlDatatypeSegment"),
                                     Ref("ObjectReferenceSegment"),
                                     Ref("ColumnTypeReferenceSegment"),
                                     Ref("RowTypeReferenceSegment"),
@@ -2542,6 +2591,240 @@ class DeclareSegment(BaseSegment):
     )
 
 
+class PlsqlDatatypeSegment(BaseSegment):
+    """Oracle PL/SQL datatype allowing BYTE/CHAR length semantics."""
+
+    type = "plsql_data_type"
+
+    match_grammar = Sequence(
+        Ref("DatatypeSegment"),
+        Bracketed(
+            Sequence(
+                Anything(),
+                OneOf("BYTE", "CHAR", optional=True),
+            ),
+            optional=True,
+        ),
+    )
+
+
+class ProcedureDeclarationSegment(BaseSegment):
+    """A procedure declaration used in package specifications."""
+
+    type = "procedure_declaration"
+
+    match_grammar = Sequence(
+        "PROCEDURE",
+        Ref("FunctionNameSegment"),
+        Ref("FunctionParameterListGrammar", optional=True),
+        Ref("DelimiterGrammar"),
+    )
+
+
+class FunctionDeclarationSegment(BaseSegment):
+    """A function declaration used in package specifications."""
+
+    type = "function_declaration"
+
+    match_grammar = Sequence(
+        "FUNCTION",
+        Ref("FunctionNameSegment"),
+        Ref("FunctionParameterListGrammar", optional=True),
+        "RETURN",
+        OneOf(
+            Ref("DatatypeSegment"),
+            Ref("ObjectReferenceSegment"),
+            Ref("ColumnTypeReferenceSegment"),
+            Ref("RowTypeReferenceSegment"),
+        ),
+        AnyNumberOf(
+            Ref("DefaultCollationClauseGrammar"),
+            Ref("InvokerRightsClauseGrammar"),
+            Ref("AccessibleByClauseGrammar"),
+            "DETERMINISTIC",
+            "SHARD_ENABLE",
+            Ref("ParallelEnableClauseGrammar"),
+            Ref("ResultCacheClauseGrammar"),
+            Sequence("AGGREGATE", "USING", Ref("ObjectReferenceSegment")),
+            Ref("PipelinedClauseGrammar"),
+            Sequence(
+                "SQL_MACRO",
+                Bracketed(
+                    Sequence("TYPE", Ref("RightArrowSegment")),
+                    OneOf("SCALAR", "TABLE"),
+                    optional=True,
+                ),
+            ),
+            optional=True,
+        ),
+        Ref("DelimiterGrammar"),
+    )
+
+
+class ProcedureBodyDefinitionSegment(BaseSegment):
+    """A procedure definition used in package bodies."""
+
+    type = "procedure_body_definition"
+
+    match_grammar = Sequence(
+        "PROCEDURE",
+        Ref("FunctionNameSegment"),
+        Ref("FunctionParameterListGrammar", optional=True),
+        OneOf("IS", "AS"),
+        AnyNumberOf(Ref("DeclareSegment"), optional=True),
+        Ref("BeginEndSegment"),
+        Ref("DelimiterGrammar"),
+    )
+
+
+class FunctionBodyDefinitionSegment(BaseSegment):
+    """A function definition used in package bodies."""
+
+    type = "function_body_definition"
+
+    match_grammar = Sequence(
+        "FUNCTION",
+        Ref("FunctionNameSegment"),
+        Ref("FunctionParameterListGrammar", optional=True),
+        "RETURN",
+        OneOf(
+            Ref("PlsqlDatatypeSegment"),
+            Ref("ObjectReferenceSegment"),
+            Ref("ColumnTypeReferenceSegment"),
+            Ref("RowTypeReferenceSegment"),
+        ),
+        AnyNumberOf(
+            Ref("DefaultCollationClauseGrammar"),
+            Ref("InvokerRightsClauseGrammar"),
+            Ref("AccessibleByClauseGrammar"),
+            "DETERMINISTIC",
+            "SHARD_ENABLE",
+            Ref("ParallelEnableClauseGrammar"),
+            Ref("ResultCacheClauseGrammar"),
+            Sequence("AGGREGATE", "USING", Ref("ObjectReferenceSegment")),
+            Ref("PipelinedClauseGrammar"),
+            Sequence(
+                "SQL_MACRO",
+                Bracketed(
+                    Sequence("TYPE", Ref("RightArrowSegment")),
+                    OneOf("SCALAR", "TABLE"),
+                    optional=True,
+                ),
+            ),
+            optional=True,
+        ),
+        OneOf("IS", "AS"),
+        AnyNumberOf(Ref("DeclareSegment"), optional=True),
+        Ref("BeginEndSegment"),
+        Ref("DelimiterGrammar"),
+    )
+
+
+class PackageSpecificationItemSegment(BaseSegment):
+    """A package specification declaration item in PL/SQL.
+
+    https://docs.oracle.com/en/database/oracle/oracle-database/26/lnpls/CREATE-PACKAGE-statement.html
+    """
+
+    type = "package_specification_item"
+
+    match_grammar = OneOf(
+        Sequence(
+            Ref("SubtypeDefinitionSegment"),
+            Ref("DelimiterGrammar"),
+        ),
+        Sequence(
+            Ref("CollectionTypeDefinitionSegment"),
+            Ref("DelimiterGrammar"),
+        ),
+        Sequence(
+            Ref("RecordTypeDefinitionSegment"),
+            Ref("DelimiterGrammar"),
+        ),
+        Sequence(
+            Ref("RefCursorTypeDefinitionSegment"),
+            Ref("DelimiterGrammar"),
+        ),
+        Sequence(
+            Ref("SingleIdentifierGrammar"),
+            Ref.keyword("CONSTANT", optional=True),
+            OneOf(
+                Ref("DatatypeSegment"),
+                Ref("ObjectReferenceSegment"),
+                Ref("ColumnTypeReferenceSegment"),
+                Ref("RowTypeReferenceSegment"),
+            ),
+            Sequence("NOT", "NULL", optional=True),
+            Sequence(
+                OneOf(
+                    Ref("AssignmentOperatorSegment"),
+                    "DEFAULT",
+                ),
+                Ref("ExpressionSegment"),
+                optional=True,
+            ),
+            Ref("DelimiterGrammar"),
+        ),
+        Sequence(
+            "PRAGMA",
+            Ref("FunctionSegment"),
+            Ref("DelimiterGrammar"),
+        ),
+        Sequence(
+            Ref("SingleIdentifierGrammar"),
+            "EXCEPTION",
+            Ref("DelimiterGrammar"),
+        ),
+        Ref("ProcedureDeclarationSegment"),
+        Ref("FunctionDeclarationSegment"),
+        Ref("DeclareCursorVariableSegment"),
+    )
+
+
+class PackageBodyItemSegment(BaseSegment):
+    """A package body declaration/definition item in PL/SQL."""
+
+    type = "package_body_item"
+
+    match_grammar = OneOf(
+        Sequence(
+            OneOf(
+                Sequence(
+                    Ref("SingleIdentifierGrammar"),
+                    Ref.keyword("CONSTANT", optional=True),
+                    OneOf(
+                        Ref("PlsqlDatatypeSegment"),
+                        Ref("ObjectReferenceSegment"),
+                        Ref("ColumnTypeReferenceSegment"),
+                        Ref("RowTypeReferenceSegment"),
+                    ),
+                ),
+                Sequence(
+                    "PRAGMA",
+                    Ref("FunctionSegment"),
+                ),
+                Ref("SubtypeDefinitionSegment"),
+                Ref("CollectionTypeDefinitionSegment"),
+                Ref("RecordTypeDefinitionSegment"),
+                Ref("RefCursorTypeDefinitionSegment"),
+            ),
+            Sequence("NOT", "NULL", optional=True),
+            Sequence(
+                OneOf(
+                    Ref("AssignmentOperatorSegment"),
+                    "DEFAULT",
+                ),
+                Ref("ExpressionSegment"),
+                optional=True,
+            ),
+            Ref("DelimiterGrammar"),
+        ),
+        Ref("ProcedureBodyDefinitionSegment"),
+        Ref("FunctionBodyDefinitionSegment"),
+        Ref("DeclareCursorVariableSegment"),
+    )
+
+
 class ColumnTypeReferenceSegment(BaseSegment):
     """A column type reference segment (e.g. `table_name.column_name%type`).
 
@@ -2551,7 +2834,18 @@ class ColumnTypeReferenceSegment(BaseSegment):
     type = "column_type_reference"
 
     match_grammar = Sequence(
-        Ref("ColumnReferenceSegment"), Ref("ModuloSegment"), "TYPE"
+        Delimited(
+            Ref("SingleIdentifierGrammar"),
+            delimiter=Ref("DotSegment"),
+            allow_gaps=False,
+        ),
+        Sequence(
+            Ref("AtSignSegment"),
+            Ref("DatabaseLinkReferenceSegment"),
+            optional=True,
+        ),
+        Ref("ModuloSegment"),
+        "TYPE",
     )
 
 
@@ -2564,7 +2858,18 @@ class RowTypeReferenceSegment(BaseSegment):
     type = "row_type_reference"
 
     match_grammar = Sequence(
-        Ref("TableReferenceSegment"), Ref("ModuloSegment"), "ROWTYPE"
+        Delimited(
+            Ref("SingleIdentifierGrammar"),
+            delimiter=Ref("DotSegment"),
+            allow_gaps=False,
+        ),
+        Sequence(
+            Ref("AtSignSegment"),
+            Ref("DatabaseLinkReferenceSegment"),
+            optional=True,
+        ),
+        Ref("ModuloSegment"),
+        "ROWTYPE",
     )
 
 
@@ -2582,13 +2887,13 @@ class CollectionTypeDefinitionSegment(BaseSegment):
         "IS",
         Sequence("TABLE", "OF", optional=True),
         OneOf(
-            Ref("DatatypeSegment"),
+            Ref("PlsqlDatatypeSegment"),
             Ref("ColumnTypeReferenceSegment"),
             Ref("RowTypeReferenceSegment"),
         ),
-        Sequence("OF", Ref("DatatypeSegment"), optional=True),
+        Sequence("OF", Ref("PlsqlDatatypeSegment"), optional=True),
         Sequence("NOT", "NULL", optional=True),
-        Sequence("INDEX", "BY", Ref("DatatypeSegment"), optional=True),
+        Sequence("INDEX", "BY", Ref("PlsqlDatatypeSegment"), optional=True),
     )
 
 
@@ -2605,7 +2910,7 @@ class SubtypeDefinitionSegment(BaseSegment):
         Ref("SingleIdentifierGrammar"),
         "IS",
         OneOf(
-            Ref("DatatypeSegment"),
+            Ref("PlsqlDatatypeSegment"),
             Ref("ColumnTypeReferenceSegment"),
             Ref("RowTypeReferenceSegment"),
             Ref("ObjectReferenceSegment"),
@@ -2630,7 +2935,10 @@ class RecordTypeDefinitionSegment(BaseSegment):
             Delimited(
                 Sequence(
                     Ref("SingleIdentifierGrammar"),
-                    OneOf(Ref("DatatypeSegment"), Ref("ColumnTypeReferenceSegment")),
+                    OneOf(
+                        Ref("PlsqlDatatypeSegment"),
+                        Ref("ColumnTypeReferenceSegment"),
+                    ),
                     Sequence(
                         Sequence("NOT", "NULL", optional=True),
                         OneOf(
@@ -2689,11 +2997,20 @@ class DeclareCursorVariableSegment(BaseSegment):
             OneOf(
                 Ref("ColumnTypeReferenceSegment"),
                 Ref("RowTypeReferenceSegment"),
-                Ref("DatatypeSegment"),
+                Ref("PlsqlDatatypeSegment"),
             ),
             optional=True,
         ),
-        Sequence("IS", Indent, Ref("SelectStatementSegment"), Dedent, optional=True),
+        Sequence(
+            "IS",
+            Indent,
+            OneOf(
+                Ref("SelectStatementSegment"),
+                Bracketed(Ref("SelectStatementSegment")),
+            ),
+            Dedent,
+            optional=True,
+        ),
         Ref("DelimiterGrammar", optional=True),
     )
 
@@ -2983,9 +3300,10 @@ class CreatePackageStatementSegment(BaseSegment):
             Ref("AccessibleByClauseGrammar"),
         ),
         OneOf("IS", "AS"),
-        Ref("DeclareSegment"),
+        AnyNumberOf(Ref("DeclareSegment")),
         "END",
         Ref("PackageReferenceSegment", optional=True),
+        Ref("SemicolonSegment"),
     )
 
 
@@ -3228,6 +3546,8 @@ class ProcedureCallStatementSegment(BaseSegment):
         Ref.keyword("END"),
         Ref.keyword("EXCEPTION"),
         Ref.keyword("ELSIF"),
+        Ref.keyword("ELSE"),
+        Ref.keyword("WHEN"),
     )
 
     match_grammar = Sequence(
@@ -3249,6 +3569,10 @@ class ProcedureCallStatementSegment(BaseSegment):
                 ),
             ),
             max_times=2,
+        ),
+        Bracketed(
+            Delimited(Ref("FunctionContentsExpressionGrammar")),
+            optional=True,
         ),
     )
 
@@ -3752,6 +4076,7 @@ class IntoClauseSegment(BaseSegment):
         Delimited(
             OneOf(
                 Ref("SingleIdentifierGrammar"),
+                Ref("ColumnReferenceSegment"),
                 Ref("BindVariableSegment"),
                 Ref("CollectionElementReferenceSegment"),
             )
@@ -3775,6 +4100,7 @@ class BulkCollectIntoClauseSegment(BaseSegment):
         Delimited(
             OneOf(
                 Ref("SingleIdentifierGrammar"),
+                Ref("ColumnReferenceSegment"),
                 Ref("BindVariableSegment"),
                 Ref("CollectionElementReferenceSegment"),
             )

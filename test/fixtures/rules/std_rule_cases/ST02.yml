@@ -107,6 +107,17 @@ test_pass_case_cannot_be_reduced_13:
   configs:
     core:
       dialect: postgres
+test_pass_case_cannot_be_reduced_14_oracle_simple_case:
+  pass_str: |
+    SELECT
+        CASE t_address_type
+            WHEN 'Civic' THEN address_line_1
+            WHEN 'PO Box' THEN address_line_2
+        END AS formatted_address
+    FROM addresses
+  configs:
+    core:
+      dialect: oracle
 test_pass_array_accessors:
   pass_str: |
     SELECT
