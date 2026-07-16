@@ -648,3 +648,42 @@ test_pass_placeholder_colon_double_colon_cast:
     templater:
       placeholder:
         param_style: colon
+
+test_fail_oracle_qualify_columns_not_plsql_variables:
+  # RF03 should qualify true columns but never qualify PL/SQL variables.
+  fail_str: |
+    CREATE OR REPLACE PROCEDURE p_test (
+      t_ATSProjectNumber NUMBER
+    ) IS
+      g_User VARCHAR2(100);
+      t_project_id NUMBER;
+    BEGIN
+      SELECT project_id
+      INTO t_project_id
+      FROM ats_projects p
+      WHERE p.project_number = t_ATSProjectNumber
+        AND p.last_user = g_User
+        AND p.last_updated <= sysdate;
+    END;
+    /
+  fix_str: |
+    CREATE OR REPLACE PROCEDURE p_test (
+      t_ATSProjectNumber NUMBER
+    ) IS
+      g_User VARCHAR2(100);
+      t_project_id NUMBER;
+    BEGIN
+      SELECT p.project_id
+      INTO t_project_id
+      FROM ats_projects p
+      WHERE p.project_number = t_ATSProjectNumber
+        AND p.last_user = g_User
+        AND p.last_updated <= sysdate;
+    END;
+    /
+  configs:
+    core:
+      dialect: oracle
+    rules:
+      references.consistent:
+        single_table_references: qualified
