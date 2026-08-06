@@ -4280,8 +4280,14 @@ class DeleteStatementSegment(ansi.DeleteStatementSegment):
     https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/DELETE.html
     """
 
-    match_grammar: Matchable = ansi.DeleteStatementSegment.match_grammar.copy(
-        insert=[Ref("ReturningClauseSegment", optional=True)]
+    match_grammar: Matchable = Sequence(
+        "DELETE",
+        OneOf(
+            Ref("FromClauseSegment"),
+            Ref("TableReferenceSegment"),
+        ),
+        Ref("WhereClauseSegment", optional=True),
+        Ref("ReturningClauseSegment", optional=True),
     )
 
 
