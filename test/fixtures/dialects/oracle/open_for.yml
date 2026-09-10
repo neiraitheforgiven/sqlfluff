@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 1923d4143d82b238d9a9640c783855710552440dc24016aa5c5fd2726044fd81
+_hash: c50da7442aa398dbc8542ae2edc030f98b1a19822d809d30a20d7eb2568ada60
 file:
 - batch:
     statement:
@@ -11,35 +11,35 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: cv
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
         - naked_identifier: v_lastname
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: last_name
-            binary_operator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: last_name
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: v_jobid
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: job_id
-            binary_operator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: job_id
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: query_2
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '200'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '200'
+                  end_bracket: )
         - assignment_operator: :=
         - expression:
             quoted_literal: "'SELECT * FROM employees\n    WHERE REGEXP_LIKE (job_id,\
@@ -47,8 +47,7 @@ file:
         - statement_terminator: ;
         - naked_identifier: v_employees
         - row_type_reference:
-            table_reference:
-              naked_identifier: employees
+            naked_identifier: employees
             binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
@@ -80,7 +79,8 @@ file:
                 expression:
                   function:
                     function_name:
-                      function_name_identifier: REGEXP_LIKE
+                      function_name_identifier:
+                        function_name_identifier: REGEXP_LIKE
                     function_contents:
                       bracketed:
                       - start_bracket: (
@@ -124,14 +124,16 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
                     expression:
                       function:
                         function_name:
-                          function_name_identifier: RPAD
+                          function_name_identifier:
+                            function_name_identifier: RPAD
                         function_contents:
                           bracketed:
                           - start_bracket: (
@@ -160,7 +162,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -200,14 +203,16 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
                     expression:
                       function:
                         function_name:
-                          function_name_identifier: RPAD
+                          function_name_identifier:
+                            function_name_identifier: RPAD
                         function_contents:
                           bracketed:
                           - start_bracket: (
@@ -250,20 +255,23 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: v1
-        - data_type:
-            naked_identifier: pkg
-            dot: .
-            data_type_identifier: mytab
+        - plsql_data_type:
+            data_type:
+              naked_identifier: pkg
+              dot: .
+              data_type_identifier: mytab
         - statement_terminator: ;
         - naked_identifier: v2
-        - data_type:
-            naked_identifier: pkg
-            dot: .
-            data_type_identifier: rec
+        - plsql_data_type:
+            data_type:
+              naked_identifier: pkg
+              dot: .
+              data_type_identifier: rec
         - statement_terminator: ;
         - naked_identifier: c1
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -315,7 +323,8 @@ file:
                     table_expression:
                       function:
                         function_name:
-                          function_name_identifier: TABLE
+                          function_name_identifier:
+                            function_name_identifier: TABLE
                         function_contents:
                           bracketed:
                             start_bracket: (
@@ -342,7 +351,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -385,33 +395,33 @@ file:
           - keyword: CURSOR
         - statement_terminator: ;
         - naked_identifier: v_emp_cursor
-        - data_type:
-            data_type_identifier: EmpCurTyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EmpCurTyp
         - statement_terminator: ;
         - naked_identifier: emp_record
         - row_type_reference:
-            table_reference:
-              naked_identifier: employees
+            naked_identifier: employees
             binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: v_stmt_str
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '200'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '200'
+                  end_bracket: )
         - statement_terminator: ;
         - naked_identifier: v_e_job
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: job_id
-            binary_operator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: job_id
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -469,20 +479,23 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: v1
-        - data_type:
-            naked_identifier: pkg
-            dot: .
-            data_type_identifier: mytab
+        - plsql_data_type:
+            data_type:
+              naked_identifier: pkg
+              dot: .
+              data_type_identifier: mytab
         - statement_terminator: ;
         - naked_identifier: v2
-        - data_type:
-            naked_identifier: pkg
-            dot: .
-            data_type_identifier: rec
+        - plsql_data_type:
+            data_type:
+              naked_identifier: pkg
+              dot: .
+              data_type_identifier: rec
         - statement_terminator: ;
         - naked_identifier: c1
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -512,7 +525,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (

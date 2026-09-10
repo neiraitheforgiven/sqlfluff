@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: ec24b6baf97659f7b5ce55f4aba60c9adbd732441150259421cf037faadabc0b
+_hash: 87a2834ea1b56049657ae210d34c2dc42d9d176087fd335f6ecaa476c07f2677
 file:
 - batch:
   - statement:
@@ -334,14 +334,16 @@ file:
               raw_comparison_operator: '='
             function:
               function_name:
-                function_name_identifier: CAST
+                function_name_identifier:
+                  function_name_identifier: CAST
               function_contents:
                 bracketed:
                   start_bracket: (
                   expression:
                     function:
                       function_name:
-                        function_name_identifier: MULTISET
+                        function_name_identifier:
+                          function_name_identifier: MULTISET
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -392,48 +394,55 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: varchar2
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '100'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: varchar2
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '100'
+                    end_bracket: )
         - statement_terminator: ;
         - naked_identifier: happyfamily
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (
                   end_bracket: )
         - statement_terminator: ;
         - naked_identifier: children
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (
                   end_bracket: )
         - statement_terminator: ;
         - naked_identifier: parents
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -566,48 +575,55 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: varchar2
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '100'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: varchar2
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '100'
+                    end_bracket: )
         - statement_terminator: ;
         - naked_identifier: a
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (
                   end_bracket: )
         - statement_terminator: ;
         - naked_identifier: b
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (
                   end_bracket: )
         - statement_terminator: ;
         - naked_identifier: c
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (

@@ -1,0 +1,885 @@
+
+loop limit=10 rule=TQ03 before_sha256=167ebc364da148ce5437df5fa97d4d8950283b1bbbcb722b680848bec108f741 after_sha256=e3aed50f37fb1df904d34f1090b247a1dd989ff3094f5653c03a9e038764b10e
+--- <string> (before)
++++ <string> (after)
+@@ -1,76 +1,69 @@
+ DECLARE  -- You can assign initial values here
+-  wages          NUMBER;
+-  hours_worked   NUMBER := 40;
+-  hourly_salary  NUMBER := 22.50;
+-  bonus          NUMBER := 150;
+-  country        VARCHAR2(128);
+-  counter        NUMBER := 0;
+-  done           BOOLEAN;
+-  valid_id       BOOLEAN;
+-  emp_rec1       employees%ROWTYPE;
+-  emp_rec2       employees%ROWTYPE;
+-  TYPE commissions IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+-  comm_tab       commissions;
+-  current_date   DATE := SYSDATE;
++    wages NUMBER;
++    hours_worked NUMBER := 40;
++    hourly_salary NUMBER := 22.50;
++    bonus NUMBER := 150;
++    country VARCHAR2(128);
++    counter NUMBER := 0;
++    done BOOLEAN;
++    valid_id BOOLEAN;
++    emp_rec1 employees % ROWTYPE;
++    emp_rec2 employees % ROWTYPE;
++    TYPE commissions IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
++    comm_tab COMMISSIONS;
++    current_date DATE := sysdate;
++BEGIN  -- You can assign values here too
++    wages := (hours_worked * hourly_salary) + bonus;
++    country := 'France';
++    country := upper('Canada');
++    done := (counter > 100);
++    valid_id := TRUE;
++    emp_rec1.first_name := 'Antonio';
++    emp_rec1.last_name := 'Ortiz';
++    emp_rec1 := emp_rec2;
++    comm_tab (5) := 20000 * 0.15;
+ 
+-BEGIN  -- You can assign values here too
+-  wages := (hours_worked * hourly_salary) + bonus;
+-  country := 'France';
+-  country := UPPER('Canada');
+-  done := (counter > 100);
+-  valid_id := TRUE;
+-  emp_rec1.first_name := 'Antonio';
+-  emp_rec1.last_name := 'Ortiz';
+-  emp_rec1 := emp_rec2;
+-  comm_tab(5) := 20000 * 0.15;
++    -- Conditional assignment
++    IF counter > 5 THEN
++        wages := wages * 1.10;
++    END IF;
+ 
+-  -- Conditional assignment
+-  IF counter > 5 THEN
+-    wages := wages * 1.10;
+-  END IF;
++    -- CASE expression assignment
++    bonus := CASE WHEN wages > 60000 THEN wages * 0.15 ELSE wages * 0.10 END;
++END;
++    /
++    DECLARE
++        done BOOLEAN;  -- Initial value is NULL by default
++        counter NUMBER := 0;
++    BEGIN
++        done := FALSE;  -- Assign literal value
++        WHILE done != TRUE  -- Compare to literal value
++        LOOP
++            counter := counter + 1;
++            done := (counter > 500);  -- Assign value of BOOLEAN expression
++        END LOOP;
++    END;
++    /
++    DECLARE
++        TYPE triplet IS VARRAY(3) OF VARCHAR2(15);
++        TYPE trio IS VARRAY(3) OF VARCHAR2(15);
+ 
+-  -- CASE expression assignment
+-  bonus := CASE
+-    WHEN wages > 60000 THEN wages * 0.15
+-    ELSE wages * 0.10
+-  END;
+-END;
+-/
+-
+-DECLARE
+-  done    BOOLEAN;              -- Initial value is NULL by default
+-  counter NUMBER := 0;
+-BEGIN
+-  done := FALSE;                -- Assign literal value
+-  WHILE done != TRUE            -- Compare to literal value
+-    LOOP
+-      counter := counter + 1;
+-      done := (counter > 500);  -- Assign value of BOOLEAN expression
+-    END LOOP;
+-END;
+-/
+-
+-DECLARE
+-  TYPE triplet IS VARRAY(3) OF VARCHAR2(15);
+-  TYPE trio    IS VARRAY(3) OF VARCHAR2(15);
+-
+-  group1 triplet := triplet('Jones', 'Wong', 'Marceau');
+-  group2 triplet;
+-  group3 trio;
+-BEGIN
+-  group2 := group1;  -- succeeds
+-  group3 := group1;  -- fails
+-END;
+-/
+-
+--- Function parameter default assignment test
+-CREATE OR REPLACE FUNCTION CALCULATE_BONUS(
+-  base_salary NUMBER := 50000,
+-  bonus_rate NUMBER := 0.10
+-) RETURN NUMBER AS
+-  result_bonus NUMBER;
+-BEGIN
+-  result_bonus := base_salary * bonus_rate;
+-  RETURN result_bonus;
+-END;
+-/
++        group1 TRIPLET := triplet('Jones', 'Wong', 'Marceau');
++        group2 TRIPLET;
++        group3 TRIO;
++    BEGIN
++        group2 := group1;  -- succeeds
++        group3 := group1;  -- fails
++    END;
++    /
++    -- Function parameter default assignment test
++                      CREATE OR REPLACE FUNCTION calculate_bonus(
++                      base_salary NUMBER := 50000,
++                      bonus_rate NUMBER := 0.10
++                    ) RETURN NUMBER AS
++                      result_bonus NUMBER;
++                    BEGIN
++                      result_bonus := base_salary * bonus_rate;
++                      RETURN result_bonus;
++                    END;
++    /
+
+loop limit=10 rule=TQ03 before_sha256=e9c32fae54a2cdca4b7630d0bf95723d005f98067da8ea0f6ed5bb13238e9e2a after_sha256=00ff8dc4dbb709dced02cc481e271713f0fc4baa8ce9bf317e413a1c05f8e973
+--- <string> (before)
++++ <string> (after)
+@@ -1,99 +1,97 @@
+-CREATE PROCEDURE IF NOT EXISTS remove_emp (employee_id NUMBER) AS
+-   tot_emps NUMBER;
+-   BEGIN
+-      DELETE FROM employees
+-      WHERE employees.employee_id = remove_emp.employee_id;
+-   tot_emps := tot_emps - 1;
+-   END;
+-/
++CREATE PROCEDURE IF NOT exists remove_emp(employee_id NUMBER) AS
++  tot_emps NUMBER;
++BEGIN
++    DELETE FROM employees
++    WHERE employees.employee_id = remove_emp.employee_id;
+ 
+-CREATE PROCEDURE top_protected_proc
+-  ACCESSIBLE BY (PROCEDURE top_trusted_proc)
+-AS
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE('Processed top_protected_proc.');
++  tot_emps := tot_emps - 1;
+ END;
+ /
++CREATE PROCEDURE top_protected_proc
++ACCESSIBLE BY (PROCEDURE top_trusted_proc)
++  AS
+ 
+-CREATE OR REPLACE PROCEDURE p (x BOOLEAN) AUTHID DEFINER AS
++BEGIN
++  DBMS_OUTPUT.put_line('Processed top_protected_proc.');
++END;
++/
++CREATE OR REPLACE PROCEDURE p(x BOOLEAN) AUTHID DEFINER AS
+ BEGIN
+   IF x THEN
+-    DBMS_OUTPUT.PUT_LINE('x is true');
++    DBMS_OUTPUT.put_line('x is true');
+   END IF;
+ END;
+ /
++                  CREATE PROCEDURE p(
++                  sales NUMBER,
++                  quota NUMBER,
++                  emp_id NUMBER
++)
++                  IS
++                  bonus NUMBER := 0;
++                  updated VARCHAR2(3) := 'No';
++                BEGIN
++                  IF sales > (quota + 200) THEN
++                  bonus := (sales - quota) / 4;
+ 
+-CREATE PROCEDURE p (
+-    sales  NUMBER,
+-    quota  NUMBER,
+-    emp_id NUMBER
+-  )
+-  IS
+-    bonus    NUMBER := 0;
+-    updated  VARCHAR2(3) := 'No';
+-  BEGIN
+-    IF sales > (quota + 200) THEN
+-      bonus := (sales - quota)/4;
++                  UPDATE employees SET
++                    salary = salary + bonus
++                  WHERE employee_id = emp_id;
+ 
+-      UPDATE employees
+-      SET salary = salary + bonus
+-      WHERE employee_id = emp_id;
++                  updated := 'Yes';
++                  END IF;
+ 
+-      updated := 'Yes';
+-    END IF;
++                  DBMS_OUTPUT.put_line(
++                    'Table updated?  ' || updated || ', '
++                    || 'bonus = ' || bonus || '.'
++                );
++                END;
++/
++                  CREATE PROCEDURE p(
++                  sales NUMBER,
++                  quota NUMBER,
++                  emp_id NUMBER
++)
++                  IS
++                  bonus NUMBER := 0;
++                BEGIN
++                  IF sales > (quota + 200) THEN
++                  bonus := (sales - quota) / 4;
++                  ELSE
++                  IF sales > quota THEN
++                  bonus := 50;
++                  ELSE
++                  bonus := 0;
++                  END IF;
++                  END IF;
+ 
+-    DBMS_OUTPUT.PUT_LINE (
+-      'Table updated?  ' || updated || ', ' ||
+-      'bonus = ' || bonus || '.'
+-    );
++                  DBMS_OUTPUT.put_line('bonus = ' || bonus);
++
++                  UPDATE employees SET
++                    salary = salary + bonus
++                  WHERE employee_id = emp_id;
++
++                END;
++/
++                  CREATE PROCEDURE create_email(
++                  name1 VARCHAR2,
++                  name2 VARCHAR2,
++                  company VARCHAR2
++)
++                  IS
++                  error_message VARCHAR2(30) := 'Email address is too long.';
++                BEGIN
++                  email := name1 || '.' || name2 || '@' || company;
++                EXCEPTION
++                WHEN value_error THEN
++                  DBMS_OUTPUT.put_line(error_message);
++                END;
++
++/
++CREATE PROCEDURE p IS
++BEGIN
++  DBMS_OUTPUT.put_line('Inside p');
++  RETURN;
++  DBMS_OUTPUT.put_line('Unreachable statement.');
+ END;
+ /
+-
+-CREATE PROCEDURE p (
+-    sales  NUMBER,
+-    quota  NUMBER,
+-    emp_id NUMBER
+-  )
+-  IS
+-    bonus  NUMBER := 0;
+-  BEGIN
+-    IF sales > (quota + 200) THEN
+-      bonus := (sales - quota)/4;
+-    ELSE
+-      IF sales > quota THEN
+-        bonus := 50;
+-      ELSE
+-        bonus := 0;
+-      END IF;
+-    END IF;
+-
+-    DBMS_OUTPUT.PUT_LINE('bonus = ' || bonus);
+-
+-    UPDATE employees
+-    SET salary = salary + bonus
+-    WHERE employee_id = emp_id;
+-  END;
+-/
+-
+-CREATE PROCEDURE create_email (
+-    name1   VARCHAR2,
+-    name2   VARCHAR2,
+-    company VARCHAR2
+-  )
+-  IS
+-    error_message VARCHAR2(30) := 'Email address is too long.';
+-  BEGIN
+-    email := name1 || '.' || name2 || '@' || company;
+-  EXCEPTION
+-    WHEN VALUE_ERROR THEN
+-      DBMS_OUTPUT.PUT_LINE(error_message);
+-  END;
+-/
+-
+-CREATE PROCEDURE p IS
+-  BEGIN
+-    DBMS_OUTPUT.PUT_LINE('Inside p');
+-    RETURN;
+-    DBMS_OUTPUT.PUT_LINE('Unreachable statement.');
+-  END;
+-  /
+
+loop limit=10 rule=TQ03 before_sha256=353565bf196fb5739b3a983bec0d16dea7e629f81d557b78c023b9aeccffe796 after_sha256=89d2f380437adf8ba5628f9c2817ed3d201b75b1d57204d491559ec8bebb0e81
+--- <string> (before)
++++ <string> (after)
+@@ -1,105 +1,113 @@
+ DECLARE
+-  dept_rec departments%ROWTYPE;
++    dept_rec departments % ROWTYPE;
+ BEGIN
+-  -- Assign values to fields:
++    -- Assign values to fields:
++    dept_rec.department_id := 10;
++    dept_rec.department_name := 'Administration';
++    dept_rec.manager_id := 200;
++    dept_rec.location_id := 1700;
+ 
+-  dept_rec.department_id   := 10;
+-  dept_rec.department_name := 'Administration';
+-  dept_rec.manager_id      := 200;
+-  dept_rec.location_id     := 1700;
++    -- Print fields:
+ 
+-  -- Print fields:
+-
+-  DBMS_OUTPUT.PUT_LINE('dept_id:   ' || dept_rec.department_id);
+-  DBMS_OUTPUT.PUT_LINE('dept_name: ' || dept_rec.department_name);
+-  DBMS_OUTPUT.PUT_LINE('mgr_id:    ' || dept_rec.manager_id);
+-  DBMS_OUTPUT.PUT_LINE('loc_id:    ' || dept_rec.location_id);
++    DBMS_OUTPUT.PUT_LINE('dept_id:   ' || dept_rec.department_id);
++    DBMS_OUTPUT.PUT_LINE('dept_name: ' || dept_rec.department_name);
++    DBMS_OUTPUT.PUT_LINE('mgr_id:    ' || dept_rec.manager_id);
++    DBMS_OUTPUT.PUT_LINE('loc_id:    ' || dept_rec.location_id);
+ END;
+ /
++DECLARE
++    t1_row t1 % ROWTYPE;
++BEGIN
++    DBMS_OUTPUT.PUT('t1.c1 = ');
++    DBMS_OUTPUT.PUT_LINE(COALESCE(TO_CHAR(t1_row.c1), 'NULL'));
+ 
+-DECLARE
+-  t1_row t1%ROWTYPE;
+-BEGIN
+-  DBMS_OUTPUT.PUT('t1.c1 = ');
+-  DBMS_OUTPUT.PUT_LINE(NVL(TO_CHAR(t1_row.c1), 'NULL'));
+-
+-  DBMS_OUTPUT.PUT('t1.c2 = '); print(t1_row.c2);
+-  DBMS_OUTPUT.PUT_LINE(NVL(TO_CHAR(t1_row.c2), 'NULL'));
++    DBMS_OUTPUT.PUT('t1.c2 = ');
++    PRINT(t1_row.c2);
++    DBMS_OUTPUT.PUT_LINE(COALESCE(TO_CHAR(t1_row.c2), 'NULL'));
+ END;
+ /
++DECLARE
++    CURSOR c IS
+ 
+-DECLARE
+-  CURSOR c IS
+-    SELECT first_name, last_name, phone_number
+-    FROM employees;
++        SELECT
++          first_name,
++          last_name,
++          phone_number
++        FROM employees;
+ 
+-  friend c%ROWTYPE;
++    friend c % ROWTYPE;
+ BEGIN
+-  friend.first_name   := 'John';
+-  friend.last_name    := 'Smith';
+-  friend.phone_number := '1-650-555-1234';
++    friend.first_name := 'John';
++    friend.last_name := 'Smith';
++    friend.phone_number := '1-650-555-1234';
+ 
+-  DBMS_OUTPUT.PUT_LINE (
+-    friend.first_name  || ' ' ||
+-    friend.last_name   || ', ' ||
+-    friend.phone_number
+-  );
++    DBMS_OUTPUT.PUT_LINE(
++        friend.first_name || ' '
++        || friend.last_name || ', '
++        || friend.phone_number
++    );
+ END;
+ /
++DECLARE
++    CURSOR c2 IS
+ 
+-DECLARE
+-  CURSOR c2 IS
+-    SELECT employee_id, email, employees.manager_id, location_id
+-    FROM employees, departments
+-    WHERE employees.department_id = departments.department_id;
++        SELECT
++          employee_id,
++          email,
++          employees.manager_id,
++          location_id
++        FROM employees, departments
++        WHERE employees.department_id = departments.department_id;
+ 
+-  join_rec c2%ROWTYPE;  -- includes columns from two tables
+-
++    join_rec c2 % ROWTYPE;  -- includes columns from two tables
+ BEGIN
+-  NULL;
++    NULL;
+ END;
+ /
++DECLARE
++    t_rec t % ROWTYPE;  -- t_rec has fields a and b, but not c
++BEGIN
++    SELECT * INTO t_rec FROM t
++    WHERE ROWNUM < 2;  -- t_rec(a)=1, t_rec(b)=2
+ 
+-DECLARE
+-  t_rec t%ROWTYPE;  -- t_rec has fields a and b, but not c
+-BEGIN
+-  SELECT * INTO t_rec FROM t WHERE ROWNUM < 2;  -- t_rec(a)=1, t_rec(b)=2
+-  DBMS_OUTPUT.PUT_LINE('c = ' || t_rec.c);
++    DBMS_OUTPUT.PUT_LINE('c = ' || t_rec.c);
+ END;
+ /
++DECLARE
++    TYPE name_rec IS RECORD (
++        first employees.first_name % TYPE DEFAULT 'John',
++        last employees.last_name % TYPE DEFAULT 'Doe'
++    );
+ 
+-DECLARE
+-  TYPE name_rec IS RECORD (
+-    first  employees.first_name%TYPE DEFAULT 'John',
+-    last   employees.last_name%TYPE DEFAULT 'Doe'
+-  );
++    CURSOR c IS
+ 
+-  CURSOR c IS
+-    SELECT first_name, last_name
+-    FROM employees;
++        SELECT
++          first_name,
++          last_name
++        FROM employees;
+ 
+-  target name_rec;
+-  source c%ROWTYPE;
++    target NAME_REC;
++    source c % ROWTYPE;
++BEGIN
++    source.first_name := 'Jane';
++    source.last_name := 'Smith';
+ 
+-BEGIN
+-  source.first_name := 'Jane'; source.last_name := 'Smith';
++    DBMS_OUTPUT.PUT_LINE(
++        'source: ' || source.first_name || ' ' || source.last_name
++    );
+ 
+-  DBMS_OUTPUT.PUT_LINE (
+-    'source: ' || source.first_name || ' ' || source.last_name
+-  );
++    target := source;
+ 
+- target := source;
+-
+- DBMS_OUTPUT.PUT_LINE (
+-   'target: ' || target.first || ' ' || target.last
+- );
++    DBMS_OUTPUT.PUT_LINE(
++        'target: ' || target.first || ' ' || target.last
++    );
+ END;
+ /
++                CREATE OR REPLACE PROCEDURE MY_PROCEDURE(
++                var1 table_name % ROWTYPE
++              ) IS
+ 
+-create or replace procedure MY_PROCEDURE(
+-    var1 table_name%rowtype
+-) is
+-begin
+-    null;
+-end;
++              BEGIN
++                NULL;
++              END;
+ /
+
+loop limit=10 rule=TQ03 before_sha256=35d0a0cf24fb5aa0d8e6d24d2629bf6cc6af18808a495f14526c3566abbfbbae after_sha256=4089ef5e41c72e439f29cb518ff6c757b38832cc1ed14e3f5289b60a9389f8c6
+--- <string> (before)
++++ <string> (after)
+@@ -1,44 +1,54 @@
+ CREATE TRIGGER foo AFTER INSERT ON bar EXECUTE FUNCTION proc(args);
+ 
+-CREATE TRIGGER foo BEFORE INSERT on bar EXECUTE FUNCTION proc(args);
++CREATE TRIGGER foo BEFORE INSERT ON bar EXECUTE FUNCTION proc(args);
+ 
+ CREATE TRIGGER foo AFTER UPDATE OF bar, baz ON bar EXECUTE FUNCTION proc(args);
+ 
+-CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION proc(args);
++  CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION proc(
++  args
++);
+ 
+-CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION schema.proc(args);
++  CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION schema.proc(
++  args
++);
+ 
+-CREATE TRIGGER foo BEFORE INSERT ON bar WHEN (a=b) EXECUTE FUNCTION proc(args);
++  CREATE TRIGGER foo BEFORE INSERT ON bar WHEN (a = b) EXECUTE FUNCTION proc(
++  args
++);
+ 
+-CREATE OR REPLACE CONSTRAINT TRIGGER foo BEFORE INSERT ON bar EXECUTE FUNCTION proc(args);
++                  CREATE OR REPLACE CONSTRAINT TRIGGER foo BEFORE INSERT ON bar EXECUTE FUNCTION proc(
++                  args
++                );
+ 
+-CREATE TRIGGER foo BEFORE INSERT ON bar REFERENCING OLD TABLE as old_table NEW TABLE AS new_table EXECUTE PROCEDURE proc(args);
++                  CREATE TRIGGER foo BEFORE INSERT ON bar REFERENCING OLD TABLE AS old_table NEW TABLE AS new_table EXECUTE PROCEDURE proc(
++                  args
++                );
+ 
+ CREATE TRIGGER check_update
+-    BEFORE INSERT OR UPDATE ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE INSERT OR UPDATE ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE OR REPLACE TRIGGER check_update
+-    BEFORE UPDATE OF balance, transactions ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE OF balance, transactions ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE OR REPLACE TRIGGER check_update
+-    BEFORE UPDATE OF balance, transactions OR TRUNCATE ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE OF balance, transactions OR TRUNCATE ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE OR REPLACE TRIGGER check_update
+-    BEFORE UPDATE OF balance ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE OF balance ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE TRIGGER check_update
+-    BEFORE UPDATE ON accounts
+-    FOR EACH ROW
+-    WHEN (OLD.balance IS DISTINCT FROM NEW.balance)
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE ON accounts
++FOR EACH ROW
++WHEN (old.balance IS DISTINCT FROM new.balance)
++EXECUTE FUNCTION check_account_update();
+ 
+ --CREATE TRIGGER log_update
+ --    AFTER UPDATE ON accounts
+@@ -47,24 +57,24 @@
+ --    EXECUTE FUNCTION log_account_update();
+ 
+ CREATE TRIGGER view_insert
+-    INSTEAD OF INSERT ON my_view
+-    FOR EACH ROW
+-    EXECUTE FUNCTION view_insert_row();
++INSTEAD OF INSERT ON my_view
++FOR EACH ROW
++EXECUTE FUNCTION view_insert_row();
+ 
+ CREATE TRIGGER transfer_insert
+-    AFTER INSERT ON transfer
+-    REFERENCING NEW TABLE AS inserted
+-    FOR EACH STATEMENT
+-    EXECUTE FUNCTION check_transfer_balances_to_zero();
++AFTER INSERT ON transfer
++REFERENCING NEW TABLE AS inserted
++FOR EACH STATEMENT
++EXECUTE FUNCTION check_transfer_balances_to_zero();
+ 
+ CREATE TRIGGER paired_items_update
+-    AFTER UPDATE ON paired_items
+-    REFERENCING NEW TABLE AS newtab OLD TABLE AS oldtab
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_matching_pairs();
++AFTER UPDATE ON paired_items
++REFERENCING NEW TABLE AS newtab OLD TABLE AS oldtab
++FOR EACH ROW
++EXECUTE FUNCTION check_matching_pairs();
+ 
+ CREATE TRIGGER log_update
+-    AFTER UPDATE ON accounts
+-    FOR EACH ROW
+-    WHEN (OLD.* IS DISTINCT FROM NEW.*)
+-    EXECUTE FUNCTION log_account_update();
++AFTER UPDATE ON accounts
++FOR EACH ROW
++WHEN (old.* IS DISTINCT FROM new.*)
++EXECUTE FUNCTION log_account_update();
+
+loop limit=10 rule=TQ03 before_sha256=35d0a0cf24fb5aa0d8e6d24d2629bf6cc6af18808a495f14526c3566abbfbbae after_sha256=4089ef5e41c72e439f29cb518ff6c757b38832cc1ed14e3f5289b60a9389f8c6
+--- <string> (before)
++++ <string> (after)
+@@ -1,44 +1,54 @@
+ CREATE TRIGGER foo AFTER INSERT ON bar EXECUTE FUNCTION proc(args);
+ 
+-CREATE TRIGGER foo BEFORE INSERT on bar EXECUTE FUNCTION proc(args);
++CREATE TRIGGER foo BEFORE INSERT ON bar EXECUTE FUNCTION proc(args);
+ 
+ CREATE TRIGGER foo AFTER UPDATE OF bar, baz ON bar EXECUTE FUNCTION proc(args);
+ 
+-CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION proc(args);
++  CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION proc(
++  args
++);
+ 
+-CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION schema.proc(args);
++  CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION schema.proc(
++  args
++);
+ 
+-CREATE TRIGGER foo BEFORE INSERT ON bar WHEN (a=b) EXECUTE FUNCTION proc(args);
++  CREATE TRIGGER foo BEFORE INSERT ON bar WHEN (a = b) EXECUTE FUNCTION proc(
++  args
++);
+ 
+-CREATE OR REPLACE CONSTRAINT TRIGGER foo BEFORE INSERT ON bar EXECUTE FUNCTION proc(args);
++                  CREATE OR REPLACE CONSTRAINT TRIGGER foo BEFORE INSERT ON bar EXECUTE FUNCTION proc(
++                  args
++                );
+ 
+-CREATE TRIGGER foo BEFORE INSERT ON bar REFERENCING OLD TABLE as old_table NEW TABLE AS new_table EXECUTE PROCEDURE proc(args);
++                  CREATE TRIGGER foo BEFORE INSERT ON bar REFERENCING OLD TABLE AS old_table NEW TABLE AS new_table EXECUTE PROCEDURE proc(
++                  args
++                );
+ 
+ CREATE TRIGGER check_update
+-    BEFORE INSERT OR UPDATE ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE INSERT OR UPDATE ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE OR REPLACE TRIGGER check_update
+-    BEFORE UPDATE OF balance, transactions ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE OF balance, transactions ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE OR REPLACE TRIGGER check_update
+-    BEFORE UPDATE OF balance, transactions OR TRUNCATE ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE OF balance, transactions OR TRUNCATE ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE OR REPLACE TRIGGER check_update
+-    BEFORE UPDATE OF balance ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE OF balance ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE TRIGGER check_update
+-    BEFORE UPDATE ON accounts
+-    FOR EACH ROW
+-    WHEN (OLD.balance IS DISTINCT FROM NEW.balance)
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE ON accounts
++FOR EACH ROW
++WHEN (old.balance IS DISTINCT FROM new.balance)
++EXECUTE FUNCTION check_account_update();
+ 
+ --CREATE TRIGGER log_update
+ --    AFTER UPDATE ON accounts
+@@ -47,24 +57,24 @@
+ --    EXECUTE FUNCTION log_account_update();
+ 
+ CREATE TRIGGER view_insert
+-    INSTEAD OF INSERT ON my_view
+-    FOR EACH ROW
+-    EXECUTE FUNCTION view_insert_row();
++INSTEAD OF INSERT ON my_view
++FOR EACH ROW
++EXECUTE FUNCTION view_insert_row();
+ 
+ CREATE TRIGGER transfer_insert
+-    AFTER INSERT ON transfer
+-    REFERENCING NEW TABLE AS inserted
+-    FOR EACH STATEMENT
+-    EXECUTE FUNCTION check_transfer_balances_to_zero();
++AFTER INSERT ON transfer
++REFERENCING NEW TABLE AS inserted
++FOR EACH STATEMENT
++EXECUTE FUNCTION check_transfer_balances_to_zero();
+ 
+ CREATE TRIGGER paired_items_update
+-    AFTER UPDATE ON paired_items
+-    REFERENCING NEW TABLE AS newtab OLD TABLE AS oldtab
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_matching_pairs();
++AFTER UPDATE ON paired_items
++REFERENCING NEW TABLE AS newtab OLD TABLE AS oldtab
++FOR EACH ROW
++EXECUTE FUNCTION check_matching_pairs();
+ 
+ CREATE TRIGGER log_update
+-    AFTER UPDATE ON accounts
+-    FOR EACH ROW
+-    WHEN (OLD.* IS DISTINCT FROM NEW.*)
+-    EXECUTE FUNCTION log_account_update();
++AFTER UPDATE ON accounts
++FOR EACH ROW
++WHEN (old.* IS DISTINCT FROM new.*)
++EXECUTE FUNCTION log_account_update();
+
+loop limit=10 rule=TQ03 before_sha256=35d0a0cf24fb5aa0d8e6d24d2629bf6cc6af18808a495f14526c3566abbfbbae after_sha256=4089ef5e41c72e439f29cb518ff6c757b38832cc1ed14e3f5289b60a9389f8c6
+--- <string> (before)
++++ <string> (after)
+@@ -1,44 +1,54 @@
+ CREATE TRIGGER foo AFTER INSERT ON bar EXECUTE FUNCTION proc(args);
+ 
+-CREATE TRIGGER foo BEFORE INSERT on bar EXECUTE FUNCTION proc(args);
++CREATE TRIGGER foo BEFORE INSERT ON bar EXECUTE FUNCTION proc(args);
+ 
+ CREATE TRIGGER foo AFTER UPDATE OF bar, baz ON bar EXECUTE FUNCTION proc(args);
+ 
+-CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION proc(args);
++  CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION proc(
++  args
++);
+ 
+-CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION schema.proc(args);
++  CREATE TRIGGER foo INSTEAD OF DELETE ON bar FROM baz DEFERRABLE INITIALLY DEFERRED FOR EACH STATEMENT EXECUTE FUNCTION schema.proc(
++  args
++);
+ 
+-CREATE TRIGGER foo BEFORE INSERT ON bar WHEN (a=b) EXECUTE FUNCTION proc(args);
++  CREATE TRIGGER foo BEFORE INSERT ON bar WHEN (a = b) EXECUTE FUNCTION proc(
++  args
++);
+ 
+-CREATE OR REPLACE CONSTRAINT TRIGGER foo BEFORE INSERT ON bar EXECUTE FUNCTION proc(args);
++                  CREATE OR REPLACE CONSTRAINT TRIGGER foo BEFORE INSERT ON bar EXECUTE FUNCTION proc(
++                  args
++                );
+ 
+-CREATE TRIGGER foo BEFORE INSERT ON bar REFERENCING OLD TABLE as old_table NEW TABLE AS new_table EXECUTE PROCEDURE proc(args);
++                  CREATE TRIGGER foo BEFORE INSERT ON bar REFERENCING OLD TABLE AS old_table NEW TABLE AS new_table EXECUTE PROCEDURE proc(
++                  args
++                );
+ 
+ CREATE TRIGGER check_update
+-    BEFORE INSERT OR UPDATE ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE INSERT OR UPDATE ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE OR REPLACE TRIGGER check_update
+-    BEFORE UPDATE OF balance, transactions ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE OF balance, transactions ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE OR REPLACE TRIGGER check_update
+-    BEFORE UPDATE OF balance, transactions OR TRUNCATE ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE OF balance, transactions OR TRUNCATE ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE OR REPLACE TRIGGER check_update
+-    BEFORE UPDATE OF balance ON accounts
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE OF balance ON accounts
++FOR EACH ROW
++EXECUTE FUNCTION check_account_update();
+ 
+ CREATE TRIGGER check_update
+-    BEFORE UPDATE ON accounts
+-    FOR EACH ROW
+-    WHEN (OLD.balance IS DISTINCT FROM NEW.balance)
+-    EXECUTE FUNCTION check_account_update();
++BEFORE UPDATE ON accounts
++FOR EACH ROW
++WHEN (old.balance IS DISTINCT FROM new.balance)
++EXECUTE FUNCTION check_account_update();
+ 
+ --CREATE TRIGGER log_update
+ --    AFTER UPDATE ON accounts
+@@ -47,24 +57,24 @@
+ --    EXECUTE FUNCTION log_account_update();
+ 
+ CREATE TRIGGER view_insert
+-    INSTEAD OF INSERT ON my_view
+-    FOR EACH ROW
+-    EXECUTE FUNCTION view_insert_row();
++INSTEAD OF INSERT ON my_view
++FOR EACH ROW
++EXECUTE FUNCTION view_insert_row();
+ 
+ CREATE TRIGGER transfer_insert
+-    AFTER INSERT ON transfer
+-    REFERENCING NEW TABLE AS inserted
+-    FOR EACH STATEMENT
+-    EXECUTE FUNCTION check_transfer_balances_to_zero();
++AFTER INSERT ON transfer
++REFERENCING NEW TABLE AS inserted
++FOR EACH STATEMENT
++EXECUTE FUNCTION check_transfer_balances_to_zero();
+ 
+ CREATE TRIGGER paired_items_update
+-    AFTER UPDATE ON paired_items
+-    REFERENCING NEW TABLE AS newtab OLD TABLE AS oldtab
+-    FOR EACH ROW
+-    EXECUTE FUNCTION check_matching_pairs();
++AFTER UPDATE ON paired_items
++REFERENCING NEW TABLE AS newtab OLD TABLE AS oldtab
++FOR EACH ROW
++EXECUTE FUNCTION check_matching_pairs();
+ 
+ CREATE TRIGGER log_update
+-    AFTER UPDATE ON accounts
+-    FOR EACH ROW
+-    WHEN (OLD.* IS DISTINCT FROM NEW.*)
+-    EXECUTE FUNCTION log_account_update();
++AFTER UPDATE ON accounts
++FOR EACH ROW
++WHEN (old.* IS DISTINCT FROM new.*)
++EXECUTE FUNCTION log_account_update();

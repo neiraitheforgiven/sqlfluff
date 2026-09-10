@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: c79d3bcd1c1eafcf85cf79490da14e562fde942cff0fa10fb3bdb131c1c5f515
+_hash: 20e7acc9202eb74b38ca96f5fa9169c341e93759a23bc34a998fbed0202751e8
 file:
 - batch:
     statement:
@@ -13,7 +13,8 @@ file:
           create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -32,20 +33,22 @@ file:
           - keyword: IS
           - declare_segment:
             - naked_identifier: bonus
-            - data_type:
-                data_type_identifier: NUMBER
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
             - assignment_operator: :=
             - expression:
                 numeric_literal: '0'
             - statement_terminator: ;
             - naked_identifier: updated
-            - data_type:
-                data_type_identifier: VARCHAR2
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '3'
-                    end_bracket: )
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: VARCHAR2
+                  bracketed_arguments:
+                    bracketed:
+                      start_bracket: (
+                      numeric_literal: '3'
+                      end_bracket: )
             - assignment_operator: :=
             - expression:
                 quoted_literal: "'No'"
@@ -132,7 +135,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -170,7 +174,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -187,7 +192,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -213,7 +219,8 @@ file:
           create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -232,8 +239,9 @@ file:
           - keyword: IS
           - declare_segment:
               naked_identifier: bonus
-              data_type:
-                data_type_identifier: NUMBER
+              plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
               assignment_operator: :=
               expression:
                 numeric_literal: '0'
@@ -293,7 +301,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -342,7 +351,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -359,7 +369,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -385,7 +396,8 @@ file:
           create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -404,8 +416,9 @@ file:
           - keyword: IS
           - declare_segment:
               naked_identifier: bonus
-              data_type:
-                data_type_identifier: NUMBER
+              plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
               assignment_operator: :=
               expression:
                 numeric_literal: '0'
@@ -489,7 +502,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -538,7 +552,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -555,7 +570,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -572,7 +588,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -598,7 +615,8 @@ file:
           create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -609,8 +627,9 @@ file:
           - keyword: IS
           - declare_segment:
               naked_identifier: bonus
-              data_type:
-                data_type_identifier: NUMBER
+              plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
               assignment_operator: :=
               expression:
                 numeric_literal: '0'
@@ -669,7 +688,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -703,7 +723,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
                 start_bracket: (
@@ -714,7 +735,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
                 start_bracket: (
@@ -725,7 +747,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
                 start_bracket: (
@@ -743,10 +766,11 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: obj_ref
-          data_type:
-            naked_identifier: SYS
-            dot: .
-            data_type_identifier: ANYDATA
+          plsql_data_type:
+            data_type:
+              naked_identifier: SYS
+              dot: .
+              data_type_identifier: ANYDATA
           statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -875,22 +899,24 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: AUDITINFO
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '2000'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '2000'
+                  end_bracket: )
         - statement_terminator: ;
         - naked_identifier: EVENT
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '10'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '10'
+                  end_bracket: )
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:

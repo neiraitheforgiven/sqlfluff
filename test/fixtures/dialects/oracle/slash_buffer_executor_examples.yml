@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 6a710195c6caa6b80990e695e7cfbcd1481d6f90643e2a11d29b56d40c18142e
+_hash: 3db631adf37c04ff9b2027d5756d93aca70e3fafe7de2b9c654cd5aaf63f016e
 file:
 - batch:
     statement:
@@ -13,7 +13,8 @@ file:
       - keyword: REPLACE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: proc1
+          function_name_identifier:
+            function_name_identifier: proc1
       - keyword: AS
       - begin_end_block:
         - keyword: BEGIN
@@ -22,7 +23,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -42,7 +44,8 @@ file:
       - keyword: REPLACE
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: func1
+          function_name_identifier:
+            function_name_identifier: func1
       - keyword: RETURN
       - data_type:
           data_type_identifier: VARCHAR2
@@ -68,7 +71,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -88,7 +92,8 @@ file:
       - keyword: REPLACE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: proc2
+          function_name_identifier:
+            function_name_identifier: proc2
       - keyword: AS
       - begin_end_block:
         - keyword: BEGIN
@@ -97,7 +102,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -117,7 +123,8 @@ file:
       - keyword: REPLACE
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: func3
+          function_name_identifier:
+            function_name_identifier: func3
       - keyword: RETURN
       - data_type:
           data_type_identifier: VARCHAR2
@@ -142,7 +149,8 @@ file:
       - keyword: REPLACE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: proc4
+          function_name_identifier:
+            function_name_identifier: proc4
       - keyword: AS
       - begin_end_block:
         - keyword: BEGIN
@@ -162,7 +170,8 @@ file:
       - keyword: REPLACE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: proc5
+          function_name_identifier:
+            function_name_identifier: proc5
       - keyword: AS
       - begin_end_block:
         - keyword: BEGIN
@@ -182,7 +191,8 @@ file:
       - keyword: REPLACE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: proc6
+          function_name_identifier:
+            function_name_identifier: proc6
       - keyword: AS
       - begin_end_block:
         - keyword: BEGIN
@@ -202,7 +212,8 @@ file:
       - keyword: REPLACE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: proc7
+          function_name_identifier:
+            function_name_identifier: proc7
       - keyword: AS
       - begin_end_block:
         - keyword: BEGIN

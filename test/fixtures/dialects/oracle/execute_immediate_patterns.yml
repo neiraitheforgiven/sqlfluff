@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 67c2be6346dd96263b85a4d9fad479f70dcf1622264e37f5085e2ba0626d40ee
+_hash: 8e04196c9b1e19819b97d2a02c9a9cca4172d72b0e396557afd87e7a966db673
 file:
 - batch:
     statement:
@@ -11,26 +11,29 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: constraint_name
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '255'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '255'
+                  end_bracket: )
         - statement_terminator: ;
         - naked_identifier: result_var
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - statement_terminator: ;
         - naked_identifier: table_name
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '100'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '100'
+                  end_bracket: )
         - assignment_operator: :=
         - expression:
             quoted_literal: "'MY_TABLE'"
@@ -153,27 +156,30 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: a
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - assignment_operator: :=
         - expression:
             numeric_literal: '4'
         - statement_terminator: ;
         - naked_identifier: b
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - assignment_operator: :=
         - expression:
             numeric_literal: '7'
         - statement_terminator: ;
         - naked_identifier: plsql_block
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '100'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '100'
+                  end_bracket: )
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -210,13 +216,14 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: a_null
-          data_type:
-            data_type_identifier: CHAR
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '1'
-                end_bracket: )
+          plsql_data_type:
+            data_type:
+              data_type_identifier: CHAR
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '1'
+                  end_bracket: )
           statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -240,55 +247,60 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: plsql_block
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '500'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '500'
+                  end_bracket: )
         - statement_terminator: ;
         - naked_identifier: new_deptid
-        - data_type:
-            data_type_identifier: NUMBER
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '4'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '4'
+                  end_bracket: )
         - statement_terminator: ;
         - naked_identifier: new_dname
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '30'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '30'
+                  end_bracket: )
         - assignment_operator: :=
         - expression:
             quoted_literal: "'Advertising'"
         - statement_terminator: ;
         - naked_identifier: new_mgrid
-        - data_type:
-            data_type_identifier: NUMBER
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '6'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '6'
+                  end_bracket: )
         - assignment_operator: :=
         - expression:
             numeric_literal: '200'
         - statement_terminator: ;
         - naked_identifier: new_locid
-        - data_type:
-            data_type_identifier: NUMBER
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '4'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '4'
+                  end_bracket: )
         - assignment_operator: :=
         - expression:
             numeric_literal: '1700'
@@ -338,17 +350,19 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: dyn_stmt
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '200'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '200'
+                  end_bracket: )
         - statement_terminator: ;
         - naked_identifier: b
-        - data_type:
-            data_type_identifier: BOOLEAN
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: BOOLEAN
         - assignment_operator: :=
         - expression:
             boolean_literal: 'TRUE'
@@ -384,19 +398,21 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: r
-        - data_type:
-            naked_identifier: pkg
-            dot: .
-            data_type_identifier: rec
+        - plsql_data_type:
+            data_type:
+              naked_identifier: pkg
+              dot: .
+              data_type_identifier: rec
         - statement_terminator: ;
         - naked_identifier: dyn_str
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '3000'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '3000'
+                  end_bracket: )
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -425,7 +441,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -445,7 +462,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -470,31 +488,35 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: emp_count
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - statement_terminator: ;
         - naked_identifier: dept_id
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - assignment_operator: :=
         - expression:
             numeric_literal: '10'
         - statement_terminator: ;
         - naked_identifier: min_salary
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - assignment_operator: :=
         - expression:
             numeric_literal: '5000'
         - statement_terminator: ;
         - naked_identifier: dynamic_query
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '500'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '500'
+                  end_bracket: )
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -541,7 +563,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -564,32 +587,36 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: emp_ids
-        - data_type:
-            naked_identifier: DBMS_SQL
-            dot: .
-            data_type_identifier: NUMBER_TABLE
+        - plsql_data_type:
+            data_type:
+              naked_identifier: DBMS_SQL
+              dot: .
+              data_type_identifier: NUMBER_TABLE
         - statement_terminator: ;
         - naked_identifier: emp_names
-        - data_type:
-            naked_identifier: DBMS_SQL
-            dot: .
-            data_type_identifier: VARCHAR2_TABLE
+        - plsql_data_type:
+            data_type:
+              naked_identifier: DBMS_SQL
+              dot: .
+              data_type_identifier: VARCHAR2_TABLE
         - statement_terminator: ;
         - naked_identifier: dept_id
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - assignment_operator: :=
         - expression:
             numeric_literal: '20'
         - statement_terminator: ;
         - naked_identifier: dynamic_query
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '500'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '500'
+                  end_bracket: )
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -636,12 +663,15 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - naked_identifier: emp_ids
-          - dot: .
-          - naked_identifier: COUNT
+          - expression:
+              column_reference:
+              - naked_identifier: emp_ids
+              - dot: .
+              - naked_identifier: COUNT
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -649,7 +679,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -660,7 +691,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: emp_names
+                            function_name_identifier:
+                              function_name_identifier: emp_names
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -677,7 +709,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: emp_ids
+                            function_name_identifier:
+                              function_name_identifier: emp_ids
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -699,7 +732,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -724,39 +758,44 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: updated_ids
-        - data_type:
-            naked_identifier: DBMS_SQL
-            dot: .
-            data_type_identifier: NUMBER_TABLE
+        - plsql_data_type:
+            data_type:
+              naked_identifier: DBMS_SQL
+              dot: .
+              data_type_identifier: NUMBER_TABLE
         - statement_terminator: ;
         - naked_identifier: updated_salaries
-        - data_type:
-            naked_identifier: DBMS_SQL
-            dot: .
-            data_type_identifier: NUMBER_TABLE
+        - plsql_data_type:
+            data_type:
+              naked_identifier: DBMS_SQL
+              dot: .
+              data_type_identifier: NUMBER_TABLE
         - statement_terminator: ;
         - naked_identifier: dept_id
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - assignment_operator: :=
         - expression:
             numeric_literal: '30'
         - statement_terminator: ;
         - naked_identifier: salary_increase
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - assignment_operator: :=
         - expression:
             numeric_literal: '500'
         - statement_terminator: ;
         - naked_identifier: dynamic_update
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '500'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '500'
+                  end_bracket: )
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -812,12 +851,15 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - naked_identifier: updated_ids
-          - dot: .
-          - naked_identifier: COUNT
+          - expression:
+              column_reference:
+              - naked_identifier: updated_ids
+              - dot: .
+              - naked_identifier: COUNT
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -825,7 +867,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -836,7 +879,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: updated_ids
+                            function_name_identifier:
+                              function_name_identifier: updated_ids
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -853,7 +897,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: updated_salaries
+                            function_name_identifier:
+                              function_name_identifier: updated_salaries
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -876,21 +921,24 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: emp_id
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - statement_terminator: ;
         - naked_identifier: emp_salary
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - statement_terminator: ;
         - naked_identifier: dynamic_delete
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '500'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '500'
+                  end_bracket: )
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -931,7 +979,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -963,26 +1012,29 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: old_name
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '100'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '100'
+                  end_bracket: )
         - statement_terminator: ;
         - naked_identifier: new_salary
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - statement_terminator: ;
         - naked_identifier: dynamic_update
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '500'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '500'
+                  end_bracket: )
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -1031,7 +1083,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (

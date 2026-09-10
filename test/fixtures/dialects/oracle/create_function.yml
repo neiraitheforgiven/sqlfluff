@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: b1550643161e2db593460a29ec13691a0b356c1008165e68c07d96cd34cd9fed
+_hash: 7d23acaa471cba39214dd8726d856ab7d2c24220e8391b8da24688fa4e61a8a0
 file:
 - batch:
     statement:
@@ -14,7 +14,8 @@ file:
       - keyword: NOT
       - keyword: EXISTS
       - function_name:
-          function_name_identifier: get_bal
+          function_name_identifier:
+            function_name_identifier: get_bal
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -30,15 +31,16 @@ file:
       - begin_end_block:
         - declare_segment:
             naked_identifier: acc_bal
-            data_type:
-              data_type_identifier: NUMBER
-              bracketed_arguments:
-                bracketed:
-                - start_bracket: (
-                - numeric_literal: '11'
-                - comma: ','
-                - numeric_literal: '2'
-                - end_bracket: )
+            plsql_data_type:
+              data_type:
+                data_type_identifier: NUMBER
+                bracketed_arguments:
+                  bracketed:
+                  - start_bracket: (
+                  - numeric_literal: '11'
+                  - comma: ','
+                  - numeric_literal: '2'
+                  - end_bracket: )
             statement_terminator: ;
         - keyword: BEGIN
         - statement:
@@ -71,7 +73,8 @@ file:
         - statement:
             function:
               function_name:
-                function_name_identifier: RETURN
+                function_name_identifier:
+                  function_name_identifier: RETURN
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -92,7 +95,8 @@ file:
       - keyword: REPLACE
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: text_length
+          function_name_identifier:
+            function_name_identifier: text_length
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -115,7 +119,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_LOB
                     dot: .
-                    function_name_identifier: GETLENGTH
+                    function_name_identifier:
+                      function_name_identifier: GETLENGTH
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -136,7 +141,8 @@ file:
           create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: square
+              function_name_identifier:
+                function_name_identifier: square
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -151,8 +157,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: original_squared
-                data_type:
-                  data_type_identifier: NUMBER
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: NUMBER
                 statement_terminator: ;
             - keyword: BEGIN
             - statement:
@@ -182,14 +189,16 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
                 expression:
                   function:
                     function_name:
-                      function_name_identifier: square
+                      function_name_identifier:
+                        function_name_identifier: square
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -208,13 +217,15 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: x
-          data_type:
-            data_type_identifier: INTEGER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: INTEGER
           statement_terminator: ;
           create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: f
+              function_name_identifier:
+                function_name_identifier: f
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -231,7 +242,8 @@ file:
             - statement:
                 function:
                   function_name:
-                    function_name_identifier: RETURN
+                    function_name_identifier:
+                      function_name_identifier: RETURN
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -251,7 +263,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -262,7 +275,8 @@ file:
                   - pipe: '|'
                 - function:
                     function_name:
-                      function_name_identifier: f
+                      function_name_identifier:
+                        function_name_identifier: f
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -283,7 +297,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: f
+                  function_name_identifier:
+                    function_name_identifier: f
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -296,7 +311,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -316,7 +332,8 @@ file:
       - keyword: REPLACE
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: f
+          function_name_identifier:
+            function_name_identifier: f
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -379,7 +396,8 @@ file:
       - keyword: REPLACE
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: f
+          function_name_identifier:
+            function_name_identifier: f
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -454,10 +472,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '0'
+          - expression:
+              numeric_literal: '0'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -465,7 +485,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -485,7 +506,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: f
+                            function_name_identifier:
+                              function_name_identifier: f
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -507,7 +529,8 @@ file:
       create_function_statement:
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: ex_func
+          function_name_identifier:
+            function_name_identifier: ex_func
       - function_parameter_list:
           bracketed:
             start_bracket: (

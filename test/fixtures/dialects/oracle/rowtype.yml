@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: f5cf15fd073e80281505313679e4477ab849088e162756fe1ab070697638aa55
+_hash: a7b44345035ca5565cca0b5ee472fa1461a4a450c146b212e8d039b1b053336f
 file:
 - batch:
     statement:
@@ -12,8 +12,7 @@ file:
           keyword: DECLARE
           naked_identifier: dept_rec
           row_type_reference:
-            table_reference:
-              naked_identifier: departments
+            naked_identifier: departments
             binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
@@ -63,7 +62,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -83,7 +83,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -103,7 +104,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -123,7 +125,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -149,8 +152,7 @@ file:
           keyword: DECLARE
           naked_identifier: t1_row
           row_type_reference:
-            table_reference:
-              naked_identifier: t1
+            naked_identifier: t1
             binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
@@ -160,7 +162,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT
+              function_name_identifier:
+                function_name_identifier: PUT
             function_contents:
               bracketed:
                 start_bracket: (
@@ -173,21 +176,24 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
                 expression:
                   function:
                     function_name:
-                      function_name_identifier: NVL
+                      function_name_identifier:
+                        function_name_identifier: NVL
                     function_contents:
                       bracketed:
                       - start_bracket: (
                       - expression:
                           function:
                             function_name:
-                              function_name_identifier: TO_CHAR
+                              function_name_identifier:
+                                function_name_identifier: TO_CHAR
                             function_contents:
                               bracketed:
                                 start_bracket: (
@@ -208,7 +214,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT
+              function_name_identifier:
+                function_name_identifier: PUT
             function_contents:
               bracketed:
                 start_bracket: (
@@ -219,7 +226,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: print
+              function_name_identifier:
+                function_name_identifier: print
             function_contents:
               bracketed:
                 start_bracket: (
@@ -235,21 +243,24 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
                 expression:
                   function:
                     function_name:
-                      function_name_identifier: NVL
+                      function_name_identifier:
+                        function_name_identifier: NVL
                     function_contents:
                       bracketed:
                       - start_bracket: (
                       - expression:
                           function:
                             function_name:
-                              function_name_identifier: TO_CHAR
+                              function_name_identifier:
+                                function_name_identifier: TO_CHAR
                             function_contents:
                               bracketed:
                                 start_bracket: (
@@ -302,8 +313,7 @@ file:
           - statement_terminator: ;
           naked_identifier: friend
           row_type_reference:
-            table_reference:
-              naked_identifier: c
+            naked_identifier: c
             binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
@@ -343,7 +353,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -438,8 +449,7 @@ file:
           - statement_terminator: ;
           naked_identifier: join_rec
           row_type_reference:
-            table_reference:
-              naked_identifier: c2
+            naked_identifier: c2
             binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
@@ -459,8 +469,7 @@ file:
           keyword: DECLARE
           naked_identifier: t_rec
           row_type_reference:
-            table_reference:
-              naked_identifier: t
+            naked_identifier: t
             binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
@@ -496,7 +505,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -520,37 +530,33 @@ file:
       begin_end_block:
       - declare_segment:
         - keyword: DECLARE
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: name_rec
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: first
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: first_name
-                binary_operator: '%'
-                keyword: TYPE
-            - keyword: DEFAULT
-            - expression:
-                quoted_literal: "'John'"
-            - comma: ','
-            - naked_identifier: last
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: last_name
-                binary_operator: '%'
-                keyword: TYPE
-            - keyword: DEFAULT
-            - expression:
-                quoted_literal: "'Doe'"
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: first
+              - word: employees
+              - dot: .
+              - word: first_name
+              - percent: '%'
+              - word: TYPE
+              - word: DEFAULT
+              - single_quote: "'John'"
+              - comma: ','
+              - word: last
+              - word: employees
+              - dot: .
+              - word: last_name
+              - percent: '%'
+              - word: TYPE
+              - word: DEFAULT
+              - single_quote: "'Doe'"
+              - end_bracket: )
         - statement_terminator: ;
         - cursor_variable:
           - keyword: CURSOR
@@ -575,13 +581,13 @@ file:
                         naked_identifier: employees
           - statement_terminator: ;
         - naked_identifier: target
-        - data_type:
-            data_type_identifier: name_rec
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: name_rec
         - statement_terminator: ;
         - naked_identifier: source
         - row_type_reference:
-            table_reference:
-              naked_identifier: c
+            naked_identifier: c
             binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
@@ -611,7 +617,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -651,7 +658,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -689,14 +697,14 @@ file:
       - keyword: replace
       - keyword: procedure
       - function_name:
-          function_name_identifier: MY_PROCEDURE
+          function_name_identifier:
+            function_name_identifier: MY_PROCEDURE
       - function_parameter_list:
           bracketed:
             start_bracket: (
             parameter: var1
             row_type_reference:
-              table_reference:
-                naked_identifier: table_name
+              naked_identifier: table_name
               binary_operator: '%'
               keyword: rowtype
             end_bracket: )

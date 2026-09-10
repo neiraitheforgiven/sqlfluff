@@ -65,6 +65,9 @@ oracle_dialect.update_keywords_set_from_multiline_string(
     "unreserved_keywords", oracle_unreserved_keywords
 )
 
+oracle_dialect.sets("reserved_keywords").discard("INDEXTYPE")
+oracle_dialect.sets("unreserved_keywords").add("INDEXTYPE")
+
 oracle_dialect.sets("bare_functions").clear()
 oracle_dialect.sets("bare_functions").update(
     [
@@ -107,7 +110,7 @@ oracle_dialect.patch_lexer_matchers(
         ),
         RegexLexer(
             "numeric_literal",
-            r"(?>\d+\.\d+|\d+\.(?![\.\w])|\d+)(\.?[eE][+-]?\d+)?((?<!\.)|(?=\b))",
+            r"(?>\d+\.\d+|\d+\.(?![\.\w])|\.\d+|\d+)(\.?[eE][+-]?\d+)?((?<!\.)|(?=\b))",
             LiteralSegment,
         ),
     ]
@@ -190,7 +193,13 @@ oracle_dialect.add(
             Sequence(OneOf("DELETE", "PRESERVE"), Ref.keyword("ROWS")),
         ),
     ),
-    ConnectByRootGrammar=Sequence("CONNECT_BY_ROOT", Ref("NakedIdentifierSegment")),
+    ConnectByRootGrammar=Sequence(
+        "CONNECT_BY_ROOT",
+        OneOf(
+            Ref("ObjectReferenceSegment"),
+            Ref("NakedIdentifierSegment"),
+        ),
+    ),
     PlusJoinSegment=Sequence(
         Ref("StartBracketSegment"),
         StringParser("+", SymbolSegment, type="plus_join_symbol"),
@@ -336,12 +345,21 @@ oracle_dialect.add(
             Ref("SingleIdentifierGrammar"),
         ),
     ),
-    IterationSteppedControlGrammar=Sequence(
-        Ref("IterationBoundsGrammar"),
-        Ref("DotSegment"),
-        Ref("DotSegment"),
-        Ref("IterationBoundsGrammar"),
-        Sequence("BY", "STEP", optional=True),
+    IterationSteppedControlGrammar=OneOf(
+        Sequence(
+            Ref("FunctionSegment"),
+            Ref("DotSegment"),
+            Ref("DotSegment"),
+            Ref("IterationBoundsGrammar"),
+            Sequence("BY", "STEP", optional=True),
+        ),
+        Sequence(
+            Ref("IterationBoundsGrammar"),
+            Ref("DotSegment"),
+            Ref("DotSegment"),
+            Ref("IterationBoundsGrammar"),
+            Sequence("BY", "STEP", optional=True),
+        ),
     ),
     ParallelEnableClauseGrammar=Sequence(
         "PARALLEL_ENABLE",
@@ -377,15 +395,14 @@ oracle_dialect.add(
             optional=True,
         ),
     ),
-    PipelinedClauseGrammar=Sequence(
+    PipelinedClauseGrammar=OneOf(
         "PIPELINED",
-        OneOf(
+        Sequence("PIPELINED", "USING", Ref("ObjectReferenceSegment")),
+        Sequence(
+            "PIPELINED",
+            OneOf("ROW", "TABLE"),
+            "POLYMORPHIC",
             Sequence("USING", Ref("ObjectReferenceSegment"), optional=True),
-            Sequence(
-                OneOf("ROW", "TABLE"),
-                "POLYMORPHIC",
-                Sequence("USING", Ref("ObjectReferenceSegment"), optional=True),
-            ),
         ),
     ),
     ElementSpecificationGrammar=Sequence(
@@ -425,7 +442,18 @@ oracle_dialect.add(
                 OneOf(
                     Sequence(
                         Ref("SingleIdentifierGrammar"),
-                        Ref("DatatypeSegment"),
+                        OneOf(
+                            Sequence(
+                                "VARCHAR2",
+                                Bracketed(
+                                    Sequence(
+                                        Ref("NumericLiteralSegment"),
+                                        OneOf("CHAR", "BYTE", optional=True),
+                                    )
+                                ),
+                            ),
+                            Ref("DatatypeSegment"),
+                        ),
                     ),
                     Ref("ElementSpecificationGrammar"),
                 )
@@ -598,7 +626,19 @@ oracle_dialect.add(
         OneOf(
             "OTHERS",
             Sequence(
-                Ref("SingleIdentifierGrammar"),
+                OneOf(
+                    Sequence(
+                        Ref("SingleIdentifierGrammar"),
+                        AnyNumberOf(
+                            Sequence(
+                                Ref("DotSegment"),
+                                Ref("SingleIdentifierGrammar"),
+                            ),
+                            min_times=1,
+                        ),
+                    ),
+                    Ref("SingleIdentifierGrammar"),
+                ),
                 AnyNumberOf(Sequence("OR", Ref("SingleIdentifierGrammar"))),
             ),
         ),
@@ -652,6 +692,11 @@ oracle_dialect.add(
 
 oracle_dialect.replace(
     CharCharacterSetGrammar=OneOf("BYTE", "CHAR"),
+    ComparisonOperatorGrammar=OneOf(
+        ansi_dialect.get_grammar("ComparisonOperatorGrammar"),
+        Sequence("MEMBER", "OF"),
+        Sequence("NOT", "MEMBER", "OF"),
+    ),
     ColumnConstraintDefaultGrammar=OneOf(
         ansi_dialect.get_grammar("ColumnConstraintDefaultGrammar"),
         Ref("SequencePseudocolumnGrammar"),
@@ -705,7 +750,15 @@ oracle_dialect.replace(
         Ref.keyword("DEFAULT"),
     ),
     FunctionContentsGrammar=ansi_dialect.get_grammar("FunctionContentsGrammar").copy(
-        insert=[Ref("ListaggOverflowClauseSegment"), Ref("JSONObjectContentSegment")]
+        insert=[
+            Sequence(
+                Ref("ExpressionSegment"),
+                "AS",
+                Ref("PlsqlDatatypeSegment"),
+            ),
+            Ref("ListaggOverflowClauseSegment"),
+            Ref("JSONObjectContentSegment"),
+        ]
     ),
     TemporaryGrammar=Sequence(
         OneOf("GLOBAL", "PRIVATE"),
@@ -729,6 +782,7 @@ oracle_dialect.replace(
             Ref("BindVariableSegment"),
             Ref.keyword("LEVEL"),
             Ref.keyword("ROWNUM"),
+            Ref.keyword("ROWID"),
             Ref.keyword("ANY"),
         ],
         before=Ref("ArrayLiteralSegment"),
@@ -745,6 +799,7 @@ oracle_dialect.replace(
         OneOf(
             Ref("PlusJoinGrammar"),
             Ref("BareFunctionSegment"),
+            Ref("OracleValueFunctionSegment"),
             Ref("FunctionSegment"),
             Ref("TriggerCorrelationReferenceSegment"),
             Bracketed(
@@ -849,6 +904,7 @@ oracle_dialect.replace(
                 Ref.keyword("IN", optional=True),
                 OneOf(
                     Ref("DatatypeSegment"),
+                    Ref("ObjectReferenceSegment"),
                     Ref("ColumnTypeReferenceSegment"),
                     Ref("RowTypeReferenceSegment"),
                 ),
@@ -864,6 +920,7 @@ oracle_dialect.replace(
                 Ref.keyword("NOCOPY", optional=True),
                 OneOf(
                     Ref("DatatypeSegment"),
+                    Ref("ObjectReferenceSegment"),
                     Ref("ColumnTypeReferenceSegment"),
                     Ref("RowTypeReferenceSegment"),
                 ),
@@ -905,6 +962,15 @@ oracle_dialect.replace(
         "FETCH",
     ),
 )
+
+
+class OracleSelectClauseModifierSegment(ansi.SelectClauseModifierSegment):
+    """Oracle SELECT modifiers, including UNIQUE as a DISTINCT synonym."""
+
+    match_grammar = OneOf("DISTINCT", "UNIQUE", "ALL")
+
+
+oracle_dialect.replace(SelectClauseModifierSegment=OracleSelectClauseModifierSegment)
 
 
 class MultisetOperatorSegment(BaseSegment):
@@ -1173,6 +1239,7 @@ class StatementSegment(ansi.StatementSegment):
             Ref("ExecuteImmediateSegment"),
             Ref("FunctionSegment"),
             Ref("IfExpressionStatement"),
+            Ref("CaseStatementSegment"),
             Ref("CaseExpressionSegment"),
             Ref("NullStatementSegment"),
             Ref("ForLoopStatementSegment"),
@@ -1584,6 +1651,7 @@ class CreateTableStatementSegment(BaseSegment):
                 Ref("CommentClauseSegment", optional=True),
                 Ref("OnCommitGrammar", optional=True),
                 Ref("OraclePhysicalAttributesSegment", optional=True),
+                Ref("TableOrganizationSegment", optional=True),
             ),
             # Create AS syntax:
             Sequence(
@@ -1596,6 +1664,40 @@ class CreateTableStatementSegment(BaseSegment):
             Sequence("LIKE", Ref("TableReferenceSegment")),
         ),
         Ref("TableEndClauseSegment", optional=True),
+    )
+
+
+class TableEndClauseSegment(BaseSegment):
+    """Oracle LOB storage clauses following a CREATE TABLE definition."""
+
+    type = "table_end_clause_segment"
+
+    match_grammar: Matchable = AnyNumberOf(
+        Sequence(
+            "LOB",
+            Bracketed(Ref("SingleIdentifierGrammar")),
+            "STORE",
+            "AS",
+            Bracketed(
+                AnySetOf(
+                    Sequence("TABLESPACE", Ref("ObjectReferenceSegment")),
+                    Sequence("DISABLE", "STORAGE", "IN", "ROW"),
+                )
+            ),
+        ),
+        min_times=1,
+    )
+
+
+class TableOrganizationSegment(BaseSegment):
+    """Oracle index-organized table physical property."""
+
+    type = "table_organization_segment"
+
+    match_grammar: Matchable = Sequence(
+        "ORGANIZATION",
+        "INDEX",
+        Sequence("TABLESPACE", Ref("ObjectReferenceSegment"), optional=True),
     )
 
 
@@ -1620,6 +1722,20 @@ class CreateIndexStatementSegment(ansi.CreateIndexStatementSegment):
             ),
         ),
         Ref("OracleIndexPhysicalAttributesSegment", optional=True),
+    )
+
+
+class IndexColumnDefinitionSegment(BaseSegment):
+    """Oracle index columns, including function-based expressions."""
+
+    type = "index_column_definition"
+
+    match_grammar: Matchable = Sequence(
+        OneOf(
+            Ref("SingleIdentifierGrammar"),
+            Ref("FunctionSegment"),
+        ),
+        OneOf("ASC", "DESC", optional=True),
     )
 
 
@@ -1752,7 +1868,6 @@ class UnorderedSelectStatementSegment(ansi.UnorderedSelectStatementSegment):
         ],
         before=Ref("GroupByClauseSegment", optional=True),
         terminators=[
-            Ref("HierarchicalQueryClauseSegment"),
             "LOG",
         ],
     ).copy(
@@ -1899,11 +2014,46 @@ class ObjectReferenceSegment(ansi.ObjectReferenceSegment):
     """A reference to an object."""
 
     # Allow whitespace
-    match_grammar: Matchable = Delimited(
-        Ref("SingleIdentifierGrammar"),
-        delimiter=Ref("ObjectReferenceDelimiterGrammar"),
-        terminators=[Ref("ObjectReferenceTerminatorGrammar")],
-        allow_gaps=True,
+    match_grammar: Matchable = OneOf(
+        Sequence(
+            Ref("SingleIdentifierGrammar"),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            OneOf(
+                Bracketed(Ref("ExpressionSegment")),
+                Ref("FunctionContentsSegment"),
+            ),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            allow_gaps=True,
+        ),
+        Sequence(
+            Ref("SingleIdentifierGrammar"),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            OneOf(
+                Bracketed(Ref("ExpressionSegment")),
+                Ref("FunctionContentsSegment"),
+            ),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            allow_gaps=True,
+        ),
+        Sequence(
+            Ref("SingleIdentifierGrammar"),
+            Bracketed(Ref("ExpressionSegment")),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            allow_gaps=True,
+        ),
+        Delimited(
+            Ref("SingleIdentifierGrammar"),
+            delimiter=Ref("ObjectReferenceDelimiterGrammar"),
+            terminators=[Ref("ObjectReferenceTerminatorGrammar")],
+            allow_gaps=True,
+        ),
     )
 
 
@@ -1973,6 +2123,16 @@ class OracleSubprogramNameSegment(BaseSegment):
         IdentifierSegment,
         type="named_identifier",
         casefold=str.upper,
+    )
+
+
+class OracleValueFunctionSegment(BaseSegment):
+    """The PL/SQL VALUE function, which collides with the VALUES clause."""
+
+    type = "function"
+    match_grammar: Matchable = Sequence(
+        "VALUE",
+        Ref("FunctionContentsSegment"),
     )
 
 
@@ -2454,12 +2614,34 @@ class TableConstraintSegment(ansi.TableConstraintSegment):
             Sequence(  # UNIQUE ( column_name [, ... ] )
                 "UNIQUE",
                 Ref("BracketedColumnReferenceListGrammar"),
+                OneOf(
+                    Sequence("NOT", "DEFERRABLE"),
+                    Sequence(
+                        "DEFERRABLE",
+                        Sequence(
+                            "INITIALLY", OneOf("IMMEDIATE", "DEFERRED"), optional=True
+                        ),
+                    ),
+                    Sequence("INITIALLY", OneOf("IMMEDIATE", "DEFERRED")),
+                    optional=True,
+                ),
                 Ref("UsingIndexClauseSegment", optional=True),
             ),
             Sequence(  # PRIMARY KEY ( column_name [, ... ] ) index_parameters
                 Ref("PrimaryKeyGrammar"),
                 # Columns making up PRIMARY KEY constraint
                 Ref("BracketedColumnReferenceListGrammar"),
+                OneOf(
+                    Sequence("NOT", "DEFERRABLE"),
+                    Sequence(
+                        "DEFERRABLE",
+                        Sequence(
+                            "INITIALLY", OneOf("IMMEDIATE", "DEFERRED"), optional=True
+                        ),
+                    ),
+                    Sequence("INITIALLY", OneOf("IMMEDIATE", "DEFERRED")),
+                    optional=True,
+                ),
                 Ref("UsingIndexClauseSegment", optional=True),
             ),
             Sequence(  # FOREIGN KEY ( column_name [, ... ] )
@@ -2471,6 +2653,15 @@ class TableConstraintSegment(ansi.TableConstraintSegment):
                     "ReferenceDefinitionGrammar"
                 ),  # REFERENCES reftable [ ( refcolumn) ]
             ),
+        ),
+        OneOf(
+            Sequence("NOT", "DEFERRABLE"),
+            Sequence(
+                "DEFERRABLE",
+                Sequence("INITIALLY", OneOf("IMMEDIATE", "DEFERRED"), optional=True),
+            ),
+            Sequence("INITIALLY", OneOf("IMMEDIATE", "DEFERRED")),
+            optional=True,
         ),
     )
 
@@ -2890,10 +3081,19 @@ class CollectionTypeDefinitionSegment(BaseSegment):
             Ref("PlsqlDatatypeSegment"),
             Ref("ColumnTypeReferenceSegment"),
             Ref("RowTypeReferenceSegment"),
+            Ref("ObjectReferenceSegment"),
         ),
         Sequence("OF", Ref("PlsqlDatatypeSegment"), optional=True),
         Sequence("NOT", "NULL", optional=True),
-        Sequence("INDEX", "BY", Ref("PlsqlDatatypeSegment"), optional=True),
+        Sequence(
+            "INDEX",
+            "BY",
+            OneOf(
+                Ref("PlsqlDatatypeSegment"),
+                Ref("ObjectReferenceSegment"),
+            ),
+            optional=True,
+        ),
     )
 
 
@@ -3005,7 +3205,9 @@ class DeclareCursorVariableSegment(BaseSegment):
             "IS",
             Indent,
             OneOf(
+                Ref("SetExpressionSegment"),
                 Ref("SelectStatementSegment"),
+                Ref("WithCompoundStatementSegment"),
                 Bracketed(Ref("SelectStatementSegment")),
             ),
             Dedent,
@@ -3394,17 +3596,26 @@ class DmlEventClauseSegment(BaseSegment):
 
     type = "dml_event_clause"
 
-    match_grammar: Matchable = Sequence(
-        Ref("DmlGrammar"),
-        AnyNumberOf(
+    match_grammar: Matchable = OneOf(
+        Sequence(
+            Ref("DmlGrammar"),
+            AnyNumberOf(
+                Sequence(
+                    "OR",
+                    Ref("DmlGrammar"),
+                )
+            ),
+            "ON",
             Sequence(
-                "OR",
-                Ref("DmlGrammar"),
-            )
+                "NESTED",
+                "TABLE",
+                Ref("ColumnReferenceSegment"),
+                "OF",
+                optional=True,
+            ),
+            Ref("TableReferenceSegment"),
         ),
-        "ON",
-        Sequence("NESTED", "TABLE", Ref("ColumnReferenceSegment"), "OF", optional=True),
-        Ref("TableReferenceSegment"),
+        Sequence("LOGON", "ON", "DATABASE"),
     )
 
 
@@ -3500,6 +3711,7 @@ class AssignmentStatementSegment(BaseSegment):
             Bracketed(
                 OneOf(
                     Ref("ObjectReferenceSegment"),
+                    Ref("ExpressionSegment"),
                     Ref("SingleQuotedIdentifierSegment"),
                     Ref("NumericLiteralSegment"),
                 ),
@@ -3722,6 +3934,59 @@ class CaseExpressionSegment(BaseSegment):
             Ref("CommaSegment"),
             Ref("BinaryOperatorGrammar"),
         ],
+    )
+
+
+class CaseStatementWhenSegment(BaseSegment):
+    """A WHEN arm in an executable CASE statement."""
+
+    type = "case_statement_when"
+    match_grammar: Matchable = Sequence(
+        "WHEN",
+        Ref("ExpressionSegment"),
+        "THEN",
+        Indent,
+        Ref("OneOrMoreStatementsGrammar"),
+        Dedent,
+    )
+
+
+class CaseStatementSegment(BaseSegment):
+    """An executable PL/SQL CASE statement."""
+
+    type = "case_statement"
+    match_grammar: Matchable = OneOf(
+        Sequence(
+            "CASE",
+            Ref("ExpressionSegment"),
+            Indent,
+            AnyNumberOf(Ref("CaseStatementWhenSegment"), min_times=1),
+            Sequence(
+                "ELSE",
+                Indent,
+                Ref("OneOrMoreStatementsGrammar"),
+                Dedent,
+                optional=True,
+            ),
+            Dedent,
+            "END",
+            "CASE",
+        ),
+        Sequence(
+            "CASE",
+            Indent,
+            AnyNumberOf(Ref("CaseStatementWhenSegment"), min_times=1),
+            Sequence(
+                "ELSE",
+                Indent,
+                Ref("OneOrMoreStatementsGrammar"),
+                Dedent,
+                optional=True,
+            ),
+            Dedent,
+            "END",
+            "CASE",
+        ),
     )
 
 

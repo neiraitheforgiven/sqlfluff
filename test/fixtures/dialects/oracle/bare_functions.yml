@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 8cbd3d1db8c88fdf57059bfd44054ab15cab9e706da76da1c1081dc96eb50607
+_hash: 5c9649ac92b542289a2117b528c833d73a83cf4268a3684ab3cb338d7a54013b
 file:
   batch:
   - statement:
@@ -80,9 +80,9 @@ file:
           keyword: SELECT
           select_clause_element:
             column_reference:
-            - naked_identifier: some_seq
-            - dot: .
-            - naked_identifier: CURRVAL
+              naked_identifier: some_seq
+              dot: .
+              keyword: CURRVAL
         from_clause:
           keyword: FROM
           from_expression:
@@ -97,9 +97,9 @@ file:
           keyword: SELECT
           select_clause_element:
             column_reference:
-            - naked_identifier: some_seq
-            - dot: .
-            - naked_identifier: NEXTVAL
+              naked_identifier: some_seq
+              dot: .
+              keyword: NEXTVAL
         from_clause:
           keyword: FROM
           from_expression:
@@ -125,9 +125,9 @@ file:
             start_bracket: (
             expression:
               column_reference:
-              - naked_identifier: some_seq
-              - dot: .
-              - naked_identifier: CURRVAL
+                naked_identifier: some_seq
+                dot: .
+                keyword: CURRVAL
             end_bracket: )
   - statement_terminator: ;
   - statement:
@@ -140,7 +140,7 @@ file:
             - dot: .
             - naked_identifier: some_seq
             - dot: .
-            - naked_identifier: CURRVAL
+            - keyword: CURRVAL
         from_clause:
           keyword: FROM
           from_expression:
@@ -159,7 +159,7 @@ file:
             - dot: .
             - naked_identifier: some_seq
             - dot: .
-            - naked_identifier: NEXTVAL
+            - keyword: NEXTVAL
         from_clause:
           keyword: FROM
           from_expression:
@@ -189,7 +189,7 @@ file:
               - dot: .
               - naked_identifier: some_seq
               - dot: .
-              - naked_identifier: NEXTVAL
+              - keyword: NEXTVAL
             end_bracket: )
   - statement_terminator: ;
   - statement:
@@ -226,9 +226,9 @@ file:
           - start_bracket: (
           - expression:
               column_reference:
-              - naked_identifier: audit_seq
-              - dot: .
-              - naked_identifier: NEXTVAL
+                naked_identifier: audit_seq
+                dot: .
+                keyword: NEXTVAL
           - comma: ','
           - expression:
               bare_function: USER
@@ -268,9 +268,9 @@ file:
           - start_bracket: (
           - expression:
               column_reference:
-              - naked_identifier: audit_seq
-              - dot: .
-              - naked_identifier: NEXTVAL
+                naked_identifier: audit_seq
+                dot: .
+                keyword: NEXTVAL
           - comma: ','
           - expression:
               bare_function: UID
@@ -310,9 +310,9 @@ file:
           - start_bracket: (
           - expression:
               column_reference:
-              - naked_identifier: audit_seq
-              - dot: .
-              - naked_identifier: NEXTVAL
+                naked_identifier: audit_seq
+                dot: .
+                keyword: NEXTVAL
           - comma: ','
           - expression:
               bare_function: SESSION_USER

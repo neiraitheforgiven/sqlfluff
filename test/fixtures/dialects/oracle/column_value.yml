@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: cb7072455c5275ed4d5485ed0d568b9f0814888076e30496752e5d415269b5b8
+_hash: 860c1f0109ecf622812cd5f6778a86c66abcd32545a65f37fc1bc9afc8e2dfc2
 file:
   batch:
     statement:
@@ -25,7 +25,8 @@ file:
                   function_name:
                     naked_identifier: sys
                     dot: .
-                    function_name_identifier: dbms_debug_vc2coll
+                    function_name_identifier:
+                      function_name_identifier: dbms_debug_vc2coll
                   function_contents:
                     bracketed:
                     - start_bracket: (

@@ -3,45 +3,44 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: a5f4b230145663d66043d7982c252a1965109e6f2e9e8667ce2c0a21cba8a595
+_hash: f27d2ac48e3e23397450793ea84e32235f5ac2db87d49da27b1d79abb8009032
 file:
 - batch:
     statement:
       begin_end_block:
       - declare_segment:
         - keyword: DECLARE
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: EmpRecTyp
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: emp_id
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: employee_id
-                binary_operator: '%'
-                keyword: TYPE
-            - comma: ','
-            - naked_identifier: salary
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: salary
-                binary_operator: '%'
-                keyword: TYPE
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: emp_id
+              - word: employees
+              - dot: .
+              - word: employee_id
+              - percent: '%'
+              - word: TYPE
+              - comma: ','
+              - word: salary
+              - word: employees
+              - dot: .
+              - word: salary
+              - percent: '%'
+              - word: TYPE
+              - end_bracket: )
         - statement_terminator: ;
         - cursor_variable:
           - keyword: CURSOR
           - naked_identifier: desc_salary
           - keyword: RETURN
-          - data_type:
-              data_type_identifier: EmpRecTyp
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: EmpRecTyp
           - keyword: IS
           - select_statement:
               select_clause:
@@ -68,17 +67,20 @@ file:
               - keyword: DESC
           - statement_terminator: ;
         - naked_identifier: highest_paid_emp
-        - data_type:
-            data_type_identifier: EmpRecTyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EmpRecTyp
         - statement_terminator: ;
         - naked_identifier: next_highest_paid_emp
-        - data_type:
-            data_type_identifier: EmpRecTyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EmpRecTyp
         - statement_terminator: ;
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: nth_highest_salary
+              function_name_identifier:
+                function_name_identifier: nth_highest_salary
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -93,8 +95,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: emp_rec
-                data_type:
-                  data_type_identifier: EmpRecTyp
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: EmpRecTyp
                 statement_terminator: ;
             - keyword: BEGIN
             - statement:
@@ -107,10 +110,13 @@ file:
                 - keyword: FOR
                 - naked_identifier: i
                 - keyword: IN
-                - numeric_literal: '1'
+                - expression:
+                    numeric_literal: '1'
                 - dot: .
                 - dot: .
-                - naked_identifier: n
+                - expression:
+                    column_reference:
+                      naked_identifier: n
                 - loop_statement:
                   - keyword: LOOP
                   - statement:
@@ -149,7 +155,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: nth_highest_salary
+                  function_name_identifier:
+                    function_name_identifier: nth_highest_salary
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -165,7 +172,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: nth_highest_salary
+                  function_name_identifier:
+                    function_name_identifier: nth_highest_salary
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -178,7 +186,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -209,7 +218,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -270,7 +280,8 @@ file:
                 expression:
                   function:
                     function_name:
-                      function_name_identifier: REGEXP_LIKE
+                      function_name_identifier:
+                        function_name_identifier: REGEXP_LIKE
                     function_contents:
                       bracketed:
                       - start_bracket: (
@@ -289,21 +300,19 @@ file:
           - statement_terminator: ;
         - naked_identifier: v_lastname
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: last_name
-            binary_operator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: last_name
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: v_jobid
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: job_id
-            binary_operator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: job_id
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - cursor_variable:
           - keyword: CURSOR
@@ -328,7 +337,8 @@ file:
                 expression:
                   function:
                     function_name:
-                      function_name_identifier: REGEXP_LIKE
+                      function_name_identifier:
+                        function_name_identifier: REGEXP_LIKE
                     function_contents:
                       bracketed:
                       - start_bracket: (
@@ -347,8 +357,7 @@ file:
           - statement_terminator: ;
         - naked_identifier: v_employees
         - row_type_reference:
-            table_reference:
-              naked_identifier: employees
+            naked_identifier: employees
             binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
@@ -385,14 +394,16 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
                     expression:
                       function:
                         function_name:
-                          function_name_identifier: RPAD
+                          function_name_identifier:
+                            function_name_identifier: RPAD
                         function_contents:
                           bracketed:
                           - start_bracket: (
@@ -426,7 +437,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -464,14 +476,16 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
                     expression:
                       function:
                         function_name:
-                          function_name_identifier: RPAD
+                          function_name_identifier:
+                            function_name_identifier: RPAD
                         function_contents:
                           bracketed:
                           - start_bracket: (
@@ -577,36 +591,31 @@ file:
           - statement_terminator: ;
         - naked_identifier: job1
         - row_type_reference:
-            table_reference:
-              naked_identifier: c
+            naked_identifier: c
             binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: job2
         - row_type_reference:
-            table_reference:
-              naked_identifier: c
+            naked_identifier: c
             binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: job3
         - row_type_reference:
-            table_reference:
-              naked_identifier: c
+            naked_identifier: c
             binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: job4
         - row_type_reference:
-            table_reference:
-              naked_identifier: c
+            naked_identifier: c
             binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: job5
         - row_type_reference:
-            table_reference:
-              naked_identifier: c
+            naked_identifier: c
             binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
@@ -666,7 +675,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -697,7 +707,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -728,7 +739,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -759,7 +771,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -790,7 +803,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -826,35 +840,35 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: cv
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
         - naked_identifier: v_lastname
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: last_name
-            binary_operator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: last_name
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: v_jobid
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: job_id
-            binary_operator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: job_id
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: query_2
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '200'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '200'
+                  end_bracket: )
         - assignment_operator: :=
         - expression:
             quoted_literal: "'SELECT * FROM employees\n    WHERE REGEXP_LIKE (job_id,\
@@ -862,8 +876,7 @@ file:
         - statement_terminator: ;
         - naked_identifier: v_employees
         - row_type_reference:
-            table_reference:
-              naked_identifier: employees
+            naked_identifier: employees
             binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
@@ -895,7 +908,8 @@ file:
                 expression:
                   function:
                     function_name:
-                      function_name_identifier: REGEXP_LIKE
+                      function_name_identifier:
+                        function_name_identifier: REGEXP_LIKE
                     function_contents:
                       bracketed:
                       - start_bracket: (
@@ -939,14 +953,16 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
                     expression:
                       function:
                         function_name:
-                          function_name_identifier: RPAD
+                          function_name_identifier:
+                            function_name_identifier: RPAD
                         function_contents:
                           bracketed:
                           - start_bracket: (
@@ -975,7 +991,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -1015,14 +1032,16 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
                     expression:
                       function:
                         function_name:
-                          function_name_identifier: RPAD
+                          function_name_identifier:
+                            function_name_identifier: RPAD
                         function_contents:
                           bracketed:
                           - start_bracket: (
@@ -1078,12 +1097,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: employees
-              - dot: .
-              - naked_identifier: last_name
-              binary_operator: '%'
-              keyword: TYPE
+            - naked_identifier: employees
+            - dot: .
+            - naked_identifier: last_name
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -1092,24 +1110,26 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: employees
-              - dot: .
-              - naked_identifier: salary
-              binary_operator: '%'
-              keyword: TYPE
+            - naked_identifier: employees
+            - dot: .
+            - naked_identifier: salary
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: emp_cv
-        - data_type:
-            data_type_identifier: empcurtyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: empcurtyp
         - statement_terminator: ;
         - naked_identifier: names
-        - data_type:
-            data_type_identifier: namelist
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: namelist
         - statement_terminator: ;
         - naked_identifier: sals
-        - data_type:
-            data_type_identifier: sallist
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: sallist
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -1171,14 +1191,16 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: names
-          - dot: .
-          - naked_identifier: FIRST
-          - dot: .
-          - dot: .
-          - naked_identifier: names
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: names
+              - dot: .
+              - naked_identifier: FIRST
+              - dot: .
+              - dot: .
+              - naked_identifier: names
+              - dot: .
+              - naked_identifier: LAST
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -1186,7 +1208,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -1197,7 +1220,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: names
+                            function_name_identifier:
+                              function_name_identifier: names
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -1214,7 +1238,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: sals
+                            function_name_identifier:
+                              function_name_identifier: sals
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -1267,8 +1292,7 @@ file:
           - statement_terminator: ;
           naked_identifier: emp_rec
           row_type_reference:
-            table_reference:
-              naked_identifier: emp
+            naked_identifier: emp
             binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
@@ -1303,7 +1327,8 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -1314,7 +1339,8 @@ file:
                       - pipe: '|'
                       function:
                         function_name:
-                          function_name_identifier: TO_CHAR
+                          function_name_identifier:
+                            function_name_identifier: TO_CHAR
                         function_contents:
                           bracketed:
                             start_bracket: (
@@ -1376,33 +1402,33 @@ file:
           - keyword: CURSOR
         - statement_terminator: ;
         - naked_identifier: v_emp_cursor
-        - data_type:
-            data_type_identifier: EmpCurTyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EmpCurTyp
         - statement_terminator: ;
         - naked_identifier: emp_record
         - row_type_reference:
-            table_reference:
-              naked_identifier: employees
+            naked_identifier: employees
             binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: v_stmt_str
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '200'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '200'
+                  end_bracket: )
         - statement_terminator: ;
         - naked_identifier: v_e_job
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: job_id
-            binary_operator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: job_id
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -1466,12 +1492,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: employees
-              - dot: .
-              - naked_identifier: last_name
-              binary_operator: '%'
-              keyword: TYPE
+            - naked_identifier: employees
+            - dot: .
+            - naked_identifier: last_name
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -1480,12 +1505,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: employees
-              - dot: .
-              - naked_identifier: salary
-              binary_operator: '%'
-              keyword: TYPE
+            - naked_identifier: employees
+            - dot: .
+            - naked_identifier: salary
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - cursor_variable:
           - keyword: CURSOR
@@ -1523,12 +1547,14 @@ file:
                   naked_identifier: last_name
           - statement_terminator: ;
         - naked_identifier: names
-        - data_type:
-            data_type_identifier: NameList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NameList
         - statement_terminator: ;
         - naked_identifier: sals
-        - data_type:
-            data_type_identifier: SalList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SalList
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -1537,18 +1563,19 @@ file:
           - keyword: TABLE
           - keyword: OF
           - row_type_reference:
-              table_reference:
-                naked_identifier: c1
+              naked_identifier: c1
               binary_operator: '%'
               keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: recs
-        - data_type:
-            data_type_identifier: RecList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: RecList
         - statement_terminator: ;
         - naked_identifier: v_limit
-        - data_type:
-            data_type_identifier: PLS_INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: PLS_INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '10'
@@ -1556,7 +1583,8 @@ file:
         - create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: print_results
+              function_name_identifier:
+                function_name_identifier: print_results
           - keyword: IS
           - begin_end_block:
             - keyword: BEGIN
@@ -1583,7 +1611,8 @@ file:
                       function_name:
                         naked_identifier: DBMS_OUTPUT
                         dot: .
-                        function_name_identifier: PUT_LINE
+                        function_name_identifier:
+                          function_name_identifier: PUT_LINE
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -1597,7 +1626,8 @@ file:
                       function_name:
                         naked_identifier: DBMS_OUTPUT
                         dot: .
-                        function_name_identifier: PUT_LINE
+                        function_name_identifier:
+                          function_name_identifier: PUT_LINE
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -1610,14 +1640,16 @@ file:
                     - keyword: FOR
                     - naked_identifier: i
                     - keyword: IN
-                    - naked_identifier: names
-                    - dot: .
-                    - naked_identifier: FIRST
-                    - dot: .
-                    - dot: .
-                    - naked_identifier: names
-                    - dot: .
-                    - naked_identifier: LAST
+                    - expression:
+                        column_reference:
+                        - naked_identifier: names
+                        - dot: .
+                        - naked_identifier: FIRST
+                        - dot: .
+                        - dot: .
+                        - naked_identifier: names
+                        - dot: .
+                        - naked_identifier: LAST
                     - loop_statement:
                       - keyword: LOOP
                       - statement:
@@ -1625,7 +1657,8 @@ file:
                             function_name:
                               naked_identifier: DBMS_OUTPUT
                               dot: .
-                              function_name_identifier: PUT_LINE
+                              function_name_identifier:
+                                function_name_identifier: PUT_LINE
                             function_contents:
                               bracketed:
                                 start_bracket: (
@@ -1636,7 +1669,8 @@ file:
                                   - pipe: '|'
                                 - function:
                                     function_name:
-                                      function_name_identifier: names
+                                      function_name_identifier:
+                                        function_name_identifier: names
                                     function_contents:
                                       bracketed:
                                         start_bracket: (
@@ -1653,7 +1687,8 @@ file:
                                   - pipe: '|'
                                 - function:
                                     function_name:
-                                      function_name_identifier: sals
+                                      function_name_identifier:
+                                        function_name_identifier: sals
                                     function_contents:
                                       bracketed:
                                         start_bracket: (
@@ -1677,7 +1712,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -1710,7 +1746,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: print_results
+              function_name_identifier:
+                function_name_identifier: print_results
             function_contents:
               bracketed:
                 start_bracket: (
@@ -1721,7 +1758,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -1776,7 +1814,8 @@ file:
           - statement:
               function:
                 function_name:
-                  function_name_identifier: print_results
+                  function_name_identifier:
+                    function_name_identifier: print_results
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -1795,7 +1834,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -1823,14 +1863,16 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: recs
-          - dot: .
-          - naked_identifier: FIRST
-          - dot: .
-          - dot: .
-          - naked_identifier: recs
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: recs
+              - dot: .
+              - naked_identifier: FIRST
+              - dot: .
+              - dot: .
+              - naked_identifier: recs
+              - dot: .
+              - naked_identifier: LAST
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -1838,7 +1880,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -1891,14 +1934,14 @@ file:
           - keyword: TABLE
           - keyword: OF
           - row_type_reference:
-              table_reference:
-                naked_identifier: c1
+              naked_identifier: c1
               binary_operator: '%'
               keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: stock_managers
-        - data_type:
-            data_type_identifier: NameSet
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NameSet
         - statement_terminator: ;
         - ref_cursor_type:
           - keyword: TYPE
@@ -1908,8 +1951,9 @@ file:
           - keyword: CURSOR
         - statement_terminator: ;
         - naked_identifier: cv
-        - data_type:
-            data_type_identifier: cursor_var_type
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: cursor_var_type
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -1972,14 +2016,16 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: stock_managers
-          - dot: .
-          - naked_identifier: FIRST
-          - dot: .
-          - dot: .
-          - naked_identifier: stock_managers
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: stock_managers
+              - dot: .
+              - naked_identifier: FIRST
+              - dot: .
+              - dot: .
+              - naked_identifier: stock_managers
+              - dot: .
+              - naked_identifier: LAST
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -1987,7 +2033,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -2013,12 +2060,14 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: NUMBER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: NUMBER
           - keyword: INDEX
           - keyword: BY
-          - data_type:
-              data_type_identifier: PLS_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: PLS_INTEGER
         - statement_terminator: ;
         - cursor_variable:
           - keyword: CURSOR
@@ -2052,8 +2101,9 @@ file:
                   naked_identifier: employee_id
           - statement_terminator: ;
         - naked_identifier: empids
-        - data_type:
-            data_type_identifier: numtab
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: numtab
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -2081,7 +2131,8 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -2094,12 +2145,15 @@ file:
               - keyword: FOR
               - naked_identifier: i
               - keyword: IN
-              - numeric_literal: '1'
+              - expression:
+                  numeric_literal: '1'
               - dot: .
               - dot: .
-              - naked_identifier: empids
-              - dot: .
-              - naked_identifier: COUNT
+              - expression:
+                  column_reference:
+                  - naked_identifier: empids
+                  - dot: .
+                  - naked_identifier: COUNT
               - loop_statement:
                 - keyword: LOOP
                 - statement:
@@ -2107,7 +2161,8 @@ file:
                       function_name:
                         naked_identifier: DBMS_OUTPUT
                         dot: .
-                        function_name_identifier: PUT_LINE
+                        function_name_identifier:
+                          function_name_identifier: PUT_LINE
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -2118,7 +2173,8 @@ file:
                             - pipe: '|'
                             function:
                               function_name:
-                                function_name_identifier: empids
+                                function_name_identifier:
+                                  function_name_identifier: empids
                               function_contents:
                                 bracketed:
                                   start_bracket: (

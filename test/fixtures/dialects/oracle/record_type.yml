@@ -3,76 +3,67 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: d1b8a38170f9796a60169e55d24db976a846bd274bc0b31250a47bf523733b6e
+_hash: 56f57d4b1acf6bb9e352ef240499cea5d8882dacbd92a4308347b099a3d2c5d9
 file:
 - batch:
     statement:
       begin_end_block:
       - declare_segment:
         - keyword: DECLARE
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: DeptRecTyp
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: dept_id
-            - data_type:
-                data_type_identifier: NUMBER
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '4'
-                    end_bracket: )
-            - keyword: NOT
-            - keyword: 'NULL'
-            - assignment_operator: :=
-            - expression:
-                numeric_literal: '10'
-            - comma: ','
-            - naked_identifier: dept_name
-            - data_type:
-                data_type_identifier: VARCHAR2
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '30'
-                    end_bracket: )
-            - keyword: NOT
-            - keyword: 'NULL'
-            - assignment_operator: :=
-            - expression:
-                quoted_literal: "'Administration'"
-            - comma: ','
-            - naked_identifier: mgr_id
-            - data_type:
-                data_type_identifier: NUMBER
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '6'
-                    end_bracket: )
-            - assignment_operator: :=
-            - expression:
-                numeric_literal: '200'
-            - comma: ','
-            - naked_identifier: loc_id
-            - data_type:
-                data_type_identifier: NUMBER
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '4'
-                    end_bracket: )
-            - assignment_operator: :=
-            - expression:
-                numeric_literal: '1700'
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: dept_id
+              - word: NUMBER
+              - bracketed:
+                  start_bracket: (
+                  numeric_literal: '4'
+                  end_bracket: )
+              - word: NOT
+              - word: 'NULL'
+              - assignment_operator: :=
+              - numeric_literal: '10'
+              - comma: ','
+              - word: dept_name
+              - word: VARCHAR2
+              - bracketed:
+                  start_bracket: (
+                  numeric_literal: '30'
+                  end_bracket: )
+              - word: NOT
+              - word: 'NULL'
+              - assignment_operator: :=
+              - single_quote: "'Administration'"
+              - comma: ','
+              - word: mgr_id
+              - word: NUMBER
+              - bracketed:
+                  start_bracket: (
+                  numeric_literal: '6'
+                  end_bracket: )
+              - assignment_operator: :=
+              - numeric_literal: '200'
+              - comma: ','
+              - word: loc_id
+              - word: NUMBER
+              - bracketed:
+                  start_bracket: (
+                  numeric_literal: '4'
+                  end_bracket: )
+              - assignment_operator: :=
+              - numeric_literal: '1700'
+              - end_bracket: )
         - statement_terminator: ;
         - naked_identifier: dept_rec
-        - data_type:
-            data_type_identifier: DeptRecTyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: DeptRecTyp
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -80,7 +71,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -100,7 +92,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -120,7 +113,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -140,7 +134,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -164,56 +159,54 @@ file:
       begin_end_block:
       - declare_segment:
         - keyword: DECLARE
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: name_rec
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: first
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: first_name
-                binary_operator: '%'
-                keyword: TYPE
-            - comma: ','
-            - naked_identifier: last
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: last_name
-                binary_operator: '%'
-                keyword: TYPE
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: first
+              - word: employees
+              - dot: .
+              - word: first_name
+              - percent: '%'
+              - word: TYPE
+              - comma: ','
+              - word: last
+              - word: employees
+              - dot: .
+              - word: last_name
+              - percent: '%'
+              - word: TYPE
+              - end_bracket: )
         - statement_terminator: ;
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: contact
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: name
-            - data_type:
-                data_type_identifier: name_rec
-            - comma: ','
-            - naked_identifier: phone
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: phone_number
-                binary_operator: '%'
-                keyword: TYPE
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: name
+              - word: name_rec
+              - comma: ','
+              - word: phone
+              - word: employees
+              - dot: .
+              - word: phone_number
+              - percent: '%'
+              - word: TYPE
+              - end_bracket: )
         - statement_terminator: ;
         - naked_identifier: friend
-        - data_type:
-            data_type_identifier: contact
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: contact
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -255,7 +248,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -305,60 +299,56 @@ file:
           - keyword: TYPE
           - naked_identifier: full_name
           - keyword: IS
-          - data_type:
-              data_type_identifier: VARRAY
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '2'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARRAY
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '2'
+                    end_bracket: )
           - keyword: OF
-          - data_type:
-              data_type_identifier: VARCHAR2
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '20'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARCHAR2
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '20'
+                    end_bracket: )
         - statement_terminator: ;
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: contact
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: name
-            - data_type:
-                data_type_identifier: full_name
-            - assignment_operator: :=
-            - expression:
-                function:
-                  function_name:
-                    function_name_identifier: full_name
-                  function_contents:
-                    bracketed:
-                    - start_bracket: (
-                    - expression:
-                        quoted_literal: "'John'"
-                    - comma: ','
-                    - expression:
-                        quoted_literal: "'Smith'"
-                    - end_bracket: )
-            - comma: ','
-            - naked_identifier: phone
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: phone_number
-                binary_operator: '%'
-                keyword: TYPE
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: name
+              - word: full_name
+              - assignment_operator: :=
+              - word: full_name
+              - bracketed:
+                - start_bracket: (
+                - single_quote: "'John'"
+                - comma: ','
+                - single_quote: "'Smith'"
+                - end_bracket: )
+              - comma: ','
+              - word: phone
+              - word: employees
+              - dot: .
+              - word: phone_number
+              - percent: '%'
+              - word: TYPE
+              - end_bracket: )
         - statement_terminator: ;
         - naked_identifier: friend
-        - data_type:
-            data_type_identifier: contact
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: contact
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -376,7 +366,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -385,7 +376,8 @@ file:
                     function_name:
                       naked_identifier: friend
                       dot: .
-                      function_name_identifier: name
+                      function_name_identifier:
+                        function_name_identifier: name
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -403,7 +395,8 @@ file:
                     function_name:
                       naked_identifier: friend
                       dot: .
-                      function_name_identifier: name
+                      function_name_identifier:
+                        function_name_identifier: name
                     function_contents:
                       bracketed:
                         start_bracket: (

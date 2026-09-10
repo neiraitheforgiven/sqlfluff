@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 40411257950619d71da8bc7c6593ce9e1df059d414667fd0f58777884ce64011
+_hash: 373e2c57aab1a1acbd32475056b3fca59ba401846450ae83945e529477fea9f5
 file:
 - batch:
     statement:
@@ -14,7 +14,8 @@ file:
       - keyword: NOT
       - keyword: EXISTS
       - function_name:
-          function_name_identifier: remove_emp
+          function_name_identifier:
+            function_name_identifier: remove_emp
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -25,8 +26,9 @@ file:
       - keyword: AS
       - declare_segment:
           naked_identifier: tot_emps
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           statement_terminator: ;
       - begin_end_block:
         - keyword: BEGIN
@@ -75,14 +77,16 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: top_protected_proc
+          function_name_identifier:
+            function_name_identifier: top_protected_proc
       - keyword: ACCESSIBLE
       - keyword: BY
       - bracketed:
           start_bracket: (
           keyword: PROCEDURE
           function_name:
-            function_name_identifier: top_trusted_proc
+            function_name_identifier:
+              function_name_identifier: top_trusted_proc
           end_bracket: )
       - keyword: AS
       - begin_end_block:
@@ -92,7 +96,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -112,7 +117,8 @@ file:
       - keyword: REPLACE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: p
+          function_name_identifier:
+            function_name_identifier: p
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -138,7 +144,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -159,7 +166,8 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: p
+          function_name_identifier:
+            function_name_identifier: p
       - function_parameter_list:
           bracketed:
           - start_bracket: (
@@ -178,20 +186,22 @@ file:
       - keyword: IS
       - declare_segment:
         - naked_identifier: bonus
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - assignment_operator: :=
         - expression:
             numeric_literal: '0'
         - statement_terminator: ;
         - naked_identifier: updated
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '3'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '3'
+                  end_bracket: )
         - assignment_operator: :=
         - expression:
             quoted_literal: "'No'"
@@ -278,7 +288,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -318,7 +329,8 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: p
+          function_name_identifier:
+            function_name_identifier: p
       - function_parameter_list:
           bracketed:
           - start_bracket: (
@@ -337,8 +349,9 @@ file:
       - keyword: IS
       - declare_segment:
           naked_identifier: bonus
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           assignment_operator: :=
           expression:
             numeric_literal: '0'
@@ -422,7 +435,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -473,7 +487,8 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: create_email
+          function_name_identifier:
+            function_name_identifier: create_email
       - function_parameter_list:
           bracketed:
           - start_bracket: (
@@ -492,13 +507,14 @@ file:
       - keyword: IS
       - declare_segment:
           naked_identifier: error_message
-          data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '30'
-                end_bracket: )
+          plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '30'
+                  end_bracket: )
           assignment_operator: :=
           expression:
             quoted_literal: "'Email address is too long.'"
@@ -541,7 +557,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -560,7 +577,8 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: p
+          function_name_identifier:
+            function_name_identifier: p
       - keyword: IS
       - begin_end_block:
         - keyword: BEGIN
@@ -569,7 +587,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -586,7 +605,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (

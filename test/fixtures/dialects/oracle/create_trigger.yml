@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 025c8c0c73784ba02bb8f842d4dc97e3d18559669916ca1a6241767d81023e49
+_hash: ed1c69d235bca5455898184425bbb4fb331a158cd5938733b4c3662529591521
 file:
 - batch:
     statement:
@@ -45,7 +45,8 @@ file:
                       function_name:
                         naked_identifier: DBMS_OUTPUT
                         dot: .
-                        function_name_identifier: PUT_LINE
+                        function_name_identifier:
+                          function_name_identifier: PUT_LINE
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -66,7 +67,8 @@ file:
                       function_name:
                         naked_identifier: DBMS_OUTPUT
                         dot: .
-                        function_name_identifier: PUT_LINE
+                        function_name_identifier:
+                          function_name_identifier: PUT_LINE
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -87,7 +89,8 @@ file:
                       function_name:
                         naked_identifier: DBMS_OUTPUT
                         dot: .
-                        function_name_identifier: PUT_LINE
+                        function_name_identifier:
+                          function_name_identifier: PUT_LINE
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -104,7 +107,8 @@ file:
                       function_name:
                         naked_identifier: DBMS_OUTPUT
                         dot: .
-                        function_name_identifier: PUT_LINE
+                        function_name_identifier:
+                          function_name_identifier: PUT_LINE
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -140,25 +144,21 @@ file:
           - declare_segment:
             - keyword: DECLARE
             - naked_identifier: duplicate_info
-            - data_type:
-                data_type_identifier: EXCEPTION
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: EXCEPTION
             - statement_terminator: ;
-            - keyword: PRAGMA
-            - function:
-                function_name:
-                  function_name_identifier: EXCEPTION_INIT
-                function_contents:
-                  bracketed:
-                  - start_bracket: (
-                  - expression:
-                      column_reference:
-                        naked_identifier: duplicate_info
-                  - comma: ','
-                  - expression:
-                      numeric_literal:
-                        sign_indicator: '-'
-                        numeric_literal: '00001'
-                  - end_bracket: )
+            - naked_identifier: PRAGMA
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: EXCEPTION_INIT
+                bracketed:
+                  start_bracket: (
+                  word: duplicate_info
+                  comma: ','
+                  minus: '-'
+                  numeric_literal: '00001'
+                  end_bracket: )
             - statement_terminator: ;
           - keyword: BEGIN
           - statement:
@@ -254,7 +254,8 @@ file:
           - statement:
               function:
                 function_name:
-                  function_name_identifier: RAISE_APPLICATION_ERROR
+                  function_name_identifier:
+                    function_name_identifier: RAISE_APPLICATION_ERROR
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -422,8 +423,9 @@ file:
         - declare_segment:
           - naked_identifier: threshhold
           - keyword: CONSTANT
-          - data_type:
-              data_type_identifier: SIMPLE_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: SIMPLE_INTEGER
           - assignment_operator: :=
           - expression:
               numeric_literal: '7'
@@ -435,22 +437,24 @@ file:
             - keyword: TABLE
             - keyword: OF
             - row_type_reference:
-                table_reference:
-                  naked_identifier: employee_salaries
+                naked_identifier: employee_salaries
                 binary_operator: '%'
                 keyword: ROWTYPE
             - keyword: INDEX
             - keyword: BY
-            - data_type:
-                data_type_identifier: SIMPLE_INTEGER
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: SIMPLE_INTEGER
           - statement_terminator: ;
           - naked_identifier: salaries
-          - data_type:
-              data_type_identifier: salaries_t
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: salaries_t
           - statement_terminator: ;
           - naked_identifier: idx
-          - data_type:
-              data_type_identifier: SIMPLE_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: SIMPLE_INTEGER
           - assignment_operator: :=
           - expression:
               numeric_literal: '0'
@@ -458,20 +462,23 @@ file:
           - create_procedure_statement:
             - keyword: PROCEDURE
             - function_name:
-                function_name_identifier: flush_array
+                function_name_identifier:
+                  function_name_identifier: flush_array
             - keyword: IS
             - declare_segment:
                 naked_identifier: n
                 keyword: CONSTANT
-                data_type:
-                  data_type_identifier: SIMPLE_INTEGER
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: SIMPLE_INTEGER
                 assignment_operator: :=
                 expression:
                   function:
                     function_name:
                       naked_identifier: salaries
                       dot: .
-                      function_name_identifier: count
+                      function_name_identifier:
+                        function_name_identifier: count
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -484,10 +491,13 @@ file:
                   - keyword: FORALL
                   - naked_identifier: j
                   - keyword: IN
-                  - numeric_literal: '1'
+                  - expression:
+                      numeric_literal: '1'
                   - dot: .
                   - dot: .
-                  - naked_identifier: n
+                  - expression:
+                      column_reference:
+                        naked_identifier: n
                   - insert_statement:
                     - keyword: INSERT
                     - keyword: INTO
@@ -498,7 +508,8 @@ file:
                         expression:
                           function:
                             function_name:
-                              function_name_identifier: salaries
+                              function_name_identifier:
+                                function_name_identifier: salaries
                             function_contents:
                               bracketed:
                                 start_bracket: (
@@ -512,7 +523,8 @@ file:
                     function_name:
                       naked_identifier: salaries
                       dot: .
-                      function_name_identifier: delete
+                      function_name_identifier:
+                        function_name_identifier: delete
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -531,7 +543,8 @@ file:
                     function_name:
                       naked_identifier: DBMS_OUTPUT
                       dot: .
-                      function_name_identifier: PUT_LINE
+                      function_name_identifier:
+                        function_name_identifier: PUT_LINE
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -643,7 +656,8 @@ file:
               - statement:
                   function:
                     function_name:
-                      function_name_identifier: flush_array
+                      function_name_identifier:
+                        function_name_identifier: flush_array
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -665,7 +679,8 @@ file:
           - statement:
               function:
                 function_name:
-                  function_name_identifier: flush_array
+                  function_name_identifier:
+                    function_name_identifier: flush_array
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -742,3 +757,27 @@ file:
           - statement_terminator: ;
           - keyword: END
       - statement_terminator: ;
+      - statement:
+          create_trigger_statement:
+          - keyword: CREATE
+          - keyword: OR
+          - keyword: REPLACE
+          - keyword: TRIGGER
+          - trigger_reference:
+              naked_identifier: logon_trigger
+          - keyword: AFTER
+          - dml_event_clause:
+            - keyword: LOGON
+            - keyword: 'ON'
+            - keyword: DATABASE
+          - statement:
+              begin_end_block:
+              - keyword: BEGIN
+              - statement:
+                  null_statement:
+                    keyword: 'NULL'
+              - statement_terminator: ;
+              - keyword: END
+          - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /

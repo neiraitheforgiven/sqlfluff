@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: dca18c63395c45a8a1f791f9fc91c357da9faffa6421a1a01d16aacba2752d9d
+_hash: 189135c5695257ad38e33ef969534874a49a32d151b76e28e5fedb510304b923
 file:
   batch:
   - statement:
@@ -517,7 +517,8 @@ file:
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: LENGTH
+                        function_name_identifier:
+                          function_name_identifier: LENGTH
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -536,7 +537,8 @@ file:
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: LENGTH
+                        function_name_identifier:
+                          function_name_identifier: LENGTH
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -710,7 +712,8 @@ file:
                             select_clause_element:
                               function:
                                 function_name:
-                                  function_name_identifier: MAX
+                                  function_name_identifier:
+                                    function_name_identifier: MAX
                                 function_contents:
                                   bracketed:
                                     start_bracket: (
@@ -754,7 +757,8 @@ file:
                             select_clause_element:
                               function:
                                 function_name:
-                                  function_name_identifier: MIN
+                                  function_name_identifier:
+                                    function_name_identifier: MIN
                                 function_contents:
                                   bracketed:
                                     start_bracket: (
@@ -816,7 +820,8 @@ file:
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: TO_CHAR
+                        function_name_identifier:
+                          function_name_identifier: TO_CHAR
                       function_contents:
                         bracketed:
                         - start_bracket: (
@@ -839,7 +844,8 @@ file:
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: TO_NUMBER
+                        function_name_identifier:
+                          function_name_identifier: TO_NUMBER
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -1051,7 +1057,8 @@ file:
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: UPPER
+                        function_name_identifier:
+                          function_name_identifier: UPPER
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -1069,7 +1076,8 @@ file:
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: LOWER
+                        function_name_identifier:
+                          function_name_identifier: LOWER
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -1411,7 +1419,8 @@ file:
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: REGEXP_LIKE
+                        function_name_identifier:
+                          function_name_identifier: REGEXP_LIKE
                       function_contents:
                         bracketed:
                         - start_bracket: (
@@ -1430,7 +1439,8 @@ file:
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: REGEXP_LIKE
+                        function_name_identifier:
+                          function_name_identifier: REGEXP_LIKE
                       function_contents:
                         bracketed:
                         - start_bracket: (

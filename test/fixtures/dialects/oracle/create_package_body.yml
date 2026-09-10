@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 329d13339d9e9c3967b00a91329bd65e7c9325533f80bb89cf475cc3a7d429a2
+_hash: 5f32bc6744b961e1f209b48068d720ad75943670e276000fa934f0b47086c6f1
 file:
 - batch:
     statement:
@@ -90,8 +90,9 @@ file:
       - keyword: AS
       - declare_segment:
           naked_identifier: v_counter
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           assignment_operator: :=
           expression:
             numeric_literal: '0'
@@ -137,7 +138,8 @@ file:
           create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: p_Test
+              function_name_identifier:
+                function_name_identifier: p_Test
           - keyword: IS
           - begin_end_block:
             - keyword: BEGIN
@@ -166,8 +168,9 @@ file:
       - keyword: AS
       - declare_segment:
           naked_identifier: v_init
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           assignment_operator: :=
           expression:
             numeric_literal: '0'
@@ -215,17 +218,20 @@ file:
       - keyword: AS
       - declare_segment:
         - naked_identifier: tot_emps
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - statement_terminator: ;
         - naked_identifier: tot_depts
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - statement_terminator: ;
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: hire
+              function_name_identifier:
+                function_name_identifier: hire
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -260,8 +266,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: new_empno
-                data_type:
-                  data_type_identifier: NUMBER
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: NUMBER
                 statement_terminator: ;
             - keyword: BEGIN
             - statement:
@@ -270,9 +277,9 @@ file:
                     keyword: SELECT
                     select_clause_element:
                       column_reference:
-                      - naked_identifier: employees_seq
-                      - dot: .
-                      - naked_identifier: NEXTVAL
+                        naked_identifier: employees_seq
+                        dot: .
+                        keyword: NEXTVAL
                   into_clause:
                     keyword: INTO
                     naked_identifier: new_empno
@@ -309,7 +316,8 @@ file:
                     - expression:
                         function:
                           function_name:
-                            function_name_identifier: TO_DATE
+                            function_name_identifier:
+                              function_name_identifier: TO_DATE
                           function_contents:
                             bracketed:
                             - start_bracket: (
@@ -345,7 +353,8 @@ file:
             - statement:
                 function:
                   function_name:
-                    function_name_identifier: RETURN
+                    function_name_identifier:
+                      function_name_identifier: RETURN
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -361,7 +370,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: create_dept
+              function_name_identifier:
+                function_name_identifier: create_dept
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -380,8 +390,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: new_deptno
-                data_type:
-                  data_type_identifier: NUMBER
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: NUMBER
                 statement_terminator: ;
             - keyword: BEGIN
             - statement:
@@ -390,9 +401,9 @@ file:
                     keyword: SELECT
                     select_clause_element:
                       column_reference:
-                      - naked_identifier: departments_seq
-                      - dot: .
-                      - naked_identifier: NEXTVAL
+                        naked_identifier: departments_seq
+                        dot: .
+                        keyword: NEXTVAL
                   into_clause:
                     keyword: INTO
                     naked_identifier: new_deptno
@@ -439,7 +450,8 @@ file:
             - statement:
                 function:
                   function_name:
-                    function_name_identifier: RETURN
+                    function_name_identifier:
+                      function_name_identifier: RETURN
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -455,7 +467,8 @@ file:
         - create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: remove_emp
+              function_name_identifier:
+                function_name_identifier: remove_emp
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -508,7 +521,8 @@ file:
         - create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: remove_dept
+              function_name_identifier:
+                function_name_identifier: remove_dept
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -561,7 +575,8 @@ file:
                     select_clause_element:
                       function:
                         function_name:
-                          function_name_identifier: COUNT
+                          function_name_identifier:
+                            function_name_identifier: COUNT
                         function_contents:
                           bracketed:
                             start_bracket: (
@@ -585,7 +600,8 @@ file:
         - create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: increase_sal
+              function_name_identifier:
+                function_name_identifier: increase_sal
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -600,8 +616,9 @@ file:
           - keyword: IS
           - declare_segment:
               naked_identifier: curr_sal
-              data_type:
-                data_type_identifier: NUMBER
+              plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
               statement_terminator: ;
           - begin_end_block:
             - keyword: BEGIN
@@ -690,7 +707,8 @@ file:
         - create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: increase_comm
+              function_name_identifier:
+                function_name_identifier: increase_comm
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -705,8 +723,9 @@ file:
           - keyword: IS
           - declare_segment:
               naked_identifier: curr_comm
-              data_type:
-                data_type_identifier: NUMBER
+              plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
               statement_terminator: ;
           - begin_end_block:
             - keyword: BEGIN
@@ -804,7 +823,8 @@ file:
           create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: test_function
+              function_name_identifier:
+                function_name_identifier: test_function
           - keyword: RETURN
           - data_type:
               data_type_identifier: VARCHAR2
@@ -812,8 +832,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: var_1
-                data_type:
-                  data_type_identifier: NUMBER
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: NUMBER
                 assignment_operator: :=
                 expression:
                   numeric_literal: '0'
@@ -859,7 +880,8 @@ file:
                       function_name:
                         naked_identifier: logger
                         dot: .
-                        function_name_identifier: log_error
+                        function_name_identifier:
+                          function_name_identifier: log_error
                       function_contents:
                         bracketed:
                           start_bracket: (

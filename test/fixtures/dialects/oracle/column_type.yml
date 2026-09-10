@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 88b0bfd64d491300a9003165885d6cb553ae251e14d10662a4ca44be6fee8bdb
+_hash: 2e05fd8020a4d588deac6c2f63b53f1005b29351ccf688b784991d447d1fc3b9
 file:
 - batch:
     statement:
@@ -12,12 +12,11 @@ file:
           keyword: DECLARE
           naked_identifier: surname
           column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: last_name
-            binary_operator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: last_name
+          - binary_operator: '%'
+          - keyword: TYPE
           statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -25,7 +24,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -48,13 +48,14 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: name
-        - data_type:
-            data_type_identifier: VARCHAR
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '25'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '25'
+                  end_bracket: )
         - keyword: NOT
         - keyword: 'NULL'
         - assignment_operator: :=
@@ -63,8 +64,7 @@ file:
         - statement_terminator: ;
         - naked_identifier: surname
         - column_type_reference:
-            column_reference:
-              naked_identifier: name
+            naked_identifier: name
             binary_operator: '%'
             keyword: TYPE
         - assignment_operator: :=
@@ -77,7 +77,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -95,7 +96,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (

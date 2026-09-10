@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 268bd7cc54dc13f315a6c992c59fb9791fc0c1274d5a5fefa8940dba4b622271
+_hash: 498f5f82cdf5110a134959362d4d416c314b9d9647baa8736d074294cfe89c68
 file:
 - batch:
     statement:
@@ -20,7 +20,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: hire
+              function_name_identifier:
+                function_name_identifier: hire
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -55,7 +56,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: create_dept
+              function_name_identifier:
+                function_name_identifier: create_dept
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -71,74 +73,66 @@ file:
           - data_type:
               data_type_identifier: NUMBER
           - statement_terminator: ;
-        - create_procedure_statement:
-            keyword: PROCEDURE
-            function_name:
-              function_name_identifier: remove_emp
-            function_parameter_list:
-              bracketed:
-                start_bracket: (
-                parameter: employee_id
-                data_type:
-                  data_type_identifier: NUMBER
-                end_bracket: )
-            statement_terminator: ;
-        - create_procedure_statement:
-            keyword: PROCEDURE
-            function_name:
-              function_name_identifier: remove_dept
-            function_parameter_list:
-              bracketed:
-                start_bracket: (
-                parameter: department_id
-                data_type:
-                  data_type_identifier: NUMBER
-                end_bracket: )
-            statement_terminator: ;
-        - create_procedure_statement:
-            keyword: PROCEDURE
-            function_name:
-              function_name_identifier: increase_sal
-            function_parameter_list:
-              bracketed:
-              - start_bracket: (
-              - parameter: employee_id
-              - data_type:
-                  data_type_identifier: NUMBER
-              - comma: ','
-              - parameter: salary_incr
-              - data_type:
-                  data_type_identifier: NUMBER
-              - end_bracket: )
-            statement_terminator: ;
-        - create_procedure_statement:
-            keyword: PROCEDURE
-            function_name:
-              function_name_identifier: increase_comm
-            function_parameter_list:
-              bracketed:
-              - start_bracket: (
-              - parameter: employee_id
-              - data_type:
-                  data_type_identifier: NUMBER
-              - comma: ','
-              - parameter: comm_incr
-              - data_type:
-                  data_type_identifier: NUMBER
-              - end_bracket: )
-            statement_terminator: ;
+        - naked_identifier: PROCEDURE
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: remove_emp
+            bracketed:
+            - start_bracket: (
+            - word: employee_id
+            - word: NUMBER
+            - end_bracket: )
+        - statement_terminator: ;
+        - naked_identifier: PROCEDURE
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: remove_dept
+            bracketed:
+            - start_bracket: (
+            - word: department_id
+            - word: NUMBER
+            - end_bracket: )
+        - statement_terminator: ;
+        - naked_identifier: PROCEDURE
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: increase_sal
+            bracketed:
+            - start_bracket: (
+            - word: employee_id
+            - word: NUMBER
+            - comma: ','
+            - word: salary_incr
+            - word: NUMBER
+            - end_bracket: )
+        - statement_terminator: ;
+        - naked_identifier: PROCEDURE
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: increase_comm
+            bracketed:
+            - start_bracket: (
+            - word: employee_id
+            - word: NUMBER
+            - comma: ','
+            - word: comm_incr
+            - word: NUMBER
+            - end_bracket: )
+        - statement_terminator: ;
         - naked_identifier: no_comm
-        - data_type:
-            data_type_identifier: EXCEPTION
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EXCEPTION
         - statement_terminator: ;
         - naked_identifier: no_sal
-        - data_type:
-            data_type_identifier: EXCEPTION
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EXCEPTION
         - statement_terminator: ;
       - keyword: END
       - package_reference:
           naked_identifier: emp_mgmt
-    statement_terminator: ;
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /
 - batch:
@@ -155,7 +149,8 @@ file:
           create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: any_function_with_result_cache
+              function_name_identifier:
+                function_name_identifier: any_function_with_result_cache
           - keyword: RETURN
           - data_type:
               data_type_identifier: VARCHAR2
@@ -164,7 +159,7 @@ file:
       - keyword: END
       - package_reference:
           naked_identifier: test_package
-    statement_terminator: ;
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /
 - batch:
@@ -179,7 +174,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: skip_col
+              function_name_identifier:
+                function_name_identifier: skip_col
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -204,7 +200,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: describe
+              function_name_identifier:
+                function_name_identifier: describe
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -231,7 +228,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: skip_col
+              function_name_identifier:
+                function_name_identifier: skip_col
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -263,7 +261,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: describe
+              function_name_identifier:
+                function_name_identifier: describe
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -295,6 +294,6 @@ file:
       - keyword: END
       - package_reference:
           naked_identifier: skip_col_pkg
-    statement_terminator: ;
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /

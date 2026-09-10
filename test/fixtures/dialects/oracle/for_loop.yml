@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 513e2e564a872a290e6fafab4870235943739306ab7f6ce4477a04f989a3c6ae
+_hash: 8c506496585029e9bea27615b44ece4b68cf62e704284bd38ae396d45da5334f
 file:
 - batch:
     statement:
@@ -14,10 +14,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -25,7 +27,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -51,10 +54,12 @@ file:
           - naked_identifier: i
           - keyword: IN
           - keyword: REVERSE
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -62,7 +67,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -111,7 +117,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -157,7 +164,8 @@ file:
           - expression:
               function:
                 function_name:
-                  function_name_identifier: MOD
+                  function_name_identifier:
+                    function_name_identifier: MOD
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -178,7 +186,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -203,10 +212,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -214,7 +225,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -225,7 +237,8 @@ file:
                         - pipe: '|'
                         function:
                           function_name:
-                            function_name_identifier: TO_CHAR
+                            function_name_identifier:
+                              function_name_identifier: TO_CHAR
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -243,7 +256,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -254,7 +268,8 @@ file:
                   - pipe: '|'
                   function:
                     function_name:
-                      function_name_identifier: TO_CHAR
+                      function_name_identifier:
+                        function_name_identifier: TO_CHAR
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -274,8 +289,9 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: i
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           assignment_operator: :=
           expression:
             numeric_literal: '5'
@@ -286,10 +302,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -297,7 +315,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -308,7 +327,8 @@ file:
                         - pipe: '|'
                         function:
                           function_name:
-                            function_name_identifier: TO_CHAR
+                            function_name_identifier:
+                              function_name_identifier: TO_CHAR
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -326,7 +346,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -337,7 +358,8 @@ file:
                   - pipe: '|'
                   function:
                     function_name:
-                      function_name_identifier: TO_CHAR
+                      function_name_identifier:
+                        function_name_identifier: TO_CHAR
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -357,8 +379,9 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: i
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           assignment_operator: :=
           expression:
             numeric_literal: '5'
@@ -369,10 +392,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -380,7 +405,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -391,7 +417,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: TO_CHAR
+                            function_name_identifier:
+                              function_name_identifier: TO_CHAR
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -408,7 +435,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: TO_CHAR
+                            function_name_identifier:
+                              function_name_identifier: TO_CHAR
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -438,10 +466,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -449,10 +479,12 @@ file:
                 - keyword: FOR
                 - naked_identifier: i
                 - keyword: IN
-                - numeric_literal: '1'
+                - expression:
+                    numeric_literal: '1'
                 - dot: .
                 - dot: .
-                - numeric_literal: '3'
+                - expression:
+                    numeric_literal: '3'
                 - loop_statement:
                   - keyword: LOOP
                   - statement:
@@ -473,7 +505,8 @@ file:
                             function_name:
                               naked_identifier: DBMS_OUTPUT
                               dot: .
-                              function_name_identifier: PUT_LINE
+                              function_name_identifier:
+                                function_name_identifier: PUT_LINE
                             function_contents:
                               bracketed:
                                 start_bracket: (
@@ -484,7 +517,8 @@ file:
                                   - pipe: '|'
                                 - function:
                                     function_name:
-                                      function_name_identifier: TO_CHAR
+                                      function_name_identifier:
+                                        function_name_identifier: TO_CHAR
                                     function_contents:
                                       bracketed:
                                         start_bracket: (
@@ -503,7 +537,8 @@ file:
                                   - pipe: '|'
                                 - function:
                                     function_name:
-                                      function_name_identifier: TO_CHAR
+                                      function_name_identifier:
+                                        function_name_identifier: TO_CHAR
                                     function_contents:
                                       bracketed:
                                         start_bracket: (
@@ -537,8 +572,7 @@ file:
           keyword: DECLARE
           naked_identifier: v_employees
           row_type_reference:
-            table_reference:
-              naked_identifier: employees
+            naked_identifier: employees
             binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
@@ -572,10 +606,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '10'
+          - expression:
+              numeric_literal: '10'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -614,8 +650,7 @@ file:
           keyword: DECLARE
           naked_identifier: v_employees
           row_type_reference:
-            table_reference:
-              naked_identifier: employees
+            naked_identifier: employees
             binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
@@ -649,10 +684,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '10'
+          - expression:
+              numeric_literal: '10'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -660,10 +697,12 @@ file:
                 - keyword: FOR
                 - naked_identifier: j
                 - keyword: IN
-                - numeric_literal: '1'
+                - expression:
+                    numeric_literal: '1'
                 - dot: .
                 - dot: .
-                - numeric_literal: '10'
+                - expression:
+                    numeric_literal: '10'
                 - loop_statement:
                   - keyword: LOOP
                   - statement:
@@ -707,8 +746,7 @@ file:
           keyword: DECLARE
           naked_identifier: v_employees
           row_type_reference:
-            table_reference:
-              naked_identifier: employees
+            naked_identifier: employees
             binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
@@ -742,10 +780,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '10'
+          - expression:
+              numeric_literal: '10'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -753,10 +793,12 @@ file:
                 - keyword: FOR
                 - naked_identifier: j
                 - keyword: IN
-                - numeric_literal: '1'
+                - expression:
+                    numeric_literal: '1'
                 - dot: .
                 - dot: .
-                - numeric_literal: '10'
+                - expression:
+                    numeric_literal: '10'
                 - loop_statement:
                   - keyword: LOOP
                   - statement:

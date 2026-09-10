@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 7aefc94aca08a10996daf4fc654498ba9e94a422e49b549f2e06c2ab9f3b175a
+_hash: 148f2f7e0af797d15c5613b5861db25fffee7ddd2d7907998c065a752dbfca93
 file:
 - batch:
     statement:
@@ -80,7 +80,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -152,10 +153,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '10'
+          - expression:
+              numeric_literal: '10'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -203,8 +206,9 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: v_count
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           assignment_operator: :=
           expression:
             numeric_literal: '0'
@@ -267,7 +271,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -296,7 +301,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -331,7 +337,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -349,8 +356,9 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: v
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           statement_terminator: ;
       - keyword: BEGIN
       - statement:

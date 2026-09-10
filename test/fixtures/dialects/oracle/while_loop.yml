@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: d902632d8a243de280943a658b69eb8e24130967b05a4238c1da6c6260d037c9
+_hash: e2f88449b571694979b1921339dcc25f39f37cc226d19483d108ff0e6e64ba0c
 file:
 - batch:
     statement:
@@ -11,8 +11,9 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: done
-          data_type:
-            data_type_identifier: BOOLEAN
+          plsql_data_type:
+            data_type:
+              data_type_identifier: BOOLEAN
           assignment_operator: :=
           expression:
             boolean_literal: 'FALSE'
@@ -31,7 +32,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -64,7 +66,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -133,10 +136,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -144,10 +149,12 @@ file:
                 - keyword: FOR
                 - naked_identifier: j
                 - keyword: IN
-                - numeric_literal: '1'
+                - expression:
+                    numeric_literal: '1'
                 - dot: .
                 - dot: .
-                - numeric_literal: '3'
+                - expression:
+                    numeric_literal: '3'
                 - loop_statement:
                   - keyword: LOOP
                   - statement:

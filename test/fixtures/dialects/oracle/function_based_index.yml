@@ -1,0 +1,73 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: db3a8a0397afc11ed1b0d31d6f3b8c427108f4b926917846c65097b014cc8eca
+file:
+  batch:
+  - statement:
+      create_index_statement:
+      - keyword: CREATE
+      - keyword: UNIQUE
+      - keyword: INDEX
+      - index_reference:
+          naked_identifier: users_ix_2
+      - keyword: 'ON'
+      - table_reference:
+          naked_identifier: users_t
+      - bracketed:
+          start_bracket: (
+          index_column_definition:
+            function:
+              function_name:
+                function_name_identifier:
+                  function_name_identifier: LOWER
+              function_contents:
+                bracketed:
+                  start_bracket: (
+                  expression:
+                    column_reference:
+                      quoted_identifier: '"AUTHENTICATIONNAME"'
+                  end_bracket: )
+          end_bracket: )
+      - oracle_index_physical_attributes:
+          keyword: TABLESPACE
+          object_reference:
+            naked_identifier: posseindexes_ts
+  - statement_terminator: ;
+  - statement:
+      create_index_statement:
+      - keyword: CREATE
+      - keyword: INDEX
+      - index_reference:
+          naked_identifier: changedobjects_ix_1
+      - keyword: 'ON'
+      - table_reference:
+          naked_identifier: changedobjects_t
+      - bracketed:
+        - start_bracket: (
+        - index_column_definition:
+            naked_identifier: syncchangelogid
+        - comma: ','
+        - index_column_definition:
+            naked_identifier: objectid
+        - comma: ','
+        - index_column_definition:
+            function:
+              function_name:
+                function_name_identifier:
+                  function_name_identifier: SYS_EXTRACT_UTC
+              function_contents:
+                bracketed:
+                  start_bracket: (
+                  expression:
+                    column_reference:
+                      quoted_identifier: '"CHANGETIME"'
+                  end_bracket: )
+        - end_bracket: )
+      - oracle_index_physical_attributes:
+          keyword: TABLESPACE
+          object_reference:
+            naked_identifier: possedata_ts
+  - statement_terminator: ;

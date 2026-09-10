@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: e5ab5335dffbb28f013bacd3b11906004a8152f6de4fad4148cd51ceae393dde
+_hash: 105b60de6135c2cbacfcbc95cedf1185407bafde86132f2f1ae83dfd8ecb455f
 file:
 - batch:
     statement:
@@ -16,30 +16,34 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: NUMBER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: NUMBER
           - keyword: INDEX
           - keyword: BY
-          - data_type:
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARCHAR2
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '64'
+                    end_bracket: )
+        - statement_terminator: ;
+        - naked_identifier: city_population
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: population
+        - statement_terminator: ;
+        - naked_identifier: i
+        - plsql_data_type:
+            data_type:
               data_type_identifier: VARCHAR2
               bracketed_arguments:
                 bracketed:
                   start_bracket: (
                   numeric_literal: '64'
                   end_bracket: )
-        - statement_terminator: ;
-        - naked_identifier: city_population
-        - data_type:
-            data_type_identifier: population
-        - statement_terminator: ;
-        - naked_identifier: i
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '64'
-                end_bracket: )
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -117,7 +121,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_Output
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -137,7 +142,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: city_population
+                            function_name_identifier:
+                              function_name_identifier: city_population
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -157,7 +163,8 @@ file:
                       function_name:
                         naked_identifier: city_population
                         dot: .
-                        function_name_identifier: NEXT
+                        function_name_identifier:
+                          function_name_identifier: NEXT
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -184,30 +191,35 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: PLS_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: PLS_INTEGER
           - keyword: INDEX
           - keyword: BY
-          - data_type:
-              data_type_identifier: PLS_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: PLS_INTEGER
         - statement_terminator: ;
         - naked_identifier: n
-        - data_type:
-            data_type_identifier: PLS_INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: PLS_INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '5'
         - statement_terminator: ;
         - naked_identifier: sn
-        - data_type:
-            data_type_identifier: PLS_INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: PLS_INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '10'
         - statement_terminator: ;
         - naked_identifier: m
-        - data_type:
-            data_type_identifier: PLS_INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: PLS_INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '3'
@@ -215,7 +227,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: get_sum_multiples
+              function_name_identifier:
+                function_name_identifier: get_sum_multiples
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -236,8 +249,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: s
-                data_type:
-                  data_type_identifier: sum_multiples
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: sum_multiples
                 statement_terminator: ;
             - keyword: BEGIN
             - statement:
@@ -245,10 +259,13 @@ file:
                 - keyword: FOR
                 - naked_identifier: i
                 - keyword: IN
-                - numeric_literal: '1'
+                - expression:
+                    numeric_literal: '1'
                 - dot: .
                 - dot: .
-                - naked_identifier: num
+                - expression:
+                    column_reference:
+                      naked_identifier: num
                 - loop_statement:
                   - keyword: LOOP
                   - statement:
@@ -307,7 +324,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -318,7 +336,8 @@ file:
                   - pipe: '|'
                 - function:
                     function_name:
-                      function_name_identifier: TO_CHAR
+                      function_name_identifier:
+                        function_name_identifier: TO_CHAR
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -335,7 +354,8 @@ file:
                   - pipe: '|'
                 - function:
                     function_name:
-                      function_name_identifier: TO_CHAR
+                      function_name_identifier:
+                        function_name_identifier: TO_CHAR
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -352,14 +372,16 @@ file:
                   - pipe: '|'
                 - function:
                     function_name:
-                      function_name_identifier: TO_CHAR
+                      function_name_identifier:
+                        function_name_identifier: TO_CHAR
                     function_contents:
                       bracketed:
                       - start_bracket: (
                       - expression:
                           function:
                             function_name:
-                              function_name_identifier: get_sum_multiples
+                              function_name_identifier:
+                                function_name_identifier: get_sum_multiples
                             function_contents:
                               bracketed:
                               - start_bracket: (
@@ -394,30 +416,34 @@ file:
           - keyword: TYPE
           - naked_identifier: Foursome
           - keyword: IS
-          - data_type:
-              data_type_identifier: VARRAY
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '4'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARRAY
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '4'
+                    end_bracket: )
           - keyword: OF
-          - data_type:
-              data_type_identifier: VARCHAR2
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '15'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARCHAR2
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '15'
+                    end_bracket: )
         - statement_terminator: ;
         - naked_identifier: team
-        - data_type:
-            data_type_identifier: Foursome
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: Foursome
         - assignment_operator: :=
         - expression:
             function:
               function_name:
-                function_name_identifier: Foursome
+                function_name_identifier:
+                  function_name_identifier: Foursome
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -437,7 +463,8 @@ file:
         - create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: print_team
+              function_name_identifier:
+                function_name_identifier: print_team
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -453,7 +480,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -467,10 +495,12 @@ file:
                 - keyword: FOR
                 - naked_identifier: i
                 - keyword: IN
-                - numeric_literal: '1'
+                - expression:
+                    numeric_literal: '1'
                 - dot: .
                 - dot: .
-                - numeric_literal: '4'
+                - expression:
+                    numeric_literal: '4'
                 - loop_statement:
                   - keyword: LOOP
                   - statement:
@@ -478,7 +508,8 @@ file:
                         function_name:
                           naked_identifier: DBMS_OUTPUT
                           dot: .
-                          function_name_identifier: PUT_LINE
+                          function_name_identifier:
+                            function_name_identifier: PUT_LINE
                         function_contents:
                           bracketed:
                             start_bracket: (
@@ -494,7 +525,8 @@ file:
                               - pipe: '|'
                             - function:
                                 function_name:
-                                  function_name_identifier: team
+                                  function_name_identifier:
+                                    function_name_identifier: team
                                 function_contents:
                                   bracketed:
                                     start_bracket: (
@@ -512,7 +544,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -526,7 +559,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: print_team
+              function_name_identifier:
+                function_name_identifier: print_team
             function_contents:
               bracketed:
                 start_bracket: (
@@ -561,7 +595,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: print_team
+              function_name_identifier:
+                function_name_identifier: print_team
             function_contents:
               bracketed:
                 start_bracket: (
@@ -577,7 +612,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: Foursome
+                  function_name_identifier:
+                    function_name_identifier: Foursome
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -597,7 +633,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: print_team
+              function_name_identifier:
+                function_name_identifier: print_team
             function_contents:
               bracketed:
                 start_bracket: (
@@ -620,22 +657,25 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: VARCHAR2
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '15'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARCHAR2
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '15'
+                    end_bracket: )
         - statement_terminator: ;
         - naked_identifier: names
-        - data_type:
-            data_type_identifier: Roster
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: Roster
         - assignment_operator: :=
         - expression:
             function:
               function_name:
-                function_name_identifier: Roster
+                function_name_identifier:
+                  function_name_identifier: Roster
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -655,7 +695,8 @@ file:
         - create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: print_names
+              function_name_identifier:
+                function_name_identifier: print_names
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -671,7 +712,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -685,14 +727,16 @@ file:
                 - keyword: FOR
                 - naked_identifier: i
                 - keyword: IN
-                - naked_identifier: names
-                - dot: .
-                - naked_identifier: FIRST
-                - dot: .
-                - dot: .
-                - naked_identifier: names
-                - dot: .
-                - naked_identifier: LAST
+                - expression:
+                    column_reference:
+                    - naked_identifier: names
+                    - dot: .
+                    - naked_identifier: FIRST
+                    - dot: .
+                    - dot: .
+                    - naked_identifier: names
+                    - dot: .
+                    - naked_identifier: LAST
                 - loop_statement:
                   - keyword: LOOP
                   - statement:
@@ -700,14 +744,16 @@ file:
                         function_name:
                           naked_identifier: DBMS_OUTPUT
                           dot: .
-                          function_name_identifier: PUT_LINE
+                          function_name_identifier:
+                            function_name_identifier: PUT_LINE
                         function_contents:
                           bracketed:
                             start_bracket: (
                             expression:
                               function:
                                 function_name:
-                                  function_name_identifier: names
+                                  function_name_identifier:
+                                    function_name_identifier: names
                                 function_contents:
                                   bracketed:
                                     start_bracket: (
@@ -725,7 +771,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -739,7 +786,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: print_names
+              function_name_identifier:
+                function_name_identifier: print_names
             function_contents:
               bracketed:
                 start_bracket: (
@@ -762,7 +810,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: print_names
+              function_name_identifier:
+                function_name_identifier: print_names
             function_contents:
               bracketed:
                 start_bracket: (
@@ -778,7 +827,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: Roster
+                  function_name_identifier:
+                    function_name_identifier: Roster
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -792,7 +842,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: print_names
+              function_name_identifier:
+                function_name_identifier: print_names
             function_contents:
               bracketed:
                 start_bracket: (
@@ -809,39 +860,35 @@ file:
       begin_end_block:
       - declare_segment:
         - keyword: DECLARE
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: employee_rec_type
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: employee_id
-            - data_type:
-                data_type_identifier: NUMBER
-            - comma: ','
-            - naked_identifier: first_name
-            - data_type:
-                data_type_identifier: VARCHAR2
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '50'
-                    end_bracket: )
-            - comma: ','
-            - naked_identifier: last_name
-            - data_type:
-                data_type_identifier: VARCHAR2
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '50'
-                    end_bracket: )
-            - comma: ','
-            - naked_identifier: salary
-            - data_type:
-                data_type_identifier: NUMBER
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: employee_id
+              - word: NUMBER
+              - comma: ','
+              - word: first_name
+              - word: VARCHAR2
+              - bracketed:
+                  start_bracket: (
+                  numeric_literal: '50'
+                  end_bracket: )
+              - comma: ','
+              - word: last_name
+              - word: VARCHAR2
+              - bracketed:
+                  start_bracket: (
+                  numeric_literal: '50'
+                  end_bracket: )
+              - comma: ','
+              - word: salary
+              - word: NUMBER
+              - end_bracket: )
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -849,16 +896,19 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: employee_rec_type
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: employee_rec_type
           - keyword: INDEX
           - keyword: BY
-          - data_type:
-              data_type_identifier: PLS_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: PLS_INTEGER
         - statement_terminator: ;
         - naked_identifier: l_employees
-        - data_type:
-            data_type_identifier: employee_array_type
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: employee_array_type
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -986,7 +1036,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
               - start_bracket: (
@@ -1029,7 +1080,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
               - start_bracket: (

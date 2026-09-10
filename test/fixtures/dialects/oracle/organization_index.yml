@@ -1,0 +1,107 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: 9313bcf70825b20fba2560b77f7b0b0bcfe63d18dec7cea708aa1748ecfe0d6b
+file:
+  batch:
+  - statement:
+      create_table_statement:
+      - keyword: CREATE
+      - keyword: TABLE
+      - table_reference:
+          naked_identifier: keywordindexedcolumndefs_t
+      - bracketed:
+        - start_bracket: (
+        - column_definition:
+            naked_identifier: columndefid
+            data_type:
+              data_type_identifier: NUMBER
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '9'
+                  end_bracket: )
+            column_constraint_segment:
+            - keyword: NOT
+            - keyword: 'NULL'
+        - comma: ','
+        - column_definition:
+            naked_identifier: active
+            data_type:
+              data_type_identifier: CHAR
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '1'
+                  end_bracket: )
+            column_constraint_segment:
+            - keyword: NOT
+            - keyword: 'NULL'
+        - comma: ','
+        - table_constraint:
+          - keyword: CONSTRAINT
+          - object_reference:
+              naked_identifier: keywordindexedcolumndefs_pk
+          - keyword: PRIMARY
+          - keyword: KEY
+          - bracketed:
+              start_bracket: (
+              column_reference:
+                naked_identifier: columndefid
+              end_bracket: )
+        - end_bracket: )
+      - table_organization_segment:
+        - keyword: ORGANIZATION
+        - keyword: INDEX
+        - keyword: TABLESPACE
+        - object_reference:
+            naked_identifier: possedata_ts
+  - statement_terminator: ;
+  - statement:
+      create_table_statement:
+      - keyword: CREATE
+      - keyword: TABLE
+      - table_reference:
+          naked_identifier: authenticationrequests_t
+      - bracketed:
+        - start_bracket: (
+        - column_definition:
+            naked_identifier: requestid
+            data_type:
+              data_type_identifier: NUMBER
+            column_constraint_segment:
+            - keyword: NOT
+            - keyword: 'NULL'
+        - comma: ','
+        - column_definition:
+            naked_identifier: formvalues
+            data_type:
+              data_type_identifier: CLOB
+        - end_bracket: )
+      - table_organization_segment:
+        - keyword: ORGANIZATION
+        - keyword: INDEX
+        - keyword: TABLESPACE
+        - object_reference:
+            naked_identifier: possedata_ts
+      - table_end_clause_segment:
+        - keyword: LOB
+        - bracketed:
+            start_bracket: (
+            naked_identifier: formvalues
+            end_bracket: )
+        - keyword: STORE
+        - keyword: AS
+        - bracketed:
+          - start_bracket: (
+          - keyword: TABLESPACE
+          - object_reference:
+              naked_identifier: posselobs_ts
+          - keyword: DISABLE
+          - keyword: STORAGE
+          - keyword: IN
+          - keyword: ROW
+          - end_bracket: )
+  - statement_terminator: ;
