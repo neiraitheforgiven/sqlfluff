@@ -1292,6 +1292,7 @@ class PlsqlStatementSegment(StatementSegment):
 
     match_grammar = StatementSegment.match_grammar.copy(
         insert=[
+            Ref("PipeRowStatementSegment"),
             # Must be last: bare reference or call without parentheses used as
             # a statement (procedure call).  More specific segments above take
             # priority when the lookahead matches their keywords.
@@ -2027,6 +2028,16 @@ class ObjectReferenceSegment(ansi.ObjectReferenceSegment):
             ),
             Ref("ObjectReferenceDelimiterGrammar"),
             Ref("SingleIdentifierGrammar"),
+            allow_gaps=True,
+        ),
+        Sequence(
+            Ref("SingleIdentifierGrammar"),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            Ref("FunctionContentsSegment"),
+            Bracketed(Ref("ExpressionSegment")),
             allow_gaps=True,
         ),
         Sequence(
@@ -2879,8 +2890,8 @@ class FunctionBodyDefinitionSegment(BaseSegment):
         Ref("FunctionParameterListGrammar", optional=True),
         "RETURN",
         OneOf(
-            Ref("PlsqlDatatypeSegment"),
             Ref("ObjectReferenceSegment"),
+            Ref("PlsqlDatatypeSegment"),
             Ref("ColumnTypeReferenceSegment"),
             Ref("RowTypeReferenceSegment"),
         ),
@@ -3208,6 +3219,7 @@ class DeclareCursorVariableSegment(BaseSegment):
                 Ref("SetExpressionSegment"),
                 Ref("SelectStatementSegment"),
                 Ref("WithCompoundStatementSegment"),
+                Bracketed(Ref("SetExpressionSegment")),
                 Bracketed(Ref("SelectStatementSegment")),
             ),
             Dedent,
@@ -3299,7 +3311,12 @@ class CreateFunctionStatementSegment(BaseSegment):
         Ref("FunctionNameSegment"),
         Ref("FunctionParameterListGrammar", optional=True),
         "RETURN",
-        Ref("DatatypeSegment"),
+        OneOf(
+            Ref("ObjectReferenceSegment"),
+            Ref("DatatypeSegment"),
+            Ref("ColumnTypeReferenceSegment"),
+            Ref("RowTypeReferenceSegment"),
+        ),
         Ref("SharingClauseGrammar", optional=True),
         AnyNumberOf(
             Ref("DefaultCollationClauseGrammar"),
@@ -3726,6 +3743,18 @@ class AssignmentStatementSegment(BaseSegment):
         ),
         OneOf(Ref("AssignmentOperatorSegment"), "DEFAULT"),
         Ref("ExpressionSegment"),
+    )
+
+
+class PipeRowStatementSegment(BaseSegment):
+    """Oracle pipelined-function row emission statement."""
+
+    type = "pipe_row_statement"
+
+    match_grammar = Sequence(
+        Ref.keyword("PIPE"),
+        Ref.keyword("ROW"),
+        Bracketed(Delimited(Ref("FunctionContentsExpressionGrammar"))),
     )
 
 

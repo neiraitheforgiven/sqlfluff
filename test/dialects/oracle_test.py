@@ -193,3 +193,58 @@ END pkg_test;
 """
 
     assert _violations(sql) == []
+
+
+def test_package_function_result_collection_index_parses() -> None:
+    """A collection returned by a package function may be indexed immediately."""
+    sql = """
+CREATE OR REPLACE PACKAGE BODY pkg_test AS
+    PROCEDURE UseFirst(a_ObjectId NUMBER) IS
+        t_Peer NUMBER := CASE
+            WHEN api.pkg_ObjectQuery.RelatedObjects(a_ObjectId, 1).COUNT > 0
+            THEN api.pkg_ObjectQuery.RelatedObjects(a_ObjectId, 1)(1)
+            ELSE NULL
+        END;
+    BEGIN
+        NULL;
+    END UseFirst;
+END pkg_test;
+/
+"""
+
+    assert _violations(sql) == []
+
+
+def test_package_function_three_part_return_type_parses() -> None:
+    """Package functions may return types qualified by schema and package."""
+    sql = """
+CREATE OR REPLACE PACKAGE pkg_test AS
+    FUNCTION UserDetailsForUser(
+        a_UserId NUMBER
+    ) RETURN extension.pkg_test.udt_UserDetails PIPELINED;
+END pkg_test;
+/
+"""
+
+    assert _violations(sql) == []
+
+
+def test_package_cursor_parenthesized_set_expression_parses() -> None:
+    """Package cursors may wrap UNION queries in parentheses."""
+    sql = """
+CREATE OR REPLACE PACKAGE BODY pkg_test AS
+    FUNCTION UserDetailsForUser(a_UserId NUMBER) RETURN NUMBER IS
+        CURSOR c_UserDetails(a_Value NUMBER) IS
+        (
+            SELECT 1 AS value FROM dual WHERE a_Value = 1
+            UNION ALL
+            SELECT 2 AS value FROM dual WHERE a_Value = 2
+        );
+    BEGIN
+        RETURN 1;
+    END;
+END pkg_test;
+/
+"""
+
+    assert _violations(sql) == []
