@@ -28,6 +28,23 @@ def _violations(sql: str) -> list:
 
 
 @pytest.mark.parametrize(
+    "condition",
+    [
+        "UTL_SMTP.TRANSIENT_ERROR OR",
+        "OR UTL_SMTP.PERMANENT_ERROR",
+        "UTL_SMTP.TRANSIENT_ERROR OR OR NO_DATA_FOUND",
+        "UTL_SMTP.TRANSIENT_ERROR OR UTL_SMTP.",
+        "UTL_SMTP.TRANSIENT_ERROR OR .PERMANENT_ERROR",
+    ],
+)
+def test_malformed_exception_choices_rejected(condition: str) -> None:
+    """Each OR alternative must contain a complete exception name."""
+    assert _violations(
+        f"BEGIN NULL; EXCEPTION WHEN {condition} THEN NULL; END;\n/\n"
+    )
+
+
+@pytest.mark.parametrize(
     "expression",
     [
         "TO_NUMBER('invalid' DEFAULT NULL ON CONVERSION ERROR)",

@@ -639,21 +639,12 @@ oracle_dialect.add(
         "WHEN",
         OneOf(
             "OTHERS",
-            Sequence(
-                OneOf(
-                    Sequence(
-                        Ref("SingleIdentifierGrammar"),
-                        AnyNumberOf(
-                            Sequence(
-                                Ref("DotSegment"),
-                                Ref("SingleIdentifierGrammar"),
-                            ),
-                            min_times=1,
-                        ),
-                    ),
+            Delimited(
+                Delimited(
                     Ref("SingleIdentifierGrammar"),
+                    delimiter=Ref("DotSegment"),
                 ),
-                AnyNumberOf(Sequence("OR", Ref("SingleIdentifierGrammar"))),
+                delimiter=Ref.keyword("OR"),
             ),
         ),
         "THEN",

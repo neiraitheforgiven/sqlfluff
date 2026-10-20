@@ -1,0 +1,37 @@
+BEGIN
+  NULL;
+EXCEPTION
+  WHEN UTL_SMTP.TRANSIENT_ERROR OR UTL_SMTP.PERMANENT_ERROR THEN
+    NULL;
+  WHEN OTHERS THEN
+    NULL;
+END;
+/
+
+BEGIN
+  NULL;
+EXCEPTION
+  WHEN NO_DATA_FOUND OR app.pkg_errors.invalid_state THEN
+    NULL;
+  WHEN app.pkg_errors.invalid_value OR VALUE_ERROR OR ZERO_DIVIDE THEN
+    NULL;
+END;
+/
+
+CREATE OR REPLACE PACKAGE BODY pkg_test AS
+  PROCEDURE SendMessage IS
+  BEGIN
+    BEGIN
+      NULL;
+    EXCEPTION
+      WHEN UTL_SMTP.TRANSIENT_ERROR OR UTL_SMTP.PERMANENT_ERROR THEN
+        NULL;
+    END;
+  EXCEPTION
+    WHEN "MailErrors"."TransientError" OR "MailErrors"."PermanentError" THEN
+      NULL;
+    WHEN OTHERS THEN
+      NULL;
+  END SendMessage;
+END pkg_test;
+/

@@ -1,0 +1,155 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: 3caa181e46349c37fa1580f24df467a6b9a119424615039c5dddb94d64c5bfd3
+file:
+- batch:
+    statement:
+      begin_end_block:
+      - keyword: BEGIN
+      - statement:
+          null_statement:
+            keyword: 'NULL'
+      - statement_terminator: ;
+      - keyword: EXCEPTION
+      - keyword: WHEN
+      - naked_identifier: UTL_SMTP
+      - dot: .
+      - naked_identifier: TRANSIENT_ERROR
+      - keyword: OR
+      - naked_identifier: UTL_SMTP
+      - dot: .
+      - naked_identifier: PERMANENT_ERROR
+      - keyword: THEN
+      - statement:
+          null_statement:
+            keyword: 'NULL'
+      - statement_terminator: ;
+      - keyword: WHEN
+      - keyword: OTHERS
+      - keyword: THEN
+      - statement:
+          null_statement:
+            keyword: 'NULL'
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      begin_end_block:
+      - keyword: BEGIN
+      - statement:
+          null_statement:
+            keyword: 'NULL'
+      - statement_terminator: ;
+      - keyword: EXCEPTION
+      - keyword: WHEN
+      - naked_identifier: NO_DATA_FOUND
+      - keyword: OR
+      - naked_identifier: app
+      - dot: .
+      - naked_identifier: pkg_errors
+      - dot: .
+      - naked_identifier: invalid_state
+      - keyword: THEN
+      - statement:
+          null_statement:
+            keyword: 'NULL'
+      - statement_terminator: ;
+      - keyword: WHEN
+      - naked_identifier: app
+      - dot: .
+      - naked_identifier: pkg_errors
+      - dot: .
+      - naked_identifier: invalid_value
+      - keyword: OR
+      - naked_identifier: VALUE_ERROR
+      - keyword: OR
+      - naked_identifier: ZERO_DIVIDE
+      - keyword: THEN
+      - statement:
+          null_statement:
+            keyword: 'NULL'
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      create_package_body_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: PACKAGE
+      - keyword: BODY
+      - package_reference:
+          naked_identifier: pkg_test
+      - keyword: AS
+      - declare_segment:
+          create_procedure_statement:
+          - keyword: PROCEDURE
+          - function_name:
+              function_name_identifier:
+                function_name_identifier: SendMessage
+          - keyword: IS
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                begin_end_block:
+                - keyword: BEGIN
+                - statement:
+                    null_statement:
+                      keyword: 'NULL'
+                - statement_terminator: ;
+                - keyword: EXCEPTION
+                - keyword: WHEN
+                - naked_identifier: UTL_SMTP
+                - dot: .
+                - naked_identifier: TRANSIENT_ERROR
+                - keyword: OR
+                - naked_identifier: UTL_SMTP
+                - dot: .
+                - naked_identifier: PERMANENT_ERROR
+                - keyword: THEN
+                - statement:
+                    null_statement:
+                      keyword: 'NULL'
+                - statement_terminator: ;
+                - keyword: END
+            - statement_terminator: ;
+            - keyword: EXCEPTION
+            - keyword: WHEN
+            - quoted_identifier: '"MailErrors"'
+            - dot: .
+            - quoted_identifier: '"TransientError"'
+            - keyword: OR
+            - quoted_identifier: '"MailErrors"'
+            - dot: .
+            - quoted_identifier: '"PermanentError"'
+            - keyword: THEN
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: WHEN
+            - keyword: OTHERS
+            - keyword: THEN
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - object_reference:
+                naked_identifier: SendMessage
+          - statement_terminator: ;
+      - keyword: END
+      - package_reference:
+          naked_identifier: pkg_test
+      - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
