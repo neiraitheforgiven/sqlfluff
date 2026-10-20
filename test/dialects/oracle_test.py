@@ -27,6 +27,38 @@ def _violations(sql: str) -> list:
     return violations
 
 
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "TO_NUMBER('invalid' DEFAULT NULL ON CONVERSION ERROR)",
+        "TO_NUMBER('invalid' DEFAULT 0 ON CONVERSION ERROR, '999')",
+        "TO_NUMBER(source_value DEFAULT fallback_value ON CONVERSION ERROR)",
+        "TO_DATE('invalid' DEFAULT '2020-01-01' ON CONVERSION ERROR, 'YYYY-MM-DD')",
+        "TO_TIMESTAMP('invalid' DEFAULT NULL ON CONVERSION ERROR)",
+        "TO_NUMBER(api.pkg_ColumnQuery.Value(a_ObjectId, c.SourceName) "
+        "DEFAULT NULL ON CONVERSION ERROR)",
+    ],
+)
+def test_conversion_error_defaults_parse(expression: str) -> None:
+    """Oracle conversion functions accept a default within their first argument."""
+    assert _violations(f"SELECT {expression} FROM dual;") == []
+
+
+def test_conversion_error_defaults_parse_in_package_body() -> None:
+    """A conversion default must not make an entire PL/SQL package unparsable."""
+    sql = (
+        "CREATE OR REPLACE PACKAGE BODY pkg_test IS\n"
+        "  PROCEDURE CopyValue(a_ObjectId NUMBER) IS\n"
+        "    t_Value NUMBER;\n"
+        "  BEGIN\n"
+        "    t_Value := TO_NUMBER(api.pkg_ColumnQuery.Value(a_ObjectId, 'Value')\n"
+        "        DEFAULT NULL ON CONVERSION ERROR);\n"
+        "  END CopyValue;\n"
+        "END pkg_test;\n/\n"
+    )
+    assert _violations(sql) == []
+
+
 # OraclePhysicalAttributesSegment - table-level attributes
 @pytest.mark.parametrize(
     "sql",

@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: f27d2ac48e3e23397450793ea84e32235f5ac2db87d49da27b1d79abb8009032
+_hash: b860947a969b808932bbaca982a6e5de5f763a40b120e45114744d9bf730c67d
 file:
 - batch:
     statement:
@@ -89,8 +89,8 @@ file:
                   data_type_identifier: INTEGER
                 end_bracket: )
           - keyword: RETURN
-          - data_type:
-              data_type_identifier: EmpRecTyp
+          - object_reference:
+              naked_identifier: EmpRecTyp
           - keyword: IS
           - begin_end_block:
             - declare_segment:

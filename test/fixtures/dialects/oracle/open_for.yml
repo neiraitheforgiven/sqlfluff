@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: c50da7442aa398dbc8542ae2edc030f98b1a19822d809d30a20d7eb2568ada60
+_hash: 1d7712009261caa065757511f82f96b1cf808bb90185a638e43d48b74a16fd9a
 file:
 - batch:
     statement:
@@ -276,32 +276,32 @@ file:
       - keyword: BEGIN
       - statement:
           assignment_segment_statement:
-          - object_reference:
-              naked_identifier: v1
-          - bracketed:
-              start_bracket: (
-              numeric_literal: '1'
-              end_bracket: )
-          - dot: .
-          - object_reference:
-              naked_identifier: f1
-          - assignment_operator: :=
-          - expression:
+            object_reference:
+            - naked_identifier: v1
+            - bracketed:
+                start_bracket: (
+                expression:
+                  numeric_literal: '1'
+                end_bracket: )
+            - dot: .
+            - naked_identifier: f1
+            assignment_operator: :=
+            expression:
               numeric_literal: '1'
       - statement_terminator: ;
       - statement:
           assignment_segment_statement:
-          - object_reference:
-              naked_identifier: v1
-          - bracketed:
-              start_bracket: (
-              numeric_literal: '1'
-              end_bracket: )
-          - dot: .
-          - object_reference:
-              naked_identifier: f2
-          - assignment_operator: :=
-          - expression:
+            object_reference:
+            - naked_identifier: v1
+            - bracketed:
+                start_bracket: (
+                expression:
+                  numeric_literal: '1'
+                end_bracket: )
+            - dot: .
+            - naked_identifier: f2
+            assignment_operator: :=
+            expression:
               quoted_literal: "'one'"
       - statement_terminator: ;
       - statement:

@@ -745,7 +745,17 @@ oracle_dialect.replace(
         Ref("OverClauseSegment", optional=True),
     ),
     FunctionContentsExpressionGrammar=OneOf(
-        Ref("ExpressionSegment"),
+        Sequence(
+            Ref("ExpressionSegment"),
+            Sequence(
+                "DEFAULT",
+                Ref("ExpressionSegment"),
+                "ON",
+                "CONVERSION",
+                "ERROR",
+                optional=True,
+            ),
+        ),
         Ref("NamedArgumentSegment"),
         Ref.keyword("DEFAULT"),
     ),

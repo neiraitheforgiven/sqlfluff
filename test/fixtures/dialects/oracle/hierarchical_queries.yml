@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 5da52345da94753d031efe94ef9ed7a0ad78d0f45d3de730ee28fedb5f2ef13f
+_hash: 70f20ba34cdbac7b681a4edd3ceea283f23258453ed0c2d275528e9a08380f53
 file:
   batch:
   - statement:
@@ -417,7 +417,8 @@ file:
         - comma: ','
         - select_clause_element:
             keyword: CONNECT_BY_ROOT
-            naked_identifier: last_name
+            object_reference:
+              naked_identifier: last_name
             alias_expression:
               quoted_identifier: '"Manager"'
         - comma: ','
@@ -527,7 +528,8 @@ file:
                     - keyword: SELECT
                     - select_clause_element:
                         keyword: CONNECT_BY_ROOT
-                        naked_identifier: last_name
+                        object_reference:
+                          naked_identifier: last_name
                         alias_expression:
                           alias_operator:
                             keyword: as

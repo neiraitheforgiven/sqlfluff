@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 498f5f82cdf5110a134959362d4d416c314b9d9647baa8736d074294cfe89c68
+_hash: fea5dcf06ab2e1a5011eec28403313190e9ac87ff9c04cd370cffa6a6d57bbbd
 file:
 - batch:
     statement:
@@ -220,10 +220,10 @@ file:
                   data_type_identifier: COLUMNS_T
               - end_bracket: )
           - keyword: RETURN
-          - data_type:
-              naked_identifier: DBMS_TF
-              dot: .
-              data_type_identifier: DESCRIBE_T
+          - object_reference:
+            - naked_identifier: DBMS_TF
+            - dot: .
+            - naked_identifier: DESCRIBE_T
           - statement_terminator: ;
         - create_function_statement:
           - keyword: FUNCTION
@@ -286,10 +286,10 @@ file:
                   quoted_literal: "'False'"
               - end_bracket: )
           - keyword: RETURN
-          - data_type:
-              naked_identifier: DBMS_TF
-              dot: .
-              data_type_identifier: DESCRIBE_T
+          - object_reference:
+            - naked_identifier: DBMS_TF
+            - dot: .
+            - naked_identifier: DESCRIBE_T
           - statement_terminator: ;
       - keyword: END
       - package_reference:
