@@ -1,0 +1,198 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: e2f30f76b3e5aac5e25ed1f69f7c3be73bb3e9e04f8714b619e4df1192b468b0
+file:
+- batch:
+    statement:
+      create_package_body_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: PACKAGE
+      - keyword: BODY
+      - package_reference:
+          naked_identifier: pkg_test
+      - keyword: IS
+      - declare_segment:
+          create_procedure_statement:
+          - keyword: PROCEDURE
+          - function_name:
+              function_name_identifier:
+                function_name_identifier: LogLocation
+          - keyword: IS
+          - declare_segment:
+              naked_identifier: t_Line
+              plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
+              assignment_operator: :=
+              expression:
+                inquiry_directive: $$PLSQL_LINE
+              statement_terminator: ;
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                function:
+                  function_name:
+                    naked_identifier: pkg_debug
+                    dot: .
+                    function_name_identifier:
+                      function_name_identifier: putline
+                  function_contents:
+                    bracketed:
+                      start_bracket: (
+                      expression:
+                        quoted_literal: "'Unit: '"
+                        binary_operator:
+                        - pipe: '|'
+                        - pipe: '|'
+                        inquiry_directive: $$plsql_unit
+                      end_bracket: )
+            - statement_terminator: ;
+            - statement:
+                function:
+                  function_name:
+                    naked_identifier: pkg_debug
+                    dot: .
+                    function_name_identifier:
+                      function_name_identifier: putline
+                  function_contents:
+                    bracketed:
+                      start_bracket: (
+                      expression:
+                        quoted_literal: "'Line: '"
+                        binary_operator:
+                        - pipe: '|'
+                        - pipe: '|'
+                        inquiry_directive: $$plsql_line
+                      end_bracket: )
+            - statement_terminator: ;
+            - statement:
+                function:
+                  function_name:
+                    naked_identifier: pkg_debug
+                    dot: .
+                    function_name_identifier:
+                      function_name_identifier: putline
+                  function_contents:
+                    bracketed:
+                      start_bracket: (
+                      expression:
+                      - inquiry_directive: $$PLSQL_UNIT_OWNER
+                      - binary_operator:
+                        - pipe: '|'
+                        - pipe: '|'
+                      - quoted_literal: "'.'"
+                      - binary_operator:
+                        - pipe: '|'
+                        - pipe: '|'
+                      - inquiry_directive: $$PLSQL_UNIT
+                      end_bracket: )
+            - statement_terminator: ;
+            - statement:
+                function:
+                  function_name:
+                    naked_identifier: pkg_debug
+                    dot: .
+                    function_name_identifier:
+                      function_name_identifier: putline
+                  function_contents:
+                    bracketed:
+                      start_bracket: (
+                      expression:
+                        inquiry_directive: $$PLSQL_UNIT_TYPE
+                      end_bracket: )
+            - statement_terminator: ;
+            - statement:
+                assignment_segment_statement:
+                  object_reference:
+                    naked_identifier: t_Line
+                  assignment_operator: :=
+                  expression:
+                    inquiry_directive: $$PLSQL_LINE
+                    binary_operator: +
+                    numeric_literal: '1'
+            - statement_terminator: ;
+            - keyword: END
+            - object_reference:
+                naked_identifier: LogLocation
+          - statement_terminator: ;
+      - keyword: END
+      - package_reference:
+          naked_identifier: pkg_test
+      - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      begin_end_block:
+      - keyword: BEGIN
+      - statement:
+          assignment_segment_statement:
+            object_reference:
+              naked_identifier: t_Enabled
+            assignment_operator: :=
+            expression:
+              inquiry_directive: $$custom_flag
+      - statement_terminator: ;
+      - statement:
+          assignment_segment_statement:
+            object_reference:
+              naked_identifier: t_Value
+            assignment_operator: :=
+            expression:
+              function:
+                function_name:
+                  function_name_identifier:
+                    function_name_identifier: NVL
+                function_contents:
+                  bracketed:
+                  - start_bracket: (
+                  - expression:
+                      inquiry_directive: $$custom_value
+                  - comma: ','
+                  - expression:
+                      numeric_literal: '0'
+                  - end_bracket: )
+      - statement_terminator: ;
+      - statement:
+          assignment_segment_statement:
+            object_reference:
+              naked_identifier: t_Result
+            assignment_operator: :=
+            expression:
+            - inquiry_directive: $$first_flag
+            - binary_operator:
+              - pipe: '|'
+              - pipe: '|'
+            - inquiry_directive: $$second_flag
+      - statement_terminator: ;
+      - statement:
+          assignment_segment_statement:
+            object_reference:
+              naked_identifier: t_Identifier
+            assignment_operator: :=
+            expression:
+              inquiry_directive: $$flag_with_$#
+      - statement_terminator: ;
+      - statement:
+          function:
+            function_name:
+              naked_identifier: pkg_debug
+              dot: .
+              function_name_identifier:
+                function_name_identifier: putline
+            function_contents:
+              bracketed:
+                start_bracket: (
+                expression:
+                  quoted_literal: "'$$PLSQL_UNIT'"
+                end_bracket: )
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /

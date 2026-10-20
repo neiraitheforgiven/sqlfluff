@@ -119,6 +119,17 @@ oracle_dialect.patch_lexer_matchers(
 oracle_dialect.insert_lexer_matchers(
     [
         RegexLexer(
+            "inquiry_directive",
+            r"\$\$[\p{L}][\p{L}\p{N}_$#]*",
+            CodeSegment,
+        ),
+    ],
+    before="dollar_quote",
+)
+
+oracle_dialect.insert_lexer_matchers(
+    [
+        RegexLexer(
             "prompt_command",
             r"PROMPT([^(\r\n)])*((?=\n)|(?=\r\n))?",
             CommentSegment,
@@ -145,6 +156,9 @@ oracle_dialect.insert_lexer_matchers(
 )
 
 oracle_dialect.add(
+    InquiryDirectiveSegment=TypedParser(
+        "inquiry_directive", LiteralSegment, type="inquiry_directive"
+    ),
     SequencePseudocolumnGrammar=OneOf(
         # 3-part: schema.sequence.{NEXTVAL|CURRVAL}
         Sequence(
@@ -788,6 +802,7 @@ oracle_dialect.replace(
     ),
     LiteralGrammar=ansi_dialect.get_grammar("LiteralGrammar").copy(
         insert=[
+            Ref("InquiryDirectiveSegment"),
             Ref("TriggerCorrelationReferenceSegment"),
             Ref("BindVariableSegment"),
             Ref.keyword("LEVEL"),
