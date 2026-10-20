@@ -791,6 +791,9 @@ oracle_dialect.replace(
         ),
         Ref("AliasExpressionSegment", optional=True),
     ),
+    SelectableGrammar=ansi_dialect.get_grammar("SelectableGrammar").copy(
+        insert=[Ref("ParenthesizedQuerySegment")],
+    ),
     LiteralGrammar=ansi_dialect.get_grammar("LiteralGrammar").copy(
         insert=[
             Ref("InquiryDirectiveSegment"),
@@ -1919,6 +1922,19 @@ class SelectStatementSegment(ansi.SelectStatementSegment):
             Ref("WithDataClauseSegment"),
             "LOG",
         ],
+    )
+
+
+class ParenthesizedQuerySegment(BaseSegment):
+    """A parenthesized Oracle query with an outer ORDER BY clause."""
+
+    type = "select_statement"
+
+    match_grammar = Sequence(
+        Bracketed(Ref("SelectableGrammar")),
+        Ref("OrderByClauseSegment"),
+        Ref("FetchClauseSegment", optional=True),
+        Ref("ForUpdateGrammar", optional=True),
     )
 
 
@@ -3232,11 +3248,17 @@ class DeclareCursorVariableSegment(BaseSegment):
             "IS",
             Indent,
             OneOf(
+                Ref("ParenthesizedQuerySegment"),
                 Ref("SetExpressionSegment"),
                 Ref("SelectStatementSegment"),
                 Ref("WithCompoundStatementSegment"),
                 Bracketed(Ref("SetExpressionSegment")),
-                Bracketed(Ref("SelectStatementSegment")),
+                Bracketed(
+                    OneOf(
+                        Ref("ParenthesizedQuerySegment"),
+                        Ref("SelectStatementSegment"),
+                    )
+                ),
             ),
             Dedent,
             optional=True,
@@ -4210,7 +4232,12 @@ class ForLoopStatementSegment(BaseSegment):
                         "OF",
                         Ref("SingleIdentifierGrammar"),
                     ),
-                    Bracketed(Ref("SelectStatementSegment")),
+                    Bracketed(
+                        OneOf(
+                            Ref("ParenthesizedQuerySegment"),
+                            Ref("SelectStatementSegment"),
+                        )
+                    ),
                 ),
                 Sequence("WHILE", Ref("ExpressionSegment"), optional=True),
                 Sequence("WHEN", Ref("ExpressionSegment"), optional=True),
@@ -4328,6 +4355,7 @@ class OpenForStatementSegment(BaseSegment):
         "FOR",
         OneOf(
             Ref("SingleQuotedIdentifierSegment"),
+            Ref("ParenthesizedQuerySegment"),
             Ref("SelectStatementSegment"),
             Ref("SingleIdentifierGrammar"),
         ),

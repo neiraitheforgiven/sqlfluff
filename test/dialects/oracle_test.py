@@ -28,6 +28,19 @@ def _violations(sql: str) -> list:
 
 
 @pytest.mark.parametrize(
+    "suffix",
+    [
+        "ORDER BY",
+        "ORDER BY id WHERE id > 0",
+        "ORDER BY id FETCH FIRST 5 ROWS",
+    ],
+)
+def test_malformed_parenthesized_query_order_by_rejected(suffix: str) -> None:
+    """Outer query clauses must still be complete and in the correct order."""
+    assert _violations(f"(SELECT id FROM records) {suffix};")
+
+
+@pytest.mark.parametrize(
     "condition",
     [
         "UTL_SMTP.TRANSIENT_ERROR OR",

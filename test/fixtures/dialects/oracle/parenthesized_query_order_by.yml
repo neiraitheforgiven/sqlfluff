@@ -1,0 +1,392 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: ab99dee664d337b411b0ac480e749da985ba427aec53b2e5c8ba488fe75e3d6e
+file:
+- batch:
+  - statement:
+      select_statement:
+        bracketed:
+          start_bracket: (
+          select_statement:
+            select_clause:
+              keyword: SELECT
+              select_clause_element:
+                column_reference:
+                  naked_identifier: id
+            from_clause:
+              keyword: FROM
+              from_expression:
+                from_expression_element:
+                  table_expression:
+                    table_reference:
+                      naked_identifier: records
+          end_bracket: )
+        orderby_clause:
+        - keyword: ORDER
+        - keyword: BY
+        - column_reference:
+            naked_identifier: id
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        bracketed:
+          start_bracket: (
+          bracketed:
+            start_bracket: (
+            select_statement:
+              select_clause:
+                keyword: SELECT
+                select_clause_element:
+                  column_reference:
+                    naked_identifier: id
+              from_clause:
+                keyword: FROM
+                from_expression:
+                  from_expression_element:
+                    table_expression:
+                      table_reference:
+                        naked_identifier: records
+            end_bracket: )
+          end_bracket: )
+        orderby_clause:
+        - keyword: ORDER
+        - keyword: BY
+        - column_reference:
+            naked_identifier: id
+        - keyword: DESC
+        - keyword: NULLS
+        - keyword: LAST
+        fetch_clause:
+        - keyword: FETCH
+        - keyword: FIRST
+        - numeric_literal: '5'
+        - keyword: ROWS
+        - keyword: ONLY
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        bracketed:
+          start_bracket: (
+          set_expression:
+          - select_statement:
+              select_clause:
+                keyword: SELECT
+                select_clause_element:
+                  column_reference:
+                    naked_identifier: id
+              from_clause:
+                keyword: FROM
+                from_expression:
+                  from_expression_element:
+                    table_expression:
+                      table_reference:
+                        naked_identifier: records
+          - set_operator:
+            - keyword: UNION
+            - keyword: ALL
+          - select_statement:
+              select_clause:
+                keyword: SELECT
+                select_clause_element:
+                  column_reference:
+                    naked_identifier: id
+              from_clause:
+                keyword: FROM
+                from_expression:
+                  from_expression_element:
+                    table_expression:
+                      table_reference:
+                        naked_identifier: archived_records
+          end_bracket: )
+        orderby_clause:
+        - keyword: ORDER
+        - keyword: BY
+        - column_reference:
+            naked_identifier: id
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+              naked_identifier: id
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                  naked_identifier: records
+        where_clause:
+          keyword: WHERE
+          expression:
+            column_reference:
+              naked_identifier: id
+            comparison_operator:
+              raw_comparison_operator: '>'
+            bracketed:
+              start_bracket: (
+              expression:
+                select_statement:
+                  select_clause:
+                    keyword: SELECT
+                    select_clause_element:
+                      function:
+                        function_name:
+                          function_name_identifier:
+                            function_name_identifier: MIN
+                        function_contents:
+                          bracketed:
+                            start_bracket: (
+                            expression:
+                              column_reference:
+                                naked_identifier: id
+                            end_bracket: )
+                  from_clause:
+                    keyword: FROM
+                    from_expression:
+                      from_expression_element:
+                        table_expression:
+                          table_reference:
+                            naked_identifier: archived_records
+              end_bracket: )
+        orderby_clause:
+        - keyword: ORDER
+        - keyword: BY
+        - column_reference:
+            naked_identifier: id
+  - statement_terminator: ;
+  - statement:
+      begin_end_block:
+      - declare_segment:
+          keyword: DECLARE
+          cursor_variable:
+          - keyword: CURSOR
+          - naked_identifier: c_records
+          - keyword: IS
+          - select_statement:
+              bracketed:
+                start_bracket: (
+                select_statement:
+                  select_clause:
+                  - keyword: SELECT
+                  - select_clause_element:
+                      column_reference:
+                        naked_identifier: id
+                  - comma: ','
+                  - select_clause_element:
+                      column_reference:
+                        naked_identifier: expiry_date
+                  from_clause:
+                    keyword: FROM
+                    from_expression:
+                      from_expression_element:
+                        table_expression:
+                          table_reference:
+                            naked_identifier: records
+                  where_clause:
+                    keyword: WHERE
+                    expression:
+                      column_reference:
+                        naked_identifier: expiry_date
+                      comparison_operator:
+                      - raw_comparison_operator: <
+                      - raw_comparison_operator: '='
+                      function:
+                        function_name:
+                          function_name_identifier:
+                            function_name_identifier: TRUNC
+                        function_contents:
+                          bracketed:
+                            start_bracket: (
+                            expression:
+                              bare_function: SYSDATE
+                            end_bracket: )
+                end_bracket: )
+              orderby_clause:
+              - keyword: ORDER
+              - keyword: BY
+              - column_reference:
+                  naked_identifier: expiry_date
+          - statement_terminator: ;
+      - keyword: BEGIN
+      - statement:
+          for_loop_statement:
+          - keyword: FOR
+          - naked_identifier: r
+          - keyword: IN
+          - expression:
+              column_reference:
+                naked_identifier: c_records
+          - loop_statement:
+            - keyword: LOOP
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - keyword: LOOP
+      - statement_terminator: ;
+      - keyword: END
+  - statement_terminator: ;
+  - slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      create_package_body_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: PACKAGE
+      - keyword: BODY
+      - package_reference:
+          naked_identifier: pkg_test
+      - keyword: IS
+      - declare_segment:
+          create_procedure_statement:
+          - keyword: PROCEDURE
+          - function_name:
+              function_name_identifier:
+                function_name_identifier: ReadRecords
+          - keyword: IS
+          - declare_segment:
+              cursor_variable:
+              - keyword: CURSOR
+              - naked_identifier: c_records
+              - keyword: IS
+              - select_statement:
+                  bracketed:
+                    start_bracket: (
+                    with_compound_statement:
+                      keyword: WITH
+                      common_table_expression:
+                        naked_identifier: recent
+                        keyword: AS
+                        bracketed:
+                          start_bracket: (
+                          select_statement:
+                            select_clause:
+                              keyword: SELECT
+                              select_clause_element:
+                                column_reference:
+                                  naked_identifier: id
+                            from_clause:
+                              keyword: FROM
+                              from_expression:
+                                from_expression_element:
+                                  table_expression:
+                                    table_reference:
+                                      naked_identifier: records
+                          end_bracket: )
+                      select_statement:
+                        select_clause:
+                          keyword: SELECT
+                          select_clause_element:
+                            column_reference:
+                              naked_identifier: id
+                        from_clause:
+                          keyword: FROM
+                          from_expression:
+                            from_expression_element:
+                              table_expression:
+                                table_reference:
+                                  naked_identifier: recent
+                    end_bracket: )
+                  orderby_clause:
+                  - keyword: ORDER
+                  - keyword: BY
+                  - column_reference:
+                      naked_identifier: id
+              - statement_terminator: ;
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                for_loop_statement:
+                - keyword: FOR
+                - naked_identifier: r
+                - keyword: IN
+                - expression:
+                    bracketed:
+                      start_bracket: (
+                      select_statement:
+                        bracketed:
+                          start_bracket: (
+                          select_statement:
+                            select_clause:
+                              keyword: SELECT
+                              select_clause_element:
+                                column_reference:
+                                  naked_identifier: id
+                            from_clause:
+                              keyword: FROM
+                              from_expression:
+                                from_expression_element:
+                                  table_expression:
+                                    table_reference:
+                                      naked_identifier: records
+                          end_bracket: )
+                        orderby_clause:
+                        - keyword: ORDER
+                        - keyword: BY
+                        - column_reference:
+                            naked_identifier: id
+                      end_bracket: )
+                - loop_statement:
+                  - keyword: LOOP
+                  - statement:
+                      null_statement:
+                        keyword: 'NULL'
+                  - statement_terminator: ;
+                  - keyword: END
+                  - keyword: LOOP
+            - statement_terminator: ;
+            - keyword: END
+            - object_reference:
+                naked_identifier: ReadRecords
+          - statement_terminator: ;
+      - keyword: END
+      - package_reference:
+          naked_identifier: pkg_test
+      - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      begin_end_block:
+      - keyword: BEGIN
+      - statement:
+          open_for_statement:
+          - keyword: OPEN
+          - naked_identifier: c_records
+          - keyword: FOR
+          - select_statement:
+              bracketed:
+                start_bracket: (
+                select_statement:
+                  select_clause:
+                    keyword: SELECT
+                    select_clause_element:
+                      column_reference:
+                        naked_identifier: id
+                  from_clause:
+                    keyword: FROM
+                    from_expression:
+                      from_expression_element:
+                        table_expression:
+                          table_reference:
+                            naked_identifier: records
+                end_bracket: )
+              orderby_clause:
+              - keyword: ORDER
+              - keyword: BY
+              - column_reference:
+                  naked_identifier: id
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
