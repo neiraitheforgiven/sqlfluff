@@ -1,0 +1,220 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: dbb150ee51eee9fad6366725320ac78905dcef85c376b090fe5ab02d1039e27a
+file:
+- batch:
+    statement:
+      begin_end_block:
+      - keyword: BEGIN
+      - statement:
+          for_loop_statement:
+          - keyword: FOR
+          - naked_identifier: i
+          - keyword: IN
+          - expression:
+              numeric_literal: '1'
+          - dot: .
+          - dot: .
+          - expression:
+              numeric_literal: '10000'
+          - loop_statement:
+            - keyword: LOOP
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - keyword: LOOP
+      - statement_terminator: ;
+      - statement:
+          for_loop_statement:
+          - keyword: FOR
+          - naked_identifier: i
+          - keyword: IN
+          - keyword: REVERSE
+          - expression:
+              numeric_literal: '1'
+          - dot: .
+          - dot: .
+          - expression:
+              numeric_literal: '100'
+          - loop_statement:
+            - keyword: LOOP
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - keyword: LOOP
+      - statement_terminator: ;
+      - statement:
+          for_loop_statement:
+          - keyword: FOR
+          - naked_identifier: i
+          - keyword: IN
+          - expression:
+              numeric_literal: '1'
+          - dot: .
+          - dot: .
+          - expression:
+              numeric_literal: '100'
+          - loop_statement:
+            - keyword: LOOP
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - keyword: LOOP
+      - statement_terminator: ;
+      - statement:
+          for_loop_statement:
+          - keyword: FOR
+          - naked_identifier: i
+          - keyword: IN
+          - expression:
+              numeric_literal: '1'
+          - dot: .
+          - dot: .
+          - expression:
+              numeric_literal: '100'
+          - loop_statement:
+            - keyword: LOOP
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - keyword: LOOP
+      - statement_terminator: ;
+      - statement:
+          for_loop_statement:
+          - keyword: FOR
+          - naked_identifier: i
+          - keyword: IN
+          - expression:
+              numeric_literal:
+                sign_indicator: '-'
+                numeric_literal: '3'
+          - dot: .
+          - dot: .
+          - expression:
+              numeric_literal:
+                sign_indicator: '-'
+                numeric_literal: '1'
+          - loop_statement:
+            - keyword: LOOP
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - keyword: LOOP
+      - statement_terminator: ;
+      - statement:
+          for_loop_statement:
+          - keyword: FOR
+          - naked_identifier: i
+          - keyword: IN
+          - expression:
+              numeric_literal: '1.0'
+          - dot: .
+          - dot: .
+          - expression:
+              numeric_literal: '3.0'
+          - loop_statement:
+            - keyword: LOOP
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - keyword: LOOP
+      - statement_terminator: ;
+      - statement:
+          for_loop_statement:
+          - keyword: FOR
+          - naked_identifier: i
+          - keyword: IN
+          - expression:
+              column_reference:
+              - naked_identifier: 1e0
+              - dot: .
+              - dot: .
+              - naked_identifier: 3e0
+          - loop_statement:
+            - keyword: LOOP
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - keyword: LOOP
+      - statement_terminator: ;
+      - statement:
+          forall_statement:
+          - keyword: FORALL
+          - naked_identifier: i
+          - keyword: IN
+          - expression:
+              numeric_literal: '1'
+          - dot: .
+          - dot: .
+          - expression:
+              numeric_literal: '3'
+          - insert_statement:
+            - keyword: INSERT
+            - keyword: INTO
+            - table_reference:
+                naked_identifier: t_demo
+            - bracketed:
+                start_bracket: (
+                column_reference:
+                  naked_identifier: value
+                end_bracket: )
+            - values_clause:
+                keyword: VALUES
+                bracketed:
+                  start_bracket: (
+                  expression:
+                    column_reference:
+                      naked_identifier: i
+                  end_bracket: )
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      select_statement:
+        select_clause:
+        - keyword: SELECT
+        - select_clause_element:
+            numeric_literal: '0.5'
+        - comma: ','
+        - select_clause_element:
+            numeric_literal: '.5'
+        - comma: ','
+        - select_clause_element:
+            numeric_literal: '1.25'
+        - comma: ','
+        - select_clause_element:
+            numeric_literal: 1e2
+        - comma: ','
+        - select_clause_element:
+            numeric_literal: 1.e2
+        - comma: ','
+        - select_clause_element:
+            numeric_literal: '1.5e-2'
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                  naked_identifier: dual
+    statement_terminator: ;

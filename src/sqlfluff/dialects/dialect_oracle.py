@@ -118,6 +118,20 @@ oracle_dialect.patch_lexer_matchers(
 
 oracle_dialect.insert_lexer_matchers(
     [
+        # Consume a range before its second dot can start a decimal literal.
+        # Keep separate dot tokens for the existing iteration-bound grammar.
+        StringLexer(
+            "range_operator",
+            "..",
+            CodeSegment,
+            subdivider=StringLexer("dot", ".", CodeSegment),
+        ),
+    ],
+    before="numeric_literal",
+)
+
+oracle_dialect.insert_lexer_matchers(
+    [
         RegexLexer(
             "inquiry_directive",
             r"\$\$[\p{L}][\p{L}\p{N}_$#]*",
