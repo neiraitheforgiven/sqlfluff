@@ -906,6 +906,15 @@ oracle_dialect.replace(
         Ref("AccessorGrammar", optional=True),
         allow_gaps=True,
     ),
+    # Oracle record and object fields can be read directly from a function result.
+    AccessorGrammar=AnyNumberOf(
+        Ref("ArrayAccessorSegment"),
+        Sequence(
+            Ref("DotSegment"),
+            Ref("SingleIdentifierGrammar"),
+            allow_gaps=False,
+        ),
+    ),
     DateTimeLiteralGrammar=Sequence(
         OneOf("DATE", "TIME", "TIMESTAMP", "INTERVAL"),
         TypedParser("single_quote", LiteralSegment, type="date_constructor_literal"),

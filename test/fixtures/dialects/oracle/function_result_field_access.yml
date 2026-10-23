@@ -1,0 +1,306 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: a0217be325005904669dbf3ac0b1d9df6dfff3a6e3cfdac3efc1445dfffee7a2
+file:
+  batch:
+    statement:
+      create_package_body_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: PACKAGE
+      - keyword: BODY
+      - package_reference:
+          naked_identifier: pkg_result_access
+      - keyword: AS
+      - declare_segment:
+        - create_function_statement:
+          - keyword: FUNCTION
+          - function_name:
+              function_name_identifier:
+                function_name_identifier: ReadFee
+          - function_parameter_list:
+              bracketed:
+                start_bracket: (
+                parameter: a_ClientObjectId
+                data_type:
+                  data_type_identifier: NUMBER
+                end_bracket: )
+          - keyword: RETURN
+          - data_type:
+              data_type_identifier: NUMBER
+          - keyword: IS
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                return_statement:
+                  keyword: RETURN
+                  expression:
+                    function:
+                      function_name:
+                        function_name_identifier:
+                          function_name_identifier: GetFees
+                      function_contents:
+                        bracketed:
+                        - start_bracket: (
+                        - expression:
+                            column_reference:
+                              naked_identifier: a_ClientObjectId
+                        - comma: ','
+                        - expression:
+                            quoted_literal: "'GR'"
+                        - end_bracket: )
+                    dot: .
+                    naked_identifier: Fee
+            - statement_terminator: ;
+            - keyword: END
+            - object_reference:
+                naked_identifier: ReadFee
+          - statement_terminator: ;
+        - create_function_statement:
+          - keyword: FUNCTION
+          - function_name:
+              function_name_identifier:
+                function_name_identifier: ReadQuantity
+          - function_parameter_list:
+              bracketed:
+                start_bracket: (
+                parameter: a_ClientObjectId
+                data_type:
+                  data_type_identifier: NUMBER
+                end_bracket: )
+          - keyword: RETURN
+          - data_type:
+              data_type_identifier: NUMBER
+          - keyword: IS
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                return_statement:
+                  keyword: RETURN
+                  expression:
+                    function:
+                      function_name:
+                        function_name_identifier:
+                          function_name_identifier: GetFees
+                      function_contents:
+                        bracketed:
+                        - start_bracket: (
+                        - expression:
+                            column_reference:
+                              naked_identifier: a_ClientObjectId
+                        - comma: ','
+                        - expression:
+                            quoted_literal: "'PCL'"
+                        - end_bracket: )
+                    dot: .
+                    naked_identifier: Quantity
+            - statement_terminator: ;
+            - keyword: END
+            - object_reference:
+                naked_identifier: ReadQuantity
+          - statement_terminator: ;
+        - create_procedure_statement:
+          - keyword: PROCEDURE
+          - function_name:
+              function_name_identifier:
+                function_name_identifier: UseFees
+          - keyword: IS
+          - declare_segment:
+              naked_identifier: t_Amount
+              plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
+              statement_terminator: ;
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                assignment_segment_statement:
+                  object_reference:
+                    naked_identifier: t_Amount
+                  assignment_operator: :=
+                  expression:
+                    column_reference:
+                    - naked_identifier: api
+                    - dot: .
+                    - naked_identifier: pkg_Fees
+                    - dot: .
+                    - naked_identifier: GetFees
+                    - bracketed:
+                        start_bracket: (
+                        expression:
+                          numeric_literal: '1'
+                        end_bracket: )
+                    - dot: .
+                    - naked_identifier: Fee
+            - statement_terminator: ;
+            - statement:
+                assignment_segment_statement:
+                  object_reference:
+                    naked_identifier: t_Amount
+                  assignment_operator: :=
+                  expression:
+                    object_reference:
+                    - naked_identifier: GetResult
+                    - bracketed:
+                        start_bracket: (
+                        end_bracket: )
+                    - dot: .
+                    - naked_identifier: Details
+                    dot: .
+            - statement:
+                procedure_call_statement:
+                  naked_identifier: Fee
+            - statement_terminator: ;
+            - statement:
+                assignment_segment_statement:
+                  object_reference:
+                    naked_identifier: t_Amount
+                  assignment_operator: :=
+                  expression:
+                    column_reference:
+                      naked_identifier: GetResult
+                      bracketed:
+                        start_bracket: (
+                        end_bracket: )
+                      dot: .
+                      quoted_identifier: '"Fee"'
+            - statement_terminator: ;
+            - statement:
+                assignment_segment_statement:
+                  object_reference:
+                    naked_identifier: t_Amount
+                  assignment_operator: :=
+                  expression:
+                    function:
+                      function_name:
+                        function_name_identifier:
+                          function_name_identifier: NVL
+                      function_contents:
+                        bracketed:
+                        - start_bracket: (
+                        - expression:
+                            function:
+                              function_name:
+                                function_name_identifier:
+                                  function_name_identifier: GetFees
+                              function_contents:
+                                bracketed:
+                                - start_bracket: (
+                                - expression:
+                                    numeric_literal: '1'
+                                - comma: ','
+                                - expression:
+                                    quoted_literal: "'GR'"
+                                - end_bracket: )
+                            dot: .
+                            naked_identifier: Fee
+                        - comma: ','
+                        - expression:
+                            numeric_literal: '0'
+                        - end_bracket: )
+            - statement_terminator: ;
+            - statement:
+                assignment_segment_statement:
+                  object_reference:
+                    naked_identifier: t_Amount
+                  assignment_operator: :=
+                  expression:
+                  - function:
+                      function_name:
+                        function_name_identifier:
+                          function_name_identifier: GetFees
+                      function_contents:
+                        bracketed:
+                        - start_bracket: (
+                        - expression:
+                            numeric_literal: '1'
+                        - comma: ','
+                        - expression:
+                            quoted_literal: "'GR'"
+                        - end_bracket: )
+                  - dot: .
+                  - naked_identifier: Fee
+                  - binary_operator: +
+                  - function:
+                      function_name:
+                        function_name_identifier:
+                          function_name_identifier: GetFees
+                      function_contents:
+                        bracketed:
+                        - start_bracket: (
+                        - expression:
+                            numeric_literal: '2'
+                        - comma: ','
+                        - expression:
+                            quoted_literal: "'PCL'"
+                        - end_bracket: )
+                  - dot: .
+                  - naked_identifier: Fee
+            - statement_terminator: ;
+            - statement:
+                if_then_statement:
+                - if_clause:
+                  - keyword: IF
+                  - expression:
+                      function:
+                        function_name:
+                          function_name_identifier:
+                            function_name_identifier: GetFees
+                        function_contents:
+                          bracketed:
+                          - start_bracket: (
+                          - expression:
+                              numeric_literal: '1'
+                          - comma: ','
+                          - expression:
+                              quoted_literal: "'GR'"
+                          - end_bracket: )
+                      dot: .
+                      naked_identifier: Fee
+                      comparison_operator:
+                        raw_comparison_operator: '>'
+                      numeric_literal: '0'
+                  - keyword: THEN
+                - statement:
+                    function:
+                      function_name:
+                        function_name_identifier:
+                          function_name_identifier: ProcessFee
+                      function_contents:
+                        bracketed:
+                          start_bracket: (
+                          expression:
+                            function:
+                              function_name:
+                                function_name_identifier:
+                                  function_name_identifier: GetFees
+                              function_contents:
+                                bracketed:
+                                - start_bracket: (
+                                - expression:
+                                    numeric_literal: '1'
+                                - comma: ','
+                                - expression:
+                                    quoted_literal: "'GR'"
+                                - end_bracket: )
+                            dot: .
+                            naked_identifier: Fee
+                          end_bracket: )
+                - statement_terminator: ;
+                - keyword: END
+                - keyword: IF
+            - statement_terminator: ;
+            - keyword: END
+            - object_reference:
+                naked_identifier: UseFees
+          - statement_terminator: ;
+      - keyword: END
+      - package_reference:
+          naked_identifier: pkg_result_access
+      - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /

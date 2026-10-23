@@ -97,6 +97,12 @@ def test_malformed_delete_alias_without_from_rejected(alias: str) -> None:
     )
 
 
+@pytest.mark.parametrize("suffix", [".", "..Fee", ".Fee."])
+def test_malformed_function_result_field_access_rejected(suffix: str) -> None:
+    """Each dot after a function call must introduce a complete field name."""
+    assert _violations(f"BEGIN t_Amount := GetFees(1, 'GR'){suffix}; END;\n/\n")
+
+
 # OraclePhysicalAttributesSegment - table-level attributes
 @pytest.mark.parametrize(
     "sql",
