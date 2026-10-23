@@ -89,6 +89,14 @@ def test_conversion_error_defaults_parse_in_package_body() -> None:
     assert _violations(sql) == []
 
 
+@pytest.mark.parametrize("alias", ["AS q", "q r"])
+def test_malformed_delete_alias_without_from_rejected(alias: str) -> None:
+    """A FROM-less DELETE accepts a single implicit table alias."""
+    assert _violations(
+        f"DELETE BillingRunObject_t {alias} WHERE billingrunjobid = a_JobId;"
+    )
+
+
 # OraclePhysicalAttributesSegment - table-level attributes
 @pytest.mark.parametrize(
     "sql",

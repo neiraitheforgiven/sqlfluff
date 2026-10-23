@@ -4615,6 +4615,8 @@ class UpdateStatementSegment(ansi.UpdateStatementSegment):
 class DeleteStatementSegment(ansi.DeleteStatementSegment):
     """A `DELETE` statement.
 
+    FROM is optional, including when the target table has an implicit alias.
+
     https://docs.oracle.com/en/database/oracle/oracle-database/26/sqlrf/DELETE.html
     """
 
@@ -4622,7 +4624,14 @@ class DeleteStatementSegment(ansi.DeleteStatementSegment):
         "DELETE",
         OneOf(
             Ref("FromClauseSegment"),
-            Ref("TableReferenceSegment"),
+            Sequence(
+                Ref("TableReferenceSegment"),
+                Ref(
+                    "AliasExpressionSegment",
+                    exclude=Ref.keyword("AS"),
+                    optional=True,
+                ),
+            ),
         ),
         Ref("WhereClauseSegment", optional=True),
         Ref("ReturningClauseSegment", optional=True),

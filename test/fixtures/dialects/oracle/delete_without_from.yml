@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 9ed270a06bfab174111ff779fd000be32bd2c00539297996cd52ba2cc51d5792
+_hash: 017ea4cdece0b70d7159181f619174d54ba6d3709c6f2ca6553b30d535a8c6d6
 file:
   batch:
   - statement:
@@ -45,3 +45,119 @@ file:
           - column_reference:
               naked_identifier: a_ObjectId
   - statement_terminator: ;
+  - statement:
+      delete_statement:
+        keyword: DELETE
+        table_reference:
+          naked_identifier: BillingRunObject_t
+        alias_expression:
+          naked_identifier: q
+        where_clause:
+          keyword: WHERE
+          expression:
+          - column_reference:
+            - naked_identifier: q
+            - dot: .
+            - naked_identifier: billingrunjobid
+          - comparison_operator:
+              raw_comparison_operator: '='
+          - column_reference:
+              naked_identifier: a_JobId
+  - statement_terminator: ;
+  - statement:
+      delete_statement:
+        keyword: DELETE
+        table_reference:
+        - naked_identifier: app
+        - dot: .
+        - naked_identifier: BillingRunObject_t
+        alias_expression:
+          quoted_identifier: '"q"'
+        where_clause:
+          keyword: WHERE
+          expression:
+          - column_reference:
+              quoted_identifier: '"q"'
+              dot: .
+              naked_identifier: billingrunjobid
+          - comparison_operator:
+              raw_comparison_operator: '='
+          - column_reference:
+              naked_identifier: a_JobId
+  - statement_terminator: ;
+  - statement:
+      delete_statement:
+        keyword: DELETE
+        table_reference:
+        - naked_identifier: BillingRunObject_t
+        - at_sign: '@'
+        - naked_identifier: remote_db
+        alias_expression:
+          naked_identifier: q
+        where_clause:
+          keyword: WHERE
+          expression:
+          - column_reference:
+            - naked_identifier: q
+            - dot: .
+            - naked_identifier: billingrunjobid
+          - comparison_operator:
+              raw_comparison_operator: '='
+          - column_reference:
+              naked_identifier: a_JobId
+  - statement_terminator: ;
+  - statement:
+      delete_statement:
+        keyword: DELETE
+        table_reference:
+          naked_identifier: BillingRunObject_t
+        alias_expression:
+          naked_identifier: q
+        where_clause:
+          keyword: WHERE
+          expression:
+          - column_reference:
+            - naked_identifier: q
+            - dot: .
+            - naked_identifier: billingrunjobid
+          - comparison_operator:
+              raw_comparison_operator: '='
+          - column_reference:
+              naked_identifier: a_JobId
+        returning_clause:
+          keyword: RETURNING
+          expression:
+            column_reference:
+            - naked_identifier: q
+            - dot: .
+            - naked_identifier: ReferenceObjectId
+          into_clause:
+            keyword: INTO
+            naked_identifier: t_ReferenceObjectId
+  - statement_terminator: ;
+  - statement:
+      begin_end_block:
+      - keyword: BEGIN
+      - statement:
+          delete_statement:
+            keyword: DELETE
+            table_reference:
+              naked_identifier: BillingRunObject_t
+            alias_expression:
+              naked_identifier: q
+            where_clause:
+              keyword: WHERE
+              expression:
+              - column_reference:
+                - naked_identifier: q
+                - dot: .
+                - naked_identifier: billingrunjobid
+              - comparison_operator:
+                  raw_comparison_operator: '='
+              - column_reference:
+                  naked_identifier: a_JobId
+      - statement_terminator: ;
+      - keyword: END
+  - statement_terminator: ;
+  - slash_buffer_executor:
+      slash: /
