@@ -1,0 +1,124 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: eea44750a2a73a89d84c0848f76d0749c8db201b30b9dc4d515888d18a32ae8c
+file:
+  batch:
+  - statement:
+      select_statement:
+        select_clause:
+        - keyword: SELECT
+        - select_clause_element:
+            function:
+              function_name:
+                function_name_identifier: TO_NUMBER
+              function_contents:
+                bracketed:
+                - start_bracket: (
+                - expression:
+                    quoted_literal: "'invalid'"
+                - keyword: DEFAULT
+                - expression:
+                    null_literal: 'NULL'
+                - keyword: 'ON'
+                - keyword: CONVERSION
+                - keyword: ERROR
+                - end_bracket: )
+        - comma: ','
+        - select_clause_element:
+            function:
+              function_name:
+                function_name_identifier: TO_NUMBER
+              function_contents:
+                bracketed:
+                - start_bracket: (
+                - expression:
+                    quoted_literal: "'invalid'"
+                - keyword: DEFAULT
+                - expression:
+                    numeric_literal: '0'
+                - keyword: 'ON'
+                - keyword: CONVERSION
+                - keyword: ERROR
+                - comma: ','
+                - expression:
+                    quoted_literal: "'999'"
+                - end_bracket: )
+        - comma: ','
+        - select_clause_element:
+            function:
+              function_name:
+                function_name_identifier: TO_DATE
+              function_contents:
+                bracketed:
+                - start_bracket: (
+                - expression:
+                    quoted_literal: "'invalid'"
+                - keyword: DEFAULT
+                - expression:
+                    quoted_literal: "'2020-01-01'"
+                - keyword: 'ON'
+                - keyword: CONVERSION
+                - keyword: ERROR
+                - comma: ','
+                - expression:
+                    quoted_literal: "'YYYY-MM-DD'"
+                - end_bracket: )
+        - comma: ','
+        - select_clause_element:
+            function:
+              function_name:
+                function_name_identifier: TO_TIMESTAMP
+              function_contents:
+                bracketed:
+                - start_bracket: (
+                - expression:
+                    quoted_literal: "'invalid'"
+                - keyword: DEFAULT
+                - expression:
+                    null_literal: 'NULL'
+                - keyword: 'ON'
+                - keyword: CONVERSION
+                - keyword: ERROR
+                - end_bracket: )
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                  naked_identifier: dual
+  - statement_terminator: ;
+  - statement:
+      begin_end_block:
+      - keyword: BEGIN
+      - statement:
+          assignment_segment_statement:
+            object_reference:
+              naked_identifier: v_value
+            assignment_operator: :=
+            expression:
+              function:
+                function_name:
+                  function_name_identifier: TO_NUMBER
+                function_contents:
+                  bracketed:
+                  - start_bracket: (
+                  - expression:
+                      column_reference:
+                        naked_identifier: v_text
+                  - keyword: DEFAULT
+                  - expression:
+                      column_reference:
+                        naked_identifier: v_fallback
+                  - keyword: 'ON'
+                  - keyword: CONVERSION
+                  - keyword: ERROR
+                  - end_bracket: )
+      - statement_terminator: ;
+      - keyword: END
+  - statement_terminator: ;
+  - slash_buffer_executor:
+      slash: /
