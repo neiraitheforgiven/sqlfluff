@@ -5003,11 +5003,18 @@ class ValuesClauseSegment(BaseSegment):
     )
 
 
+class OracleValueFunctionNameSegment(BaseSegment):
+    """The VALUE function name, retaining the standard function tree shape."""
+
+    type = "function_name"
+    match_grammar = StringParser("VALUE", WordSegment, type="function_name_identifier")
+
+
 class OracleValueFunctionSegment(BaseSegment):
     """The PL/SQL VALUE function, which collides with the VALUES clause."""
 
     type = "function"
     match_grammar: Matchable = Sequence(
-        "VALUE",
+        Ref("OracleValueFunctionNameSegment"),
         Ref("FunctionContentsSegment"),
     )
