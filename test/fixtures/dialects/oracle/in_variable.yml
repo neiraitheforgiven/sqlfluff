@@ -1,0 +1,638 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: 50acc110988aec648e2c9d9ba95253f3faf0f8025e51115feb127a22d2eba21d
+file:
+  batch:
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: ToObjectId
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                - naked_identifier: api
+                - dot: .
+                - naked_identifier: Relationships
+              alias_expression:
+                naked_identifier: rel
+        where_clause:
+          keyword: WHERE
+          expression:
+            column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: EndPointId
+            keyword: IN
+            variable_reference:
+              naked_identifier: t_EndPointId
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: ToObjectId
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                - naked_identifier: api
+                - dot: .
+                - naked_identifier: Relationships
+              alias_expression:
+                naked_identifier: rel
+        where_clause:
+          keyword: WHERE
+          expression:
+          - column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: EndPointId
+          - keyword: NOT
+          - keyword: IN
+          - variable_reference:
+              naked_identifier: t_EndPointId
+          - binary_operator: AND
+          - column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: FromObjectId
+          - comparison_operator:
+              raw_comparison_operator: '='
+          - column_reference:
+              naked_identifier: a_ObjectId
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: ToObjectId
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                - naked_identifier: api
+                - dot: .
+                - naked_identifier: Relationships
+              alias_expression:
+                naked_identifier: rel
+        where_clause:
+          keyword: WHERE
+          expression:
+          - column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: EndPointId
+          - keyword: IN
+          - variable_reference:
+            - naked_identifier: pkg_Config
+            - dot: .
+            - naked_identifier: t_EndPointId
+          - binary_operator: OR
+          - column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: EndPointId
+          - keyword: IN
+          - variable_reference:
+              naked_identifier: settings
+              dot: .
+              quoted_identifier: '"EndPointId"'
+          - binary_operator: OR
+          - column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: EndPointId
+          - keyword: IN
+          - variable_reference:
+            - naked_identifier: pkg_Config
+            - dot: .
+            - naked_identifier: t_EndPointId
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: ToObjectId
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                - naked_identifier: api
+                - dot: .
+                - naked_identifier: Relationships
+              alias_expression:
+                naked_identifier: rel
+        where_clause:
+          keyword: WHERE
+          expression:
+          - column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: EndPointId
+          - keyword: IN
+          - bind_variable:
+              bind_colon: ':'
+              parameter: EndPointId
+          - binary_operator: AND
+          - column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: FromObjectId
+          - keyword: NOT
+          - keyword: IN
+          - bind_variable:
+              bind_colon: ':'
+              parameter: ObjectId
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: ToObjectId
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                - naked_identifier: api
+                - dot: .
+                - naked_identifier: Relationships
+              alias_expression:
+                naked_identifier: rel
+        where_clause:
+          keyword: WHERE
+          expression:
+            column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: EndPointId
+            keyword: IN
+            variable_reference:
+              quoted_identifier: '"EndPointId"'
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: ToObjectId
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                - naked_identifier: api
+                - dot: .
+                - naked_identifier: Relationships
+              alias_expression:
+                naked_identifier: rel
+            join_clause:
+              keyword: JOIN
+              from_expression_element:
+                table_expression:
+                  table_reference:
+                  - naked_identifier: api
+                  - dot: .
+                  - naked_identifier: Objects
+                alias_expression:
+                  naked_identifier: obj
+              join_on_condition:
+                keyword: 'ON'
+                expression:
+                - column_reference:
+                  - naked_identifier: obj
+                  - dot: .
+                  - naked_identifier: ObjectId
+                - comparison_operator:
+                    raw_comparison_operator: '='
+                - column_reference:
+                  - naked_identifier: rel
+                  - dot: .
+                  - naked_identifier: ToObjectId
+                - binary_operator: AND
+                - column_reference:
+                  - naked_identifier: rel
+                  - dot: .
+                  - naked_identifier: EndPointId
+                - keyword: IN
+                - variable_reference:
+                    naked_identifier: t_EndPointId
+        where_clause:
+          keyword: WHERE
+          expression:
+          - column_reference:
+            - naked_identifier: obj
+            - dot: .
+            - naked_identifier: ObjectId
+          - keyword: NOT
+          - keyword: IN
+          - variable_reference:
+              naked_identifier: a_ExcludedObjectId
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+        - keyword: SELECT
+        - select_clause_element:
+            column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: EndPointId
+        - comma: ','
+        - select_clause_element:
+            function:
+              function_name:
+                function_name_identifier: COUNT
+              function_contents:
+                bracketed:
+                  start_bracket: (
+                  star: '*'
+                  end_bracket: )
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                - naked_identifier: api
+                - dot: .
+                - naked_identifier: Relationships
+              alias_expression:
+                naked_identifier: rel
+        groupby_clause:
+        - keyword: GROUP
+        - keyword: BY
+        - column_reference:
+          - naked_identifier: rel
+          - dot: .
+          - naked_identifier: EndPointId
+        having_clause:
+          keyword: HAVING
+          expression:
+            function:
+              function_name:
+                function_name_identifier: COUNT
+              function_contents:
+                bracketed:
+                  start_bracket: (
+                  star: '*'
+                  end_bracket: )
+            keyword: IN
+            variable_reference:
+              naked_identifier: t_Count
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: ToObjectId
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                - naked_identifier: api
+                - dot: .
+                - naked_identifier: Relationships
+              alias_expression:
+                naked_identifier: rel
+        where_clause:
+          keyword: WHERE
+          expression:
+          - column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: EndPointId
+          - keyword: IN
+          - variable_reference:
+              naked_identifier: t_EndPointId
+          - binary_operator: AND
+          - column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: FromObjectId
+          - keyword: IN
+          - bracketed:
+            - start_bracket: (
+            - column_reference:
+                naked_identifier: a_ObjectId
+            - comma: ','
+            - column_reference:
+                naked_identifier: a_OtherObjectId
+            - end_bracket: )
+          - binary_operator: AND
+          - column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: ToObjectId
+          - keyword: NOT
+          - keyword: IN
+          - bracketed:
+              start_bracket: (
+              select_statement:
+                select_clause:
+                  keyword: SELECT
+                  select_clause_element:
+                    column_reference:
+                      naked_identifier: ObjectId
+                from_clause:
+                  keyword: FROM
+                  from_expression:
+                    from_expression_element:
+                      table_expression:
+                        table_reference:
+                        - naked_identifier: api
+                        - dot: .
+                        - naked_identifier: ExcludedObjects
+              end_bracket: )
+          - binary_operator: AND
+          - column_reference:
+            - naked_identifier: rel
+            - dot: .
+            - naked_identifier: RelationshipId
+          - keyword: IN
+          - function:
+              function_name:
+                naked_identifier: api
+                dot: .
+                function_name_identifier: GetRelationshipIds
+              function_contents:
+                bracketed:
+                  start_bracket: (
+                  expression:
+                    column_reference:
+                      naked_identifier: a_ObjectId
+                  end_bracket: )
+  - statement_terminator: ;
+  - statement:
+      create_package_body_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: PACKAGE
+      - keyword: BODY
+      - package_reference:
+          naked_identifier: pkg_in_variable
+      - keyword: AS
+      - declare_segment:
+          create_procedure_statement:
+          - keyword: PROCEDURE
+          - function_name:
+              function_name_identifier: AttachmentChange
+          - function_parameter_list:
+              bracketed:
+              - start_bracket: (
+              - parameter: a_ObjectId
+              - data_type:
+                  data_type_identifier: NUMBER
+              - comma: ','
+              - parameter: a_EndPointId
+              - data_type:
+                  data_type_identifier: NUMBER
+              - end_bracket: )
+          - keyword: IS
+          - declare_segment:
+            - collection_type:
+              - keyword: TYPE
+              - naked_identifier: udt_Ids
+              - keyword: IS
+              - keyword: TABLE
+              - keyword: OF
+              - data_type:
+                  data_type_identifier: NUMBER
+            - statement_terminator: ;
+            - naked_identifier: t_Contacts
+            - data_type:
+                data_type_identifier: udt_Ids
+            - statement_terminator: ;
+            - naked_identifier: t_EndPointId
+            - data_type:
+                data_type_identifier: NUMBER
+            - assignment_operator: :=
+            - expression:
+                column_reference:
+                  naked_identifier: a_EndPointId
+            - statement_terminator: ;
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                select_statement:
+                  select_clause:
+                    keyword: SELECT
+                    select_clause_element:
+                      column_reference:
+                      - naked_identifier: rel
+                      - dot: .
+                      - naked_identifier: ToObjectId
+                  bulk_collect_into_clause:
+                  - keyword: BULK
+                  - keyword: COLLECT
+                  - keyword: INTO
+                  - naked_identifier: t_Contacts
+                  from_clause:
+                    keyword: FROM
+                    from_expression:
+                      from_expression_element:
+                        table_expression:
+                          table_reference:
+                          - naked_identifier: api
+                          - dot: .
+                          - naked_identifier: Relationships
+                        alias_expression:
+                          naked_identifier: rel
+                  where_clause:
+                    keyword: WHERE
+                    expression:
+                    - column_reference:
+                      - naked_identifier: rel
+                      - dot: .
+                      - naked_identifier: FromObjectId
+                    - comparison_operator:
+                        raw_comparison_operator: '='
+                    - column_reference:
+                        naked_identifier: a_ObjectId
+                    - binary_operator: AND
+                    - column_reference:
+                      - naked_identifier: rel
+                      - dot: .
+                      - naked_identifier: EndPointId
+                    - keyword: IN
+                    - variable_reference:
+                        naked_identifier: t_EndPointId
+            - statement_terminator: ;
+            - statement:
+                update_statement:
+                  keyword: UPDATE
+                  table_reference:
+                  - naked_identifier: api
+                  - dot: .
+                  - naked_identifier: Relationships
+                  set_clause_list:
+                    keyword: SET
+                    set_clause:
+                    - column_reference:
+                        naked_identifier: ToObjectId
+                    - comparison_operator:
+                        raw_comparison_operator: '='
+                    - column_reference:
+                        naked_identifier: a_ObjectId
+                  where_clause:
+                    keyword: WHERE
+                    expression:
+                      column_reference:
+                        naked_identifier: EndPointId
+                      keyword: IN
+                      variable_reference:
+                        naked_identifier: t_EndPointId
+            - statement_terminator: ;
+            - statement:
+                delete_statement:
+                  keyword: DELETE
+                  from_clause:
+                    keyword: FROM
+                    from_expression:
+                      from_expression_element:
+                        table_expression:
+                          table_reference:
+                          - naked_identifier: api
+                          - dot: .
+                          - naked_identifier: Relationships
+                  where_clause:
+                    keyword: WHERE
+                    expression:
+                    - column_reference:
+                        naked_identifier: EndPointId
+                    - keyword: NOT
+                    - keyword: IN
+                    - variable_reference:
+                        naked_identifier: t_EndPointId
+            - statement_terminator: ;
+            - statement:
+                if_then_statement:
+                - if_clause:
+                  - keyword: IF
+                  - expression:
+                    - column_reference:
+                        naked_identifier: a_EndPointId
+                    - keyword: NOT
+                    - keyword: IN
+                    - variable_reference:
+                        naked_identifier: t_EndPointId
+                  - keyword: THEN
+                - statement:
+                    null_statement:
+                      keyword: 'NULL'
+                - statement_terminator: ;
+                - keyword: END
+                - keyword: IF
+            - statement_terminator: ;
+            - statement:
+                for_loop_statement:
+                - keyword: FOR
+                - naked_identifier: c
+                - keyword: IN
+                - expression:
+                    bracketed:
+                      start_bracket: (
+                      expression:
+                        select_statement:
+                          select_clause:
+                            keyword: SELECT
+                            select_clause_element:
+                              column_reference:
+                              - naked_identifier: rel
+                              - dot: .
+                              - naked_identifier: ToObjectId
+                          from_clause:
+                            keyword: FROM
+                            from_expression:
+                              from_expression_element:
+                                table_expression:
+                                  table_reference:
+                                  - naked_identifier: api
+                                  - dot: .
+                                  - naked_identifier: Relationships
+                                alias_expression:
+                                  naked_identifier: rel
+                          where_clause:
+                            keyword: WHERE
+                            expression:
+                            - column_reference:
+                              - naked_identifier: rel
+                              - dot: .
+                              - naked_identifier: EndPointId
+                            - keyword: IN
+                            - variable_reference:
+                                naked_identifier: t_EndPointId
+                            - binary_operator: AND
+                            - column_reference:
+                              - naked_identifier: rel
+                              - dot: .
+                              - naked_identifier: FromObjectId
+                            - comparison_operator:
+                                raw_comparison_operator: '='
+                            - column_reference:
+                                naked_identifier: a_ObjectId
+                      end_bracket: )
+                - loop_statement:
+                  - keyword: LOOP
+                  - statement:
+                      null_statement:
+                        keyword: 'NULL'
+                  - statement_terminator: ;
+                  - keyword: END
+                  - keyword: LOOP
+            - statement_terminator: ;
+            - keyword: END
+            - object_reference:
+                naked_identifier: AttachmentChange
+          - statement_terminator: ;
+      - keyword: END
+      - package_reference:
+          naked_identifier: pkg_in_variable
+  - statement_terminator: ;
+  - slash_buffer_executor:
+      slash: /

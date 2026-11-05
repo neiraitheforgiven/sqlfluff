@@ -5000,3 +5000,30 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+class InVariableReferenceSegment(BaseSegment):
+    """An unparenthesized variable operand of an Oracle IN predicate."""
+
+    type = "variable_reference"
+
+    match_grammar = Delimited(
+        Ref("SingleIdentifierGrammar"),
+        delimiter=Ref("DotSegment"),
+        allow_gaps=True,
+    )
+
+
+oracle_dialect.replace(
+    InOperatorGrammar=OneOf(
+        ansi_dialect.get_grammar("InOperatorGrammar"),
+        Sequence(
+            Ref.keyword("NOT", optional=True),
+            "IN",
+            OneOf(
+                Ref("InVariableReferenceSegment"),
+                Ref("BindVariableSegment"),
+            ),
+        ),
+    ),
+)
