@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: c79d3bcd1c1eafcf85cf79490da14e562fde942cff0fa10fb3bdb131c1c5f515
+_hash: 55da116c94453104b685c31a1588d7675a59114ac87e52be374a3a3a09834258
 file:
 - batch:
     statement:
@@ -13,7 +13,8 @@ file:
           create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -132,7 +133,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -170,7 +172,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -187,7 +190,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -213,7 +217,8 @@ file:
           create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -276,7 +281,10 @@ file:
                         binary_operator: /
                         numeric_literal: '4'
                 - statement_terminator: ;
-                - keyword: ELSE
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: ELSE
                 - statement:
                     assignment_segment_statement:
                       object_reference:
@@ -293,7 +301,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -342,7 +351,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -359,7 +369,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -385,7 +396,8 @@ file:
           create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -448,7 +460,10 @@ file:
                         binary_operator: /
                         numeric_literal: '4'
                 - statement_terminator: ;
-                - keyword: ELSE
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: ELSE
                 - statement:
                     if_then_statement:
                     - if_clause:
@@ -469,7 +484,10 @@ file:
                           expression:
                             numeric_literal: '50'
                     - statement_terminator: ;
-                    - keyword: ELSE
+                    - statement:
+                        procedure_call_statement:
+                          named_identifier:
+                            named_identifier: ELSE
                     - statement:
                         assignment_segment_statement:
                           object_reference:
@@ -489,7 +507,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -538,7 +557,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -555,7 +575,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -572,7 +593,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
               - start_bracket: (
@@ -598,7 +620,8 @@ file:
           create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -652,7 +675,10 @@ file:
                       expression:
                         numeric_literal: '500'
                 - statement_terminator: ;
-                - keyword: ELSE
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: ELSE
                 - statement:
                     assignment_segment_statement:
                       object_reference:
@@ -669,7 +695,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -703,7 +730,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
                 start_bracket: (
@@ -714,7 +742,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
                 start_bracket: (
@@ -725,7 +754,8 @@ file:
       - statement:
           function:
             function_name:
-              function_name_identifier: p
+              function_name_identifier:
+                function_name_identifier: p
             function_contents:
               bracketed:
                 start_bracket: (
@@ -965,7 +995,10 @@ file:
                 expression:
                   quoted_literal: "'UPDATE'"
           - statement_terminator: ;
-          - keyword: ELSE
+          - statement:
+              procedure_call_statement:
+                named_identifier:
+                  named_identifier: ELSE
           - statement:
               assignment_segment_statement:
                 object_reference:

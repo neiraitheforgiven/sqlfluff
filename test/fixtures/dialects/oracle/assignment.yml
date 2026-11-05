@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 160a219d6cb18938e80aa6311529aa02adfe21b098dc4632eec99c95a3231b8c
+_hash: 9f4c98cea7db3eabbf3f85760677f1da302a26b75bc846c866d7c1f12bf3d8ad
 file:
 - batch:
     statement:
@@ -133,7 +133,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: UPPER
+                  function_name_identifier:
+                    function_name_identifier: UPPER
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -391,7 +392,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: triplet
+                function_name_identifier:
+                  function_name_identifier: triplet
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -444,7 +446,8 @@ file:
       - keyword: REPLACE
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: CALCULATE_BONUS
+          function_name_identifier:
+            function_name_identifier: CALCULATE_BONUS
       - function_parameter_list:
           bracketed:
           - start_bracket: (

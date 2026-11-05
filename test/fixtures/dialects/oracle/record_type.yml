@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: df8eed5761739e44aa5233d6dbcd299c488f66c371c1bafac196128cf6ca8179
+_hash: 67283b1dab836bb208195ca3221be798d5075ee4be5fd50b141d0e4f05ceb23e
 file:
 - batch:
     statement:
@@ -80,7 +80,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -100,7 +101,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -120,7 +122,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -140,7 +143,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -255,7 +259,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -335,7 +340,8 @@ file:
             - expression:
                 function:
                   function_name:
-                    function_name_identifier: full_name
+                    function_name_identifier:
+                      function_name_identifier: full_name
                   function_contents:
                     bracketed:
                     - start_bracket: (
@@ -376,7 +382,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -385,7 +392,8 @@ file:
                     function_name:
                       naked_identifier: friend
                       dot: .
-                      function_name_identifier: name
+                      function_name_identifier:
+                        function_name_identifier: name
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -403,7 +411,8 @@ file:
                     function_name:
                       naked_identifier: friend
                       dot: .
-                      function_name_identifier: name
+                      function_name_identifier:
+                        function_name_identifier: name
                     function_contents:
                       bracketed:
                         start_bracket: (

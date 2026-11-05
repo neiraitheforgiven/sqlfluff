@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: ec24b6baf97659f7b5ce55f4aba60c9adbd732441150259421cf037faadabc0b
+_hash: dee6b7621769c3c5ab3f821393495f811d616dd042fb3d0e3bea20571a8fb75a
 file:
 - batch:
   - statement:
@@ -334,14 +334,16 @@ file:
               raw_comparison_operator: '='
             function:
               function_name:
-                function_name_identifier: CAST
+                function_name_identifier:
+                  function_name_identifier: CAST
               function_contents:
                 bracketed:
                   start_bracket: (
                   expression:
                     function:
                       function_name:
-                        function_name_identifier: MULTISET
+                        function_name_identifier:
+                          function_name_identifier: MULTISET
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -407,7 +409,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -420,7 +423,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -433,7 +437,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -581,7 +586,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -594,7 +600,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -607,7 +614,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: LIST_OF_NAMES_T
+                function_name_identifier:
+                  function_name_identifier: LIST_OF_NAMES_T
               function_contents:
                 bracketed:
                   start_bracket: (

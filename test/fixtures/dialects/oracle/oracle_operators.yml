@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 95ccc21f007f781f7a4883bb35d66f29a936bcb904d236ae2b8d6c170c71b39a
+_hash: 7961b4f01a86f123e5ba22a6e9e1a5fee56687daa1712c8595418f6e9bccf0a5
 file:
   batch:
     statement:
@@ -27,7 +27,8 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -56,7 +57,8 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -64,13 +66,17 @@ file:
                       quoted_literal: "'i is even number'"
                     end_bracket: )
           - statement_terminator: ;
-          - keyword: ELSE
+          - statement:
+              procedure_call_statement:
+                named_identifier:
+                  named_identifier: ELSE
           - statement:
               function:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -108,7 +114,8 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -301,7 +308,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -312,7 +320,8 @@ file:
                   - pipe: '|'
                   function:
                     function_name:
-                      function_name_identifier: TO_CHAR
+                      function_name_identifier:
+                        function_name_identifier: TO_CHAR
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -330,7 +339,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -341,7 +351,8 @@ file:
                   - pipe: '|'
                   function:
                     function_name:
-                      function_name_identifier: TO_CHAR
+                      function_name_identifier:
+                        function_name_identifier: TO_CHAR
                     function_contents:
                       bracketed:
                         start_bracket: (

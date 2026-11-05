@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: b69491eeb30a90ecd2d4ddeeb37ba2eea0e9d237e36fe309b6f3fc4c13b93a35
+_hash: 1f34ceccd5758c0010f30d6c06a613e32ef48ecba5e762219abb78b3cf25c57d
 file:
 - batch:
     statement:
@@ -115,7 +115,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -292,7 +293,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -392,7 +394,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -430,7 +433,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -441,7 +445,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: enums
+                            function_name_identifier:
+                              function_name_identifier: enums
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -458,7 +463,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: names
+                            function_name_identifier:
+                              function_name_identifier: names
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -570,7 +576,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -608,14 +615,16 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
                       expression:
                       - function:
                           function_name:
-                            function_name_identifier: names
+                            function_name_identifier:
+                              function_name_identifier: names
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -632,7 +641,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: old_sals
+                            function_name_identifier:
+                              function_name_identifier: old_sals
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -649,7 +659,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: new_sals
+                            function_name_identifier:
+                              function_name_identifier: new_sals
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -687,7 +698,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: NumList
+                function_name_identifier:
+                  function_name_identifier: NumList
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -769,7 +781,8 @@ file:
                     raw_comparison_operator: '='
                   function:
                     function_name:
-                      function_name_identifier: depts
+                      function_name_identifier:
+                        function_name_identifier: depts
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -795,7 +808,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -833,7 +847,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -844,7 +859,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: e_ids
+                            function_name_identifier:
+                              function_name_identifier: e_ids
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -861,7 +877,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: d_ids
+                            function_name_identifier:
+                              function_name_identifier: d_ids
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -932,7 +949,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: t_desc_tab
+                function_name_identifier:
+                  function_name_identifier: t_desc_tab
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -986,7 +1004,8 @@ file:
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: l_desc_tab
+                        function_name_identifier:
+                          function_name_identifier: l_desc_tab
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -1028,7 +1047,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: put_line
+                    function_name_identifier:
+                      function_name_identifier: put_line
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -1039,7 +1059,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: l_id_tab
+                            function_name_identifier:
+                              function_name_identifier: l_id_tab
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -1056,7 +1077,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: l_desc_out_tab
+                            function_name_identifier:
+                              function_name_identifier: l_desc_out_tab
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -1225,7 +1247,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: put_line
+                    function_name_identifier:
+                      function_name_identifier: put_line
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -1236,7 +1259,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: l_empno
+                            function_name_identifier:
+                              function_name_identifier: l_empno
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -1253,7 +1277,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: l_salo
+                            function_name_identifier:
+                              function_name_identifier: l_salo
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -1270,7 +1295,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: l_saln
+                            function_name_identifier:
+                              function_name_identifier: l_saln
                           function_contents:
                             bracketed:
                               start_bracket: (

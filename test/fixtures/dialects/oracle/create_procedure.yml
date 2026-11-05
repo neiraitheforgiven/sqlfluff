@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 40411257950619d71da8bc7c6593ce9e1df059d414667fd0f58777884ce64011
+_hash: d990e7af52c3a36a4603dce7c4374cf935a08c805501ce48069707dddbb7d8a8
 file:
 - batch:
     statement:
@@ -14,7 +14,8 @@ file:
       - keyword: NOT
       - keyword: EXISTS
       - function_name:
-          function_name_identifier: remove_emp
+          function_name_identifier:
+            function_name_identifier: remove_emp
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -75,14 +76,16 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: top_protected_proc
+          function_name_identifier:
+            function_name_identifier: top_protected_proc
       - keyword: ACCESSIBLE
       - keyword: BY
       - bracketed:
           start_bracket: (
           keyword: PROCEDURE
           function_name:
-            function_name_identifier: top_trusted_proc
+            function_name_identifier:
+              function_name_identifier: top_trusted_proc
           end_bracket: )
       - keyword: AS
       - begin_end_block:
@@ -92,7 +95,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -112,7 +116,8 @@ file:
       - keyword: REPLACE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: p
+          function_name_identifier:
+            function_name_identifier: p
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -138,7 +143,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -159,7 +165,8 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: p
+          function_name_identifier:
+            function_name_identifier: p
       - function_parameter_list:
           bracketed:
           - start_bracket: (
@@ -278,7 +285,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -318,7 +326,8 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: p
+          function_name_identifier:
+            function_name_identifier: p
       - function_parameter_list:
           bracketed:
           - start_bracket: (
@@ -381,7 +390,10 @@ file:
                     binary_operator: /
                     numeric_literal: '4'
             - statement_terminator: ;
-            - keyword: ELSE
+            - statement:
+                procedure_call_statement:
+                  named_identifier:
+                    named_identifier: ELSE
             - statement:
                 if_then_statement:
                 - if_clause:
@@ -402,7 +414,10 @@ file:
                       expression:
                         numeric_literal: '50'
                 - statement_terminator: ;
-                - keyword: ELSE
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: ELSE
                 - statement:
                     assignment_segment_statement:
                       object_reference:
@@ -422,7 +437,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -473,7 +489,8 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: create_email
+          function_name_identifier:
+            function_name_identifier: create_email
       - function_parameter_list:
           bracketed:
           - start_bracket: (
@@ -541,7 +558,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -560,7 +578,8 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: p
+          function_name_identifier:
+            function_name_identifier: p
       - keyword: IS
       - begin_end_block:
         - keyword: BEGIN
@@ -569,7 +588,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -586,7 +606,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (

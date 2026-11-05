@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 5d6fc371d461be400d3e242901c3663f52e16285e742b31d3af4e596e4c57b68
+_hash: b9aedf1553517ff19414dd14c54fc07d1ad740956c13222af1a70a4534fdfd95
 file:
   batch:
     statement:
@@ -13,7 +13,8 @@ file:
       - keyword: REPLACE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: test_proc
+          function_name_identifier:
+            function_name_identifier: test_proc
       - function_parameter_list:
           bracketed:
             start_bracket: (

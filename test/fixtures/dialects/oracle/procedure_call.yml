@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 7aefc94aca08a10996daf4fc654498ba9e94a422e49b549f2e06c2ab9f3b175a
+_hash: 9180c1495abefce9ddbe0f87b223b571318265d77d45277cccc0fe239fd039fc
 file:
 - batch:
     statement:
@@ -80,7 +80,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -267,7 +268,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -296,7 +298,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -331,7 +334,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -406,7 +410,10 @@ file:
               - dot: .
               - naked_identifier: my_procedure
           - statement_terminator: ;
-          - keyword: ELSE
+          - statement:
+              procedure_call_statement:
+                named_identifier:
+                  named_identifier: ELSE
           - statement:
               procedure_call_statement:
               - naked_identifier: schema

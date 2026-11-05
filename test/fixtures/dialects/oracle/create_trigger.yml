@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: f4ae9f6bbb34e4cae76e4bc6f58042b9cb9d00e8ebb29a32732373b2de629ce5
+_hash: af8b39ba5bf381ae773de67dcfee601486b5501254693dc422bb7cc91cbc7d57
 file:
 - batch:
     statement:
@@ -45,7 +45,8 @@ file:
                       function_name:
                         naked_identifier: DBMS_OUTPUT
                         dot: .
-                        function_name_identifier: PUT_LINE
+                        function_name_identifier:
+                          function_name_identifier: PUT_LINE
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -53,20 +54,32 @@ file:
                             quoted_literal: "'Inserting'"
                           end_bracket: )
                 - statement_terminator: ;
-              - when_clause:
-                - keyword: WHEN
-                - keyword: UPDATING
-                - bracketed:
-                    start_bracket: (
-                    quoted_literal: "'salary'"
-                    end_bracket: )
-                - keyword: THEN
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: WHEN
+                - statement:
+                    function:
+                      function_name:
+                        function_name_identifier:
+                          function_name_identifier: UPDATING
+                      function_contents:
+                        bracketed:
+                          start_bracket: (
+                          expression:
+                            quoted_literal: "'salary'"
+                          end_bracket: )
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: THEN
                 - statement:
                     function:
                       function_name:
                         naked_identifier: DBMS_OUTPUT
                         dot: .
-                        function_name_identifier: PUT_LINE
+                        function_name_identifier:
+                          function_name_identifier: PUT_LINE
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -74,20 +87,32 @@ file:
                             quoted_literal: "'Updating salary'"
                           end_bracket: )
                 - statement_terminator: ;
-              - when_clause:
-                - keyword: WHEN
-                - keyword: UPDATING
-                - bracketed:
-                    start_bracket: (
-                    quoted_literal: "'department_id'"
-                    end_bracket: )
-                - keyword: THEN
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: WHEN
+                - statement:
+                    function:
+                      function_name:
+                        function_name_identifier:
+                          function_name_identifier: UPDATING
+                      function_contents:
+                        bracketed:
+                          start_bracket: (
+                          expression:
+                            quoted_literal: "'department_id'"
+                          end_bracket: )
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: THEN
                 - statement:
                     function:
                       function_name:
                         naked_identifier: DBMS_OUTPUT
                         dot: .
-                        function_name_identifier: PUT_LINE
+                        function_name_identifier:
+                          function_name_identifier: PUT_LINE
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -95,16 +120,25 @@ file:
                             quoted_literal: "'Updating department ID'"
                           end_bracket: )
                 - statement_terminator: ;
-              - when_clause:
-                - keyword: WHEN
-                - keyword: DELETING
-                - keyword: THEN
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: WHEN
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: DELETING
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: THEN
                 - statement:
                     function:
                       function_name:
                         naked_identifier: DBMS_OUTPUT
                         dot: .
-                        function_name_identifier: PUT_LINE
+                        function_name_identifier:
+                          function_name_identifier: PUT_LINE
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -146,7 +180,8 @@ file:
             - keyword: PRAGMA
             - function:
                 function_name:
-                  function_name_identifier: EXCEPTION_INIT
+                  function_name_identifier:
+                    function_name_identifier: EXCEPTION_INIT
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -254,7 +289,8 @@ file:
           - statement:
               function:
                 function_name:
-                  function_name_identifier: RAISE_APPLICATION_ERROR
+                  function_name_identifier:
+                    function_name_identifier: RAISE_APPLICATION_ERROR
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -458,7 +494,8 @@ file:
           - create_procedure_statement:
             - keyword: PROCEDURE
             - function_name:
-                function_name_identifier: flush_array
+                function_name_identifier:
+                  function_name_identifier: flush_array
             - keyword: IS
             - declare_segment:
                 naked_identifier: n
@@ -471,7 +508,8 @@ file:
                     function_name:
                       naked_identifier: salaries
                       dot: .
-                      function_name_identifier: count
+                      function_name_identifier:
+                        function_name_identifier: count
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -498,7 +536,8 @@ file:
                         expression:
                           function:
                             function_name:
-                              function_name_identifier: salaries
+                              function_name_identifier:
+                                function_name_identifier: salaries
                             function_contents:
                               bracketed:
                                 start_bracket: (
@@ -512,7 +551,8 @@ file:
                     function_name:
                       naked_identifier: salaries
                       dot: .
-                      function_name_identifier: delete
+                      function_name_identifier:
+                        function_name_identifier: delete
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -531,7 +571,8 @@ file:
                     function_name:
                       naked_identifier: DBMS_OUTPUT
                       dot: .
-                      function_name_identifier: PUT_LINE
+                      function_name_identifier:
+                        function_name_identifier: PUT_LINE
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -643,7 +684,8 @@ file:
               - statement:
                   function:
                     function_name:
-                      function_name_identifier: flush_array
+                      function_name_identifier:
+                        function_name_identifier: flush_array
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -665,7 +707,8 @@ file:
           - statement:
               function:
                 function_name:
-                  function_name_identifier: flush_array
+                  function_name_identifier:
+                    function_name_identifier: flush_array
                 function_contents:
                   bracketed:
                     start_bracket: (

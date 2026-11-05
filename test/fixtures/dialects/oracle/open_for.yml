@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: a0959e6f5dadb7733c9e7a718b62ac8302c204c7960f1857c6af822142c2c688
+_hash: 0324d9b3e4edbdf193e5fd2c4de48dd489dc744f2c7ec9278e36486fc421139a
 file:
 - batch:
     statement:
@@ -80,7 +80,8 @@ file:
                 expression:
                   function:
                     function_name:
-                      function_name_identifier: REGEXP_LIKE
+                      function_name_identifier:
+                        function_name_identifier: REGEXP_LIKE
                     function_contents:
                       bracketed:
                       - start_bracket: (
@@ -124,14 +125,16 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
                     expression:
                       function:
                         function_name:
-                          function_name_identifier: RPAD
+                          function_name_identifier:
+                            function_name_identifier: RPAD
                         function_contents:
                           bracketed:
                           - start_bracket: (
@@ -160,7 +163,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -200,14 +204,16 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
                     expression:
                       function:
                         function_name:
-                          function_name_identifier: RPAD
+                          function_name_identifier:
+                            function_name_identifier: RPAD
                         function_contents:
                           bracketed:
                           - start_bracket: (
@@ -315,7 +321,8 @@ file:
                     table_expression:
                       function:
                         function_name:
-                          function_name_identifier: TABLE
+                          function_name_identifier:
+                            function_name_identifier: TABLE
                         function_contents:
                           bracketed:
                             start_bracket: (
@@ -342,7 +349,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -512,7 +520,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (

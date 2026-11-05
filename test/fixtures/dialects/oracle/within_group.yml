@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 97c80c67f9df14a8dd7e3c6cf59c1d706b4b65a18aaa6a6ee6f66fd62bd74018
+_hash: 6ede18e246d7ef6d5cf24813a1aff7c55dd72e1de87fa03aa0bcfa2f6cd84f12
 file:
   batch:
   - statement:
@@ -13,7 +13,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: LISTAGG
+                function_name_identifier:
+                  function_name_identifier: LISTAGG
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -44,7 +45,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: MIN
+                function_name_identifier:
+                  function_name_identifier: MIN
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -83,7 +85,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: LISTAGG
+                function_name_identifier:
+                  function_name_identifier: LISTAGG
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -138,7 +141,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: LISTAGG
+                function_name_identifier:
+                  function_name_identifier: LISTAGG
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -210,7 +214,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: LISTAGG
+                function_name_identifier:
+                  function_name_identifier: LISTAGG
               function_contents:
                 bracketed:
                 - start_bracket: (

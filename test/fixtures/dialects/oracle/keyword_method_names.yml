@@ -1,0 +1,69 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: c5da728749e8d48347adafa2b10921bee9f6857023afc720d74777e6ae95e106
+file:
+  batch:
+    statement:
+      begin_end_block:
+      - keyword: BEGIN
+      - statement:
+          function:
+            function_name:
+              naked_identifier: example_pkg
+              dot: .
+              function_name_identifier:
+                function_name_identifier: DELETE
+            function_contents:
+              bracketed:
+                start_bracket: (
+                expression:
+                  numeric_literal: '1'
+                end_bracket: )
+      - statement_terminator: ;
+      - statement:
+          procedure_call_statement:
+            naked_identifier: example_pkg
+            dot: .
+            named_identifier:
+              named_identifier: DELETE
+      - statement_terminator: ;
+      - statement:
+          function:
+            function_name:
+              naked_identifier: v_items
+              dot: .
+              function_name_identifier:
+                function_name_identifier: DELETE
+            function_contents:
+              bracketed:
+                start_bracket: (
+                expression:
+                  numeric_literal: '1'
+                end_bracket: )
+      - statement_terminator: ;
+      - statement:
+          assignment_segment_statement:
+            object_reference:
+              naked_identifier: v_value
+            assignment_operator: :=
+            expression:
+              function:
+                function_name:
+                  naked_identifier: example_pkg
+                  dot: .
+                  function_name_identifier:
+                    function_name_identifier: VALUE
+                function_contents:
+                  bracketed:
+                    start_bracket: (
+                    expression:
+                      numeric_literal: '1'
+                    end_bracket: )
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /

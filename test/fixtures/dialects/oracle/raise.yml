@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 755186f0967a1f2d739b4ce9d4b8c92c284276a6021d320bef0dd2336eb45921
+_hash: 318e9fe1be8180f5a41d26446a6dd04adbf1f3966f5844398bfe174637325d24
 file:
 - batch:
     statement:
@@ -11,7 +11,8 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: account_status
+          function_name_identifier:
+            function_name_identifier: account_status
       - function_parameter_list:
           bracketed:
           - start_bracket: (
@@ -62,7 +63,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -80,7 +82,8 @@ file:
       - keyword: CREATE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: p
+          function_name_identifier:
+            function_name_identifier: p
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -117,7 +120,10 @@ file:
                   keyword: RAISE
                   naked_identifier: INVALID_NUMBER
             - statement_terminator: ;
-            - keyword: ELSE
+            - statement:
+                procedure_call_statement:
+                  named_identifier:
+                    named_identifier: ELSE
             - statement:
                 insert_statement:
                 - keyword: INSERT
@@ -131,7 +137,8 @@ file:
                       expression:
                         function:
                           function_name:
-                            function_name_identifier: TO_NUMBER
+                            function_name_identifier:
+                              function_name_identifier: TO_NUMBER
                           function_contents:
                             bracketed:
                             - start_bracket: (
@@ -155,7 +162,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -251,7 +259,8 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -273,7 +282,8 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -314,7 +324,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (

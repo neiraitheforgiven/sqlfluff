@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 67c2be6346dd96263b85a4d9fad479f70dcf1622264e37f5085e2ba0626d40ee
+_hash: 4c8f28693743a650dd131dcd8a54b746da050b8b09a06fd68ab69f99ab9c732e
 file:
 - batch:
     statement:
@@ -425,7 +425,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -445,7 +446,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -541,7 +543,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -649,7 +652,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -660,7 +664,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: emp_names
+                            function_name_identifier:
+                              function_name_identifier: emp_names
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -677,7 +682,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: emp_ids
+                            function_name_identifier:
+                              function_name_identifier: emp_ids
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -699,7 +705,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -825,7 +832,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -836,7 +844,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: updated_ids
+                            function_name_identifier:
+                              function_name_identifier: updated_ids
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -853,7 +862,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: updated_salaries
+                            function_name_identifier:
+                              function_name_identifier: updated_salaries
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -931,7 +941,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -1031,7 +1042,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (

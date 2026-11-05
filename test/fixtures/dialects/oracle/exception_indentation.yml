@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: a71dfc33c4448d07e9153eab909f88acea3eceefee21e017f90d7eccb59bbf3d
+_hash: fdff2b9de41dcf466e41d02db722a56e354b1865ce33f5c365e4162ae5f2cf34
 file:
   batch:
   - statement:
@@ -32,7 +32,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -40,15 +41,24 @@ file:
                   quoted_literal: "'No data'"
                 end_bracket: )
       - statement_terminator: ;
-      - keyword: WHEN
-      - keyword: OTHERS
-      - keyword: THEN
+      - statement:
+          procedure_call_statement:
+            named_identifier:
+              named_identifier: WHEN
+      - statement:
+          procedure_call_statement:
+            naked_identifier: OTHERS
+      - statement:
+          procedure_call_statement:
+            named_identifier:
+              named_identifier: THEN
       - statement:
           function:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -87,7 +97,8 @@ file:
                 function_name:
                   naked_identifier: DBMS_OUTPUT
                   dot: .
-                  function_name_identifier: PUT_LINE
+                  function_name_identifier:
+                    function_name_identifier: PUT_LINE
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -106,7 +117,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -132,7 +144,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -140,15 +153,24 @@ file:
                   quoted_literal: "'Division by zero'"
                 end_bracket: )
       - statement_terminator: ;
-      - keyword: WHEN
-      - naked_identifier: invalid_number
-      - keyword: THEN
+      - statement:
+          procedure_call_statement:
+            named_identifier:
+              named_identifier: WHEN
+      - statement:
+          procedure_call_statement:
+            naked_identifier: invalid_number
+      - statement:
+          procedure_call_statement:
+            named_identifier:
+              named_identifier: THEN
       - statement:
           function:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -156,15 +178,24 @@ file:
                   quoted_literal: "'Invalid number'"
                 end_bracket: )
       - statement_terminator: ;
-      - keyword: WHEN
-      - keyword: OTHERS
-      - keyword: THEN
+      - statement:
+          procedure_call_statement:
+            named_identifier:
+              named_identifier: WHEN
+      - statement:
+          procedure_call_statement:
+            naked_identifier: OTHERS
+      - statement:
+          procedure_call_statement:
+            named_identifier:
+              named_identifier: THEN
       - statement:
           function:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (

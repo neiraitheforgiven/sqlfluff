@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: dc3bd04edadee0f4e1b6284495bd269054a3273d3ea6a0cfbbf2afd25b6c9f21
+_hash: bc261b0c40b99fbe7aef6d2a1bcb24da298d744f809e6ad450fbd3f2d02138b5
 file:
   batch:
   - statement:
@@ -265,7 +265,8 @@ file:
           - expression:
               function:
                 function_name:
-                  function_name_identifier: TO_DATE
+                  function_name_identifier:
+                    function_name_identifier: TO_DATE
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -389,7 +390,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: person_t
+                  function_name_identifier:
+                    function_name_identifier: person_t
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -414,7 +416,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: employee_t
+                  function_name_identifier:
+                    function_name_identifier: employee_t
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -445,7 +448,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: part_time_emp_t
+                  function_name_identifier:
+                    function_name_identifier: part_time_emp_t
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -481,7 +485,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: person_t
+                  function_name_identifier:
+                    function_name_identifier: person_t
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -508,7 +513,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: employee_t
+                  function_name_identifier:
+                    function_name_identifier: employee_t
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -541,7 +547,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: part_time_emp_t
+                  function_name_identifier:
+                    function_name_identifier: part_time_emp_t
                 function_contents:
                   bracketed:
                   - start_bracket: (
@@ -578,7 +585,8 @@ file:
           - select_clause_element:
               function:
                 function_name:
-                  function_name_identifier: TO_LOB
+                  function_name_identifier:
+                    function_name_identifier: TO_LOB
                 function_contents:
                   bracketed:
                     start_bracket: (

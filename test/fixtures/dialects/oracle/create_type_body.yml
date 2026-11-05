@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 7fe520be110e6920982705704b59e9e06f66d04a0a2e52bd0a990bb23dd275f9
+_hash: 0d6db7c52124227aee7ba25f54ca80bc4db56ca8d35e77d40fada01a8dd4c10f
 file:
 - batch:
     statement:
@@ -18,7 +18,8 @@ file:
       - create_function_statement:
         - keyword: FUNCTION
         - function_name:
-            function_name_identifier: prod
+            function_name_identifier:
+              function_name_identifier: prod
         - function_parameter_list:
             bracketed:
               start_bracket: (
@@ -35,7 +36,8 @@ file:
           - statement:
               function:
                 function_name:
-                  function_name_identifier: RETURN
+                  function_name_identifier:
+                    function_name_identifier: RETURN
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -66,7 +68,8 @@ file:
       - create_function_statement:
         - keyword: FUNCTION
         - function_name:
-            function_name_identifier: get_square
+            function_name_identifier:
+              function_name_identifier: get_square
         - keyword: RETURN
         - data_type:
             data_type_identifier: NUMBER
@@ -113,7 +116,8 @@ file:
           - statement:
               function:
                 function_name:
-                  function_name_identifier: RETURN
+                  function_name_identifier:
+                    function_name_identifier: RETURN
                 function_contents:
                   bracketed:
                     start_bracket: (

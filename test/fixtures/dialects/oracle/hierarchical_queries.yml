@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: d70a0d24f8bf0d1ae04b488a871af46653fb56d1bd2c8e3c3ef0dfe69862648d
+_hash: 5da52345da94753d031efe94ef9ed7a0ad78d0f45d3de730ee28fedb5f2ef13f
 file:
   batch:
   - statement:
@@ -148,7 +148,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: SYS_CONNECT_BY_PATH
+                function_name_identifier:
+                  function_name_identifier: SYS_CONNECT_BY_PATH
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -232,7 +233,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: SYS_CONNECT_BY_PATH
+                function_name_identifier:
+                  function_name_identifier: SYS_CONNECT_BY_PATH
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -316,14 +318,16 @@ file:
           select_clause_element:
             function:
               function_name:
-                function_name_identifier: LTRIM
+                function_name_identifier:
+                  function_name_identifier: LTRIM
               function_contents:
                 bracketed:
                 - start_bracket: (
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: SYS_CONNECT_BY_PATH
+                        function_name_identifier:
+                          function_name_identifier: SYS_CONNECT_BY_PATH
                       function_contents:
                         bracketed:
                         - start_bracket: (
@@ -428,7 +432,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: SYS_CONNECT_BY_PATH
+                function_name_identifier:
+                  function_name_identifier: SYS_CONNECT_BY_PATH
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -499,7 +504,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: SUM
+                function_name_identifier:
+                  function_name_identifier: SUM
               function_contents:
                 bracketed:
                   start_bracket: (

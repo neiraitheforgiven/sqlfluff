@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 9092f83cabc20c555bac84f7a122686cddd4b04a9cbd50a6dcba07834a3839e5
+_hash: d8e77c3ae3097a210989729af8317a2b0efc635a4d51606df48a9e64aeefcb5a
 file:
 - batch:
     statement:
@@ -14,7 +14,8 @@ file:
       - keyword: NOT
       - keyword: EXISTS
       - function_name:
-          function_name_identifier: get_bal
+          function_name_identifier:
+            function_name_identifier: get_bal
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -71,7 +72,8 @@ file:
         - statement:
             function:
               function_name:
-                function_name_identifier: RETURN
+                function_name_identifier:
+                  function_name_identifier: RETURN
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -92,7 +94,8 @@ file:
       - keyword: REPLACE
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: text_length
+          function_name_identifier:
+            function_name_identifier: text_length
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -115,7 +118,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_LOB
                     dot: .
-                    function_name_identifier: GETLENGTH
+                    function_name_identifier:
+                      function_name_identifier: GETLENGTH
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -136,7 +140,8 @@ file:
           create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: square
+              function_name_identifier:
+                function_name_identifier: square
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -182,14 +187,16 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
                 expression:
                   function:
                     function_name:
-                      function_name_identifier: square
+                      function_name_identifier:
+                        function_name_identifier: square
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -214,7 +221,8 @@ file:
           create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: f
+              function_name_identifier:
+                function_name_identifier: f
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -231,7 +239,8 @@ file:
             - statement:
                 function:
                   function_name:
-                    function_name_identifier: RETURN
+                    function_name_identifier:
+                      function_name_identifier: RETURN
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -251,7 +260,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -262,7 +272,8 @@ file:
                   - pipe: '|'
                 - function:
                     function_name:
-                      function_name_identifier: f
+                      function_name_identifier:
+                        function_name_identifier: f
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -283,7 +294,8 @@ file:
             expression:
               function:
                 function_name:
-                  function_name_identifier: f
+                  function_name_identifier:
+                    function_name_identifier: f
                 function_contents:
                   bracketed:
                     start_bracket: (
@@ -296,7 +308,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -316,7 +329,8 @@ file:
       - keyword: REPLACE
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: f
+          function_name_identifier:
+            function_name_identifier: f
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -379,7 +393,8 @@ file:
       - keyword: REPLACE
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: f
+          function_name_identifier:
+            function_name_identifier: f
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -427,7 +442,10 @@ file:
                     column_reference:
                       naked_identifier: n
             - statement_terminator: ;
-            - keyword: ELSE
+            - statement:
+                procedure_call_statement:
+                  named_identifier:
+                    named_identifier: ELSE
             - statement:
                 return_statement:
                   keyword: RETURN
@@ -465,7 +483,8 @@ file:
                   function_name:
                     naked_identifier: DBMS_OUTPUT
                     dot: .
-                    function_name_identifier: PUT_LINE
+                    function_name_identifier:
+                      function_name_identifier: PUT_LINE
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -485,7 +504,8 @@ file:
                         - pipe: '|'
                       - function:
                           function_name:
-                            function_name_identifier: f
+                            function_name_identifier:
+                              function_name_identifier: f
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -507,7 +527,8 @@ file:
       create_function_statement:
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: ex_func
+          function_name_identifier:
+            function_name_identifier: ex_func
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -530,7 +551,8 @@ file:
       create_function_statement:
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: f_ex
+          function_name_identifier:
+            function_name_identifier: f_ex
       - function_parameter_list:
           bracketed:
             start_bracket: (
@@ -553,7 +575,8 @@ file:
       create_function_statement:
       - keyword: FUNCTION
       - function_name:
-          function_name_identifier: f_ex
+          function_name_identifier:
+            function_name_identifier: f_ex
       - function_parameter_list:
           bracketed:
             start_bracket: (

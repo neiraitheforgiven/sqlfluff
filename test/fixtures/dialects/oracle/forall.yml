@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 46b83d97598b4ccfc27088feaf6be1f1e2e29baa7ad1e1d15133badbfd0b04c6
+_hash: 0fd2418a2a9bcb3a9ac1c10faa3f747268ec7f6ca4d6972835cca9c87732545d
 file:
 - batch:
     statement:
@@ -32,7 +32,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: NumList
+                function_name_identifier:
+                  function_name_identifier: NumList
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -78,7 +79,8 @@ file:
                     raw_comparison_operator: '='
                   function:
                     function_name:
-                      function_name_identifier: depts
+                      function_name_identifier:
+                        function_name_identifier: depts
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -203,7 +205,8 @@ file:
                     - pipe: '|'
                     function:
                       function_name:
-                        function_name_identifier: TO_CHAR
+                        function_name_identifier:
+                          function_name_identifier: TO_CHAR
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -258,7 +261,8 @@ file:
                     - expression:
                         function:
                           function_name:
-                            function_name_identifier: pnums
+                            function_name_identifier:
+                              function_name_identifier: pnums
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -270,7 +274,8 @@ file:
                     - expression:
                         function:
                           function_name:
-                            function_name_identifier: pnames
+                            function_name_identifier:
+                              function_name_identifier: pnames
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -323,7 +328,8 @@ file:
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: pnums
+                        function_name_identifier:
+                          function_name_identifier: pnums
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -335,7 +341,8 @@ file:
                 - expression:
                     function:
                       function_name:
-                        function_name_identifier: pnames
+                        function_name_identifier:
+                          function_name_identifier: pnames
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -361,7 +368,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -374,7 +382,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -387,7 +396,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -398,7 +408,8 @@ file:
                   - pipe: '|'
                   function:
                     function_name:
-                      function_name_identifier: TO_CHAR
+                      function_name_identifier:
+                        function_name_identifier: TO_CHAR
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -422,7 +433,8 @@ file:
             function_name:
               naked_identifier: DBMS_OUTPUT
               dot: .
-              function_name_identifier: PUT_LINE
+              function_name_identifier:
+                function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
                 start_bracket: (
@@ -433,7 +445,8 @@ file:
                   - pipe: '|'
                   function:
                     function_name:
-                      function_name_identifier: TO_CHAR
+                      function_name_identifier:
+                        function_name_identifier: TO_CHAR
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -487,7 +500,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: NumList
+                function_name_identifier:
+                  function_name_identifier: NumList
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -550,7 +564,8 @@ file:
                     raw_comparison_operator: '='
                   function:
                     function_name:
-                      function_name_identifier: depts
+                      function_name_identifier:
+                        function_name_identifier: depts
                     function_contents:
                       bracketed:
                         start_bracket: (
@@ -571,7 +586,8 @@ file:
       - keyword: REPLACE
       - keyword: PROCEDURE
       - function_name:
-          function_name_identifier: p
+          function_name_identifier:
+            function_name_identifier: p
       - keyword: AUTHID
       - keyword: DEFINER
       - keyword: AS
@@ -592,7 +608,8 @@ file:
         - expression:
             function:
               function_name:
-                function_name_identifier: NumList
+                function_name_identifier:
+                  function_name_identifier: NumList
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -730,7 +747,8 @@ file:
                       raw_comparison_operator: '='
                     function:
                       function_name:
-                        function_name_identifier: depts
+                        function_name_identifier:
+                          function_name_identifier: depts
                       function_contents:
                         bracketed:
                           start_bracket: (
@@ -757,7 +775,8 @@ file:
               function_name:
                 naked_identifier: DBMS_OUTPUT
                 dot: .
-                function_name_identifier: PUT_LINE
+                function_name_identifier:
+                  function_name_identifier: PUT_LINE
               function_contents:
                 bracketed:
                   start_bracket: (

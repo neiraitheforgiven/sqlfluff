@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 0c26399034de07c8c1df551ba8c6670411aea124f1686bd20e087c87439f43e9
+_hash: b8c6489ce2e184da705e5838d7a12c04ea0e95c96cf8e613a4c6eeae6f2af0b7
 file:
 - batch:
     statement:
@@ -183,7 +183,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: hire
+              function_name_identifier:
+                function_name_identifier: hire
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -267,7 +268,8 @@ file:
                     - expression:
                         function:
                           function_name:
-                            function_name_identifier: TO_DATE
+                            function_name_identifier:
+                              function_name_identifier: TO_DATE
                           function_contents:
                             bracketed:
                             - start_bracket: (
@@ -303,7 +305,8 @@ file:
             - statement:
                 function:
                   function_name:
-                    function_name_identifier: RETURN
+                    function_name_identifier:
+                      function_name_identifier: RETURN
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -319,7 +322,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: create_dept
+              function_name_identifier:
+                function_name_identifier: create_dept
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -397,7 +401,8 @@ file:
             - statement:
                 function:
                   function_name:
-                    function_name_identifier: RETURN
+                    function_name_identifier:
+                      function_name_identifier: RETURN
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -413,7 +418,8 @@ file:
         - create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: remove_emp
+              function_name_identifier:
+                function_name_identifier: remove_emp
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -466,7 +472,8 @@ file:
         - create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: remove_dept
+              function_name_identifier:
+                function_name_identifier: remove_dept
           - function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -519,7 +526,8 @@ file:
                     select_clause_element:
                       function:
                         function_name:
-                          function_name_identifier: COUNT
+                          function_name_identifier:
+                            function_name_identifier: COUNT
                         function_contents:
                           bracketed:
                             start_bracket: (
@@ -543,7 +551,8 @@ file:
         - create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: increase_sal
+              function_name_identifier:
+                function_name_identifier: increase_sal
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -609,7 +618,10 @@ file:
                       keyword: RAISE
                       naked_identifier: no_sal
                 - statement_terminator: ;
-                - keyword: ELSE
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: ELSE
                 - statement:
                     update_statement:
                       keyword: UPDATE
@@ -648,7 +660,8 @@ file:
         - create_procedure_statement:
           - keyword: PROCEDURE
           - function_name:
-              function_name_identifier: increase_comm
+              function_name_identifier:
+                function_name_identifier: increase_comm
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -714,7 +727,10 @@ file:
                       keyword: RAISE
                       naked_identifier: no_comm
                 - statement_terminator: ;
-                - keyword: ELSE
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: ELSE
                 - statement:
                     update_statement:
                       keyword: UPDATE
@@ -762,7 +778,8 @@ file:
           create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: test_function
+              function_name_identifier:
+                function_name_identifier: test_function
           - keyword: RETURN
           - data_type:
               data_type_identifier: VARCHAR2
@@ -809,15 +826,24 @@ file:
                       expression:
                         numeric_literal: '0'
                 - statement_terminator: ;
-                - keyword: WHEN
-                - keyword: OTHERS
-                - keyword: THEN
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: WHEN
+                - statement:
+                    procedure_call_statement:
+                      naked_identifier: OTHERS
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: THEN
                 - statement:
                     function:
                       function_name:
                         naked_identifier: logger
                         dot: .
-                        function_name_identifier: log_error
+                        function_name_identifier:
+                          function_name_identifier: log_error
                       function_contents:
                         bracketed:
                           start_bracket: (

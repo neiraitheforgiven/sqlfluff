@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 53ca7c25e54378562755e620c050dee5b4f0591d01a54b68d8f6a8a54059e560
+_hash: 557304a2155b60253a8eb18531145b61de363899b6eacdff223c4f2c31635bba
 file:
   batch:
   - statement:
@@ -47,7 +47,8 @@ file:
               - start_bracket: (
               - function:
                   function_name:
-                    function_name_identifier: count
+                    function_name_identifier:
+                      function_name_identifier: count
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -118,7 +119,8 @@ file:
               - start_bracket: (
               - function:
                   function_name:
-                    function_name_identifier: count
+                    function_name_identifier:
+                      function_name_identifier: count
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -191,7 +193,8 @@ file:
               - start_bracket: (
               - function:
                   function_name:
-                    function_name_identifier: count
+                    function_name_identifier:
+                      function_name_identifier: count
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -282,7 +285,8 @@ file:
               - start_bracket: (
               - function:
                   function_name:
-                    function_name_identifier: count
+                    function_name_identifier:
+                      function_name_identifier: count
                   function_contents:
                     bracketed:
                       start_bracket: (
@@ -341,7 +345,8 @@ file:
               - start_bracket: (
               - function:
                   function_name:
-                    function_name_identifier: count
+                    function_name_identifier:
+                      function_name_identifier: count
                   function_contents:
                     bracketed:
                       start_bracket: (

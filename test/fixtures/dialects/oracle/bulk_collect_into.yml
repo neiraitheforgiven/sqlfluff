@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: da6dcc8d4a8dc4fc205452b25cd1409162ac2025de9dbb0528052ac679171022
+_hash: 922f9de1362e75afcf9a69101acdbe16fbab0cad659b43637b8556e1bcda47bb
 file:
   batch:
   - statement:
@@ -100,7 +100,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: UPPER
+                function_name_identifier:
+                  function_name_identifier: UPPER
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -114,7 +115,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: LENGTH
+                function_name_identifier:
+                  function_name_identifier: LENGTH
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -169,7 +171,8 @@ file:
                       select_clause_element:
                         function:
                           function_name:
-                            function_name_identifier: MAX
+                            function_name_identifier:
+                              function_name_identifier: MAX
                           function_contents:
                             bracketed:
                               start_bracket: (
@@ -319,7 +322,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: ROW_NUMBER
+                function_name_identifier:
+                  function_name_identifier: ROW_NUMBER
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -345,7 +349,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: AVG
+                function_name_identifier:
+                  function_name_identifier: AVG
               function_contents:
                 bracketed:
                   start_bracket: (
@@ -415,7 +420,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: CONCAT
+                function_name_identifier:
+                  function_name_identifier: CONCAT
               function_contents:
                 bracketed:
                 - start_bracket: (
@@ -432,7 +438,8 @@ file:
         - select_clause_element:
             function:
               function_name:
-                function_name_identifier: SUBSTR
+                function_name_identifier:
+                  function_name_identifier: SUBSTR
               function_contents:
                 bracketed:
                 - start_bracket: (

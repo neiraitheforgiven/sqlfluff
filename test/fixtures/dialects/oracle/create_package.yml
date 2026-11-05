@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 268bd7cc54dc13f315a6c992c59fb9791fc0c1274d5a5fefa8940dba4b622271
+_hash: d10beae67590709be7e71ea4fad8e850adf9b7c642b9698df55a7bf1b9fb0665
 file:
 - batch:
     statement:
@@ -20,7 +20,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: hire
+              function_name_identifier:
+                function_name_identifier: hire
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -55,7 +56,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: create_dept
+              function_name_identifier:
+                function_name_identifier: create_dept
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -74,7 +76,8 @@ file:
         - create_procedure_statement:
             keyword: PROCEDURE
             function_name:
-              function_name_identifier: remove_emp
+              function_name_identifier:
+                function_name_identifier: remove_emp
             function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -86,7 +89,8 @@ file:
         - create_procedure_statement:
             keyword: PROCEDURE
             function_name:
-              function_name_identifier: remove_dept
+              function_name_identifier:
+                function_name_identifier: remove_dept
             function_parameter_list:
               bracketed:
                 start_bracket: (
@@ -98,7 +102,8 @@ file:
         - create_procedure_statement:
             keyword: PROCEDURE
             function_name:
-              function_name_identifier: increase_sal
+              function_name_identifier:
+                function_name_identifier: increase_sal
             function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -114,7 +119,8 @@ file:
         - create_procedure_statement:
             keyword: PROCEDURE
             function_name:
-              function_name_identifier: increase_comm
+              function_name_identifier:
+                function_name_identifier: increase_comm
             function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -155,7 +161,8 @@ file:
           create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: any_function_with_result_cache
+              function_name_identifier:
+                function_name_identifier: any_function_with_result_cache
           - keyword: RETURN
           - data_type:
               data_type_identifier: VARCHAR2
@@ -179,7 +186,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: skip_col
+              function_name_identifier:
+                function_name_identifier: skip_col
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -204,7 +212,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: describe
+              function_name_identifier:
+                function_name_identifier: describe
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -231,7 +240,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: skip_col
+              function_name_identifier:
+                function_name_identifier: skip_col
           - function_parameter_list:
               bracketed:
               - start_bracket: (
@@ -263,7 +273,8 @@ file:
         - create_function_statement:
           - keyword: FUNCTION
           - function_name:
-              function_name_identifier: describe
+              function_name_identifier:
+                function_name_identifier: describe
           - function_parameter_list:
               bracketed:
               - start_bracket: (

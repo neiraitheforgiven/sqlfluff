@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: a0c03d40496175d333588e3885e1ab5049edb8cabed6162ebce122da4071846f
+_hash: e1da6bc31401e1057f1bf4f2129490f33b36fc695c119ec72ac96a5d0bd5b0ba
 file:
 - batch:
     statement:
@@ -124,7 +124,10 @@ file:
                     expression:
                       quoted_literal: "'UPDATE'"
               - statement_terminator: ;
-              - keyword: ELSE
+              - statement:
+                  procedure_call_statement:
+                    named_identifier:
+                      named_identifier: ELSE
               - statement:
                   assignment_segment_statement:
                     object_reference:
@@ -516,27 +519,49 @@ file:
                     null_statement:
                       keyword: 'NULL'
                 - statement_terminator: ;
-              - when_clause:
-                - keyword: WHEN
-                - keyword: NOT
-                - keyword: DELETING
-                - keyword: AND
-                - keyword: UPDATING
-                - bracketed:
-                    start_bracket: (
-                    quoted_literal: "'other_col'"
-                    end_bracket: )
-                - keyword: THEN
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: WHEN
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: NOT
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: DELETING
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: AND
+                - statement:
+                    function:
+                      function_name:
+                        function_name_identifier:
+                          function_name_identifier: UPDATING
+                      function_contents:
+                        bracketed:
+                          start_bracket: (
+                          expression:
+                            quoted_literal: "'other_col'"
+                          end_bracket: )
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: THEN
                 - statement:
                     null_statement:
                       keyword: 'NULL'
                 - statement_terminator: ;
-              - else_clause:
-                  keyword: ELSE
-                  statement:
+                - statement:
+                    procedure_call_statement:
+                      named_identifier:
+                        named_identifier: ELSE
+                - statement:
                     null_statement:
                       keyword: 'NULL'
-                  statement_terminator: ;
+                - statement_terminator: ;
               - keyword: END
               - keyword: CASE
           - statement_terminator: ;
