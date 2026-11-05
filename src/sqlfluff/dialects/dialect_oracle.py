@@ -295,6 +295,15 @@ oracle_dialect.add(
     ),
     UnpivotNullsGrammar=Sequence(OneOf("INCLUDE", "EXCLUDE"), "NULLS"),
     StatementAndDelimiterGrammar=Sequence(
+        Sequence(
+            Ref("RawLessThanSegment"),
+            Ref("RawLessThanSegment"),
+            Ref("SingleIdentifierGrammar"),
+            Ref("RawGreaterThanSegment"),
+            Ref("RawGreaterThanSegment"),
+            optional=True,
+            allow_gaps=False,
+        ),
         # PlsqlStatementSegment extends StatementSegment with ProcedureCallStatementSegment.
         # Using it here (rather than plain StatementSegment) means bare procedure-call
         # syntax is only tried inside PL/SQL block bodies (BEGIN/END, loops, IF, etc.)
