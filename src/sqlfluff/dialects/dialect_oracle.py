@@ -4190,9 +4190,12 @@ class IntoClauseSegment(BaseSegment):
     match_grammar = Sequence(
         "INTO",
         Delimited(
-            Ref("SingleIdentifierGrammar"),
-            Ref("ObjectReferenceSegment"),
-            Ref("BindVariableSegment"),
+            OneOf(
+                Ref("SingleIdentifierGrammar"),
+                Ref("ObjectReferenceSegment"),
+                Ref("BindVariableSegment"),
+                Ref("CollectionElementReferenceSegment"),
+            )
         ),
     )
 
@@ -4210,7 +4213,14 @@ class BulkCollectIntoClauseSegment(BaseSegment):
         "COLLECT",
         "INTO",
         ImplicitIndent,
-        Delimited(OneOf(Ref("SingleIdentifierGrammar"), Ref("BindVariableSegment"))),
+        Delimited(
+            OneOf(
+                Ref("SingleIdentifierGrammar"),
+                Ref("ObjectReferenceSegment"),
+                Ref("BindVariableSegment"),
+                Ref("CollectionElementReferenceSegment"),
+            )
+        ),
         Dedent,
     )
 
@@ -4999,4 +5009,15 @@ class ValuesClauseSegment(BaseSegment):
             ),
         ),
         Dedent,
+    )
+
+
+class CollectionElementReferenceSegment(BaseSegment):
+    """A collection element reference like `t_List(i)` or `pkg.t_List(i)`."""
+
+    type = "collection_element_reference"
+
+    match_grammar = Sequence(
+        Ref("ColumnReferenceSegment"),
+        Bracketed(Delimited(Ref("ExpressionSegment"))),
     )
