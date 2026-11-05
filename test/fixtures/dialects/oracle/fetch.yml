@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 8e69ada2a057e25ed34549593c4e2e08a2b9ce7e6e6546c38a3d31341637b42d
+_hash: 6830cc529c80d85f6ce230ee4919c6109c8d849a644720ceed7343f7bb523126
 file:
 - batch:
     statement:
@@ -38,8 +38,9 @@ file:
           - keyword: CURSOR
           - naked_identifier: desc_salary
           - keyword: RETURN
-          - data_type:
-              data_type_identifier: EmpRecTyp
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: EmpRecTyp
           - keyword: IS
           - select_statement:
               select_clause:

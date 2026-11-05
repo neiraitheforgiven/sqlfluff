@@ -3131,7 +3131,7 @@ class DeclareCursorVariableSegment(BaseSegment):
             OneOf(
                 Ref("ColumnTypeReferenceSegment"),
                 Ref("RowTypeReferenceSegment"),
-                Ref("DatatypeSegment"),
+                Ref("PlsqlDatatypeSegment"),
             ),
             optional=True,
         ),
