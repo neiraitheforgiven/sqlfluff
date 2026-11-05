@@ -5015,3 +5015,4 @@ class PipeRowStatementSegment(BaseSegment):
 
 
 oracle_dialect.sets("reserved_keywords").update({"PIPE", "PIPELINED"})
+oracle_dialect.sets("unreserved_keywords").discard("PIPELINED")
