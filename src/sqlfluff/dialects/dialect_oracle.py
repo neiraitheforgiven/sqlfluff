@@ -5000,3 +5000,12 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+oracle_dialect.replace(
+    ComparisonOperatorGrammar=OneOf(
+        ansi_dialect.get_grammar("ComparisonOperatorGrammar"),
+        Sequence("MEMBER", "OF"),
+        Sequence("NOT", "MEMBER", "OF"),
+    ),
+)
