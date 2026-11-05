@@ -3,10 +3,10 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: cb7072455c5275ed4d5485ed0d568b9f0814888076e30496752e5d415269b5b8
+_hash: 88f47742c90dd31c3d9fb1135275ffd85f8c319304e3d7e57b44e777b89a53ea
 file:
   batch:
-    statement:
+  - statement:
       select_statement:
         select_clause:
           keyword: SELECT
@@ -38,4 +38,326 @@ file:
                     - expression:
                         quoted_literal: "'09'"
                     - end_bracket: )
-    statement_terminator: ;
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+              naked_identifier: t
+              dot: .
+              keyword: column_value
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                function:
+                  function_name:
+                    function_name_identifier: TABLE
+                  function_contents:
+                    bracketed:
+                      start_bracket: (
+                      expression:
+                        column_reference:
+                          naked_identifier: t_Ids
+                      end_bracket: )
+              alias_expression:
+                naked_identifier: t
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+              quoted_identifier: '"Ids"'
+              dot: .
+              keyword: COLUMN_VALUE
+            alias_expression:
+              alias_operator:
+                keyword: AS
+              naked_identifier: ObjectId
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                function:
+                  function_name:
+                    function_name_identifier: TABLE
+                  function_contents:
+                    bracketed:
+                      start_bracket: (
+                      expression:
+                        column_reference:
+                          naked_identifier: t_Ids
+                      end_bracket: )
+              alias_expression:
+                quoted_identifier: '"Ids"'
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+            - naked_identifier: schema_name
+            - dot: .
+            - naked_identifier: collection_name
+            - dot: .
+            - keyword: column_value
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                - naked_identifier: schema_name
+                - dot: .
+                - naked_identifier: collection_name
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+        - keyword: SELECT
+        - select_clause_element:
+            column_reference:
+              naked_identifier: rels
+              dot: .
+              keyword: column_value
+            alias_expression:
+              naked_identifier: RelationshipId
+        - comma: ','
+        - select_clause_element:
+            column_reference:
+            - naked_identifier: c
+            - dot: .
+            - naked_identifier: ObjectId
+        from_clause:
+          keyword: FROM
+          from_expression:
+          - from_expression_element:
+              table_expression:
+                function:
+                  function_name:
+                    function_name_identifier: TABLE
+                  function_contents:
+                    bracketed:
+                      start_bracket: (
+                      expression:
+                        column_reference:
+                          naked_identifier: t_Ids
+                      end_bracket: )
+              alias_expression:
+                naked_identifier: rels
+          - join_clause:
+              keyword: JOIN
+              from_expression_element:
+                table_expression:
+                  table_reference:
+                  - naked_identifier: query
+                  - dot: .
+                  - naked_identifier: r_ClientBusinessContact
+                alias_expression:
+                  naked_identifier: r
+              join_on_condition:
+                keyword: 'ON'
+                expression:
+                - column_reference:
+                  - naked_identifier: r
+                  - dot: .
+                  - naked_identifier: RelationshipId
+                - comparison_operator:
+                    raw_comparison_operator: '='
+                - column_reference:
+                    naked_identifier: rels
+                    dot: .
+                    keyword: column_value
+          - join_clause:
+              keyword: JOIN
+              from_expression_element:
+                table_expression:
+                  table_reference:
+                  - naked_identifier: query
+                  - dot: .
+                  - naked_identifier: o_BusinessContact
+                alias_expression:
+                  naked_identifier: c
+              join_on_condition:
+                keyword: 'ON'
+                expression:
+                - column_reference:
+                  - naked_identifier: c
+                  - dot: .
+                  - naked_identifier: ObjectId
+                - comparison_operator:
+                    raw_comparison_operator: '='
+                - column_reference:
+                  - naked_identifier: r
+                  - dot: .
+                  - naked_identifier: BusinessContactObjectId
+        where_clause:
+          keyword: WHERE
+          expression:
+            column_reference:
+              naked_identifier: rels
+              dot: .
+              keyword: column_value
+            comparison_operator:
+              raw_comparison_operator: '='
+            function:
+              function_name:
+                function_name_identifier: NVL
+              function_contents:
+                bracketed:
+                - start_bracket: (
+                - expression:
+                    column_reference:
+                    - naked_identifier: c
+                    - dot: .
+                    - naked_identifier: ContactTypeId
+                - comma: ','
+                - expression:
+                    column_reference:
+                      naked_identifier: t_ContactTypeId
+                - end_bracket: )
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+              naked_identifier: ids
+              dot: .
+              keyword: column_value
+            alias_expression:
+              alias_operator:
+                keyword: AS
+              naked_identifier: FromObjectId
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                function:
+                  function_name:
+                    function_name_identifier: TABLE
+                  function_contents:
+                    bracketed:
+                      start_bracket: (
+                      expression:
+                        column_reference:
+                          naked_identifier: t_Ids
+                      end_bracket: )
+              alias_expression:
+                naked_identifier: ids
+        where_clause:
+          keyword: WHERE
+          expression:
+            column_reference:
+              naked_identifier: ids
+              dot: .
+              keyword: column_value
+            keyword: IN
+            bracketed:
+              start_bracket: (
+              select_statement:
+                select_clause:
+                  keyword: SELECT
+                  select_clause_element:
+                    column_reference:
+                      naked_identifier: other_ids
+                      dot: .
+                      keyword: column_value
+                from_clause:
+                  keyword: FROM
+                  from_expression:
+                    from_expression_element:
+                      table_expression:
+                        function:
+                          function_name:
+                            function_name_identifier: TABLE
+                          function_contents:
+                            bracketed:
+                              start_bracket: (
+                              expression:
+                                column_reference:
+                                  naked_identifier: t_OtherIds
+                              end_bracket: )
+                      alias_expression:
+                        naked_identifier: other_ids
+              end_bracket: )
+  - statement_terminator: ;
+  - statement:
+      begin_end_block:
+      - declare_segment:
+          keyword: DECLARE
+          naked_identifier: t_Ids
+          data_type:
+            data_type_identifier: udt_IdList
+          statement_terminator: ;
+          cursor_variable:
+          - keyword: CURSOR
+          - naked_identifier: c_BusinessContacts
+          - keyword: IS
+          - select_statement:
+              select_clause:
+                keyword: SELECT
+                select_clause_element:
+                  column_reference:
+                  - naked_identifier: r
+                  - dot: .
+                  - naked_identifier: RelationshipId
+              from_clause:
+                keyword: FROM
+                from_expression:
+                  from_expression_element:
+                    table_expression:
+                      function:
+                        function_name:
+                          function_name_identifier: TABLE
+                        function_contents:
+                          bracketed:
+                            start_bracket: (
+                            expression:
+                              column_reference:
+                                naked_identifier: t_Ids
+                            end_bracket: )
+                    alias_expression:
+                      naked_identifier: rels
+                  join_clause:
+                    keyword: JOIN
+                    from_expression_element:
+                      table_expression:
+                        table_reference:
+                        - naked_identifier: query
+                        - dot: .
+                        - naked_identifier: r_ClientBusinessContact
+                      alias_expression:
+                        naked_identifier: r
+                    join_on_condition:
+                      keyword: 'ON'
+                      expression:
+                      - column_reference:
+                        - naked_identifier: r
+                        - dot: .
+                        - naked_identifier: RelationshipId
+                      - comparison_operator:
+                          raw_comparison_operator: '='
+                      - column_reference:
+                          naked_identifier: rels
+                          dot: .
+                          keyword: column_value
+          - statement_terminator: ;
+      - keyword: BEGIN
+      - statement:
+          null_statement:
+            keyword: 'NULL'
+      - statement_terminator: ;
+      - keyword: END
+  - statement_terminator: ;
+  - slash_buffer_executor:
+      slash: /

@@ -18,11 +18,12 @@ def _violations(sql: str) -> list:
     Top-level parse failures surface in parsed.violations, but content that
     cannot be matched inside a Bracketed clause is silently wrapped in an
     unparsable tree node without raising a SQLParseError. We collect both so
-    that rejection tests for STORAGE(...) sub-parameters work correctly.
+    that rejection tests for STORAGE(...) sub-parameters work correctly. A
+    top-level parsing error does not require a successfully parsed root tree.
     """
     parsed = Linter(dialect="oracle").parse_string(sql)
     violations: list = list(parsed.violations)
-    if parsed.tree:
+    if not violations and parsed.tree:
         violations += list(parsed.tree.recursive_crawl("unparsable"))
     return violations
 
@@ -161,3 +162,26 @@ def test_inmemory_subclauses_rejected(sql: str) -> None:
 def test_index_physical_attrs_rejected(sql: str) -> None:
     """Duplicate or mutually-exclusive index physical attributes must produce a parse violation."""
     assert _violations(sql) != [], f"Expected violations but got none for:\n{sql}"
+
+
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "ids..COLUMN_VALUE",
+        "ids.COLUMN_VALUE.",
+        "ids.SELECT",
+        "ids.FROM",
+    ],
+)
+def test_malformed_column_value_reference_rejected(expression: str) -> None:
+    """Pseudocolumn support must not admit malformed or reserved field names."""
+    assert _violations(f"SELECT {expression} FROM TABLE(t_Ids) ids;")
+
+
+@pytest.mark.parametrize(
+    "expression",
+    ["j..ROWNUM", "j.ROWNUM.", "j.ROWNUM..field", ".ROWNUM", "j.SELECT"],
+)
+def test_malformed_cursor_rownum_reference_rejected(expression: str) -> None:
+    """Cursor ROWNUM fields must have a complete, well-formed reference path."""
+    assert _violations(f"BEGIN t_Ids({expression}) := 1; END;\n/\n")

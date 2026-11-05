@@ -799,6 +799,7 @@ oracle_dialect.replace(
             Ref("BindVariableSegment"),
             Ref.keyword("LEVEL"),
             Ref.keyword("ROWNUM"),
+            Ref.keyword("ROWID"),
             Ref.keyword("ANY"),
         ],
         before=Ref("ArrayLiteralSegment"),
@@ -2247,6 +2248,20 @@ class ColumnReferenceSegment(ObjectReferenceSegment):
     """A reference to column, field or alias."""
 
     type = "column_reference"
+
+    match_grammar = OneOf(
+        Sequence(
+            Delimited(
+                Ref("SingleIdentifierGrammar"),
+                delimiter=Ref("DotSegment"),
+                allow_gaps=False,
+            ),
+            Ref("DotSegment"),
+            OneOf("COLUMN_VALUE", "ROWNUM"),
+            allow_gaps=False,
+        ),
+        ObjectReferenceSegment.match_grammar,
+    )
 
 
 class FunctionNameSegment(BaseSegment):
