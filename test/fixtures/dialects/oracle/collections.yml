@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: e5ab5335dffbb28f013bacd3b11906004a8152f6de4fad4148cd51ceae393dde
+_hash: 3430f7a9df4f41bbaf31b5615f33c863488251cd8443a8a025794584f1ea0468
 file:
 - batch:
     statement:
@@ -48,7 +48,8 @@ file:
               naked_identifier: city_population
             bracketed:
               start_bracket: (
-              quoted_identifier: "'Smallville'"
+              expression:
+                quoted_literal: "'Smallville'"
               end_bracket: )
             assignment_operator: :=
             expression:
@@ -60,7 +61,8 @@ file:
               naked_identifier: city_population
             bracketed:
               start_bracket: (
-              quoted_identifier: "'Midland'"
+              expression:
+                quoted_literal: "'Midland'"
               end_bracket: )
             assignment_operator: :=
             expression:
@@ -72,7 +74,8 @@ file:
               naked_identifier: city_population
             bracketed:
               start_bracket: (
-              quoted_identifier: "'Megalopolis'"
+              expression:
+                quoted_literal: "'Megalopolis'"
               end_bracket: )
             assignment_operator: :=
             expression:
@@ -84,7 +87,8 @@ file:
               naked_identifier: city_population
             bracketed:
               start_bracket: (
-              quoted_identifier: "'Smallville'"
+              expression:
+                quoted_literal: "'Smallville'"
               end_bracket: )
             assignment_operator: :=
             expression:
@@ -540,7 +544,8 @@ file:
               naked_identifier: team
             bracketed:
               start_bracket: (
-              numeric_literal: '3'
+              expression:
+                numeric_literal: '3'
               end_bracket: )
             assignment_operator: :=
             expression:
@@ -552,7 +557,8 @@ file:
               naked_identifier: team
             bracketed:
               start_bracket: (
-              numeric_literal: '4'
+              expression:
+                numeric_literal: '4'
               end_bracket: )
             assignment_operator: :=
             expression:
@@ -753,7 +759,8 @@ file:
               naked_identifier: names
             bracketed:
               start_bracket: (
-              numeric_literal: '3'
+              expression:
+                numeric_literal: '3'
               end_bracket: )
             assignment_operator: :=
             expression:
@@ -867,7 +874,8 @@ file:
               naked_identifier: l_employees
           - bracketed:
               start_bracket: (
-              numeric_literal: '101'
+              expression:
+                numeric_literal: '101'
               end_bracket: )
           - dot: .
           - object_reference:
@@ -882,7 +890,8 @@ file:
               naked_identifier: l_employees
           - bracketed:
               start_bracket: (
-              numeric_literal: '101'
+              expression:
+                numeric_literal: '101'
               end_bracket: )
           - dot: .
           - object_reference:
@@ -897,7 +906,8 @@ file:
               naked_identifier: l_employees
           - bracketed:
               start_bracket: (
-              numeric_literal: '101'
+              expression:
+                numeric_literal: '101'
               end_bracket: )
           - dot: .
           - object_reference:
@@ -912,7 +922,8 @@ file:
               naked_identifier: l_employees
           - bracketed:
               start_bracket: (
-              numeric_literal: '101'
+              expression:
+                numeric_literal: '101'
               end_bracket: )
           - dot: .
           - object_reference:
@@ -927,7 +938,8 @@ file:
               naked_identifier: l_employees
           - bracketed:
               start_bracket: (
-              numeric_literal: '102'
+              expression:
+                numeric_literal: '102'
               end_bracket: )
           - dot: .
           - object_reference:
@@ -942,7 +954,8 @@ file:
               naked_identifier: l_employees
           - bracketed:
               start_bracket: (
-              numeric_literal: '102'
+              expression:
+                numeric_literal: '102'
               end_bracket: )
           - dot: .
           - object_reference:
@@ -957,7 +970,8 @@ file:
               naked_identifier: l_employees
           - bracketed:
               start_bracket: (
-              numeric_literal: '102'
+              expression:
+                numeric_literal: '102'
               end_bracket: )
           - dot: .
           - object_reference:
@@ -972,7 +986,8 @@ file:
               naked_identifier: l_employees
           - bracketed:
               start_bracket: (
-              numeric_literal: '102'
+              expression:
+                numeric_literal: '102'
               end_bracket: )
           - dot: .
           - object_reference:

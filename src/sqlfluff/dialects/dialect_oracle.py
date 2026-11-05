@@ -3609,6 +3609,7 @@ class AssignmentStatementSegment(BaseSegment):
             Bracketed(
                 OneOf(
                     Ref("ObjectReferenceSegment"),
+                    Ref("ExpressionSegment"),
                     Ref("SingleQuotedIdentifierSegment"),
                     Ref("NumericLiteralSegment"),
                 ),
