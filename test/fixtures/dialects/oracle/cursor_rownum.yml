@@ -1,0 +1,226 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: a8435f56c4f0cd878e999dd9e3cee825de94f1f94c0975d74ca6ec32d4330a25
+file:
+- batch:
+    statement:
+      create_package_body_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: PACKAGE
+      - keyword: BODY
+      - package_reference:
+          naked_identifier: pkg_test
+      - keyword: AS
+      - declare_segment:
+          create_procedure_statement:
+          - keyword: PROCEDURE
+          - function_name:
+              function_name_identifier:
+                function_name_identifier: Assess
+          - keyword: IS
+          - declare_segment:
+            - collection_type:
+              - keyword: TYPE
+              - naked_identifier: udt_NumberList
+              - keyword: IS
+              - keyword: TABLE
+              - keyword: OF
+              - plsql_data_type:
+                  data_type:
+                    data_type_identifier: NUMBER
+              - keyword: INDEX
+              - keyword: BY
+              - plsql_data_type:
+                  data_type:
+                    data_type_identifier: PLS_INTEGER
+            - statement_terminator: ;
+            - naked_identifier: t_Ids
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: udt_NumberList
+            - statement_terminator: ;
+            - naked_identifier: t_Value
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
+            - statement_terminator: ;
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                for_loop_statement:
+                - keyword: FOR
+                - naked_identifier: i
+                - keyword: IN
+                - expression:
+                    bracketed:
+                      start_bracket: (
+                      set_expression:
+                      - select_statement:
+                          select_clause:
+                            keyword: SELECT
+                            select_clause_element:
+                              column_reference:
+                                naked_identifier: ClientId
+                          from_clause:
+                            keyword: FROM
+                            from_expression:
+                              from_expression_element:
+                                table_expression:
+                                  table_reference:
+                                    naked_identifier: first_accounts
+                      - set_operator:
+                          keyword: UNION
+                      - select_statement:
+                          select_clause:
+                            keyword: SELECT
+                            select_clause_element:
+                              column_reference:
+                                naked_identifier: ClientId
+                          from_clause:
+                            keyword: FROM
+                            from_expression:
+                              from_expression_element:
+                                table_expression:
+                                  table_reference:
+                                    naked_identifier: second_accounts
+                      end_bracket: )
+                - loop_statement:
+                  - keyword: LOOP
+                  - statement:
+                      for_loop_statement:
+                      - keyword: FOR
+                      - naked_identifier: j
+                      - keyword: IN
+                      - expression:
+                          bracketed:
+                            start_bracket: (
+                            select_statement:
+                              select_clause:
+                              - keyword: SELECT
+                              - select_clause_element:
+                                  column_reference:
+                                    naked_identifier: ObjectId
+                              - comma: ','
+                              - select_clause_element:
+                                  keyword: ROWNUM
+                              from_clause:
+                                keyword: FROM
+                                from_expression:
+                                  from_expression_element:
+                                    table_expression:
+                                      table_reference:
+                                        naked_identifier: objects
+                              where_clause:
+                                keyword: WHERE
+                                expression:
+                                - column_reference:
+                                    naked_identifier: ClientId
+                                - comparison_operator:
+                                    raw_comparison_operator: '='
+                                - column_reference:
+                                  - naked_identifier: i
+                                  - dot: .
+                                  - naked_identifier: ClientId
+                            end_bracket: )
+                      - loop_statement:
+                        - keyword: LOOP
+                        - statement:
+                            assignment_segment_statement:
+                              object_reference:
+                                naked_identifier: t_Ids
+                              bracketed:
+                                start_bracket: (
+                                expression:
+                                  column_reference:
+                                    naked_identifier: j
+                                    dot: .
+                                    keyword: rownum
+                                end_bracket: )
+                              assignment_operator: :=
+                              expression:
+                                column_reference:
+                                - naked_identifier: j
+                                - dot: .
+                                - naked_identifier: ObjectId
+                        - statement_terminator: ;
+                        - statement:
+                            assignment_segment_statement:
+                              object_reference:
+                                naked_identifier: t_Value
+                              assignment_operator: :=
+                              expression:
+                                column_reference:
+                                  naked_identifier: j
+                                  dot: .
+                                  keyword: ROWNUM
+                                binary_operator: +
+                                numeric_literal: '1'
+                        - statement_terminator: ;
+                        - statement:
+                            function:
+                              function_name:
+                                function_name_identifier:
+                                  function_name_identifier: Process
+                              function_contents:
+                                bracketed:
+                                  start_bracket: (
+                                  expression:
+                                    column_reference:
+                                      naked_identifier: j
+                                      dot: .
+                                      keyword: rownum
+                                  end_bracket: )
+                        - statement_terminator: ;
+                        - keyword: END
+                        - keyword: LOOP
+                  - statement_terminator: ;
+                  - keyword: END
+                  - keyword: LOOP
+            - statement_terminator: ;
+            - keyword: END
+            - object_reference:
+                naked_identifier: Assess
+          - statement_terminator: ;
+      - keyword: END
+      - package_reference:
+          naked_identifier: pkg_test
+      - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      begin_end_block:
+      - keyword: BEGIN
+      - statement:
+          assignment_segment_statement:
+            object_reference:
+              naked_identifier: t_Value
+            assignment_operator: :=
+            expression:
+              column_reference:
+                quoted_identifier: '"Item"'
+                dot: .
+                keyword: ROWNUM
+      - statement_terminator: ;
+      - statement:
+          assignment_segment_statement:
+            object_reference:
+              naked_identifier: t_Value
+            assignment_operator: :=
+            expression:
+              column_reference:
+              - naked_identifier: outer_record
+              - dot: .
+              - naked_identifier: inner_record
+              - dot: .
+              - keyword: rownum
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /

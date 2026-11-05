@@ -48,3 +48,17 @@ CREATE PACKAGE skip_col_pkg AS
 
 END skip_col_pkg;
 /
+
+CREATE OR REPLACE PACKAGE pkg_dates IS
+  SUBTYPE udt_Date IS DATE;
+  PROCEDURE CheckDates (
+    a_AsOfDate Date,
+    a_Input IN DATE,
+    a_Output OUT DATE,
+    a_Result IN OUT NOCOPY DATE,
+    a_Custom udt_Date,
+    a_Quoted "Date"
+  );
+  FUNCTION GetDate (a_AsOfDate Date) RETURN DATE;
+END pkg_dates;
+/

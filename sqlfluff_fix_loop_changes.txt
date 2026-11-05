@@ -1781,3 +1781,5909 @@ loop limit=10 rule=TQ03 before_sha256=bc962c8dd72a0856a9639ce13f4b2817b8ce6582ae
 +        END LOOP;
 +END;
 +/
+
+loop limit=10 rule=TQ03 before_sha256=6a941dc080a432bea78f5bf9c53760975822ad334afa2fa30b88b2a6f143565f after_sha256=8123d7e41abaa3bc387e57de6de10184d4c24d87e7ba2084d21bb7184c8df6fd
+--- <string> (before)
++++ <string> (after)
+@@ -1,149 +1,156 @@
+ DECLARE
+-  -- Associative array indexed by string:
++    -- Associative array indexed by string:
+ 
+-  TYPE population IS TABLE OF NUMBER  -- Associative array type
+-    INDEX BY VARCHAR2(64);            --  indexed by string
++    TYPE population IS TABLE OF number  -- Associative array type
++    INDEX BY varchar2(64);  --  indexed by string
+ 
+-  city_population  population;        -- Associative array variable
+-  i  VARCHAR2(64);                    -- Scalar variable
+-
++    -- Associative array variable
++    city_population population;
++    -- Scalar variable
++    i varchar2(64);
+ BEGIN
+   -- Add elements (key-value pairs) to associative array:
+-
+-  city_population('Smallville')  := 2000;
+-  city_population('Midland')     := 750000;
+-  city_population('Megalopolis') := 1000000;
++    city_population ('Smallville') := 2000;
++    city_population ('Midland') := 750000;
++    city_population ('Megalopolis') := 1000000;
+ 
+   -- Change value associated with key 'Smallville':
+ 
+-  city_population('Smallville') := 2001;
++    city_population ('Smallville') := 2001;
+ 
+   -- Print associative array:
+ 
+-  i := city_population.FIRST;  -- Get first element of array
++    i := city_population.first;  -- Get first element of array
+ 
+-  WHILE i IS NOT NULL LOOP
+-    DBMS_Output.PUT_LINE
+-      ('Population of ' || i || ' is ' || city_population(i));
+-    i := city_population.NEXT(i);  -- Get next element of array
++    WHILE i IS NOT NULL LOOP
++        DBMS_Output.PUT_LINE(
++            'Population of ' || i || ' is ' || CITY_POPULATION(i)
++        );
++        i := city_population.next(i);  -- Get next element of array
+   END LOOP;
+ END;
+ /
+ 
+ DECLARE
+-  TYPE sum_multiples IS TABLE OF PLS_INTEGER INDEX BY PLS_INTEGER;
+-  n  PLS_INTEGER := 5;   -- number of multiples to sum for display
+-  sn PLS_INTEGER := 10;  -- number of multiples to sum
+-  m  PLS_INTEGER := 3;   -- multiple
++    TYPE sum_multiples IS TABLE OF pls_integer INDEX BY pls_integer;
++    n pls_integer
++        := 5;  -- number of multiples to sum for display
++    sn pls_integer
++        := 10;  -- number of multiples to sum
++    m pls_integer := 3;  -- multiple
+ 
+-  FUNCTION get_sum_multiples (
+-    multiple IN PLS_INTEGER,
+-    num      IN PLS_INTEGER
+-  ) RETURN sum_multiples
+-  IS
+-    s sum_multiples;
++    FUNCTION GET_SUM_MULTIPLES(
++        multiple IN pls_integer,
++        num IN pls_integer
++    ) RETURN sum_multiples IS
++      s sum_multiples;
++        BEGIN
++        FOR i IN 1..num LOOP
++            s (i) := multiple * ((i * (i + 1)) / 2);  -- sum of multiples
++          END LOOP;
++        RETURN s;
++END get_sum_multiples;
+   BEGIN
+-    FOR i IN 1..num LOOP
+-      s(i) := multiple * ((i * (i + 1)) / 2);  -- sum of multiples
+-    END LOOP;
+-    RETURN s;
+-  END get_sum_multiples;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE (
+-    'Sum of the first ' || TO_CHAR(n) || ' multiples of ' ||
+-    TO_CHAR(m) || ' is ' || TO_CHAR(get_sum_multiples (m, sn)(n))
+-  );
++    DBMS_OUTPUT.PUT_LINE(
++        'Sum of the first ' || to_char(n) || ' multiples of ' || to_char(m) || ' is '
++        || to_char(GET_SUM_MULTIPLES(m, sn) (n)));
+ END;
+ /
+ 
+ DECLARE
+-  TYPE Foursome IS VARRAY(4) OF VARCHAR2(15);  -- VARRAY type
++    TYPE foursome IS varray(4) OF varchar2(15);  -- VARRAY type
+ 
+-  -- varray variable initialized with constructor:
++    -- varray variable initialized with constructor:
+ 
+-  team Foursome := Foursome('John', 'Mary', 'Alberto', 'Juanita');
++    team foursome
++        := FOURSOME('John', 'Mary', 'Alberto', 'Juanita');
+ 
+-  PROCEDURE print_team (heading VARCHAR2) IS
++    PROCEDURE PRINT_TEAM(
++        heading varchar2
++    ) IS
++      BEGIN
++        DBMS_OUTPUT.PUT_LINE(heading);
++
++        FOR i IN 1..4 LOOP
++            DBMS_OUTPUT.PUT_LINE(i || '.' || TEAM(i));
++        END LOOP;
++
++        DBMS_OUTPUT.PUT_LINE('---');
++END;
++
+   BEGIN
+-    DBMS_OUTPUT.PUT_LINE(heading);
++    PRINT_TEAM('2001 Team:');
+ 
+-    FOR i IN 1..4 LOOP
+-      DBMS_OUTPUT.PUT_LINE(i || '.' || team(i));
+-    END LOOP;
++    team (3) := 'Pierre';  -- Change values of two elements
++    team (4) := 'Yvonne';
++    PRINT_TEAM('2005 Team:');
+ 
+-    DBMS_OUTPUT.PUT_LINE('---');
+-  END;
++    -- Invoke constructor to assign new values to varray variable:
+ 
+-BEGIN
+-  print_team('2001 Team:');
+-
+-  team(3) := 'Pierre';  -- Change values of two elements
+-  team(4) := 'Yvonne';
+-  print_team('2005 Team:');
+-
+-  -- Invoke constructor to assign new values to varray variable:
+-
+-  team := Foursome('Arun', 'Amitha', 'Allan', 'Mae');
+-  print_team('2009 Team:');
++    team := FOURSOME('Arun', 'Amitha', 'Allan', 'Mae');
++    PRINT_TEAM('2009 Team:');
+ END;
+ /
+ 
+ DECLARE
+-  TYPE Roster IS TABLE OF VARCHAR2(15);  -- nested table type
++    TYPE roster IS TABLE OF varchar2(15);  -- nested table type
+ 
+-  -- nested table variable initialized with constructor:
++    -- nested table variable initialized with constructor:
+ 
+-  names Roster := Roster('D Caruso', 'J Hamil', 'D Piro', 'R Singh');
++    names roster
++        := ROSTER('D Caruso', 'J Hamil', 'D Piro', 'R Singh');
+ 
+-  PROCEDURE print_names (heading VARCHAR2) IS
++    PROCEDURE PRINT_NAMES(
++        heading varchar2
++    ) IS
++      BEGIN
++        DBMS_OUTPUT.PUT_LINE(heading);
++
++        FOR i IN names.first..names.last LOOP  -- For first to last element
++            DBMS_OUTPUT.PUT_LINE(NAMES(i));
++        END LOOP;
++
++        DBMS_OUTPUT.PUT_LINE('---');
++END;
++
+   BEGIN
+-    DBMS_OUTPUT.PUT_LINE(heading);
++    PRINT_NAMES('Initial Values:');
+ 
+-    FOR i IN names.FIRST .. names.LAST LOOP  -- For first to last element
+-      DBMS_OUTPUT.PUT_LINE(names(i));
+-    END LOOP;
++    names (3) := 'P Perez';  -- Change value of one element
++    PRINT_NAMES('Current Values:');
+ 
+-    DBMS_OUTPUT.PUT_LINE('---');
+-  END;
+-
+-BEGIN
+-  print_names('Initial Values:');
+-
+-  names(3) := 'P Perez';  -- Change value of one element
+-  print_names('Current Values:');
+-
+-  names := Roster('A Jansen', 'B Gupta');  -- Change entire table
+-  print_names('Current Values:');
++    names := ROSTER('A Jansen', 'B Gupta');  -- Change entire table
++    PRINT_NAMES('Current Values:');
+ END;
+ /
+ 
+ DECLARE
+-  TYPE employee_rec_type IS RECORD (
+-    employee_id   NUMBER,
+-    first_name    VARCHAR2(50),
+-    last_name     VARCHAR2(50),
+-    salary        NUMBER
+-  );
++    TYPE employee_rec_type IS record (
++      employee_id NUMBER,
++      first_name VARCHAR2 (50),
++      last_name VARCHAR2 (50),
++      salary NUMBER
++    );
+ 
+-  TYPE employee_array_type IS TABLE OF employee_rec_type INDEX BY PLS_INTEGER;
++    TYPE employee_array_type IS TABLE OF employee_rec_type INDEX BY pls_integer;
+ 
+-  l_employees employee_array_type;
++    l_employees employee_array_type;
++      BEGIN
++        -- Populate the array
++    l_employees(101).employee_id := 101;
++    l_employees(101).first_name := 'John';
++    l_employees(101).last_name := 'Doe';
++    l_employees(101).salary := 50000;
+ 
+-BEGIN
+-  -- Populate the array
+-  l_employees(101).employee_id := 101;
+-  l_employees(101).first_name := 'John';
+-  l_employees(101).last_name := 'Doe';
+-  l_employees(101).salary := 50000;
++    l_employees(102).employee_id := 102;
++    l_employees(102).first_name := 'Jane';
++    l_employees(102).last_name := 'Smith';
++    l_employees(102).salary := 60000;
+ 
+-  l_employees(102).employee_id := 102;
+-  l_employees(102).first_name := 'Jane';
+-  l_employees(102).last_name := 'Smith';
+-  l_employees(102).salary := 60000;
+-
+-  -- Access and display data
+-  DBMS_OUTPUT.PUT_LINE('Employee 101: ' || l_employees(101).first_name || ' ' || l_employees(101).last_name);
+-  DBMS_OUTPUT.PUT_LINE('Employee 102 Salary: ' || l_employees(102).salary);
++        -- Access and display data
++    DBMS_OUTPUT.PUT_LINE(
++        'Employee 101: ' || l_employees(101).first_name || ' ' || l_employees(101).last_name
++        );
++    DBMS_OUTPUT.PUT_LINE('Employee 102 Salary: ' || l_employees(102).salary);
+ END;
+ /
+
+loop limit=10 rule=TQ03 before_sha256=2e1b78c5cab43749d00082559ac3989f07b2e21f3c688eb6ff282e9897730964 after_sha256=0dbb692dd361eabefab150c7ea3d0ad2a778f84e78fbff7654b7ac8948fe9d57
+--- <string> (before)
++++ <string> (after)
+@@ -1,135 +1,151 @@
+ CREATE OR REPLACE TRIGGER t
+-  BEFORE
+-    INSERT OR
+-    UPDATE OF salary, department_id OR
+-    DELETE
+-  ON employees
++BEFORE
++
++INSERT OR
++
++UPDATE OF salary, department_id OR
++
++DELETE
++ON employees
+ BEGIN
+-  CASE
+-    WHEN INSERTING THEN
+-      DBMS_OUTPUT.PUT_LINE('Inserting');
+-    WHEN UPDATING('salary') THEN
+-      DBMS_OUTPUT.PUT_LINE('Updating salary');
+-    WHEN UPDATING('department_id') THEN
+-      DBMS_OUTPUT.PUT_LINE('Updating department ID');
+-    WHEN DELETING THEN
+-      DBMS_OUTPUT.PUT_LINE('Deleting');
+-  END CASE;
++    CASE
++      WHEN INSERTING
++            THEN
++        DBMS_OUTPUT.PUT_LINE('Inserting');
++      WHEN UPDATING ('salary')
++            THEN
++        DBMS_OUTPUT.PUT_LINE('Updating salary');
++      WHEN UPDATING ('department_id')
++            THEN
++        DBMS_OUTPUT.PUT_LINE('Updating department ID');
++      WHEN DELETING THEN
++        DBMS_OUTPUT.PUT_LINE('Deleting');
++    END CASE;
+ END;
+ /
+ 
+ CREATE OR REPLACE TRIGGER order_info_insert
+-   INSTEAD OF INSERT ON order_info
+-   DECLARE
+-     duplicate_info EXCEPTION;
+-     PRAGMA EXCEPTION_INIT (duplicate_info, -00001);
+-   BEGIN
+-     INSERT INTO customers
+-       (customer_id, cust_last_name, cust_first_name)
+-     VALUES (
+-     :new.customer_id,
+-     :new.cust_last_name,
+-     :new.cust_first_name);
+-   INSERT INTO orders (order_id, order_date, customer_id)
+-   VALUES (
+-     :new.order_id,
+-     :new.order_date,
+-     :new.customer_id);
+-   EXCEPTION
+-     WHEN duplicate_info THEN
+-       RAISE_APPLICATION_ERROR (
+-         num=> -20107,
+-         msg=> 'Duplicate customer or order ID');
+-   END order_info_insert;
++INSTEAD OF INSERT ON order_info
++DECLARE
++    duplicate_info EXCEPTION;
++    pragma EXCEPTION_INIT (duplicate_info, - 00001);
++      BEGIN
++        INSERT INTO customers (
++        customer_id,
++        cust_last_name,
++        cust_first_name
++    ) VALUES (
++        :NEW.customer_id,
++        :NEW.cust_last_name,
++        :NEW.cust_first_name
++    );
++
++        INSERT INTO orders (
++        order_id,
++        order_date,
++        customer_id
++    ) VALUES (
++        :NEW.order_id,
++        :NEW.order_date,
++        :NEW.customer_id
++    );
++      EXCEPTION
++      WHEN duplicate_info THEN
++        raise_application_error(num => -20107, msg => 'Duplicate customer or order ID');
++END order_info_insert;
++
+ /
+ 
+ CREATE OR REPLACE TRIGGER dept_emplist_tr
+-  INSTEAD OF INSERT ON NESTED TABLE emplist OF dept_view
+-  REFERENCING NEW AS Employee
+-              PARENT AS Department
+-  FOR EACH ROW
+-BEGIN
+-  -- Insert on nested table translates to insert on base table:
+-  INSERT INTO employees (
+-    employee_id,
+-    last_name,
+-    email,
+-    hire_date,
+-    job_id,
+-    salary,
+-    department_id
+-  )
+-  VALUES (
+-    :Employee.emp_id,                      -- employee_id
+-    :Employee.lastname,                    -- last_name
+-    :Employee.lastname || '@example.com',  -- email
+-    SYSDATE,                               -- hire_date
+-    :Employee.job,                         -- job_id
+-    :Employee.sal,                         -- salary
+-    :Department.department_id              -- department_id
+-  );
++INSTEAD OF INSERT ON NESTED TABLE emplist OF dept_view
++REFERENCING NEW AS employee
++PARENT AS department
++FOR EACH ROW
++  BEGIN
++    -- Insert on nested table translates to insert on base table:
++    INSERT INTO employees (
++        employee_id,
++        last_name,
++        email,
++        hire_date,
++        job_id,
++        salary,
++        department_id
++    ) VALUES (
++        :Employee.emp_id,  -- employee_id
++        :Employee.lastname,  -- last_name
++        :Employee.lastname || '@example.com',  -- email
++        sysdate,  -- hire_date
++        :Employee.job,  -- job_id
++        :Employee.sal,  -- salary
++        :Department.department_id  -- department_id
++    );
++
+ END;
+ /
+ 
+ CREATE OR REPLACE TRIGGER maintain_employee_salaries
+-  FOR UPDATE OF salary ON employees
+-    COMPOUND TRIGGER
+-
++FOR UPDATE OF salary ON employees
++COMPOUND TRIGGER
+ -- Declarative Part:
+ -- Choose small threshhold value to show how example works:
+-  threshhold CONSTANT SIMPLE_INTEGER := 7;
++    threshhold CONSTANT simple_integer := 7;
+ 
+-  TYPE salaries_t IS TABLE OF employee_salaries%ROWTYPE INDEX BY SIMPLE_INTEGER;
+-  salaries  salaries_t;
+-  idx       SIMPLE_INTEGER := 0;
++    TYPE salaries_t IS TABLE OF employee_salaries
++    % ROWTYPE INDEX BY simple_integer;
++    salaries SALARIES_T;
++    idx simple_integer := 0;
+ 
+-  PROCEDURE flush_array IS
+-    n CONSTANT SIMPLE_INTEGER := salaries.count();
++    PROCEDURE FLUSH_ARRAY IS
++      n CONSTANT simple_integer := salaries.count();
++        BEGIN
++        FORALL j IN 1..n
++
++          INSERT INTO employee_salaries VALUES SALARIES(
++            j
++        );
++        salaries.DELETE();
++        idx := 0;
++        DBMS_OUTPUT.PUT_LINE('Flushed ' || n || ' rows');
++END flush_array;
++
++-- AFTER EACH ROW Section:
++
++AFTER EACH ROW IS
+   BEGIN
+-    FORALL j IN 1..n
+-      INSERT INTO employee_salaries VALUES salaries(j);
+-    salaries.delete();
+-    idx := 0;
+-    DBMS_OUTPUT.PUT_LINE('Flushed ' || n || ' rows');
+-  END flush_array;
++idx := idx + 1;
++salaries(idx).employee_id := :NEW.employee_id;
++salaries(idx).change_date := systimestamp;
++salaries(idx).salary := :NEW.salary;
++IF idx >= threshhold THEN
++    FLUSH_ARRAY();
++    END IF;
++END AFTER EACH ROW;
+ 
+-  -- AFTER EACH ROW Section:
++-- AFTER STATEMENT Section:
+ 
+-  AFTER EACH ROW IS
++AFTER STATEMENT IS
+   BEGIN
+-    idx := idx + 1;
+-    salaries(idx).employee_id := :NEW.employee_id;
+-    salaries(idx).change_date := SYSTIMESTAMP;
+-    salaries(idx).salary := :NEW.salary;
+-    IF idx >= threshhold THEN
+-      flush_array();
+-    END IF;
+-  END AFTER EACH ROW;
++FLUSH_ARRAY();
++END AFTER STATEMENT;
++END maintain_employee_salaries;
+ 
+-  -- AFTER STATEMENT Section:
+-
+-  AFTER STATEMENT IS
+-  BEGIN
+-    flush_array();
+-  END AFTER STATEMENT;
+-END maintain_employee_salaries;
+ /
+ 
+ CREATE OR REPLACE TRIGGER insert_or_update_trigger
+ BEFORE INSERT OR UPDATE ON your_table_name
+ FOR EACH ROW
+-BEGIN
++  BEGIN
+     IF INSERTING THEN
+-        :new.created_at := CURRENT_TIMESTAMP;
++        :NEW.created_at := CURRENT_TIMESTAMP;
+     ELSIF UPDATING THEN
+-        :new.updated_at := CURRENT_TIMESTAMP;
++        :NEW.updated_at := CURRENT_TIMESTAMP;
+     END IF;
+ END;
+ 
+-
+ CREATE OR REPLACE TRIGGER logon_trigger
+ AFTER LOGON ON DATABASE
+-BEGIN
+-  NULL;
++  BEGIN
++    NULL;
+ END;
+ /
+
+loop limit=10 rule=TQ03 before_sha256=bc962c8dd72a0856a9639ce13f4b2817b8ce6582aeb8eb33a559ca163d092618 after_sha256=324a32e6f5076e76db4ce4932f7344eccfb1eec4b0452ca1cd6f024b87e88d0b
+--- <string> (before)
++++ <string> (after)
+@@ -1,429 +1,475 @@
+ DECLARE
+-  TYPE empcurtyp IS REF CURSOR RETURN employees%ROWTYPE;  -- strong type
+-  TYPE genericcurtyp IS REF CURSOR;                       -- weak type
+-
+-  cursor1  empcurtyp;       -- strong cursor variable
+-  cursor2  genericcurtyp;   -- weak cursor variable
+-  my_cursor SYS_REFCURSOR;  -- weak cursor variable
+-
+-  TYPE deptcurtyp IS REF CURSOR RETURN departments%ROWTYPE;  -- strong type
+-  dept_cv deptcurtyp;  -- strong cursor variable
++    TYPE empcurtyp IS REF CURSOR RETURN employees % ROWTYPE;  -- strong type
++    TYPE genericcurtyp IS REF CURSOR;  -- weak type
++
++    cursor1 empcurtyp;  -- strong cursor variable
++    cursor2 genericcurtyp;  -- weak cursor variable
++    my_cursor sys_refcursor;  -- weak cursor variable
++
++    TYPE deptcurtyp IS REF CURSOR RETURN departments % ROWTYPE;  -- strong type
++    dept_cv deptcurtyp;  -- strong cursor variable
+ BEGIN
+-  NULL;
+-END;
+-/
+-
+-DECLARE
+-  TYPE EmpRecTyp IS RECORD (
+-    employee_id NUMBER,
+-    last_name VARCHAR2(25),
+-    salary   NUMBER(8,2));
+-
+-  TYPE EmpCurTyp IS REF CURSOR RETURN EmpRecTyp;
+-  emp_cv EmpCurTyp;
+-BEGIN
+-  NULL;
+-END;
+-/
+-
+-DECLARE
+-  sal           employees.salary%TYPE;
+-  sal_multiple  employees.salary%TYPE;
+-  factor        INTEGER := 2;
+-
+-  cv SYS_REFCURSOR;
+-
+-BEGIN
+-  OPEN cv FOR
+-    SELECT salary, salary*factor
+-    FROM employees
+-    WHERE job_id LIKE 'AD_%';   -- PL/SQL evaluates factor
+-
+-  LOOP
+-    FETCH cv INTO sal, sal_multiple;
+-    EXIT WHEN cv%NOTFOUND;
++    NULL;
++END;
++/
++
++DECLARE
++    TYPE emprectyp IS record (
++      employee_id NUMBER,
++      last_name VARCHAR2 (25),
++      salary NUMBER (8, 2)
++    );
++
++    TYPE empcurtyp IS REF CURSOR RETURN emprectyp;
++    emp_cv empcurtyp;
++      BEGIN
++    NULL;
++END;
++/
++
++DECLARE
++    sal employees.salary % TYPE;
++    sal_multiple employees.salary % TYPE;
++    factor integer := 2;
++
++    cv sys_refcursor;
++      BEGIN
++    OPEN cv FOR
++
++        SELECT
++          salary,
++          salary * factor
++        FROM employees
++        WHERE job_id LIKE 'AD_%';  -- PL/SQL evaluates factor
++
++    LOOP
++        FETCH cv INTO sal, sal_multiple;
++        EXIT WHEN cv % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++        factor := factor + 1;  -- Does not affect sal_multiple
++        END LOOP;
++
++    CLOSE cv;
++END;
++/
++
++DECLARE
++    sal employees.salary % TYPE;
++    sal_multiple employees.salary % TYPE;
++    factor integer := 2;
++
++    cv sys_refcursor;
++      BEGIN
+     DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-    factor := factor + 1;  -- Does not affect sal_multiple
+-  END LOOP;
+-
+-  CLOSE cv;
+-END;
+-/
+-
+-DECLARE
+-  sal           employees.salary%TYPE;
+-  sal_multiple  employees.salary%TYPE;
+-  factor        INTEGER := 2;
+-
+-  cv SYS_REFCURSOR;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-
+-  OPEN cv FOR
+-    SELECT salary, salary*factor
+-    FROM employees
+-    WHERE job_id LIKE 'AD_%';   -- PL/SQL evaluates factor
+-
+-  LOOP
+-    FETCH cv INTO sal, sal_multiple;
+-    EXIT WHEN cv%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-  END LOOP;
+-
+-  factor := factor + 1;
+-
+-  DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-
+-  OPEN cv FOR
+-    SELECT salary, salary*factor
+-    FROM employees
+-    WHERE job_id LIKE 'AD_%';   -- PL/SQL evaluates factor
+-
+-  LOOP
+-    FETCH cv INTO sal, sal_multiple;
+-    EXIT WHEN cv%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-  END LOOP;
+-
+-  CLOSE cv;
+-END;
+-/
+-
+-DECLARE
+-  v1 pkg.mytab;  -- collection of records
+-  v2 pkg.rec;
+-  c1 SYS_REFCURSOR;
+-BEGIN
+-  v1(1).f1 := 1;
+-  v1(1).f2 := 'one';
+-  OPEN c1 FOR SELECT * FROM TABLE(v1);
+-  FETCH c1 INTO v2;
+-  CLOSE c1;
+-  DBMS_OUTPUT.PUT_LINE('Values in record are ' || v2.f1 || ' and ' || v2.f2);
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 RETURN departments%ROWTYPE;    -- Declare c1
+-
+-  CURSOR c2 IS                             -- Declare and define c2
+-    SELECT employee_id, job_id, salary FROM employees
+-    WHERE salary > 2000;
+-
+-  CURSOR c1 RETURN departments%ROWTYPE IS  -- Define c1,
+-    SELECT * FROM departments              -- repeating return type
+-    WHERE department_id = 110;
+-
+-  CURSOR c3 RETURN locations%ROWTYPE;      -- Declare c3
+-
+-  CURSOR c3 IS                             -- Define c3,
+-    SELECT * FROM locations                -- omitting return type
+-    WHERE country_id = 'JP';
+-BEGIN
+-  NULL;
+-END;
+-/
+-
+-DECLARE
+-  sal           employees.salary%TYPE;
+-  sal_multiple  employees.salary%TYPE;
+-  factor        INTEGER := 2;
+-
+-  CURSOR c1 IS
+-    SELECT salary, salary*factor FROM employees
+-    WHERE job_id LIKE 'AD_%';
+-
+-BEGIN
+-  OPEN c1;  -- PL/SQL evaluates factor
+-
+-  LOOP
+-    FETCH c1 INTO sal, sal_multiple;
+-    EXIT WHEN c1%NOTFOUND;
++
++    OPEN cv FOR
++
++        SELECT
++          salary,
++          salary * factor
++        FROM employees
++        WHERE job_id LIKE 'AD_%';  -- PL/SQL evaluates factor
++
++    LOOP
++        FETCH cv INTO sal, sal_multiple;
++        EXIT WHEN cv % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++        END LOOP;
++
++    factor := factor + 1;
++
+     DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-    factor := factor + 1;  -- Does not affect sal_multiple
+-  END LOOP;
+-
+-  CLOSE c1;
+-END;
+-/
+-
+-DECLARE
+-  sal           employees.salary%TYPE;
+-  sal_multiple  employees.salary%TYPE;
+-  factor        INTEGER := 2;
+-
+-  CURSOR c1 IS
+-    SELECT salary, salary*factor FROM employees
+-    WHERE job_id LIKE 'AD_%';
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-  OPEN c1;  -- PL/SQL evaluates factor
+-  LOOP
+-    FETCH c1 INTO sal, sal_multiple;
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-  END LOOP;
+-  CLOSE c1;
+-
+-  factor := factor + 1;
+-
+-  DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-  OPEN c1;  -- PL/SQL evaluates factor
+-  LOOP
+-    FETCH c1 INTO sal, sal_multiple;
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-  END LOOP;
+-  CLOSE c1;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT employee_id,
+-           (salary * 0.05) raisee
+-    FROM employees
+-    WHERE job_id LIKE '%_MAN'
+-    ORDER BY employee_id;
+-  emp_rec c1%ROWTYPE;
+-BEGIN
+-  OPEN c1;
+-  LOOP
+-    FETCH c1 INTO emp_rec;
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE (
+-      'Raise for employee #' || emp_rec.employee_id ||
+-      ' is $' || emp_rec.raisee
+-    );
+-  END LOOP;
+-  CLOSE c1;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c (job VARCHAR2, max_sal NUMBER) IS
+-    SELECT last_name, first_name, (salary - max_sal) overpayment
+-    FROM employees
+-    WHERE job_id = job
+-    AND salary > max_sal
+-    ORDER BY salary;
+-
+-  PROCEDURE print_overpaid IS
+-    last_name_   employees.last_name%TYPE;
+-    first_name_  employees.first_name%TYPE;
+-    overpayment_      employees.salary%TYPE;
++
++    OPEN cv FOR
++
++        SELECT
++          salary,
++          salary * factor
++        FROM employees
++        WHERE job_id LIKE 'AD_%';  -- PL/SQL evaluates factor
++
++    LOOP
++        FETCH cv INTO sal, sal_multiple;
++        EXIT WHEN cv % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++        END LOOP;
++
++    CLOSE cv;
++END;
++/
++
++DECLARE
++    v1 pkg.mytab;  -- collection of records
++    v2 pkg.rec;
++    c1 sys_refcursor;
++      BEGIN
++    v1(1).f1 := 1;
++    v1(1).f2 := 'one';
++    OPEN c1 FOR SELECT * FROM TABLE(v1);
++    FETCH c1 INTO v2;
++    CLOSE c1;
++    DBMS_OUTPUT.PUT_LINE('Values in record are ' || v2.f1 || ' and ' || v2.f2);
++END;
++/
++
++DECLARE
++    CURSOR c1 RETURN departments % ROWTYPE;  -- Declare c1
++
++    CURSOR c2 IS -- Declare and define c2
++      SELECT
++        employee_id,
++        job_id,
++        salary
++      FROM employees
++      WHERE salary > 2000;
++
++    CURSOR c1 RETURN departments % ROWTYPE IS -- Define c1,
++      SELECT *
++      FROM departments  -- repeating return type
++      WHERE department_id = 110;
++
++    CURSOR c3 RETURN locations % ROWTYPE;  -- Declare c3
++
++    CURSOR c3 IS -- Define c3,
++      SELECT *
++      FROM locations  -- omitting return type
++      WHERE country_id = 'JP';
++
++        BEGIN
++    NULL;
++END;
++/
++
++DECLARE
++    sal employees.salary % TYPE;
++    sal_multiple employees.salary % TYPE;
++    factor integer := 2;
++
++    CURSOR c1 IS
++      SELECT
++        salary,
++        salary * factor
++      FROM employees
++      WHERE job_id LIKE 'AD_%';
++
++          BEGIN
++    OPEN c1;  -- PL/SQL evaluates factor
++
++    LOOP
++        FETCH c1 INTO sal, sal_multiple;
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++        factor := factor + 1;  -- Does not affect sal_multiple
++            END LOOP;
++
++    CLOSE c1;
++END;
++/
++
++DECLARE
++    sal employees.salary % TYPE;
++    sal_multiple employees.salary % TYPE;
++    factor integer := 2;
++
++    CURSOR c1 IS
++      SELECT
++        salary,
++        salary * factor
++      FROM employees
++      WHERE job_id LIKE 'AD_%';
++
++            BEGIN
++    DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
++    OPEN c1;  -- PL/SQL evaluates factor
++    LOOP
++        FETCH c1 INTO sal, sal_multiple;
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++              END LOOP;
++    CLOSE c1;
++
++    factor := factor + 1;
++
++    DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
++    OPEN c1;  -- PL/SQL evaluates factor
++    LOOP
++        FETCH c1 INTO sal, sal_multiple;
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++              END LOOP;
++    CLOSE c1;
++END;
++/
++
++DECLARE
++    CURSOR c1 IS
++      SELECT
++        employee_id,
++        (salary * 0.05) AS raisee
++      FROM employees
++      WHERE job_id LIKE '%_MAN'
++      ORDER BY employee_id;
++    emp_rec c1 % ROWTYPE;
++      BEGIN
++    OPEN c1;
++    LOOP
++        FETCH c1 INTO emp_rec;
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE(
++            'Raise for employee #' || emp_rec.employee_id || ' is $' || emp_rec.raisee
++        );
++        END LOOP;
++    CLOSE c1;
++END;
++/
++
++DECLARE
++    CURSOR c(job varchar2, max_sal number) IS
++      SELECT
++        last_name,
++        first_name,
++        (salary - max_sal) AS overpayment
++      FROM employees
++      WHERE
++        job_id = job
++        AND salary > max_sal
++      ORDER BY salary;
++
++    PROCEDURE PRINT_OVERPAID IS
++      last_name_ employees.last_name % TYPE;
++      first_name_ employees.first_name % TYPE;
++      overpayment_ employees.salary % TYPE;
++        BEGIN
++        LOOP
++            FETCH c INTO last_name_, first_name_, overpayment_;
++            EXIT WHEN c % NOTFOUND;
++            DBMS_OUTPUT.PUT_LINE(
++                last_name_ || ', ' || first_name_ || ' (by ' || overpayment_ || ')'
++            );
++          END LOOP;
++END print_overpaid;
+   BEGIN
+-    LOOP
+-      FETCH c INTO last_name_, first_name_, overpayment_;
+-      EXIT WHEN c%NOTFOUND;
+-      DBMS_OUTPUT.PUT_LINE(last_name_ || ', ' || first_name_ ||
+-        ' (by ' || overpayment_ || ')');
+-    END LOOP;
+-  END print_overpaid;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE('----------------------');
+-  DBMS_OUTPUT.PUT_LINE('Overpaid Stock Clerks:');
+-  DBMS_OUTPUT.PUT_LINE('----------------------');
+-  OPEN c('ST_CLERK', 5000);
+-  print_overpaid();
+-  CLOSE c;
+-
+-  DBMS_OUTPUT.PUT_LINE('-------------------------------');
+-  DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives:');
+-  DBMS_OUTPUT.PUT_LINE('-------------------------------');
+-  OPEN c('SA_REP', 10000);
+-  print_overpaid();
+-  CLOSE c;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c (location NUMBER DEFAULT 1700) IS
+-    SELECT d.department_name,
+-           e.last_name manager,
+-           l.city
+-    FROM departments d, employees e, locations l
+-    WHERE l.location_id = location
+-      AND l.location_id = d.location_id
+-      AND d.department_id = e.department_id
+-    ORDER BY d.department_id;
+-
+-  PROCEDURE print_depts IS
+-    dept_name  departments.department_name%TYPE;
+-    mgr_name   employees.last_name%TYPE;
+-    city_name  locations.city%TYPE;
++    DBMS_OUTPUT.PUT_LINE('----------------------');
++    DBMS_OUTPUT.PUT_LINE('Overpaid Stock Clerks:');
++    DBMS_OUTPUT.PUT_LINE('----------------------');
++    OPEN c('ST_CLERK', 5000);
++    PRINT_OVERPAID();
++    CLOSE c;
++
++    DBMS_OUTPUT.PUT_LINE('-------------------------------');
++    DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives:');
++    DBMS_OUTPUT.PUT_LINE('-------------------------------');
++    OPEN c('SA_REP', 10000);
++    PRINT_OVERPAID();
++    CLOSE c;
++END;
++/
++
++DECLARE
++    CURSOR c(location number DEFAULT 1700) IS
++      SELECT
++        d.department_name,
++        e.last_name AS manager,
++        l.city
++      FROM
++        departments d,
++        employees e,
++        locations l
++      WHERE
++        l.location_id = location
++        AND l.location_id = d.location_id
++        AND d.department_id = e.department_id
++      ORDER BY d.department_id;
++
++    PROCEDURE PRINT_DEPTS IS
++      dept_name departments.department_name % TYPE;
++      mgr_name employees.last_name % TYPE;
++      city_name locations.city % TYPE;
++        BEGIN
++        LOOP
++            FETCH c INTO dept_name, mgr_name, city_name;
++            EXIT WHEN c % NOTFOUND;
++            DBMS_OUTPUT.PUT_LINE(dept_name || ' (Manager: ' || mgr_name || ')');
++          END LOOP;
++END print_depts;
+   BEGIN
+-    LOOP
+-      FETCH c INTO dept_name, mgr_name, city_name;
+-      EXIT WHEN c%NOTFOUND;
+-      DBMS_OUTPUT.PUT_LINE(dept_name || ' (Manager: ' || mgr_name || ')');
+-    END LOOP;
+-  END print_depts;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE('DEPARTMENTS AT HEADQUARTERS:');
+-  DBMS_OUTPUT.PUT_LINE('--------------------------------');
+-  OPEN c;
+-  print_depts();
+-  DBMS_OUTPUT.PUT_LINE('--------------------------------');
+-  CLOSE c;
+-
+-  DBMS_OUTPUT.PUT_LINE('DEPARTMENTS IN CANADA:');
+-  DBMS_OUTPUT.PUT_LINE('--------------------------------');
+-  OPEN c(1800); -- Toronto
+-  print_depts();
+-  CLOSE c;
+-  OPEN c(1900); -- Whitehorse
+-  print_depts();
+-  CLOSE c;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c (job VARCHAR2, max_sal NUMBER,
+-            hired DATE DEFAULT TO_DATE('31-DEC-1999', 'DD-MON-YYYY')) IS
+-    SELECT last_name, first_name, (salary - max_sal) overpayment
+-    FROM employees
+-    WHERE job_id = job
+-    AND salary > max_sal
+-    AND hire_date > hired
+-    ORDER BY salary;
+-
+-  PROCEDURE print_overpaid IS
+-    last_name_   employees.last_name%TYPE;
+-    first_name_  employees.first_name%TYPE;
+-    overpayment_      employees.salary%TYPE;
++    DBMS_OUTPUT.PUT_LINE('DEPARTMENTS AT HEADQUARTERS:');
++    DBMS_OUTPUT.PUT_LINE('--------------------------------');
++    OPEN c;
++    PRINT_DEPTS();
++    DBMS_OUTPUT.PUT_LINE('--------------------------------');
++    CLOSE c;
++
++    DBMS_OUTPUT.PUT_LINE('DEPARTMENTS IN CANADA:');
++    DBMS_OUTPUT.PUT_LINE('--------------------------------');
++    OPEN c(1800);  -- Toronto
++    PRINT_DEPTS();
++    CLOSE c;
++    OPEN c(1900);  -- Whitehorse
++    PRINT_DEPTS();
++    CLOSE c;
++END;
++/
++
++DECLARE
++    CURSOR c(
++        job varchar2, max_sal number,
++        hired date DEFAULT to_date('31-DEC-1999', 'DD-MON-YYYY')) IS
++      SELECT
++        last_name,
++        first_name,
++        (salary - max_sal) AS overpayment
++      FROM employees
++      WHERE
++        job_id = job
++        AND salary > max_sal
++        AND hire_date > hired
++      ORDER BY salary;
++
++    PROCEDURE PRINT_OVERPAID IS
++      last_name_ employees.last_name % TYPE;
++      first_name_ employees.first_name % TYPE;
++      overpayment_ employees.salary % TYPE;
++        BEGIN
++        LOOP
++            FETCH c INTO last_name_, first_name_, overpayment_;
++            EXIT WHEN c % NOTFOUND;
++            DBMS_OUTPUT.PUT_LINE(
++                last_name_ || ', ' || first_name_ || ' (by ' || overpayment_ || ')'
++            );
++          END LOOP;
++END print_overpaid;
+   BEGIN
+-    LOOP
+-      FETCH c INTO last_name_, first_name_, overpayment_;
+-      EXIT WHEN c%NOTFOUND;
+-      DBMS_OUTPUT.PUT_LINE(last_name_ || ', ' || first_name_ ||
+-        ' (by ' || overpayment_ || ')');
+-    END LOOP;
+-  END print_overpaid;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE('-------------------------------');
+-  DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives:');
+-  DBMS_OUTPUT.PUT_LINE('-------------------------------');
+-  OPEN c('SA_REP', 10000);  -- existing reference
+-  print_overpaid();
+-  CLOSE c;
+-
+-  DBMS_OUTPUT.PUT_LINE('------------------------------------------------');
+-  DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives Hired After 2014:');
+-  DBMS_OUTPUT.PUT_LINE('------------------------------------------------');
+-  OPEN c('SA_REP', 10000, TO_DATE('31-DEC-2014', 'DD-MON-YYYY'));
+-                          -- new reference
+-  print_overpaid();
+-  CLOSE c;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT t1.department_id, department_name, staff
+-    FROM departments t1,
+-         ( SELECT department_id, COUNT(*) AS staff
+-           FROM employees
+-           GROUP BY department_id
+-         ) t2
+-    WHERE (t1.department_id = t2.department_id) AND staff >= 5
+-    ORDER BY staff;
+-
+-BEGIN
+-   FOR dept IN c1
+-   LOOP
+-     DBMS_OUTPUT.PUT_LINE ('Department = '
+-       || dept.department_name || ', staff = ' || dept.staff);
+-   END LOOP;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT department_id, last_name, salary
+-    FROM employees t
+-    WHERE salary > ( SELECT AVG(salary)
+-                     FROM employees
+-                     WHERE t.department_id = department_id
+-                   )
+-    ORDER BY department_id, last_name;
+-BEGIN
+-  FOR person IN c1
+-  LOOP
+-    DBMS_OUTPUT.PUT_LINE('Making above-average salary = ' || person.last_name);
+-  END LOOP;
+-END;
+-/
+-
+-DECLARE
+-  TYPE emp_cur_typ IS REF CURSOR;
+-
+-  emp_cur    emp_cur_typ;
+-  dept_name  departments.department_name%TYPE;
+-  emp_name   employees.last_name%TYPE;
+-
+-  CURSOR c1 IS
+-    SELECT department_name,
+-      CURSOR ( SELECT e.last_name
+-                FROM employees e
+-                WHERE e.department_id = d.department_id
+-                ORDER BY e.last_name
+-              ) employees
+-    FROM departments d
+-    WHERE department_name LIKE 'A%'
+-    ORDER BY department_name;
+-BEGIN
+-  OPEN c1;
+-  LOOP  -- Process each row of query result set
+-    FETCH c1 INTO dept_name, emp_cur;
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE('Department: ' || dept_name);
+-
+-    LOOP -- Process each row of subquery result set
+-      FETCH emp_cur INTO emp_name;
+-      EXIT WHEN emp_cur%NOTFOUND;
+-      DBMS_OUTPUT.PUT_LINE('-- Employee: ' || emp_name);
+-    END LOOP;
+-  END LOOP;
+-  CLOSE c1;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT * FROM emp
+-    FOR UPDATE OF salary
+-    ORDER BY employee_id;
+-
+-  emp_rec  emp%ROWTYPE;
+-BEGIN
+-  OPEN c1;
+-  LOOP
+-    FETCH c1 INTO emp_rec;  -- fails on second iteration
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE (
+-      'emp_rec.employee_id = ' ||
+-      TO_CHAR(emp_rec.employee_id)
+-    );
+-
+-    UPDATE emp
+-    SET salary = salary * 1.05
+-    WHERE employee_id = 105;
+-
+-    COMMIT;  -- releases locks
+-  END LOOP;
+-END;
+-/
++    DBMS_OUTPUT.PUT_LINE('-------------------------------');
++    DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives:');
++    DBMS_OUTPUT.PUT_LINE('-------------------------------');
++    OPEN c('SA_REP', 10000);  -- existing reference
++    PRINT_OVERPAID();
++    CLOSE c;
++
++    DBMS_OUTPUT.PUT_LINE('------------------------------------------------');
++    DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives Hired After 2014:');
++    DBMS_OUTPUT.PUT_LINE('------------------------------------------------');
++    OPEN c('SA_REP', 10000, to_date('31-DEC-2014', 'DD-MON-YYYY'));
++    -- new reference
++    PRINT_OVERPAID();
++    CLOSE c;
++END;
++/
++
++DECLARE
++    CURSOR c1 IS
++      SELECT
++        t1.department_id,
++        department_name,
++        staff
++      FROM
++        departments t1,
++        (
++            SELECT
++              department_id,
++              count(*) AS staff
++            FROM employees
++            GROUP BY department_id
++            ) t2
++      WHERE (t1.department_id = t2.department_id) AND staff >= 5
++      ORDER BY staff;
++    BEGIN
++    FOR dept IN c1
++    LOOP
++        DBMS_OUTPUT.PUT_LINE('Department = ' || dept.department_name || ', staff = ' || dept.staff);
++END LOOP;
++END;
++/
++
++DECLARE
++    CURSOR c1 IS
++      SELECT
++        department_id,
++        last_name,
++        salary
++      FROM employees t
++      WHERE
++        salary > (
++        SELECT avg(salary)
++        FROM employees
++        WHERE t.department_id = department_id
++        )
++      ORDER BY department_id, last_name;
++      BEGIN
++    FOR person IN c1
++    LOOP
++        DBMS_OUTPUT.PUT_LINE(
++            'Making above-average salary = ' || person.last_name
++        );
++END LOOP;
++END;
++/
++
++DECLARE
++    TYPE emp_cur_typ IS REF CURSOR;
++
++    emp_cur emp_cur_typ;
++    dept_name departments.department_name % TYPE;
++    emp_name employees.last_name % TYPE;
++
++    CURSOR c1 IS
++      SELECT
++        department_name,
++        CURSOR(
++        SELECT e.last_name
++        FROM employees e
++        WHERE e.department_id = d.department_id
++        ORDER BY e.last_name
++        ) AS employees
++      FROM departments d
++      WHERE department_name LIKE 'A%'
++      ORDER BY department_name;
++        BEGIN
++    OPEN c1;
++    LOOP  -- Process each row of query result set
++        FETCH c1 INTO dept_name, emp_cur;
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('Department: ' || dept_name);
++
++        LOOP  -- Process each row of subquery result set
++            FETCH emp_cur INTO emp_name;
++            EXIT WHEN emp_cur % NOTFOUND;
++            DBMS_OUTPUT.PUT_LINE('-- Employee: ' || emp_name);
++      END LOOP;
++          END LOOP;
++    CLOSE c1;
++END;
++/
++
++DECLARE
++    CURSOR c1 IS
++      SELECT *
++      FROM emp
++        FOR UPDATE OF salary
++      ORDER BY employee_id;
++
++    emp_rec emp % ROWTYPE;
++      BEGIN
++    OPEN c1;
++    LOOP
++        FETCH c1 INTO emp_rec;  -- fails on second iteration
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('emp_rec.employee_id = ' || to_char(emp_rec.employee_id));
++
++        UPDATE emp SET
++          salary = salary * 1.05
++        WHERE employee_id = 105;
++
++        COMMIT;  -- releases locks
++        END LOOP;
++END;
++/
+
+loop limit=10 rule=TQ03 before_sha256=0735e7ddc8480c48439f6fd83715d6fc572e451e6fd47f9b25df73cced5c5e39 after_sha256=223917544ac555c49c6974995ee77a60585975fbae2be77a55024cbf592c86da
+--- <string> (before)
++++ <string> (after)
+@@ -1,336 +1,357 @@
+ DECLARE
+-  TYPE EmpRecTyp IS RECORD (
+-    emp_id  employees.employee_id%TYPE,
+-    salary  employees.salary%TYPE
+-  );
+-
+-  CURSOR desc_salary RETURN EmpRecTyp IS
+-    SELECT employee_id, salary
+-    FROM employees
+-    ORDER BY salary DESC;
+-
+-  highest_paid_emp       EmpRecTyp;
+-  next_highest_paid_emp  EmpRecTyp;
+-
+-  FUNCTION nth_highest_salary (n INTEGER) RETURN EmpRecTyp IS
+-    emp_rec  EmpRecTyp;
+-  BEGIN
+-    OPEN desc_salary;
+-    FOR i IN 1..n LOOP
+-      FETCH desc_salary INTO emp_rec;
+-    END LOOP;
+-    CLOSE desc_salary;
+-    RETURN emp_rec;
+-  END nth_highest_salary;
+-
+-BEGIN
+-  highest_paid_emp := nth_highest_salary(1);
+-  next_highest_paid_emp := nth_highest_salary(2);
+-
+-  DBMS_OUTPUT.PUT_LINE(
+-    'Highest Paid: #' ||
+-    highest_paid_emp.emp_id || ', $' ||
+-    highest_paid_emp.salary
+-  );
+-  DBMS_OUTPUT.PUT_LINE(
+-    'Next Highest Paid: #' ||
+-    next_highest_paid_emp.emp_id || ', $' ||
+-    next_highest_paid_emp.salary
+-  );
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT last_name, job_id FROM employees
+-    WHERE REGEXP_LIKE (job_id, 'S[HT]_CLERK')
+-    ORDER BY last_name;
+-
+-  v_lastname  employees.last_name%TYPE;  -- variable for last_name
+-  v_jobid     employees.job_id%TYPE;     -- variable for job_id
+-
+-  CURSOR c2 IS
+-    SELECT * FROM employees
+-    WHERE REGEXP_LIKE (job_id, '[ACADFIMKSA]_M[ANGR]')
+-    ORDER BY job_id;
+-
+-  v_employees employees%ROWTYPE;  -- record variable for row of table
+-
+-BEGIN
+-  OPEN c1;
+-  LOOP  -- Fetches 2 columns into variables
+-    FETCH c1 INTO v_lastname, v_jobid;
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE( RPAD(v_lastname, 25, ' ') || v_jobid );
+-  END LOOP;
+-  CLOSE c1;
+-  DBMS_OUTPUT.PUT_LINE( '-------------------------------------' );
+-
+-  OPEN c2;
+-  LOOP  -- Fetches entire row into the v_employees record
+-    FETCH c2 INTO v_employees;
+-    EXIT WHEN c2%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE( RPAD(v_employees.last_name, 25, ' ') ||
+-                               v_employees.job_id );
+-  END LOOP;
+-  CLOSE c2;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c IS
+-    SELECT e.job_id, j.job_title
+-    FROM employees e, jobs j
+-    WHERE e.job_id = j.job_id AND e.manager_id = 100
+-    ORDER BY last_name;
+-
+-  -- Record variables for rows of cursor result set:
+-
+-  job1 c%ROWTYPE;
+-  job2 c%ROWTYPE;
+-  job3 c%ROWTYPE;
+-  job4 c%ROWTYPE;
+-  job5 c%ROWTYPE;
+-
+-BEGIN
+-  OPEN c;
+-  FETCH c INTO job1;  -- fetches first row
+-  FETCH c INTO job2;  -- fetches second row
+-  FETCH c INTO job3;  -- fetches third row
+-  FETCH c INTO job4;  -- fetches fourth row
+-  FETCH c INTO job5;  -- fetches fifth row
+-  CLOSE c;
+-
+-  DBMS_OUTPUT.PUT_LINE(job1.job_title || ' (' || job1.job_id || ')');
+-  DBMS_OUTPUT.PUT_LINE(job2.job_title || ' (' || job2.job_id || ')');
+-  DBMS_OUTPUT.PUT_LINE(job3.job_title || ' (' || job3.job_id || ')');
+-  DBMS_OUTPUT.PUT_LINE(job4.job_title || ' (' || job4.job_id || ')');
+-  DBMS_OUTPUT.PUT_LINE(job5.job_title || ' (' || job5.job_id || ')');
+-END;
+-/
+-
+-DECLARE
+-  cv SYS_REFCURSOR;  -- cursor variable
+-
+-  v_lastname  employees.last_name%TYPE;  -- variable for last_name
+-  v_jobid     employees.job_id%TYPE;     -- variable for job_id
+-
+-  query_2 VARCHAR2(200) :=
+-    'SELECT * FROM employees
++    TYPE EMPRECTYP IS record (
++      emp_id employees.employee_id % TYPE,
++      salary employees.salary % TYPE
++    );
++
++    CURSOR DESC_SALARY RETURN emprectyp IS
++      SELECT
++        EMPLOYEE_ID,
++        SALARY
++      FROM EMPLOYEES
++      ORDER BY SALARY DESC;
++
++    HIGHEST_PAID_EMP emprectyp;
++    NEXT_HIGHEST_PAID_EMP emprectyp;
++
++    FUNCTION nth_highest_salary(
++      n integer
++    ) RETURN EMPRECTYP IS
++      EMP_REC emprectyp;
++    BEGIN
++      OPEN DESC_SALARY;
++      FOR I IN 1..N LOOP
++        FETCH DESC_SALARY INTO EMP_REC;
++      END LOOP;
++      CLOSE DESC_SALARY;
++      RETURN EMP_REC;
++    END NTH_HIGHEST_SALARY;
++BEGIN
++    HIGHEST_PAID_EMP := nth_highest_salary(1);
++    NEXT_HIGHEST_PAID_EMP := nth_highest_salary(2);
++
++    DBMS_OUTPUT.put_line(
++        'Highest Paid: #' || HIGHEST_PAID_EMP.EMP_ID || ', $' || HIGHEST_PAID_EMP.SALARY);
++    DBMS_OUTPUT.put_line(
++        'Next Highest Paid: #' || NEXT_HIGHEST_PAID_EMP.EMP_ID || ', $'
++        || NEXT_HIGHEST_PAID_EMP.SALARY);
++END;
++/
++
++DECLARE
++    CURSOR C1 IS
++      SELECT
++        LAST_NAME,
++        JOB_ID
++      FROM EMPLOYEES
++      WHERE regexp_like(JOB_ID, 'S[HT]_CLERK')
++      ORDER BY LAST_NAME;
++
++    -- variable for last_name
++    V_LASTNAME EMPLOYEES.LAST_NAME % TYPE;
++    -- variable for job_id
++    V_JOBID EMPLOYEES.JOB_ID % TYPE;
++
++    CURSOR C2 IS
++      SELECT *
++      FROM EMPLOYEES
++      WHERE regexp_like(JOB_ID, '[ACADFIMKSA]_M[ANGR]')
++      ORDER BY JOB_ID;
++
++    -- record variable for row of table
++    V_EMPLOYEES EMPLOYEES % ROWTYPE;
++BEGIN
++    OPEN C1;
++    LOOP  -- Fetches 2 columns into variables
++        FETCH C1 INTO V_LASTNAME, V_JOBID;
++        EXIT WHEN C1 % NOTFOUND;
++        DBMS_OUTPUT.put_line(rpad(V_LASTNAME, 25, ' ') || V_JOBID);
++  END LOOP;
++    CLOSE C1;
++    DBMS_OUTPUT.put_line('-------------------------------------');
++
++    OPEN C2;
++    LOOP  -- Fetches entire row into the v_employees record
++        FETCH C2 INTO V_EMPLOYEES;
++        EXIT WHEN C2 % NOTFOUND;
++        DBMS_OUTPUT.put_line(rpad(V_EMPLOYEES.LAST_NAME, 25, ' ') || V_EMPLOYEES.JOB_ID);
++  END LOOP;
++    CLOSE C2;
++END;
++/
++
++DECLARE
++    CURSOR C IS
++      SELECT
++        E.JOB_ID,
++        J.JOB_TITLE
++      FROM
++        EMPLOYEES E,
++        JOBS J
++      WHERE E.JOB_ID = J.JOB_ID AND E.MANAGER_ID = 100
++      ORDER BY LAST_NAME;
++
++    -- Record variables for rows of cursor result set:
++
++    JOB1 C % ROWTYPE;
++    JOB2 C % ROWTYPE;
++    JOB3 C % ROWTYPE;
++    JOB4 C % ROWTYPE;
++    JOB5 C % ROWTYPE;
++BEGIN
++    OPEN C;
++    FETCH C INTO JOB1;  -- fetches first row
++    FETCH C INTO JOB2;  -- fetches second row
++    FETCH C INTO JOB3;  -- fetches third row
++    FETCH C INTO JOB4;  -- fetches fourth row
++    FETCH C INTO JOB5;  -- fetches fifth row
++    CLOSE C;
++
++    DBMS_OUTPUT.put_line(JOB1.JOB_TITLE || ' (' || JOB1.JOB_ID || ')');
++    DBMS_OUTPUT.put_line(JOB2.JOB_TITLE || ' (' || JOB2.JOB_ID || ')');
++    DBMS_OUTPUT.put_line(JOB3.JOB_TITLE || ' (' || JOB3.JOB_ID || ')');
++    DBMS_OUTPUT.put_line(JOB4.JOB_TITLE || ' (' || JOB4.JOB_ID || ')');
++    DBMS_OUTPUT.put_line(JOB5.JOB_TITLE || ' (' || JOB5.JOB_ID || ')');
++END;
++/
++
++DECLARE
++    CV sys_refcursor;  -- cursor variable
++
++    -- variable for last_name
++    V_LASTNAME EMPLOYEES.LAST_NAME % TYPE;
++    -- variable for job_id
++    V_JOBID EMPLOYEES.JOB_ID % TYPE;
++
++    QUERY_2 varchar2(200)
++    := 'SELECT * FROM employees
+     WHERE REGEXP_LIKE (job_id, ''[ACADFIMKSA]_M[ANGR]'')
+     ORDER BY job_id';
+ 
+-  v_employees employees%ROWTYPE;  -- record variable row of table
+-
+-BEGIN
+-  OPEN cv FOR
+-    SELECT last_name, job_id FROM employees
+-    WHERE REGEXP_LIKE (job_id, 'S[HT]_CLERK')
+-    ORDER BY last_name;
+-
+-  LOOP  -- Fetches 2 columns into variables
+-    FETCH cv INTO v_lastname, v_jobid;
+-    EXIT WHEN cv%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE( RPAD(v_lastname, 25, ' ') || v_jobid );
+-  END LOOP;
+-
+-  DBMS_OUTPUT.PUT_LINE( '-------------------------------------' );
+-
+-  OPEN cv FOR query_2;
+-
+-  LOOP  -- Fetches entire row into the v_employees record
+-    FETCH cv INTO v_employees;
+-    EXIT WHEN cv%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE( RPAD(v_employees.last_name, 25, ' ') ||
+-                               v_employees.job_id );
+-  END LOOP;
+-
+-  CLOSE cv;
+-END;
+-/
+-
+-DECLARE
+-  TYPE empcurtyp IS REF CURSOR;
+-  TYPE namelist IS TABLE OF employees.last_name%TYPE;
+-  TYPE sallist IS TABLE OF employees.salary%TYPE;
+-  emp_cv  empcurtyp;
+-  names   namelist;
+-  sals    sallist;
+-BEGIN
+-  OPEN emp_cv FOR
+-    SELECT last_name, salary FROM employees
+-    WHERE job_id = 'SA_REP'
+-    ORDER BY salary DESC;
+-
+-  FETCH emp_cv BULK COLLECT INTO names, sals;
+-  CLOSE emp_cv;
++    -- record variable row of table
++    V_EMPLOYEES EMPLOYEES % ROWTYPE;
++BEGIN
++    OPEN CV FOR
++
++  SELECT
++    LAST_NAME,
++    JOB_ID
++  FROM EMPLOYEES
++  WHERE regexp_like(JOB_ID, 'S[HT]_CLERK')
++  ORDER BY LAST_NAME;
++
++    LOOP  -- Fetches 2 columns into variables
++        FETCH CV INTO V_LASTNAME, V_JOBID;
++        EXIT WHEN CV % NOTFOUND;
++        DBMS_OUTPUT.put_line(rpad(V_LASTNAME, 25, ' ') || V_JOBID);
++  END LOOP;
++
++    DBMS_OUTPUT.put_line('-------------------------------------');
++
++    OPEN CV FOR QUERY_2;
++
++    LOOP  -- Fetches entire row into the v_employees record
++        FETCH CV INTO V_EMPLOYEES;
++        EXIT WHEN CV % NOTFOUND;
++        DBMS_OUTPUT.put_line(rpad(V_EMPLOYEES.LAST_NAME, 25, ' ') || V_EMPLOYEES.JOB_ID);
++  END LOOP;
++
++    CLOSE CV;
++END;
++/
++
++DECLARE
++    TYPE EMPCURTYP IS REF CURSOR;
++    TYPE NAMELIST IS TABLE OF EMPLOYEES.LAST_NAME % TYPE;
++    TYPE SALLIST IS TABLE OF EMPLOYEES.SALARY % TYPE;
++    EMP_CV empcurtyp;
++    NAMES namelist;
++    SALS sallist;
++BEGIN
++    OPEN EMP_CV FOR
++
++  SELECT
++    LAST_NAME,
++    SALARY
++  FROM EMPLOYEES
++  WHERE JOB_ID = 'SA_REP'
++  ORDER BY SALARY DESC;
++
++    FETCH EMP_CV BULK COLLECT INTO NAMES, SALS;
++    CLOSE EMP_CV;
+   -- loop through the names and sals collections
+-  FOR i IN names.FIRST .. names.LAST
+-  LOOP
+-    DBMS_OUTPUT.PUT_LINE
+-      ('Name = ' || names(i) || ', salary = ' || sals(i));
+-  END LOOP;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT * FROM emp
+-    FOR UPDATE OF salary
+-    ORDER BY employee_id;
+-
+-  emp_rec  emp%ROWTYPE;
+-BEGIN
+-  OPEN c1;
+-  LOOP
+-    FETCH c1 INTO emp_rec;  -- fails on second iteration
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE (
+-      'emp_rec.employee_id = ' ||
+-      TO_CHAR(emp_rec.employee_id)
+-    );
+-
+-    UPDATE emp
+-    SET salary = salary * 1.05
+-    WHERE employee_id = 105;
+-
+-    COMMIT;  -- releases locks
+-  END LOOP;
+-END;
+-/
+-
+-DECLARE
+-  TYPE EmpCurTyp  IS REF CURSOR;
+-  v_emp_cursor    EmpCurTyp;
+-  emp_record      employees%ROWTYPE;
+-  v_stmt_str      VARCHAR2(200);
+-  v_e_job         employees.job_id%TYPE;
++    FOR I IN NAMES.first..NAMES.last
++    LOOP
++        DBMS_OUTPUT.put_line('Name = ' || names(I) || ', salary = ' || sals(I));
++END LOOP;
++END;
++/
++
++DECLARE
++    CURSOR C1 IS
++      SELECT *
++      FROM EMP
++        FOR UPDATE OF SALARY
++      ORDER BY EMPLOYEE_ID;
++
++    EMP_REC EMP % ROWTYPE;
++BEGIN
++    OPEN C1;
++    LOOP
++        FETCH C1 INTO EMP_REC;  -- fails on second iteration
++        EXIT WHEN C1 % NOTFOUND;
++        DBMS_OUTPUT.put_line('emp_rec.employee_id = ' || to_char(EMP_REC.EMPLOYEE_ID));
++
++        UPDATE EMP SET
++          SALARY = SALARY * 1.05
++        WHERE EMPLOYEE_ID = 105;
++
++        COMMIT;  -- releases locks
++  END LOOP;
++END;
++/
++
++DECLARE
++    TYPE EMPCURTYP IS REF CURSOR;
++    V_EMP_CURSOR empcurtyp;
++    EMP_RECORD EMPLOYEES % ROWTYPE;
++    V_STMT_STR varchar2(200);
++    V_E_JOB EMPLOYEES.JOB_ID % TYPE;
+ BEGIN
+   -- Dynamic SQL statement with placeholder:
+-  v_stmt_str := 'SELECT * FROM employees WHERE job_id = :j';
++    V_STMT_STR := 'SELECT * FROM employees WHERE job_id = :j';
+ 
+   -- Open cursor & specify bind variable in USING clause:
+-  OPEN v_emp_cursor FOR v_stmt_str USING 'MANAGER';
++    OPEN V_EMP_CURSOR FOR V_STMT_STR USING MANAGER;
+ 
+   -- Fetch rows from result set one at a time:
+-  LOOP
+-    FETCH v_emp_cursor INTO emp_record;
+-    EXIT WHEN v_emp_cursor%NOTFOUND;
++    LOOP
++        FETCH V_EMP_CURSOR INTO EMP_RECORD;
++        EXIT WHEN V_EMP_CURSOR % NOTFOUND;
+   END LOOP;
+ 
+   -- Close cursor:
+-  CLOSE v_emp_cursor;
+-END;
+-/
+-
+-DECLARE
+-  TYPE NameList IS TABLE OF employees.last_name%TYPE;
+-  TYPE SalList IS TABLE OF employees.salary%TYPE;
+-
+-  CURSOR c1 IS
+-    SELECT last_name, salary
+-    FROM employees
+-    WHERE salary > 10000
+-    ORDER BY last_name;
+-
+-  names  NameList;
+-  sals   SalList;
+-
+-  TYPE RecList IS TABLE OF c1%ROWTYPE;
+-  recs RecList;
+-
+-  v_limit PLS_INTEGER := 10;
+-
+-  PROCEDURE print_results IS
+-  BEGIN
+-    -- Check if collections are empty:
+-
+-    IF names IS NULL OR names.COUNT = 0 THEN
+-      DBMS_OUTPUT.PUT_LINE('No results!');
+-    ELSE
+-      DBMS_OUTPUT.PUT_LINE('Result: ');
+-      FOR i IN names.FIRST .. names.LAST
+-      LOOP
+-        DBMS_OUTPUT.PUT_LINE('  Employee ' || names(i) || ': $' || sals(i));
++    CLOSE V_EMP_CURSOR;
++END;
++/
++
++DECLARE
++    TYPE NAMELIST IS TABLE OF EMPLOYEES.LAST_NAME % TYPE;
++    TYPE SALLIST IS TABLE OF EMPLOYEES.SALARY % TYPE;
++
++    CURSOR C1 IS
++      SELECT
++        LAST_NAME,
++        SALARY
++      FROM EMPLOYEES
++      WHERE SALARY > 10000
++      ORDER BY LAST_NAME;
++
++    NAMES namelist;
++    SALS sallist;
++
++    TYPE RECLIST IS TABLE OF C1 % ROWTYPE;
++    RECS reclist;
++
++    V_LIMIT pls_integer := 10;
++
++    PROCEDURE print_results IS
++    BEGIN
++      -- Check if collections are empty:
++      IF NAMES IS NULL OR NAMES.count = 0 THEN
++        DBMS_OUTPUT.put_line('No results!');
++      ELSE
++        DBMS_OUTPUT.put_line('Result: ');
++        FOR I IN NAMES.first..NAMES.last
++                LOOP
++                DBMS_OUTPUT.put_line(
++                    '  Employee ' || names(I) || ': $' || sals(I)
++                );
+       END LOOP;
+     END IF;
+-  END;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE ('--- Processing all results simultaneously ---');
+-  OPEN c1;
+-  FETCH c1 BULK COLLECT INTO names, sals;
+-  CLOSE c1;
+-  print_results();
+-  DBMS_OUTPUT.PUT_LINE ('--- Processing ' || v_limit || ' rows at a time ---');
+-  OPEN c1;
+-  LOOP
+-    FETCH c1 BULK COLLECT INTO names, sals LIMIT v_limit;
+-    EXIT WHEN names.COUNT = 0;
++    END;
++
++BEGIN
++    DBMS_OUTPUT.put_line('--- Processing all results simultaneously ---');
++    OPEN C1;
++    FETCH C1 BULK COLLECT INTO NAMES, SALS;
++    CLOSE C1;
+     print_results();
+-  END LOOP;
+-  CLOSE c1;
+-  DBMS_OUTPUT.PUT_LINE ('--- Fetching records rather than columns ---');
+-  OPEN c1;
+-  FETCH c1 BULK COLLECT INTO recs;
+-  FOR i IN recs.FIRST .. recs.LAST
+-  LOOP
+-    -- Now all columns from result set come from one record
+-    DBMS_OUTPUT.PUT_LINE (1);
+-  END LOOP;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT first_name, last_name, hire_date
+-    FROM employees;
+-
+-  TYPE NameSet IS TABLE OF c1%ROWTYPE;
+-  stock_managers  NameSet;  -- nested table of records
+-
+-  TYPE cursor_var_type is REF CURSOR;
+-  cv cursor_var_type;
+-
++    DBMS_OUTPUT.put_line('--- Processing ' || V_LIMIT || ' rows at a time ---');
++    OPEN C1;
++    LOOP
++        FETCH C1 BULK COLLECT INTO NAMES, SALS limit V_LIMIT;
++        EXIT WHEN NAMES.count = 0;
++        print_results();
++  END LOOP;
++    CLOSE C1;
++    DBMS_OUTPUT.put_line('--- Fetching records rather than columns ---');
++    OPEN C1;
++    FETCH C1 BULK COLLECT INTO RECS;
++    FOR I IN RECS.first..RECS.last
++    LOOP
++  -- Now all columns from result set come from one record
++        DBMS_OUTPUT.put_line(1);
++END LOOP;
++END;
++/
++
++DECLARE
++    CURSOR C1 IS
++      SELECT
++        FIRST_NAME,
++        LAST_NAME,
++        HIRE_DATE
++      FROM EMPLOYEES;
++
++    TYPE NAMESET IS TABLE OF C1 % ROWTYPE;
++    STOCK_MANAGERS nameset;  -- nested table of records
++
++    TYPE CURSOR_VAR_TYPE IS REF CURSOR;
++    CV cursor_var_type;
+ BEGIN
+   -- Assign values to nested table of records:
+-
+-  OPEN cv FOR
+-    SELECT first_name, last_name, hire_date
+-    FROM employees
+-    WHERE job_id = 'ST_MAN'
+-    ORDER BY hire_date;
+-
+-  FETCH cv BULK COLLECT INTO stock_managers;
+-  CLOSE cv;
++    OPEN CV FOR
++
++  SELECT
++    FIRST_NAME,
++    LAST_NAME,
++    HIRE_DATE
++  FROM EMPLOYEES
++  WHERE JOB_ID = 'ST_MAN'
++  ORDER BY HIRE_DATE;
++
++    FETCH CV BULK COLLECT INTO STOCK_MANAGERS;
++    CLOSE CV;
+ 
+   -- Print nested table of records:
+ 
+-    FOR i IN stock_managers.FIRST .. stock_managers.LAST LOOP
+-      DBMS_OUTPUT.PUT_LINE (1);
+-    END LOOP;END;
+-/
+-
+-DECLARE
+-  TYPE numtab IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+-
+-  CURSOR c1 IS
+-    SELECT employee_id
+-    FROM employees
+-    WHERE department_id = 80
+-    ORDER BY employee_id;
+-
+-  empids  numtab;
+-BEGIN
+-  OPEN c1;
+-  LOOP  -- Fetch 10 rows or fewer in each iteration
+-    FETCH c1 BULK COLLECT INTO empids LIMIT 10;
+-    DBMS_OUTPUT.PUT_LINE ('------- Results from One Bulk Fetch --------');
+-    FOR i IN 1..empids.COUNT LOOP
+-      DBMS_OUTPUT.PUT_LINE ('Employee Id: ' || empids(i));
+-    END LOOP;
+-    EXIT WHEN c1%NOTFOUND;
+-  END LOOP;
+-  CLOSE c1;
+-END;
+-/
++    FOR I IN STOCK_MANAGERS.first..STOCK_MANAGERS.last LOOP
++        DBMS_OUTPUT.put_line(1);
++  END LOOP;
++END;
++/
++
++DECLARE
++    TYPE NUMTAB IS TABLE OF number INDEX BY pls_integer;
++
++    CURSOR C1 IS
++      SELECT EMPLOYEE_ID
++      FROM EMPLOYEES
++      WHERE DEPARTMENT_ID = 80
++      ORDER BY EMPLOYEE_ID;
++
++    EMPIDS numtab;
++BEGIN
++    OPEN C1;
++    LOOP  -- Fetch 10 rows or fewer in each iteration
++        FETCH C1 BULK COLLECT INTO EMPIDS limit 10;
++        DBMS_OUTPUT.put_line('------- Results from One Bulk Fetch --------');
++        FOR I IN 1..EMPIDS.count LOOP
++            DBMS_OUTPUT.put_line('Employee Id: ' || empids(I));
++      END LOOP;
++        EXIT WHEN C1 % NOTFOUND;
++  END LOOP;
++    CLOSE C1;
++END;
++/
+
+loop limit=10 rule=TQ03 before_sha256=f1a5b4e24fc707b3e30894e3a74944732fbdfe3d0b4da138cadb357ce0a8b4e4 after_sha256=7341307d07a478d74b208496c3089b0dd87d327f48604218549fa37fdfb2b9d4
+--- <string> (before)
++++ <string> (after)
+@@ -1,154 +1,151 @@
+ DECLARE
+-  PROCEDURE p (
+-    sales  NUMBER,
+-    quota  NUMBER,
+-    emp_id NUMBER
+-  )
+-  IS
+-    bonus    NUMBER := 0;
+-    updated  VARCHAR2(3) := 'No';
+-  BEGIN
+-    IF sales > (quota + 200) THEN
+-      bonus := (sales - quota)/4;
++    PROCEDURE p (
++        sales                           number,
++        quota                           number,
++        emp_id                          number
++    ) IS
++        bonus                           number := 0;
++        updated                         varchar2(3) := 'No';
++    BEGIN
++        IF sales > (quota + 200) THEN
++            bonus := (sales - quota) / 4;
+ 
+-      UPDATE employees
+-      SET salary = salary + bonus
+-      WHERE employee_id = emp_id;
++            UPDATE employees SET
++                salary = salary + bonus
++            WHERE employee_id = emp_id;
+ 
+-      updated := 'Yes';
+-    END IF;
++            updated := 'Yes';
++        END IF;
+ 
+-    DBMS_OUTPUT.PUT_LINE (
+-      'Table updated?  ' || updated || ', ' ||
+-      'bonus = ' || bonus || '.'
+-    );
+-  END p;
++        DBMS_OUTPUT.put_line('Table updated?  ' || updated || ', ' || 'bonus = ' || bonus || '.');
++    END p;
+ BEGIN
+-  p(10100, 10000, 120);
+-  p(10500, 10000, 121);
+-END;
++    p(10100, 10000, 120);
++    p(10500, 10000, 121);
++END p;
+ /
+ 
+ DECLARE
+-  PROCEDURE p (
+-    sales  NUMBER,
+-    quota  NUMBER,
+-    emp_id NUMBER
+-  )
+-  IS
+-    bonus  NUMBER := 0;
+-  BEGIN
+-    IF sales > (quota + 200) THEN
+-      bonus := (sales - quota)/4;
+-    ELSE
+-      bonus := 50;
+-    END IF;
++    PROCEDURE p (
++        sales                           number,
++        quota                           number,
++        emp_id                          number
++    ) IS
++        bonus                           number := 0;
++    BEGIN
++        IF sales > (quota + 200) THEN
++            bonus := (sales - quota) / 4;
++        ELSE
++            bonus := 50;
++        END IF;
+ 
+-    DBMS_OUTPUT.PUT_LINE('bonus = ' || bonus);
++        DBMS_OUTPUT.put_line('bonus = ' || bonus);
+ 
+-    UPDATE employees
+-    SET salary = salary + bonus
+-    WHERE employee_id = emp_id;
+-  END p;
++        UPDATE employees SET
++            salary = salary + bonus
++        WHERE employee_id = emp_id;
++
++    END p;
+ BEGIN
+-  p(10100, 10000, 120);
+-  p(10500, 10000, 121);
+-END;
++    p(10100, 10000, 120);
++    p(10500, 10000, 121);
++END p;
+ /
+ 
+ DECLARE
+-  PROCEDURE p (
+-    sales  NUMBER,
+-    quota  NUMBER,
+-    emp_id NUMBER
+-  )
+-  IS
+-    bonus  NUMBER := 0;
+-  BEGIN
+-    IF sales > (quota + 200) THEN
+-      bonus := (sales - quota)/4;
+-    ELSE
+-      IF sales > quota THEN
+-        bonus := 50;
+-      ELSE
+-        bonus := 0;
+-      END IF;
+-    END IF;
++    PROCEDURE p (
++        sales                           number,
++        quota                           number,
++        emp_id                          number
++    ) IS
++        bonus                           number := 0;
++    BEGIN
++        IF sales > (quota + 200) THEN
++            bonus := (sales - quota) / 4;
++        ELSE
++            IF sales > quota THEN
++                bonus := 50;
++            ELSE
++                bonus := 0;
++            END IF;
++        END IF;
+ 
+-    DBMS_OUTPUT.PUT_LINE('bonus = ' || bonus);
++        DBMS_OUTPUT.put_line('bonus = ' || bonus);
+ 
+-    UPDATE employees
+-    SET salary = salary + bonus
+-    WHERE employee_id = emp_id;
+-  END p;
++        UPDATE employees SET
++            salary = salary + bonus
++        WHERE employee_id = emp_id;
++
++    END p;
+ BEGIN
+-  p(10100, 10000, 120);
+-  p(10500, 10000, 121);
+-  p(9500, 10000, 122);
+-END;
++    p(10100, 10000, 120);
++    p(10500, 10000, 121);
++    p(9500, 10000, 122);
++END p;
+ /
+ 
+ DECLARE
+-  PROCEDURE p (sales NUMBER)
+-  IS
+-    bonus  NUMBER := 0;
+-  BEGIN
+-    IF sales > 50000 THEN
+-      bonus := 1500;
+-    ELSIF sales > 35000 THEN
+-      bonus := 500;
+-    ELSE
+-      bonus := 100;
+-    END IF;
++    PROCEDURE p (
++        sales                           number
++    ) IS
++        bonus                           number := 0;
++    BEGIN
++        IF sales > 50000 THEN
++            bonus := 1500;
++        ELSIF sales > 35000 THEN
++            bonus := 500;
++        ELSE
++            bonus := 100;
++        END IF;
+ 
+-    DBMS_OUTPUT.PUT_LINE (
+-      'Sales = ' || sales || ', bonus = ' || bonus || '.'
+-    );
+-  END p;
++        DBMS_OUTPUT.put_line(
++            'Sales = ' || sales || ', bonus = ' || bonus || '.'
++        );
++    END p;
+ BEGIN
+-  p(55000);
+-  p(40000);
+-  p(30000);
+-END;
++    p(55000);
++    p(40000);
++    p(30000);
++END p;
+ /
+ 
+ -- IS [NOT] OF type predicate (Oracle OO PL/SQL)
+ DECLARE
+-  obj_ref SYS.ANYDATA;
++    obj_ref                             SYS.anydata;
+ BEGIN
+-  IF obj_ref IS OF (emp_t) THEN
+-    NULL;
+-  ELSIF obj_ref IS NOT OF (mgr_t, emp_t) THEN
+-    NULL;
+-  ELSIF obj_ref IS OF TYPE (worker_t) THEN
+-    NULL;
+-  ELSIF obj_ref IS NOT OF TYPE (mgr_t) THEN
+-    NULL;
+-  ELSIF obj_ref IS OF (ONLY emp_t) THEN
+-    NULL;
+-  ELSIF obj_ref IS NOT OF (ONLY mgr_t, ONLY emp_t) THEN
+-    NULL;
+-  END IF;
+-END;
++    IF obj_ref IS OF (emp_t) THEN
++        NULL;
++    ELSIF obj_ref IS NOT OF (mgr_t, emp_t) THEN
++        NULL;
++    ELSIF obj_ref IS OF TYPE (worker_t) THEN
++        NULL;
++    ELSIF obj_ref IS NOT OF TYPE (mgr_t) THEN
++        NULL;
++    ELSIF obj_ref IS OF (ONLY emp_t) THEN
++        NULL;
++    ELSIF obj_ref IS NOT OF (ONLY mgr_t, ONLY emp_t) THEN
++        NULL;
++    END IF;
++END p;
+ /
+ 
+ -- Anonymous block with IF/ELSIF/ELSE
+ DECLARE
+-  AUDITINFO VARCHAR2(2000);
+-  EVENT VARCHAR2(10);
++    auditinfo varchar2(2000);
++    event varchar2(10);
+ BEGIN
+-  IF 1 = 1 THEN
+-    AUDITINFO := 'Insert row into ';
+-    EVENT := 'INSERT';
+-  ELSIF 1 = 2 THEN
+-    AUDITINFO := 'Delete row from ';
+-    EVENT := 'DELETE';
+-  ELSIF 1 = 3 THEN
+-    AUDITINFO := 'Update row from ';
+-    EVENT := 'UPDATE';
+-  ELSE
+-    AUDITINFO := 'Unknow operation ';
+-    EVENT := 'UNKNOW';
+-  END IF;
+-END;
++    IF 1 = 1 THEN
++        auditinfo := 'Insert row into ';
++        event := 'INSERT';
++    ELSIF 1 = 2 THEN
++        auditinfo := 'Delete row from ';
++        event := 'DELETE';
++    ELSIF 1 = 3 THEN
++        auditinfo := 'Update row from ';
++        event := 'UPDATE';
++    ELSE
++        auditinfo := 'Unknow operation ';
++        event := 'UNKNOW';
++    END IF;
++END p;
+ /
+
+loop limit=10 rule=TQ03 before_sha256=7e2e39bab50c21bb6abc5dbe08efe681d2e9d374643e9b3d7f1340fed2941a2a after_sha256=a41c7bdf7fc309a65ef58b9c177618acf45e78d770ebf564f9849bbe082ffe90
+--- <string> (before)
++++ <string> (after)
+@@ -1,77 +1,81 @@
+ DECLARE
+-  x INTEGER;
++    x integer;
+ 
+-  FUNCTION f (n INTEGER)
+-  RETURN INTEGER
+-  IS
+-  BEGIN
+-    RETURN (n*n);
+-  END;
++    FUNCTION f(
++      n integer
++    ) RETURN integer IS
++    BEGIN
++      return(n * n);
++    END;
+ 
+ BEGIN
+-  DBMS_OUTPUT.PUT_LINE (
+-    'f returns ' || f(2) || '. Execution returns here (1).'
+-  );
++    DBMS_OUTPUT.put_line(
++        'f returns ' || f(2) || '. Execution returns here (1).'
++    );
+ 
+-  x := f(2);
+-  DBMS_OUTPUT.PUT_LINE('Execution returns here (2).');
++    x := f(2);
++    DBMS_OUTPUT.put_line('Execution returns here (2).');
+ END;
+ /
+ 
+-CREATE OR REPLACE FUNCTION f (n INTEGER)
+-  RETURN INTEGER
+-  AUTHID DEFINER
+-IS
+-BEGIN
+-  IF n = 0 THEN
+-    RETURN 1;
+-  ELSIF n = 1 THEN
+-    RETURN n;
+-  END IF;
+-END;
+-/
++                  CREATE OR REPLACE FUNCTION f(
++                  n integer
++) RETURN integer
++                  AUTHID DEFINER IS
++                BEGIN
++                  IF n = 0 THEN
++                    RETURN 1;
++                  ELSIF n = 1 THEN
++                    RETURN n;
++                  END IF;
++                END;
++                  /
+ 
+-CREATE OR REPLACE FUNCTION f (n INTEGER)
+-  RETURN INTEGER
+-  AUTHID DEFINER
+-IS
+-BEGIN
+-  IF n = 0 THEN
+-    RETURN 1;
+-  ELSIF n = 1 THEN
+-    RETURN n;
+-  ELSE
+-    RETURN n*n;
+-  END IF;
+-END;
+-/
++CREATE OR REPLACE FUNCTION f(
++    n integer
++) RETURN integer
++AUTHID DEFINER IS
++                  BEGIN
++                    IF n = 0 THEN
++                      RETURN 1;
++                    ELSIF n = 1 THEN
++                      RETURN n;
++                    ELSE
++                      RETURN n * n;
++                    END IF;
++                END;
++                  /
+ 
+-BEGIN
+-  FOR i IN 0 .. 3 LOOP
+-    DBMS_OUTPUT.PUT_LINE('f(' || i || ') = ' || f(i));
+-  END LOOP;
+-END;
+-/
++                  BEGIN
++                    FOR i IN 0..3 LOOP
++                      DBMS_OUTPUT.put_line('f(' || i || ') = ' || f(i));
++                    END LOOP;
++                END;
++                  /
+ 
+ DECLARE
+-  PROCEDURE p IS
+-  BEGIN
+-    DBMS_OUTPUT.PUT_LINE('Inside p');
+-    RETURN;
+-    DBMS_OUTPUT.PUT_LINE('Unreachable statement.');
+-  END;
+-BEGIN
+-  p();
+-  DBMS_OUTPUT.PUT_LINE('Control returns here.');
+-END;
+-/
++    PROCEDURE p IS
++                  BEGIN
++                    DBMS_OUTPUT.put_line('Inside p');
++                    RETURN;
++                    DBMS_OUTPUT.put_line('Unreachable statement.');
++                END;
+ 
+-BEGIN
+-  BEGIN
+-    DBMS_OUTPUT.PUT_LINE('Inside inner block.');
+-    RETURN;
+-    DBMS_OUTPUT.PUT_LINE('Unreachable statement.');
+-  END;
+-  DBMS_OUTPUT.PUT_LINE('Inside outer block. Unreachable statement.');
+-END;
+-/
++                BEGIN
++                  p();
++                  DBMS_OUTPUT.put_line('Control returns here.');
++                END;
++                  /
++
++                  BEGIN
++
++                    BEGIN
++                      DBMS_OUTPUT.put_line('Inside inner block.');
++                      RETURN;
++                      DBMS_OUTPUT.put_line('Unreachable statement.');
++                    END;
++                    DBMS_OUTPUT.put_line(
++                        'Inside outer block. Unreachable statement.'
++                    );
++                END;
++                  /
+
+loop limit=10 rule=TQ03 before_sha256=353565bf196fb5739b3a983bec0d16dea7e629f81d557b78c023b9aeccffe796 after_sha256=4860793ee9c52097454839aca1ecf64ebad32d18c09819bde8ae4d1484758b55
+--- <string> (before)
++++ <string> (after)
+@@ -1,105 +1,117 @@
+ DECLARE
+-  dept_rec departments%ROWTYPE;
++    dept_rec                            departments % ROWTYPE;
+ BEGIN
+-  -- Assign values to fields:
++    -- Assign values to fields:
++    dept_rec.department_id := 10;
++    dept_rec.department_name := 'Administration';
++    dept_rec.manager_id := 200;
++    dept_rec.location_id := 1700;
+ 
+-  dept_rec.department_id   := 10;
+-  dept_rec.department_name := 'Administration';
+-  dept_rec.manager_id      := 200;
+-  dept_rec.location_id     := 1700;
++    -- Print fields:
+ 
+-  -- Print fields:
+-
+-  DBMS_OUTPUT.PUT_LINE('dept_id:   ' || dept_rec.department_id);
+-  DBMS_OUTPUT.PUT_LINE('dept_name: ' || dept_rec.department_name);
+-  DBMS_OUTPUT.PUT_LINE('mgr_id:    ' || dept_rec.manager_id);
+-  DBMS_OUTPUT.PUT_LINE('loc_id:    ' || dept_rec.location_id);
++    DBMS_OUTPUT.PUT_LINE('dept_id:   ' || dept_rec.department_id);
++    DBMS_OUTPUT.PUT_LINE('dept_name: ' || dept_rec.department_name);
++    DBMS_OUTPUT.PUT_LINE('mgr_id:    ' || dept_rec.manager_id);
++    DBMS_OUTPUT.PUT_LINE('loc_id:    ' || dept_rec.location_id);
+ END;
+ /
+ 
+ DECLARE
+-  t1_row t1%ROWTYPE;
++    t1_row                              t1 % ROWTYPE;
+ BEGIN
+-  DBMS_OUTPUT.PUT('t1.c1 = ');
+-  DBMS_OUTPUT.PUT_LINE(NVL(TO_CHAR(t1_row.c1), 'NULL'));
++    DBMS_OUTPUT.PUT('t1.c1 = ');
++    DBMS_OUTPUT.PUT_LINE(coalesce(to_char(t1_row.c1), 'NULL'));
+ 
+-  DBMS_OUTPUT.PUT('t1.c2 = '); print(t1_row.c2);
+-  DBMS_OUTPUT.PUT_LINE(NVL(TO_CHAR(t1_row.c2), 'NULL'));
++    DBMS_OUTPUT.PUT('t1.c2 = ');
++    PRINT(t1_row.c2);
++    DBMS_OUTPUT.PUT_LINE(coalesce(to_char(t1_row.c2), 'NULL'));
+ END;
+ /
+ 
+ DECLARE
+-  CURSOR c IS
+-    SELECT first_name, last_name, phone_number
+-    FROM employees;
++    CURSOR c IS
++        SELECT
++            first_name,
++            last_name,
++            phone_number
++        FROM employees;
+ 
+-  friend c%ROWTYPE;
++    friend                              c % ROWTYPE;
+ BEGIN
+-  friend.first_name   := 'John';
+-  friend.last_name    := 'Smith';
+-  friend.phone_number := '1-650-555-1234';
++    friend.first_name := 'John';
++    friend.last_name := 'Smith';
++    friend.phone_number := '1-650-555-1234';
+ 
+-  DBMS_OUTPUT.PUT_LINE (
+-    friend.first_name  || ' ' ||
+-    friend.last_name   || ', ' ||
+-    friend.phone_number
+-  );
++    DBMS_OUTPUT.PUT_LINE(
++        friend.first_name || ' ' || friend.last_name || ', ' || friend.phone_number
++    );
+ END;
+ /
+ 
+ DECLARE
+-  CURSOR c2 IS
+-    SELECT employee_id, email, employees.manager_id, location_id
+-    FROM employees, departments
+-    WHERE employees.department_id = departments.department_id;
++    CURSOR c2 IS
++        SELECT
++            employee_id,
++            email,
++            employees.manager_id,
++            location_id
++        FROM
++            employees,
++            departments
++        WHERE employees.department_id = departments.department_id;
+ 
+-  join_rec c2%ROWTYPE;  -- includes columns from two tables
+-
++    -- includes columns from two tables
++    join_rec                            c2 % ROWTYPE;
+ BEGIN
+-  NULL;
++    NULL;
+ END;
+ /
+ 
+ DECLARE
+-  t_rec t%ROWTYPE;  -- t_rec has fields a and b, but not c
++    -- t_rec has fields a and b, but not c
++    t_rec                               t % ROWTYPE;
+ BEGIN
+-  SELECT * INTO t_rec FROM t WHERE ROWNUM < 2;  -- t_rec(a)=1, t_rec(b)=2
+-  DBMS_OUTPUT.PUT_LINE('c = ' || t_rec.c);
++    SELECT *
++    INTO t_rec
++    FROM t
++    WHERE ROWNUM < 2;  -- t_rec(a)=1, t_rec(b)=2
++
++    DBMS_OUTPUT.PUT_LINE('c = ' || t_rec.c);
+ END;
+ /
+ 
+ DECLARE
+-  TYPE name_rec IS RECORD (
+-    first  employees.first_name%TYPE DEFAULT 'John',
+-    last   employees.last_name%TYPE DEFAULT 'Doe'
+-  );
++    TYPE name_rec IS record (
++        first                             employees.first_name % TYPE DEFAULT 'John',
++        last                              employees.last_name % TYPE DEFAULT 'Doe'
++    );
+ 
+-  CURSOR c IS
+-    SELECT first_name, last_name
+-    FROM employees;
++    CURSOR c IS
++        SELECT
++            first_name,
++            last_name
++        FROM employees;
+ 
+-  target name_rec;
+-  source c%ROWTYPE;
++    target                              name_rec;
++    source                              c % ROWTYPE;
++BEGIN
++    source.first_name := 'Jane';
++    source.last_name := 'Smith';
+ 
+-BEGIN
+-  source.first_name := 'Jane'; source.last_name := 'Smith';
++    DBMS_OUTPUT.PUT_LINE(
++        'source: ' || source.first_name || ' ' || source.last_name
++    );
+ 
+-  DBMS_OUTPUT.PUT_LINE (
+-    'source: ' || source.first_name || ' ' || source.last_name
+-  );
++    target := source;
+ 
+- target := source;
+-
+- DBMS_OUTPUT.PUT_LINE (
+-   'target: ' || target.first || ' ' || target.last
+- );
++    DBMS_OUTPUT.PUT_LINE('target: ' || target.first || ' ' || target.last);
+ END;
+ /
+ 
+-create or replace procedure MY_PROCEDURE(
+-    var1 table_name%rowtype
+-) is
+-begin
+-    null;
+-end;
++CREATE OR REPLACE PROCEDURE MY_PROCEDURE (
++    var1                                table_name % ROWTYPE
++) IS
++BEGIN
++    NULL;
++END;
+ /
+
+loop limit=10 rule=TQ03 before_sha256=784db7567376bc9de71c9c32dbdf589f3c4c6de26c6a34a2eba9910387fd81c5 after_sha256=ad7c8f0a90578002e6ebd122de8e787366af03532c633b1ce252291e087b1fba
+--- <string> (before)
++++ <string> (after)
+@@ -1,39 +1,44 @@
+ CREATE OR REPLACE PACKAGE BODY pkg_nested_access AS
+-  PROCEDURE CopyContactInfo IS
+-    TYPE udt_IdList IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+-    TYPE udt_Group IS RECORD (
+-      ClientId NUMBER,
+-      ContactInfoList udt_IdList
+-    );
+-    TYPE udt_Groups IS TABLE OF udt_Group INDEX BY PLS_INTEGER;
+-    t_Groups udt_Groups;
+-    t_IdList udt_IdList;
+-    t_Index PLS_INTEGER := 1;
++    /*----------------------------------------------------------------------------
++   * COPYCONTACTINFO()
++   *--------------------------------------------------------------------------*/
++  PROCEDURE COPYCONTACTINFO IS
++    TYPE udt_idlist IS TABLE OF number INDEX BY pls_integer;
++        TYPE udt_group IS record (
++          ClientId                      NUMBER,
++          ContactInfoList               udt_IdList
++        );
++    TYPE udt_groups IS TABLE OF udt_group INDEX BY pls_integer;
++    t_groups                        udt_groups;
++    t_idlist                        udt_idlist;
++    t_index                         pls_integer := 1;
+   BEGIN
+-    t_Index := t_Groups(1).ContactInfoList.COUNT + 1;
+-    t_Index := t_Groups(1).ContactInfoList.COUNT - 1;
+-    t_Index := (t_Groups(1).ContactInfoList.COUNT + 1) * 2;
+-    t_Index := NVL(t_Groups(1).ContactInfoList.COUNT + 1, 0);
+-    t_Index := pkg_Cache.t_Groups(1).ContactInfoList.COUNT + 1;
+-    t_Index := GetGroups(1).Details.COUNT + 1;
+-    t_Index := api.GetGroups(1).Details.COUNT + 1;
+-    t_Index := t_Groups(1)."ContactInfoList".COUNT + 1;
++    t_index := t_groups(1).contactinfolist.count + 1;
++    t_index := t_groups(1).contactinfolist.count - 1;
++    t_index := (t_groups(1).contactinfolist.count + 1) * 2;
++    t_index := COALESCE(t_groups(1).contactinfolist.count + 1, 0);
++    t_index := pkg_cache.t_groups(1).contactinfolist.count + 1;
++    t_index := getgroups(1).details.count + 1;
++    t_index := api.getgroups(1).details.count + 1;
++    t_index := t_groups(1)."ContactInfoList".count + 1;
+ 
+-    t_Groups(1).ContactInfoList(
+-      t_Groups(1).ContactInfoList.COUNT + 1
+-    ) := t_IdList(1);
+-    t_Groups(1).ContactInfoList(t_Index) := t_Groups(2).ContactInfoList(t_Index);
+-    t_Groups(1).ClientId := t_IdList(1);
++    t_groups(1).contactinfolist (
++        t_groups(1).contactinfolist.count + 1
++        ) := T_IDLIST(1);
++    t_groups(1).contactinfolist (t_index)
++        := t_groups(2).contactinfolist (t_index);
++    t_groups(1).clientid := T_IDLIST(1);
+ 
+-    IF t_Groups(1).ContactInfoList.COUNT + 1 > 0
+-      AND t_Groups(1).ClientId = 1 THEN
++    IF t_groups(1).contactinfolist.count + 1 > 0
++        AND t_groups(1).clientid = 1 THEN
+       NULL;
+     END IF;
+ 
+-    FOR x IN 1..t_Groups(1).ContactInfoList.COUNT + 1 LOOP
+-      t_Index := t_Groups(x).ContactInfoList.FIRST;
+-      t_Index := t_Groups(x).ContactInfoList.LAST;
++    FOR x IN 1..t_groups(1).contactinfolist.count + 1 LOOP
++      t_index := t_groups(x).contactinfolist.first;
++      t_index := t_groups(x).contactinfolist.last;
+     END LOOP;
+-  END CopyContactInfo;
++  END copycontactinfo;
+ END pkg_nested_access;
++
+ /
+
+loop limit=10 rule=TQ03 before_sha256=784db7567376bc9de71c9c32dbdf589f3c4c6de26c6a34a2eba9910387fd81c5 after_sha256=ad7c8f0a90578002e6ebd122de8e787366af03532c633b1ce252291e087b1fba
+--- <string> (before)
++++ <string> (after)
+@@ -1,39 +1,44 @@
+ CREATE OR REPLACE PACKAGE BODY pkg_nested_access AS
+-  PROCEDURE CopyContactInfo IS
+-    TYPE udt_IdList IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+-    TYPE udt_Group IS RECORD (
+-      ClientId NUMBER,
+-      ContactInfoList udt_IdList
+-    );
+-    TYPE udt_Groups IS TABLE OF udt_Group INDEX BY PLS_INTEGER;
+-    t_Groups udt_Groups;
+-    t_IdList udt_IdList;
+-    t_Index PLS_INTEGER := 1;
++    /*----------------------------------------------------------------------------
++   * COPYCONTACTINFO()
++   *--------------------------------------------------------------------------*/
++  PROCEDURE COPYCONTACTINFO IS
++    TYPE udt_idlist IS TABLE OF number INDEX BY pls_integer;
++        TYPE udt_group IS record (
++          ClientId                      NUMBER,
++          ContactInfoList               udt_IdList
++        );
++    TYPE udt_groups IS TABLE OF udt_group INDEX BY pls_integer;
++    t_groups                        udt_groups;
++    t_idlist                        udt_idlist;
++    t_index                         pls_integer := 1;
+   BEGIN
+-    t_Index := t_Groups(1).ContactInfoList.COUNT + 1;
+-    t_Index := t_Groups(1).ContactInfoList.COUNT - 1;
+-    t_Index := (t_Groups(1).ContactInfoList.COUNT + 1) * 2;
+-    t_Index := NVL(t_Groups(1).ContactInfoList.COUNT + 1, 0);
+-    t_Index := pkg_Cache.t_Groups(1).ContactInfoList.COUNT + 1;
+-    t_Index := GetGroups(1).Details.COUNT + 1;
+-    t_Index := api.GetGroups(1).Details.COUNT + 1;
+-    t_Index := t_Groups(1)."ContactInfoList".COUNT + 1;
++    t_index := t_groups(1).contactinfolist.count + 1;
++    t_index := t_groups(1).contactinfolist.count - 1;
++    t_index := (t_groups(1).contactinfolist.count + 1) * 2;
++    t_index := COALESCE(t_groups(1).contactinfolist.count + 1, 0);
++    t_index := pkg_cache.t_groups(1).contactinfolist.count + 1;
++    t_index := getgroups(1).details.count + 1;
++    t_index := api.getgroups(1).details.count + 1;
++    t_index := t_groups(1)."ContactInfoList".count + 1;
+ 
+-    t_Groups(1).ContactInfoList(
+-      t_Groups(1).ContactInfoList.COUNT + 1
+-    ) := t_IdList(1);
+-    t_Groups(1).ContactInfoList(t_Index) := t_Groups(2).ContactInfoList(t_Index);
+-    t_Groups(1).ClientId := t_IdList(1);
++    t_groups(1).contactinfolist (
++        t_groups(1).contactinfolist.count + 1
++        ) := T_IDLIST(1);
++    t_groups(1).contactinfolist (t_index)
++        := t_groups(2).contactinfolist (t_index);
++    t_groups(1).clientid := T_IDLIST(1);
+ 
+-    IF t_Groups(1).ContactInfoList.COUNT + 1 > 0
+-      AND t_Groups(1).ClientId = 1 THEN
++    IF t_groups(1).contactinfolist.count + 1 > 0
++        AND t_groups(1).clientid = 1 THEN
+       NULL;
+     END IF;
+ 
+-    FOR x IN 1..t_Groups(1).ContactInfoList.COUNT + 1 LOOP
+-      t_Index := t_Groups(x).ContactInfoList.FIRST;
+-      t_Index := t_Groups(x).ContactInfoList.LAST;
++    FOR x IN 1..t_groups(1).contactinfolist.count + 1 LOOP
++      t_index := t_groups(x).contactinfolist.first;
++      t_index := t_groups(x).contactinfolist.last;
+     END LOOP;
+-  END CopyContactInfo;
++  END copycontactinfo;
+ END pkg_nested_access;
++
+ /
+
+loop limit=10 rule=TQ03 before_sha256=6a941dc080a432bea78f5bf9c53760975822ad334afa2fa30b88b2a6f143565f after_sha256=8123d7e41abaa3bc387e57de6de10184d4c24d87e7ba2084d21bb7184c8df6fd
+--- <string> (before)
++++ <string> (after)
+@@ -1,149 +1,156 @@
+ DECLARE
+-  -- Associative array indexed by string:
++    -- Associative array indexed by string:
+ 
+-  TYPE population IS TABLE OF NUMBER  -- Associative array type
+-    INDEX BY VARCHAR2(64);            --  indexed by string
++    TYPE population IS TABLE OF number  -- Associative array type
++    INDEX BY varchar2(64);  --  indexed by string
+ 
+-  city_population  population;        -- Associative array variable
+-  i  VARCHAR2(64);                    -- Scalar variable
+-
++    -- Associative array variable
++    city_population population;
++    -- Scalar variable
++    i varchar2(64);
+ BEGIN
+   -- Add elements (key-value pairs) to associative array:
+-
+-  city_population('Smallville')  := 2000;
+-  city_population('Midland')     := 750000;
+-  city_population('Megalopolis') := 1000000;
++    city_population ('Smallville') := 2000;
++    city_population ('Midland') := 750000;
++    city_population ('Megalopolis') := 1000000;
+ 
+   -- Change value associated with key 'Smallville':
+ 
+-  city_population('Smallville') := 2001;
++    city_population ('Smallville') := 2001;
+ 
+   -- Print associative array:
+ 
+-  i := city_population.FIRST;  -- Get first element of array
++    i := city_population.first;  -- Get first element of array
+ 
+-  WHILE i IS NOT NULL LOOP
+-    DBMS_Output.PUT_LINE
+-      ('Population of ' || i || ' is ' || city_population(i));
+-    i := city_population.NEXT(i);  -- Get next element of array
++    WHILE i IS NOT NULL LOOP
++        DBMS_Output.PUT_LINE(
++            'Population of ' || i || ' is ' || CITY_POPULATION(i)
++        );
++        i := city_population.next(i);  -- Get next element of array
+   END LOOP;
+ END;
+ /
+ 
+ DECLARE
+-  TYPE sum_multiples IS TABLE OF PLS_INTEGER INDEX BY PLS_INTEGER;
+-  n  PLS_INTEGER := 5;   -- number of multiples to sum for display
+-  sn PLS_INTEGER := 10;  -- number of multiples to sum
+-  m  PLS_INTEGER := 3;   -- multiple
++    TYPE sum_multiples IS TABLE OF pls_integer INDEX BY pls_integer;
++    n pls_integer
++        := 5;  -- number of multiples to sum for display
++    sn pls_integer
++        := 10;  -- number of multiples to sum
++    m pls_integer := 3;  -- multiple
+ 
+-  FUNCTION get_sum_multiples (
+-    multiple IN PLS_INTEGER,
+-    num      IN PLS_INTEGER
+-  ) RETURN sum_multiples
+-  IS
+-    s sum_multiples;
++    FUNCTION GET_SUM_MULTIPLES(
++        multiple IN pls_integer,
++        num IN pls_integer
++    ) RETURN sum_multiples IS
++      s sum_multiples;
++        BEGIN
++        FOR i IN 1..num LOOP
++            s (i) := multiple * ((i * (i + 1)) / 2);  -- sum of multiples
++          END LOOP;
++        RETURN s;
++END get_sum_multiples;
+   BEGIN
+-    FOR i IN 1..num LOOP
+-      s(i) := multiple * ((i * (i + 1)) / 2);  -- sum of multiples
+-    END LOOP;
+-    RETURN s;
+-  END get_sum_multiples;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE (
+-    'Sum of the first ' || TO_CHAR(n) || ' multiples of ' ||
+-    TO_CHAR(m) || ' is ' || TO_CHAR(get_sum_multiples (m, sn)(n))
+-  );
++    DBMS_OUTPUT.PUT_LINE(
++        'Sum of the first ' || to_char(n) || ' multiples of ' || to_char(m) || ' is '
++        || to_char(GET_SUM_MULTIPLES(m, sn) (n)));
+ END;
+ /
+ 
+ DECLARE
+-  TYPE Foursome IS VARRAY(4) OF VARCHAR2(15);  -- VARRAY type
++    TYPE foursome IS varray(4) OF varchar2(15);  -- VARRAY type
+ 
+-  -- varray variable initialized with constructor:
++    -- varray variable initialized with constructor:
+ 
+-  team Foursome := Foursome('John', 'Mary', 'Alberto', 'Juanita');
++    team foursome
++        := FOURSOME('John', 'Mary', 'Alberto', 'Juanita');
+ 
+-  PROCEDURE print_team (heading VARCHAR2) IS
++    PROCEDURE PRINT_TEAM(
++        heading varchar2
++    ) IS
++      BEGIN
++        DBMS_OUTPUT.PUT_LINE(heading);
++
++        FOR i IN 1..4 LOOP
++            DBMS_OUTPUT.PUT_LINE(i || '.' || TEAM(i));
++        END LOOP;
++
++        DBMS_OUTPUT.PUT_LINE('---');
++END;
++
+   BEGIN
+-    DBMS_OUTPUT.PUT_LINE(heading);
++    PRINT_TEAM('2001 Team:');
+ 
+-    FOR i IN 1..4 LOOP
+-      DBMS_OUTPUT.PUT_LINE(i || '.' || team(i));
+-    END LOOP;
++    team (3) := 'Pierre';  -- Change values of two elements
++    team (4) := 'Yvonne';
++    PRINT_TEAM('2005 Team:');
+ 
+-    DBMS_OUTPUT.PUT_LINE('---');
+-  END;
++    -- Invoke constructor to assign new values to varray variable:
+ 
+-BEGIN
+-  print_team('2001 Team:');
+-
+-  team(3) := 'Pierre';  -- Change values of two elements
+-  team(4) := 'Yvonne';
+-  print_team('2005 Team:');
+-
+-  -- Invoke constructor to assign new values to varray variable:
+-
+-  team := Foursome('Arun', 'Amitha', 'Allan', 'Mae');
+-  print_team('2009 Team:');
++    team := FOURSOME('Arun', 'Amitha', 'Allan', 'Mae');
++    PRINT_TEAM('2009 Team:');
+ END;
+ /
+ 
+ DECLARE
+-  TYPE Roster IS TABLE OF VARCHAR2(15);  -- nested table type
++    TYPE roster IS TABLE OF varchar2(15);  -- nested table type
+ 
+-  -- nested table variable initialized with constructor:
++    -- nested table variable initialized with constructor:
+ 
+-  names Roster := Roster('D Caruso', 'J Hamil', 'D Piro', 'R Singh');
++    names roster
++        := ROSTER('D Caruso', 'J Hamil', 'D Piro', 'R Singh');
+ 
+-  PROCEDURE print_names (heading VARCHAR2) IS
++    PROCEDURE PRINT_NAMES(
++        heading varchar2
++    ) IS
++      BEGIN
++        DBMS_OUTPUT.PUT_LINE(heading);
++
++        FOR i IN names.first..names.last LOOP  -- For first to last element
++            DBMS_OUTPUT.PUT_LINE(NAMES(i));
++        END LOOP;
++
++        DBMS_OUTPUT.PUT_LINE('---');
++END;
++
+   BEGIN
+-    DBMS_OUTPUT.PUT_LINE(heading);
++    PRINT_NAMES('Initial Values:');
+ 
+-    FOR i IN names.FIRST .. names.LAST LOOP  -- For first to last element
+-      DBMS_OUTPUT.PUT_LINE(names(i));
+-    END LOOP;
++    names (3) := 'P Perez';  -- Change value of one element
++    PRINT_NAMES('Current Values:');
+ 
+-    DBMS_OUTPUT.PUT_LINE('---');
+-  END;
+-
+-BEGIN
+-  print_names('Initial Values:');
+-
+-  names(3) := 'P Perez';  -- Change value of one element
+-  print_names('Current Values:');
+-
+-  names := Roster('A Jansen', 'B Gupta');  -- Change entire table
+-  print_names('Current Values:');
++    names := ROSTER('A Jansen', 'B Gupta');  -- Change entire table
++    PRINT_NAMES('Current Values:');
+ END;
+ /
+ 
+ DECLARE
+-  TYPE employee_rec_type IS RECORD (
+-    employee_id   NUMBER,
+-    first_name    VARCHAR2(50),
+-    last_name     VARCHAR2(50),
+-    salary        NUMBER
+-  );
++    TYPE employee_rec_type IS record (
++      employee_id NUMBER,
++      first_name VARCHAR2 (50),
++      last_name VARCHAR2 (50),
++      salary NUMBER
++    );
+ 
+-  TYPE employee_array_type IS TABLE OF employee_rec_type INDEX BY PLS_INTEGER;
++    TYPE employee_array_type IS TABLE OF employee_rec_type INDEX BY pls_integer;
+ 
+-  l_employees employee_array_type;
++    l_employees employee_array_type;
++      BEGIN
++        -- Populate the array
++    l_employees(101).employee_id := 101;
++    l_employees(101).first_name := 'John';
++    l_employees(101).last_name := 'Doe';
++    l_employees(101).salary := 50000;
+ 
+-BEGIN
+-  -- Populate the array
+-  l_employees(101).employee_id := 101;
+-  l_employees(101).first_name := 'John';
+-  l_employees(101).last_name := 'Doe';
+-  l_employees(101).salary := 50000;
++    l_employees(102).employee_id := 102;
++    l_employees(102).first_name := 'Jane';
++    l_employees(102).last_name := 'Smith';
++    l_employees(102).salary := 60000;
+ 
+-  l_employees(102).employee_id := 102;
+-  l_employees(102).first_name := 'Jane';
+-  l_employees(102).last_name := 'Smith';
+-  l_employees(102).salary := 60000;
+-
+-  -- Access and display data
+-  DBMS_OUTPUT.PUT_LINE('Employee 101: ' || l_employees(101).first_name || ' ' || l_employees(101).last_name);
+-  DBMS_OUTPUT.PUT_LINE('Employee 102 Salary: ' || l_employees(102).salary);
++        -- Access and display data
++    DBMS_OUTPUT.PUT_LINE(
++        'Employee 101: ' || l_employees(101).first_name || ' ' || l_employees(101).last_name
++        );
++    DBMS_OUTPUT.PUT_LINE('Employee 102 Salary: ' || l_employees(102).salary);
+ END;
+ /
+
+loop limit=10 rule=TQ03 before_sha256=2e1b78c5cab43749d00082559ac3989f07b2e21f3c688eb6ff282e9897730964 after_sha256=0dbb692dd361eabefab150c7ea3d0ad2a778f84e78fbff7654b7ac8948fe9d57
+--- <string> (before)
++++ <string> (after)
+@@ -1,135 +1,151 @@
+ CREATE OR REPLACE TRIGGER t
+-  BEFORE
+-    INSERT OR
+-    UPDATE OF salary, department_id OR
+-    DELETE
+-  ON employees
++BEFORE
++
++INSERT OR
++
++UPDATE OF salary, department_id OR
++
++DELETE
++ON employees
+ BEGIN
+-  CASE
+-    WHEN INSERTING THEN
+-      DBMS_OUTPUT.PUT_LINE('Inserting');
+-    WHEN UPDATING('salary') THEN
+-      DBMS_OUTPUT.PUT_LINE('Updating salary');
+-    WHEN UPDATING('department_id') THEN
+-      DBMS_OUTPUT.PUT_LINE('Updating department ID');
+-    WHEN DELETING THEN
+-      DBMS_OUTPUT.PUT_LINE('Deleting');
+-  END CASE;
++    CASE
++      WHEN INSERTING
++            THEN
++        DBMS_OUTPUT.PUT_LINE('Inserting');
++      WHEN UPDATING ('salary')
++            THEN
++        DBMS_OUTPUT.PUT_LINE('Updating salary');
++      WHEN UPDATING ('department_id')
++            THEN
++        DBMS_OUTPUT.PUT_LINE('Updating department ID');
++      WHEN DELETING THEN
++        DBMS_OUTPUT.PUT_LINE('Deleting');
++    END CASE;
+ END;
+ /
+ 
+ CREATE OR REPLACE TRIGGER order_info_insert
+-   INSTEAD OF INSERT ON order_info
+-   DECLARE
+-     duplicate_info EXCEPTION;
+-     PRAGMA EXCEPTION_INIT (duplicate_info, -00001);
+-   BEGIN
+-     INSERT INTO customers
+-       (customer_id, cust_last_name, cust_first_name)
+-     VALUES (
+-     :new.customer_id,
+-     :new.cust_last_name,
+-     :new.cust_first_name);
+-   INSERT INTO orders (order_id, order_date, customer_id)
+-   VALUES (
+-     :new.order_id,
+-     :new.order_date,
+-     :new.customer_id);
+-   EXCEPTION
+-     WHEN duplicate_info THEN
+-       RAISE_APPLICATION_ERROR (
+-         num=> -20107,
+-         msg=> 'Duplicate customer or order ID');
+-   END order_info_insert;
++INSTEAD OF INSERT ON order_info
++DECLARE
++    duplicate_info EXCEPTION;
++    pragma EXCEPTION_INIT (duplicate_info, - 00001);
++      BEGIN
++        INSERT INTO customers (
++        customer_id,
++        cust_last_name,
++        cust_first_name
++    ) VALUES (
++        :NEW.customer_id,
++        :NEW.cust_last_name,
++        :NEW.cust_first_name
++    );
++
++        INSERT INTO orders (
++        order_id,
++        order_date,
++        customer_id
++    ) VALUES (
++        :NEW.order_id,
++        :NEW.order_date,
++        :NEW.customer_id
++    );
++      EXCEPTION
++      WHEN duplicate_info THEN
++        raise_application_error(num => -20107, msg => 'Duplicate customer or order ID');
++END order_info_insert;
++
+ /
+ 
+ CREATE OR REPLACE TRIGGER dept_emplist_tr
+-  INSTEAD OF INSERT ON NESTED TABLE emplist OF dept_view
+-  REFERENCING NEW AS Employee
+-              PARENT AS Department
+-  FOR EACH ROW
+-BEGIN
+-  -- Insert on nested table translates to insert on base table:
+-  INSERT INTO employees (
+-    employee_id,
+-    last_name,
+-    email,
+-    hire_date,
+-    job_id,
+-    salary,
+-    department_id
+-  )
+-  VALUES (
+-    :Employee.emp_id,                      -- employee_id
+-    :Employee.lastname,                    -- last_name
+-    :Employee.lastname || '@example.com',  -- email
+-    SYSDATE,                               -- hire_date
+-    :Employee.job,                         -- job_id
+-    :Employee.sal,                         -- salary
+-    :Department.department_id              -- department_id
+-  );
++INSTEAD OF INSERT ON NESTED TABLE emplist OF dept_view
++REFERENCING NEW AS employee
++PARENT AS department
++FOR EACH ROW
++  BEGIN
++    -- Insert on nested table translates to insert on base table:
++    INSERT INTO employees (
++        employee_id,
++        last_name,
++        email,
++        hire_date,
++        job_id,
++        salary,
++        department_id
++    ) VALUES (
++        :Employee.emp_id,  -- employee_id
++        :Employee.lastname,  -- last_name
++        :Employee.lastname || '@example.com',  -- email
++        sysdate,  -- hire_date
++        :Employee.job,  -- job_id
++        :Employee.sal,  -- salary
++        :Department.department_id  -- department_id
++    );
++
+ END;
+ /
+ 
+ CREATE OR REPLACE TRIGGER maintain_employee_salaries
+-  FOR UPDATE OF salary ON employees
+-    COMPOUND TRIGGER
+-
++FOR UPDATE OF salary ON employees
++COMPOUND TRIGGER
+ -- Declarative Part:
+ -- Choose small threshhold value to show how example works:
+-  threshhold CONSTANT SIMPLE_INTEGER := 7;
++    threshhold CONSTANT simple_integer := 7;
+ 
+-  TYPE salaries_t IS TABLE OF employee_salaries%ROWTYPE INDEX BY SIMPLE_INTEGER;
+-  salaries  salaries_t;
+-  idx       SIMPLE_INTEGER := 0;
++    TYPE salaries_t IS TABLE OF employee_salaries
++    % ROWTYPE INDEX BY simple_integer;
++    salaries SALARIES_T;
++    idx simple_integer := 0;
+ 
+-  PROCEDURE flush_array IS
+-    n CONSTANT SIMPLE_INTEGER := salaries.count();
++    PROCEDURE FLUSH_ARRAY IS
++      n CONSTANT simple_integer := salaries.count();
++        BEGIN
++        FORALL j IN 1..n
++
++          INSERT INTO employee_salaries VALUES SALARIES(
++            j
++        );
++        salaries.DELETE();
++        idx := 0;
++        DBMS_OUTPUT.PUT_LINE('Flushed ' || n || ' rows');
++END flush_array;
++
++-- AFTER EACH ROW Section:
++
++AFTER EACH ROW IS
+   BEGIN
+-    FORALL j IN 1..n
+-      INSERT INTO employee_salaries VALUES salaries(j);
+-    salaries.delete();
+-    idx := 0;
+-    DBMS_OUTPUT.PUT_LINE('Flushed ' || n || ' rows');
+-  END flush_array;
++idx := idx + 1;
++salaries(idx).employee_id := :NEW.employee_id;
++salaries(idx).change_date := systimestamp;
++salaries(idx).salary := :NEW.salary;
++IF idx >= threshhold THEN
++    FLUSH_ARRAY();
++    END IF;
++END AFTER EACH ROW;
+ 
+-  -- AFTER EACH ROW Section:
++-- AFTER STATEMENT Section:
+ 
+-  AFTER EACH ROW IS
++AFTER STATEMENT IS
+   BEGIN
+-    idx := idx + 1;
+-    salaries(idx).employee_id := :NEW.employee_id;
+-    salaries(idx).change_date := SYSTIMESTAMP;
+-    salaries(idx).salary := :NEW.salary;
+-    IF idx >= threshhold THEN
+-      flush_array();
+-    END IF;
+-  END AFTER EACH ROW;
++FLUSH_ARRAY();
++END AFTER STATEMENT;
++END maintain_employee_salaries;
+ 
+-  -- AFTER STATEMENT Section:
+-
+-  AFTER STATEMENT IS
+-  BEGIN
+-    flush_array();
+-  END AFTER STATEMENT;
+-END maintain_employee_salaries;
+ /
+ 
+ CREATE OR REPLACE TRIGGER insert_or_update_trigger
+ BEFORE INSERT OR UPDATE ON your_table_name
+ FOR EACH ROW
+-BEGIN
++  BEGIN
+     IF INSERTING THEN
+-        :new.created_at := CURRENT_TIMESTAMP;
++        :NEW.created_at := CURRENT_TIMESTAMP;
+     ELSIF UPDATING THEN
+-        :new.updated_at := CURRENT_TIMESTAMP;
++        :NEW.updated_at := CURRENT_TIMESTAMP;
+     END IF;
+ END;
+ 
+-
+ CREATE OR REPLACE TRIGGER logon_trigger
+ AFTER LOGON ON DATABASE
+-BEGIN
+-  NULL;
++  BEGIN
++    NULL;
+ END;
+ /
+
+loop limit=10 rule=TQ03 before_sha256=bc962c8dd72a0856a9639ce13f4b2817b8ce6582aeb8eb33a559ca163d092618 after_sha256=324a32e6f5076e76db4ce4932f7344eccfb1eec4b0452ca1cd6f024b87e88d0b
+--- <string> (before)
++++ <string> (after)
+@@ -1,429 +1,475 @@
+ DECLARE
+-  TYPE empcurtyp IS REF CURSOR RETURN employees%ROWTYPE;  -- strong type
+-  TYPE genericcurtyp IS REF CURSOR;                       -- weak type
+-
+-  cursor1  empcurtyp;       -- strong cursor variable
+-  cursor2  genericcurtyp;   -- weak cursor variable
+-  my_cursor SYS_REFCURSOR;  -- weak cursor variable
+-
+-  TYPE deptcurtyp IS REF CURSOR RETURN departments%ROWTYPE;  -- strong type
+-  dept_cv deptcurtyp;  -- strong cursor variable
++    TYPE empcurtyp IS REF CURSOR RETURN employees % ROWTYPE;  -- strong type
++    TYPE genericcurtyp IS REF CURSOR;  -- weak type
++
++    cursor1 empcurtyp;  -- strong cursor variable
++    cursor2 genericcurtyp;  -- weak cursor variable
++    my_cursor sys_refcursor;  -- weak cursor variable
++
++    TYPE deptcurtyp IS REF CURSOR RETURN departments % ROWTYPE;  -- strong type
++    dept_cv deptcurtyp;  -- strong cursor variable
+ BEGIN
+-  NULL;
+-END;
+-/
+-
+-DECLARE
+-  TYPE EmpRecTyp IS RECORD (
+-    employee_id NUMBER,
+-    last_name VARCHAR2(25),
+-    salary   NUMBER(8,2));
+-
+-  TYPE EmpCurTyp IS REF CURSOR RETURN EmpRecTyp;
+-  emp_cv EmpCurTyp;
+-BEGIN
+-  NULL;
+-END;
+-/
+-
+-DECLARE
+-  sal           employees.salary%TYPE;
+-  sal_multiple  employees.salary%TYPE;
+-  factor        INTEGER := 2;
+-
+-  cv SYS_REFCURSOR;
+-
+-BEGIN
+-  OPEN cv FOR
+-    SELECT salary, salary*factor
+-    FROM employees
+-    WHERE job_id LIKE 'AD_%';   -- PL/SQL evaluates factor
+-
+-  LOOP
+-    FETCH cv INTO sal, sal_multiple;
+-    EXIT WHEN cv%NOTFOUND;
++    NULL;
++END;
++/
++
++DECLARE
++    TYPE emprectyp IS record (
++      employee_id NUMBER,
++      last_name VARCHAR2 (25),
++      salary NUMBER (8, 2)
++    );
++
++    TYPE empcurtyp IS REF CURSOR RETURN emprectyp;
++    emp_cv empcurtyp;
++      BEGIN
++    NULL;
++END;
++/
++
++DECLARE
++    sal employees.salary % TYPE;
++    sal_multiple employees.salary % TYPE;
++    factor integer := 2;
++
++    cv sys_refcursor;
++      BEGIN
++    OPEN cv FOR
++
++        SELECT
++          salary,
++          salary * factor
++        FROM employees
++        WHERE job_id LIKE 'AD_%';  -- PL/SQL evaluates factor
++
++    LOOP
++        FETCH cv INTO sal, sal_multiple;
++        EXIT WHEN cv % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++        factor := factor + 1;  -- Does not affect sal_multiple
++        END LOOP;
++
++    CLOSE cv;
++END;
++/
++
++DECLARE
++    sal employees.salary % TYPE;
++    sal_multiple employees.salary % TYPE;
++    factor integer := 2;
++
++    cv sys_refcursor;
++      BEGIN
+     DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-    factor := factor + 1;  -- Does not affect sal_multiple
+-  END LOOP;
+-
+-  CLOSE cv;
+-END;
+-/
+-
+-DECLARE
+-  sal           employees.salary%TYPE;
+-  sal_multiple  employees.salary%TYPE;
+-  factor        INTEGER := 2;
+-
+-  cv SYS_REFCURSOR;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-
+-  OPEN cv FOR
+-    SELECT salary, salary*factor
+-    FROM employees
+-    WHERE job_id LIKE 'AD_%';   -- PL/SQL evaluates factor
+-
+-  LOOP
+-    FETCH cv INTO sal, sal_multiple;
+-    EXIT WHEN cv%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-  END LOOP;
+-
+-  factor := factor + 1;
+-
+-  DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-
+-  OPEN cv FOR
+-    SELECT salary, salary*factor
+-    FROM employees
+-    WHERE job_id LIKE 'AD_%';   -- PL/SQL evaluates factor
+-
+-  LOOP
+-    FETCH cv INTO sal, sal_multiple;
+-    EXIT WHEN cv%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-  END LOOP;
+-
+-  CLOSE cv;
+-END;
+-/
+-
+-DECLARE
+-  v1 pkg.mytab;  -- collection of records
+-  v2 pkg.rec;
+-  c1 SYS_REFCURSOR;
+-BEGIN
+-  v1(1).f1 := 1;
+-  v1(1).f2 := 'one';
+-  OPEN c1 FOR SELECT * FROM TABLE(v1);
+-  FETCH c1 INTO v2;
+-  CLOSE c1;
+-  DBMS_OUTPUT.PUT_LINE('Values in record are ' || v2.f1 || ' and ' || v2.f2);
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 RETURN departments%ROWTYPE;    -- Declare c1
+-
+-  CURSOR c2 IS                             -- Declare and define c2
+-    SELECT employee_id, job_id, salary FROM employees
+-    WHERE salary > 2000;
+-
+-  CURSOR c1 RETURN departments%ROWTYPE IS  -- Define c1,
+-    SELECT * FROM departments              -- repeating return type
+-    WHERE department_id = 110;
+-
+-  CURSOR c3 RETURN locations%ROWTYPE;      -- Declare c3
+-
+-  CURSOR c3 IS                             -- Define c3,
+-    SELECT * FROM locations                -- omitting return type
+-    WHERE country_id = 'JP';
+-BEGIN
+-  NULL;
+-END;
+-/
+-
+-DECLARE
+-  sal           employees.salary%TYPE;
+-  sal_multiple  employees.salary%TYPE;
+-  factor        INTEGER := 2;
+-
+-  CURSOR c1 IS
+-    SELECT salary, salary*factor FROM employees
+-    WHERE job_id LIKE 'AD_%';
+-
+-BEGIN
+-  OPEN c1;  -- PL/SQL evaluates factor
+-
+-  LOOP
+-    FETCH c1 INTO sal, sal_multiple;
+-    EXIT WHEN c1%NOTFOUND;
++
++    OPEN cv FOR
++
++        SELECT
++          salary,
++          salary * factor
++        FROM employees
++        WHERE job_id LIKE 'AD_%';  -- PL/SQL evaluates factor
++
++    LOOP
++        FETCH cv INTO sal, sal_multiple;
++        EXIT WHEN cv % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++        END LOOP;
++
++    factor := factor + 1;
++
+     DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-    factor := factor + 1;  -- Does not affect sal_multiple
+-  END LOOP;
+-
+-  CLOSE c1;
+-END;
+-/
+-
+-DECLARE
+-  sal           employees.salary%TYPE;
+-  sal_multiple  employees.salary%TYPE;
+-  factor        INTEGER := 2;
+-
+-  CURSOR c1 IS
+-    SELECT salary, salary*factor FROM employees
+-    WHERE job_id LIKE 'AD_%';
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-  OPEN c1;  -- PL/SQL evaluates factor
+-  LOOP
+-    FETCH c1 INTO sal, sal_multiple;
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-  END LOOP;
+-  CLOSE c1;
+-
+-  factor := factor + 1;
+-
+-  DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
+-  OPEN c1;  -- PL/SQL evaluates factor
+-  LOOP
+-    FETCH c1 INTO sal, sal_multiple;
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
+-    DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
+-  END LOOP;
+-  CLOSE c1;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT employee_id,
+-           (salary * 0.05) raisee
+-    FROM employees
+-    WHERE job_id LIKE '%_MAN'
+-    ORDER BY employee_id;
+-  emp_rec c1%ROWTYPE;
+-BEGIN
+-  OPEN c1;
+-  LOOP
+-    FETCH c1 INTO emp_rec;
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE (
+-      'Raise for employee #' || emp_rec.employee_id ||
+-      ' is $' || emp_rec.raisee
+-    );
+-  END LOOP;
+-  CLOSE c1;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c (job VARCHAR2, max_sal NUMBER) IS
+-    SELECT last_name, first_name, (salary - max_sal) overpayment
+-    FROM employees
+-    WHERE job_id = job
+-    AND salary > max_sal
+-    ORDER BY salary;
+-
+-  PROCEDURE print_overpaid IS
+-    last_name_   employees.last_name%TYPE;
+-    first_name_  employees.first_name%TYPE;
+-    overpayment_      employees.salary%TYPE;
++
++    OPEN cv FOR
++
++        SELECT
++          salary,
++          salary * factor
++        FROM employees
++        WHERE job_id LIKE 'AD_%';  -- PL/SQL evaluates factor
++
++    LOOP
++        FETCH cv INTO sal, sal_multiple;
++        EXIT WHEN cv % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++        END LOOP;
++
++    CLOSE cv;
++END;
++/
++
++DECLARE
++    v1 pkg.mytab;  -- collection of records
++    v2 pkg.rec;
++    c1 sys_refcursor;
++      BEGIN
++    v1(1).f1 := 1;
++    v1(1).f2 := 'one';
++    OPEN c1 FOR SELECT * FROM TABLE(v1);
++    FETCH c1 INTO v2;
++    CLOSE c1;
++    DBMS_OUTPUT.PUT_LINE('Values in record are ' || v2.f1 || ' and ' || v2.f2);
++END;
++/
++
++DECLARE
++    CURSOR c1 RETURN departments % ROWTYPE;  -- Declare c1
++
++    CURSOR c2 IS -- Declare and define c2
++      SELECT
++        employee_id,
++        job_id,
++        salary
++      FROM employees
++      WHERE salary > 2000;
++
++    CURSOR c1 RETURN departments % ROWTYPE IS -- Define c1,
++      SELECT *
++      FROM departments  -- repeating return type
++      WHERE department_id = 110;
++
++    CURSOR c3 RETURN locations % ROWTYPE;  -- Declare c3
++
++    CURSOR c3 IS -- Define c3,
++      SELECT *
++      FROM locations  -- omitting return type
++      WHERE country_id = 'JP';
++
++        BEGIN
++    NULL;
++END;
++/
++
++DECLARE
++    sal employees.salary % TYPE;
++    sal_multiple employees.salary % TYPE;
++    factor integer := 2;
++
++    CURSOR c1 IS
++      SELECT
++        salary,
++        salary * factor
++      FROM employees
++      WHERE job_id LIKE 'AD_%';
++
++          BEGIN
++    OPEN c1;  -- PL/SQL evaluates factor
++
++    LOOP
++        FETCH c1 INTO sal, sal_multiple;
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++        factor := factor + 1;  -- Does not affect sal_multiple
++            END LOOP;
++
++    CLOSE c1;
++END;
++/
++
++DECLARE
++    sal employees.salary % TYPE;
++    sal_multiple employees.salary % TYPE;
++    factor integer := 2;
++
++    CURSOR c1 IS
++      SELECT
++        salary,
++        salary * factor
++      FROM employees
++      WHERE job_id LIKE 'AD_%';
++
++            BEGIN
++    DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
++    OPEN c1;  -- PL/SQL evaluates factor
++    LOOP
++        FETCH c1 INTO sal, sal_multiple;
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++              END LOOP;
++    CLOSE c1;
++
++    factor := factor + 1;
++
++    DBMS_OUTPUT.PUT_LINE('factor = ' || factor);
++    OPEN c1;  -- PL/SQL evaluates factor
++    LOOP
++        FETCH c1 INTO sal, sal_multiple;
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('sal          = ' || sal);
++        DBMS_OUTPUT.PUT_LINE('sal_multiple = ' || sal_multiple);
++              END LOOP;
++    CLOSE c1;
++END;
++/
++
++DECLARE
++    CURSOR c1 IS
++      SELECT
++        employee_id,
++        (salary * 0.05) AS raisee
++      FROM employees
++      WHERE job_id LIKE '%_MAN'
++      ORDER BY employee_id;
++    emp_rec c1 % ROWTYPE;
++      BEGIN
++    OPEN c1;
++    LOOP
++        FETCH c1 INTO emp_rec;
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE(
++            'Raise for employee #' || emp_rec.employee_id || ' is $' || emp_rec.raisee
++        );
++        END LOOP;
++    CLOSE c1;
++END;
++/
++
++DECLARE
++    CURSOR c(job varchar2, max_sal number) IS
++      SELECT
++        last_name,
++        first_name,
++        (salary - max_sal) AS overpayment
++      FROM employees
++      WHERE
++        job_id = job
++        AND salary > max_sal
++      ORDER BY salary;
++
++    PROCEDURE PRINT_OVERPAID IS
++      last_name_ employees.last_name % TYPE;
++      first_name_ employees.first_name % TYPE;
++      overpayment_ employees.salary % TYPE;
++        BEGIN
++        LOOP
++            FETCH c INTO last_name_, first_name_, overpayment_;
++            EXIT WHEN c % NOTFOUND;
++            DBMS_OUTPUT.PUT_LINE(
++                last_name_ || ', ' || first_name_ || ' (by ' || overpayment_ || ')'
++            );
++          END LOOP;
++END print_overpaid;
+   BEGIN
+-    LOOP
+-      FETCH c INTO last_name_, first_name_, overpayment_;
+-      EXIT WHEN c%NOTFOUND;
+-      DBMS_OUTPUT.PUT_LINE(last_name_ || ', ' || first_name_ ||
+-        ' (by ' || overpayment_ || ')');
+-    END LOOP;
+-  END print_overpaid;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE('----------------------');
+-  DBMS_OUTPUT.PUT_LINE('Overpaid Stock Clerks:');
+-  DBMS_OUTPUT.PUT_LINE('----------------------');
+-  OPEN c('ST_CLERK', 5000);
+-  print_overpaid();
+-  CLOSE c;
+-
+-  DBMS_OUTPUT.PUT_LINE('-------------------------------');
+-  DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives:');
+-  DBMS_OUTPUT.PUT_LINE('-------------------------------');
+-  OPEN c('SA_REP', 10000);
+-  print_overpaid();
+-  CLOSE c;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c (location NUMBER DEFAULT 1700) IS
+-    SELECT d.department_name,
+-           e.last_name manager,
+-           l.city
+-    FROM departments d, employees e, locations l
+-    WHERE l.location_id = location
+-      AND l.location_id = d.location_id
+-      AND d.department_id = e.department_id
+-    ORDER BY d.department_id;
+-
+-  PROCEDURE print_depts IS
+-    dept_name  departments.department_name%TYPE;
+-    mgr_name   employees.last_name%TYPE;
+-    city_name  locations.city%TYPE;
++    DBMS_OUTPUT.PUT_LINE('----------------------');
++    DBMS_OUTPUT.PUT_LINE('Overpaid Stock Clerks:');
++    DBMS_OUTPUT.PUT_LINE('----------------------');
++    OPEN c('ST_CLERK', 5000);
++    PRINT_OVERPAID();
++    CLOSE c;
++
++    DBMS_OUTPUT.PUT_LINE('-------------------------------');
++    DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives:');
++    DBMS_OUTPUT.PUT_LINE('-------------------------------');
++    OPEN c('SA_REP', 10000);
++    PRINT_OVERPAID();
++    CLOSE c;
++END;
++/
++
++DECLARE
++    CURSOR c(location number DEFAULT 1700) IS
++      SELECT
++        d.department_name,
++        e.last_name AS manager,
++        l.city
++      FROM
++        departments d,
++        employees e,
++        locations l
++      WHERE
++        l.location_id = location
++        AND l.location_id = d.location_id
++        AND d.department_id = e.department_id
++      ORDER BY d.department_id;
++
++    PROCEDURE PRINT_DEPTS IS
++      dept_name departments.department_name % TYPE;
++      mgr_name employees.last_name % TYPE;
++      city_name locations.city % TYPE;
++        BEGIN
++        LOOP
++            FETCH c INTO dept_name, mgr_name, city_name;
++            EXIT WHEN c % NOTFOUND;
++            DBMS_OUTPUT.PUT_LINE(dept_name || ' (Manager: ' || mgr_name || ')');
++          END LOOP;
++END print_depts;
+   BEGIN
+-    LOOP
+-      FETCH c INTO dept_name, mgr_name, city_name;
+-      EXIT WHEN c%NOTFOUND;
+-      DBMS_OUTPUT.PUT_LINE(dept_name || ' (Manager: ' || mgr_name || ')');
+-    END LOOP;
+-  END print_depts;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE('DEPARTMENTS AT HEADQUARTERS:');
+-  DBMS_OUTPUT.PUT_LINE('--------------------------------');
+-  OPEN c;
+-  print_depts();
+-  DBMS_OUTPUT.PUT_LINE('--------------------------------');
+-  CLOSE c;
+-
+-  DBMS_OUTPUT.PUT_LINE('DEPARTMENTS IN CANADA:');
+-  DBMS_OUTPUT.PUT_LINE('--------------------------------');
+-  OPEN c(1800); -- Toronto
+-  print_depts();
+-  CLOSE c;
+-  OPEN c(1900); -- Whitehorse
+-  print_depts();
+-  CLOSE c;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c (job VARCHAR2, max_sal NUMBER,
+-            hired DATE DEFAULT TO_DATE('31-DEC-1999', 'DD-MON-YYYY')) IS
+-    SELECT last_name, first_name, (salary - max_sal) overpayment
+-    FROM employees
+-    WHERE job_id = job
+-    AND salary > max_sal
+-    AND hire_date > hired
+-    ORDER BY salary;
+-
+-  PROCEDURE print_overpaid IS
+-    last_name_   employees.last_name%TYPE;
+-    first_name_  employees.first_name%TYPE;
+-    overpayment_      employees.salary%TYPE;
++    DBMS_OUTPUT.PUT_LINE('DEPARTMENTS AT HEADQUARTERS:');
++    DBMS_OUTPUT.PUT_LINE('--------------------------------');
++    OPEN c;
++    PRINT_DEPTS();
++    DBMS_OUTPUT.PUT_LINE('--------------------------------');
++    CLOSE c;
++
++    DBMS_OUTPUT.PUT_LINE('DEPARTMENTS IN CANADA:');
++    DBMS_OUTPUT.PUT_LINE('--------------------------------');
++    OPEN c(1800);  -- Toronto
++    PRINT_DEPTS();
++    CLOSE c;
++    OPEN c(1900);  -- Whitehorse
++    PRINT_DEPTS();
++    CLOSE c;
++END;
++/
++
++DECLARE
++    CURSOR c(
++        job varchar2, max_sal number,
++        hired date DEFAULT to_date('31-DEC-1999', 'DD-MON-YYYY')) IS
++      SELECT
++        last_name,
++        first_name,
++        (salary - max_sal) AS overpayment
++      FROM employees
++      WHERE
++        job_id = job
++        AND salary > max_sal
++        AND hire_date > hired
++      ORDER BY salary;
++
++    PROCEDURE PRINT_OVERPAID IS
++      last_name_ employees.last_name % TYPE;
++      first_name_ employees.first_name % TYPE;
++      overpayment_ employees.salary % TYPE;
++        BEGIN
++        LOOP
++            FETCH c INTO last_name_, first_name_, overpayment_;
++            EXIT WHEN c % NOTFOUND;
++            DBMS_OUTPUT.PUT_LINE(
++                last_name_ || ', ' || first_name_ || ' (by ' || overpayment_ || ')'
++            );
++          END LOOP;
++END print_overpaid;
+   BEGIN
+-    LOOP
+-      FETCH c INTO last_name_, first_name_, overpayment_;
+-      EXIT WHEN c%NOTFOUND;
+-      DBMS_OUTPUT.PUT_LINE(last_name_ || ', ' || first_name_ ||
+-        ' (by ' || overpayment_ || ')');
+-    END LOOP;
+-  END print_overpaid;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE('-------------------------------');
+-  DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives:');
+-  DBMS_OUTPUT.PUT_LINE('-------------------------------');
+-  OPEN c('SA_REP', 10000);  -- existing reference
+-  print_overpaid();
+-  CLOSE c;
+-
+-  DBMS_OUTPUT.PUT_LINE('------------------------------------------------');
+-  DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives Hired After 2014:');
+-  DBMS_OUTPUT.PUT_LINE('------------------------------------------------');
+-  OPEN c('SA_REP', 10000, TO_DATE('31-DEC-2014', 'DD-MON-YYYY'));
+-                          -- new reference
+-  print_overpaid();
+-  CLOSE c;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT t1.department_id, department_name, staff
+-    FROM departments t1,
+-         ( SELECT department_id, COUNT(*) AS staff
+-           FROM employees
+-           GROUP BY department_id
+-         ) t2
+-    WHERE (t1.department_id = t2.department_id) AND staff >= 5
+-    ORDER BY staff;
+-
+-BEGIN
+-   FOR dept IN c1
+-   LOOP
+-     DBMS_OUTPUT.PUT_LINE ('Department = '
+-       || dept.department_name || ', staff = ' || dept.staff);
+-   END LOOP;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT department_id, last_name, salary
+-    FROM employees t
+-    WHERE salary > ( SELECT AVG(salary)
+-                     FROM employees
+-                     WHERE t.department_id = department_id
+-                   )
+-    ORDER BY department_id, last_name;
+-BEGIN
+-  FOR person IN c1
+-  LOOP
+-    DBMS_OUTPUT.PUT_LINE('Making above-average salary = ' || person.last_name);
+-  END LOOP;
+-END;
+-/
+-
+-DECLARE
+-  TYPE emp_cur_typ IS REF CURSOR;
+-
+-  emp_cur    emp_cur_typ;
+-  dept_name  departments.department_name%TYPE;
+-  emp_name   employees.last_name%TYPE;
+-
+-  CURSOR c1 IS
+-    SELECT department_name,
+-      CURSOR ( SELECT e.last_name
+-                FROM employees e
+-                WHERE e.department_id = d.department_id
+-                ORDER BY e.last_name
+-              ) employees
+-    FROM departments d
+-    WHERE department_name LIKE 'A%'
+-    ORDER BY department_name;
+-BEGIN
+-  OPEN c1;
+-  LOOP  -- Process each row of query result set
+-    FETCH c1 INTO dept_name, emp_cur;
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE('Department: ' || dept_name);
+-
+-    LOOP -- Process each row of subquery result set
+-      FETCH emp_cur INTO emp_name;
+-      EXIT WHEN emp_cur%NOTFOUND;
+-      DBMS_OUTPUT.PUT_LINE('-- Employee: ' || emp_name);
+-    END LOOP;
+-  END LOOP;
+-  CLOSE c1;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT * FROM emp
+-    FOR UPDATE OF salary
+-    ORDER BY employee_id;
+-
+-  emp_rec  emp%ROWTYPE;
+-BEGIN
+-  OPEN c1;
+-  LOOP
+-    FETCH c1 INTO emp_rec;  -- fails on second iteration
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE (
+-      'emp_rec.employee_id = ' ||
+-      TO_CHAR(emp_rec.employee_id)
+-    );
+-
+-    UPDATE emp
+-    SET salary = salary * 1.05
+-    WHERE employee_id = 105;
+-
+-    COMMIT;  -- releases locks
+-  END LOOP;
+-END;
+-/
++    DBMS_OUTPUT.PUT_LINE('-------------------------------');
++    DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives:');
++    DBMS_OUTPUT.PUT_LINE('-------------------------------');
++    OPEN c('SA_REP', 10000);  -- existing reference
++    PRINT_OVERPAID();
++    CLOSE c;
++
++    DBMS_OUTPUT.PUT_LINE('------------------------------------------------');
++    DBMS_OUTPUT.PUT_LINE('Overpaid Sales Representatives Hired After 2014:');
++    DBMS_OUTPUT.PUT_LINE('------------------------------------------------');
++    OPEN c('SA_REP', 10000, to_date('31-DEC-2014', 'DD-MON-YYYY'));
++    -- new reference
++    PRINT_OVERPAID();
++    CLOSE c;
++END;
++/
++
++DECLARE
++    CURSOR c1 IS
++      SELECT
++        t1.department_id,
++        department_name,
++        staff
++      FROM
++        departments t1,
++        (
++            SELECT
++              department_id,
++              count(*) AS staff
++            FROM employees
++            GROUP BY department_id
++            ) t2
++      WHERE (t1.department_id = t2.department_id) AND staff >= 5
++      ORDER BY staff;
++    BEGIN
++    FOR dept IN c1
++    LOOP
++        DBMS_OUTPUT.PUT_LINE('Department = ' || dept.department_name || ', staff = ' || dept.staff);
++END LOOP;
++END;
++/
++
++DECLARE
++    CURSOR c1 IS
++      SELECT
++        department_id,
++        last_name,
++        salary
++      FROM employees t
++      WHERE
++        salary > (
++        SELECT avg(salary)
++        FROM employees
++        WHERE t.department_id = department_id
++        )
++      ORDER BY department_id, last_name;
++      BEGIN
++    FOR person IN c1
++    LOOP
++        DBMS_OUTPUT.PUT_LINE(
++            'Making above-average salary = ' || person.last_name
++        );
++END LOOP;
++END;
++/
++
++DECLARE
++    TYPE emp_cur_typ IS REF CURSOR;
++
++    emp_cur emp_cur_typ;
++    dept_name departments.department_name % TYPE;
++    emp_name employees.last_name % TYPE;
++
++    CURSOR c1 IS
++      SELECT
++        department_name,
++        CURSOR(
++        SELECT e.last_name
++        FROM employees e
++        WHERE e.department_id = d.department_id
++        ORDER BY e.last_name
++        ) AS employees
++      FROM departments d
++      WHERE department_name LIKE 'A%'
++      ORDER BY department_name;
++        BEGIN
++    OPEN c1;
++    LOOP  -- Process each row of query result set
++        FETCH c1 INTO dept_name, emp_cur;
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('Department: ' || dept_name);
++
++        LOOP  -- Process each row of subquery result set
++            FETCH emp_cur INTO emp_name;
++            EXIT WHEN emp_cur % NOTFOUND;
++            DBMS_OUTPUT.PUT_LINE('-- Employee: ' || emp_name);
++      END LOOP;
++          END LOOP;
++    CLOSE c1;
++END;
++/
++
++DECLARE
++    CURSOR c1 IS
++      SELECT *
++      FROM emp
++        FOR UPDATE OF salary
++      ORDER BY employee_id;
++
++    emp_rec emp % ROWTYPE;
++      BEGIN
++    OPEN c1;
++    LOOP
++        FETCH c1 INTO emp_rec;  -- fails on second iteration
++        EXIT WHEN c1 % NOTFOUND;
++        DBMS_OUTPUT.PUT_LINE('emp_rec.employee_id = ' || to_char(emp_rec.employee_id));
++
++        UPDATE emp SET
++          salary = salary * 1.05
++        WHERE employee_id = 105;
++
++        COMMIT;  -- releases locks
++        END LOOP;
++END;
++/
+
+loop limit=10 rule=TQ03 before_sha256=0735e7ddc8480c48439f6fd83715d6fc572e451e6fd47f9b25df73cced5c5e39 after_sha256=223917544ac555c49c6974995ee77a60585975fbae2be77a55024cbf592c86da
+--- <string> (before)
++++ <string> (after)
+@@ -1,336 +1,357 @@
+ DECLARE
+-  TYPE EmpRecTyp IS RECORD (
+-    emp_id  employees.employee_id%TYPE,
+-    salary  employees.salary%TYPE
+-  );
+-
+-  CURSOR desc_salary RETURN EmpRecTyp IS
+-    SELECT employee_id, salary
+-    FROM employees
+-    ORDER BY salary DESC;
+-
+-  highest_paid_emp       EmpRecTyp;
+-  next_highest_paid_emp  EmpRecTyp;
+-
+-  FUNCTION nth_highest_salary (n INTEGER) RETURN EmpRecTyp IS
+-    emp_rec  EmpRecTyp;
+-  BEGIN
+-    OPEN desc_salary;
+-    FOR i IN 1..n LOOP
+-      FETCH desc_salary INTO emp_rec;
+-    END LOOP;
+-    CLOSE desc_salary;
+-    RETURN emp_rec;
+-  END nth_highest_salary;
+-
+-BEGIN
+-  highest_paid_emp := nth_highest_salary(1);
+-  next_highest_paid_emp := nth_highest_salary(2);
+-
+-  DBMS_OUTPUT.PUT_LINE(
+-    'Highest Paid: #' ||
+-    highest_paid_emp.emp_id || ', $' ||
+-    highest_paid_emp.salary
+-  );
+-  DBMS_OUTPUT.PUT_LINE(
+-    'Next Highest Paid: #' ||
+-    next_highest_paid_emp.emp_id || ', $' ||
+-    next_highest_paid_emp.salary
+-  );
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT last_name, job_id FROM employees
+-    WHERE REGEXP_LIKE (job_id, 'S[HT]_CLERK')
+-    ORDER BY last_name;
+-
+-  v_lastname  employees.last_name%TYPE;  -- variable for last_name
+-  v_jobid     employees.job_id%TYPE;     -- variable for job_id
+-
+-  CURSOR c2 IS
+-    SELECT * FROM employees
+-    WHERE REGEXP_LIKE (job_id, '[ACADFIMKSA]_M[ANGR]')
+-    ORDER BY job_id;
+-
+-  v_employees employees%ROWTYPE;  -- record variable for row of table
+-
+-BEGIN
+-  OPEN c1;
+-  LOOP  -- Fetches 2 columns into variables
+-    FETCH c1 INTO v_lastname, v_jobid;
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE( RPAD(v_lastname, 25, ' ') || v_jobid );
+-  END LOOP;
+-  CLOSE c1;
+-  DBMS_OUTPUT.PUT_LINE( '-------------------------------------' );
+-
+-  OPEN c2;
+-  LOOP  -- Fetches entire row into the v_employees record
+-    FETCH c2 INTO v_employees;
+-    EXIT WHEN c2%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE( RPAD(v_employees.last_name, 25, ' ') ||
+-                               v_employees.job_id );
+-  END LOOP;
+-  CLOSE c2;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c IS
+-    SELECT e.job_id, j.job_title
+-    FROM employees e, jobs j
+-    WHERE e.job_id = j.job_id AND e.manager_id = 100
+-    ORDER BY last_name;
+-
+-  -- Record variables for rows of cursor result set:
+-
+-  job1 c%ROWTYPE;
+-  job2 c%ROWTYPE;
+-  job3 c%ROWTYPE;
+-  job4 c%ROWTYPE;
+-  job5 c%ROWTYPE;
+-
+-BEGIN
+-  OPEN c;
+-  FETCH c INTO job1;  -- fetches first row
+-  FETCH c INTO job2;  -- fetches second row
+-  FETCH c INTO job3;  -- fetches third row
+-  FETCH c INTO job4;  -- fetches fourth row
+-  FETCH c INTO job5;  -- fetches fifth row
+-  CLOSE c;
+-
+-  DBMS_OUTPUT.PUT_LINE(job1.job_title || ' (' || job1.job_id || ')');
+-  DBMS_OUTPUT.PUT_LINE(job2.job_title || ' (' || job2.job_id || ')');
+-  DBMS_OUTPUT.PUT_LINE(job3.job_title || ' (' || job3.job_id || ')');
+-  DBMS_OUTPUT.PUT_LINE(job4.job_title || ' (' || job4.job_id || ')');
+-  DBMS_OUTPUT.PUT_LINE(job5.job_title || ' (' || job5.job_id || ')');
+-END;
+-/
+-
+-DECLARE
+-  cv SYS_REFCURSOR;  -- cursor variable
+-
+-  v_lastname  employees.last_name%TYPE;  -- variable for last_name
+-  v_jobid     employees.job_id%TYPE;     -- variable for job_id
+-
+-  query_2 VARCHAR2(200) :=
+-    'SELECT * FROM employees
++    TYPE EMPRECTYP IS record (
++      emp_id employees.employee_id % TYPE,
++      salary employees.salary % TYPE
++    );
++
++    CURSOR DESC_SALARY RETURN emprectyp IS
++      SELECT
++        EMPLOYEE_ID,
++        SALARY
++      FROM EMPLOYEES
++      ORDER BY SALARY DESC;
++
++    HIGHEST_PAID_EMP emprectyp;
++    NEXT_HIGHEST_PAID_EMP emprectyp;
++
++    FUNCTION nth_highest_salary(
++      n integer
++    ) RETURN EMPRECTYP IS
++      EMP_REC emprectyp;
++    BEGIN
++      OPEN DESC_SALARY;
++      FOR I IN 1..N LOOP
++        FETCH DESC_SALARY INTO EMP_REC;
++      END LOOP;
++      CLOSE DESC_SALARY;
++      RETURN EMP_REC;
++    END NTH_HIGHEST_SALARY;
++BEGIN
++    HIGHEST_PAID_EMP := nth_highest_salary(1);
++    NEXT_HIGHEST_PAID_EMP := nth_highest_salary(2);
++
++    DBMS_OUTPUT.put_line(
++        'Highest Paid: #' || HIGHEST_PAID_EMP.EMP_ID || ', $' || HIGHEST_PAID_EMP.SALARY);
++    DBMS_OUTPUT.put_line(
++        'Next Highest Paid: #' || NEXT_HIGHEST_PAID_EMP.EMP_ID || ', $'
++        || NEXT_HIGHEST_PAID_EMP.SALARY);
++END;
++/
++
++DECLARE
++    CURSOR C1 IS
++      SELECT
++        LAST_NAME,
++        JOB_ID
++      FROM EMPLOYEES
++      WHERE regexp_like(JOB_ID, 'S[HT]_CLERK')
++      ORDER BY LAST_NAME;
++
++    -- variable for last_name
++    V_LASTNAME EMPLOYEES.LAST_NAME % TYPE;
++    -- variable for job_id
++    V_JOBID EMPLOYEES.JOB_ID % TYPE;
++
++    CURSOR C2 IS
++      SELECT *
++      FROM EMPLOYEES
++      WHERE regexp_like(JOB_ID, '[ACADFIMKSA]_M[ANGR]')
++      ORDER BY JOB_ID;
++
++    -- record variable for row of table
++    V_EMPLOYEES EMPLOYEES % ROWTYPE;
++BEGIN
++    OPEN C1;
++    LOOP  -- Fetches 2 columns into variables
++        FETCH C1 INTO V_LASTNAME, V_JOBID;
++        EXIT WHEN C1 % NOTFOUND;
++        DBMS_OUTPUT.put_line(rpad(V_LASTNAME, 25, ' ') || V_JOBID);
++  END LOOP;
++    CLOSE C1;
++    DBMS_OUTPUT.put_line('-------------------------------------');
++
++    OPEN C2;
++    LOOP  -- Fetches entire row into the v_employees record
++        FETCH C2 INTO V_EMPLOYEES;
++        EXIT WHEN C2 % NOTFOUND;
++        DBMS_OUTPUT.put_line(rpad(V_EMPLOYEES.LAST_NAME, 25, ' ') || V_EMPLOYEES.JOB_ID);
++  END LOOP;
++    CLOSE C2;
++END;
++/
++
++DECLARE
++    CURSOR C IS
++      SELECT
++        E.JOB_ID,
++        J.JOB_TITLE
++      FROM
++        EMPLOYEES E,
++        JOBS J
++      WHERE E.JOB_ID = J.JOB_ID AND E.MANAGER_ID = 100
++      ORDER BY LAST_NAME;
++
++    -- Record variables for rows of cursor result set:
++
++    JOB1 C % ROWTYPE;
++    JOB2 C % ROWTYPE;
++    JOB3 C % ROWTYPE;
++    JOB4 C % ROWTYPE;
++    JOB5 C % ROWTYPE;
++BEGIN
++    OPEN C;
++    FETCH C INTO JOB1;  -- fetches first row
++    FETCH C INTO JOB2;  -- fetches second row
++    FETCH C INTO JOB3;  -- fetches third row
++    FETCH C INTO JOB4;  -- fetches fourth row
++    FETCH C INTO JOB5;  -- fetches fifth row
++    CLOSE C;
++
++    DBMS_OUTPUT.put_line(JOB1.JOB_TITLE || ' (' || JOB1.JOB_ID || ')');
++    DBMS_OUTPUT.put_line(JOB2.JOB_TITLE || ' (' || JOB2.JOB_ID || ')');
++    DBMS_OUTPUT.put_line(JOB3.JOB_TITLE || ' (' || JOB3.JOB_ID || ')');
++    DBMS_OUTPUT.put_line(JOB4.JOB_TITLE || ' (' || JOB4.JOB_ID || ')');
++    DBMS_OUTPUT.put_line(JOB5.JOB_TITLE || ' (' || JOB5.JOB_ID || ')');
++END;
++/
++
++DECLARE
++    CV sys_refcursor;  -- cursor variable
++
++    -- variable for last_name
++    V_LASTNAME EMPLOYEES.LAST_NAME % TYPE;
++    -- variable for job_id
++    V_JOBID EMPLOYEES.JOB_ID % TYPE;
++
++    QUERY_2 varchar2(200)
++    := 'SELECT * FROM employees
+     WHERE REGEXP_LIKE (job_id, ''[ACADFIMKSA]_M[ANGR]'')
+     ORDER BY job_id';
+ 
+-  v_employees employees%ROWTYPE;  -- record variable row of table
+-
+-BEGIN
+-  OPEN cv FOR
+-    SELECT last_name, job_id FROM employees
+-    WHERE REGEXP_LIKE (job_id, 'S[HT]_CLERK')
+-    ORDER BY last_name;
+-
+-  LOOP  -- Fetches 2 columns into variables
+-    FETCH cv INTO v_lastname, v_jobid;
+-    EXIT WHEN cv%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE( RPAD(v_lastname, 25, ' ') || v_jobid );
+-  END LOOP;
+-
+-  DBMS_OUTPUT.PUT_LINE( '-------------------------------------' );
+-
+-  OPEN cv FOR query_2;
+-
+-  LOOP  -- Fetches entire row into the v_employees record
+-    FETCH cv INTO v_employees;
+-    EXIT WHEN cv%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE( RPAD(v_employees.last_name, 25, ' ') ||
+-                               v_employees.job_id );
+-  END LOOP;
+-
+-  CLOSE cv;
+-END;
+-/
+-
+-DECLARE
+-  TYPE empcurtyp IS REF CURSOR;
+-  TYPE namelist IS TABLE OF employees.last_name%TYPE;
+-  TYPE sallist IS TABLE OF employees.salary%TYPE;
+-  emp_cv  empcurtyp;
+-  names   namelist;
+-  sals    sallist;
+-BEGIN
+-  OPEN emp_cv FOR
+-    SELECT last_name, salary FROM employees
+-    WHERE job_id = 'SA_REP'
+-    ORDER BY salary DESC;
+-
+-  FETCH emp_cv BULK COLLECT INTO names, sals;
+-  CLOSE emp_cv;
++    -- record variable row of table
++    V_EMPLOYEES EMPLOYEES % ROWTYPE;
++BEGIN
++    OPEN CV FOR
++
++  SELECT
++    LAST_NAME,
++    JOB_ID
++  FROM EMPLOYEES
++  WHERE regexp_like(JOB_ID, 'S[HT]_CLERK')
++  ORDER BY LAST_NAME;
++
++    LOOP  -- Fetches 2 columns into variables
++        FETCH CV INTO V_LASTNAME, V_JOBID;
++        EXIT WHEN CV % NOTFOUND;
++        DBMS_OUTPUT.put_line(rpad(V_LASTNAME, 25, ' ') || V_JOBID);
++  END LOOP;
++
++    DBMS_OUTPUT.put_line('-------------------------------------');
++
++    OPEN CV FOR QUERY_2;
++
++    LOOP  -- Fetches entire row into the v_employees record
++        FETCH CV INTO V_EMPLOYEES;
++        EXIT WHEN CV % NOTFOUND;
++        DBMS_OUTPUT.put_line(rpad(V_EMPLOYEES.LAST_NAME, 25, ' ') || V_EMPLOYEES.JOB_ID);
++  END LOOP;
++
++    CLOSE CV;
++END;
++/
++
++DECLARE
++    TYPE EMPCURTYP IS REF CURSOR;
++    TYPE NAMELIST IS TABLE OF EMPLOYEES.LAST_NAME % TYPE;
++    TYPE SALLIST IS TABLE OF EMPLOYEES.SALARY % TYPE;
++    EMP_CV empcurtyp;
++    NAMES namelist;
++    SALS sallist;
++BEGIN
++    OPEN EMP_CV FOR
++
++  SELECT
++    LAST_NAME,
++    SALARY
++  FROM EMPLOYEES
++  WHERE JOB_ID = 'SA_REP'
++  ORDER BY SALARY DESC;
++
++    FETCH EMP_CV BULK COLLECT INTO NAMES, SALS;
++    CLOSE EMP_CV;
+   -- loop through the names and sals collections
+-  FOR i IN names.FIRST .. names.LAST
+-  LOOP
+-    DBMS_OUTPUT.PUT_LINE
+-      ('Name = ' || names(i) || ', salary = ' || sals(i));
+-  END LOOP;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT * FROM emp
+-    FOR UPDATE OF salary
+-    ORDER BY employee_id;
+-
+-  emp_rec  emp%ROWTYPE;
+-BEGIN
+-  OPEN c1;
+-  LOOP
+-    FETCH c1 INTO emp_rec;  -- fails on second iteration
+-    EXIT WHEN c1%NOTFOUND;
+-    DBMS_OUTPUT.PUT_LINE (
+-      'emp_rec.employee_id = ' ||
+-      TO_CHAR(emp_rec.employee_id)
+-    );
+-
+-    UPDATE emp
+-    SET salary = salary * 1.05
+-    WHERE employee_id = 105;
+-
+-    COMMIT;  -- releases locks
+-  END LOOP;
+-END;
+-/
+-
+-DECLARE
+-  TYPE EmpCurTyp  IS REF CURSOR;
+-  v_emp_cursor    EmpCurTyp;
+-  emp_record      employees%ROWTYPE;
+-  v_stmt_str      VARCHAR2(200);
+-  v_e_job         employees.job_id%TYPE;
++    FOR I IN NAMES.first..NAMES.last
++    LOOP
++        DBMS_OUTPUT.put_line('Name = ' || names(I) || ', salary = ' || sals(I));
++END LOOP;
++END;
++/
++
++DECLARE
++    CURSOR C1 IS
++      SELECT *
++      FROM EMP
++        FOR UPDATE OF SALARY
++      ORDER BY EMPLOYEE_ID;
++
++    EMP_REC EMP % ROWTYPE;
++BEGIN
++    OPEN C1;
++    LOOP
++        FETCH C1 INTO EMP_REC;  -- fails on second iteration
++        EXIT WHEN C1 % NOTFOUND;
++        DBMS_OUTPUT.put_line('emp_rec.employee_id = ' || to_char(EMP_REC.EMPLOYEE_ID));
++
++        UPDATE EMP SET
++          SALARY = SALARY * 1.05
++        WHERE EMPLOYEE_ID = 105;
++
++        COMMIT;  -- releases locks
++  END LOOP;
++END;
++/
++
++DECLARE
++    TYPE EMPCURTYP IS REF CURSOR;
++    V_EMP_CURSOR empcurtyp;
++    EMP_RECORD EMPLOYEES % ROWTYPE;
++    V_STMT_STR varchar2(200);
++    V_E_JOB EMPLOYEES.JOB_ID % TYPE;
+ BEGIN
+   -- Dynamic SQL statement with placeholder:
+-  v_stmt_str := 'SELECT * FROM employees WHERE job_id = :j';
++    V_STMT_STR := 'SELECT * FROM employees WHERE job_id = :j';
+ 
+   -- Open cursor & specify bind variable in USING clause:
+-  OPEN v_emp_cursor FOR v_stmt_str USING 'MANAGER';
++    OPEN V_EMP_CURSOR FOR V_STMT_STR USING MANAGER;
+ 
+   -- Fetch rows from result set one at a time:
+-  LOOP
+-    FETCH v_emp_cursor INTO emp_record;
+-    EXIT WHEN v_emp_cursor%NOTFOUND;
++    LOOP
++        FETCH V_EMP_CURSOR INTO EMP_RECORD;
++        EXIT WHEN V_EMP_CURSOR % NOTFOUND;
+   END LOOP;
+ 
+   -- Close cursor:
+-  CLOSE v_emp_cursor;
+-END;
+-/
+-
+-DECLARE
+-  TYPE NameList IS TABLE OF employees.last_name%TYPE;
+-  TYPE SalList IS TABLE OF employees.salary%TYPE;
+-
+-  CURSOR c1 IS
+-    SELECT last_name, salary
+-    FROM employees
+-    WHERE salary > 10000
+-    ORDER BY last_name;
+-
+-  names  NameList;
+-  sals   SalList;
+-
+-  TYPE RecList IS TABLE OF c1%ROWTYPE;
+-  recs RecList;
+-
+-  v_limit PLS_INTEGER := 10;
+-
+-  PROCEDURE print_results IS
+-  BEGIN
+-    -- Check if collections are empty:
+-
+-    IF names IS NULL OR names.COUNT = 0 THEN
+-      DBMS_OUTPUT.PUT_LINE('No results!');
+-    ELSE
+-      DBMS_OUTPUT.PUT_LINE('Result: ');
+-      FOR i IN names.FIRST .. names.LAST
+-      LOOP
+-        DBMS_OUTPUT.PUT_LINE('  Employee ' || names(i) || ': $' || sals(i));
++    CLOSE V_EMP_CURSOR;
++END;
++/
++
++DECLARE
++    TYPE NAMELIST IS TABLE OF EMPLOYEES.LAST_NAME % TYPE;
++    TYPE SALLIST IS TABLE OF EMPLOYEES.SALARY % TYPE;
++
++    CURSOR C1 IS
++      SELECT
++        LAST_NAME,
++        SALARY
++      FROM EMPLOYEES
++      WHERE SALARY > 10000
++      ORDER BY LAST_NAME;
++
++    NAMES namelist;
++    SALS sallist;
++
++    TYPE RECLIST IS TABLE OF C1 % ROWTYPE;
++    RECS reclist;
++
++    V_LIMIT pls_integer := 10;
++
++    PROCEDURE print_results IS
++    BEGIN
++      -- Check if collections are empty:
++      IF NAMES IS NULL OR NAMES.count = 0 THEN
++        DBMS_OUTPUT.put_line('No results!');
++      ELSE
++        DBMS_OUTPUT.put_line('Result: ');
++        FOR I IN NAMES.first..NAMES.last
++                LOOP
++                DBMS_OUTPUT.put_line(
++                    '  Employee ' || names(I) || ': $' || sals(I)
++                );
+       END LOOP;
+     END IF;
+-  END;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE ('--- Processing all results simultaneously ---');
+-  OPEN c1;
+-  FETCH c1 BULK COLLECT INTO names, sals;
+-  CLOSE c1;
+-  print_results();
+-  DBMS_OUTPUT.PUT_LINE ('--- Processing ' || v_limit || ' rows at a time ---');
+-  OPEN c1;
+-  LOOP
+-    FETCH c1 BULK COLLECT INTO names, sals LIMIT v_limit;
+-    EXIT WHEN names.COUNT = 0;
++    END;
++
++BEGIN
++    DBMS_OUTPUT.put_line('--- Processing all results simultaneously ---');
++    OPEN C1;
++    FETCH C1 BULK COLLECT INTO NAMES, SALS;
++    CLOSE C1;
+     print_results();
+-  END LOOP;
+-  CLOSE c1;
+-  DBMS_OUTPUT.PUT_LINE ('--- Fetching records rather than columns ---');
+-  OPEN c1;
+-  FETCH c1 BULK COLLECT INTO recs;
+-  FOR i IN recs.FIRST .. recs.LAST
+-  LOOP
+-    -- Now all columns from result set come from one record
+-    DBMS_OUTPUT.PUT_LINE (1);
+-  END LOOP;
+-END;
+-/
+-
+-DECLARE
+-  CURSOR c1 IS
+-    SELECT first_name, last_name, hire_date
+-    FROM employees;
+-
+-  TYPE NameSet IS TABLE OF c1%ROWTYPE;
+-  stock_managers  NameSet;  -- nested table of records
+-
+-  TYPE cursor_var_type is REF CURSOR;
+-  cv cursor_var_type;
+-
++    DBMS_OUTPUT.put_line('--- Processing ' || V_LIMIT || ' rows at a time ---');
++    OPEN C1;
++    LOOP
++        FETCH C1 BULK COLLECT INTO NAMES, SALS limit V_LIMIT;
++        EXIT WHEN NAMES.count = 0;
++        print_results();
++  END LOOP;
++    CLOSE C1;
++    DBMS_OUTPUT.put_line('--- Fetching records rather than columns ---');
++    OPEN C1;
++    FETCH C1 BULK COLLECT INTO RECS;
++    FOR I IN RECS.first..RECS.last
++    LOOP
++  -- Now all columns from result set come from one record
++        DBMS_OUTPUT.put_line(1);
++END LOOP;
++END;
++/
++
++DECLARE
++    CURSOR C1 IS
++      SELECT
++        FIRST_NAME,
++        LAST_NAME,
++        HIRE_DATE
++      FROM EMPLOYEES;
++
++    TYPE NAMESET IS TABLE OF C1 % ROWTYPE;
++    STOCK_MANAGERS nameset;  -- nested table of records
++
++    TYPE CURSOR_VAR_TYPE IS REF CURSOR;
++    CV cursor_var_type;
+ BEGIN
+   -- Assign values to nested table of records:
+-
+-  OPEN cv FOR
+-    SELECT first_name, last_name, hire_date
+-    FROM employees
+-    WHERE job_id = 'ST_MAN'
+-    ORDER BY hire_date;
+-
+-  FETCH cv BULK COLLECT INTO stock_managers;
+-  CLOSE cv;
++    OPEN CV FOR
++
++  SELECT
++    FIRST_NAME,
++    LAST_NAME,
++    HIRE_DATE
++  FROM EMPLOYEES
++  WHERE JOB_ID = 'ST_MAN'
++  ORDER BY HIRE_DATE;
++
++    FETCH CV BULK COLLECT INTO STOCK_MANAGERS;
++    CLOSE CV;
+ 
+   -- Print nested table of records:
+ 
+-    FOR i IN stock_managers.FIRST .. stock_managers.LAST LOOP
+-      DBMS_OUTPUT.PUT_LINE (1);
+-    END LOOP;END;
+-/
+-
+-DECLARE
+-  TYPE numtab IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+-
+-  CURSOR c1 IS
+-    SELECT employee_id
+-    FROM employees
+-    WHERE department_id = 80
+-    ORDER BY employee_id;
+-
+-  empids  numtab;
+-BEGIN
+-  OPEN c1;
+-  LOOP  -- Fetch 10 rows or fewer in each iteration
+-    FETCH c1 BULK COLLECT INTO empids LIMIT 10;
+-    DBMS_OUTPUT.PUT_LINE ('------- Results from One Bulk Fetch --------');
+-    FOR i IN 1..empids.COUNT LOOP
+-      DBMS_OUTPUT.PUT_LINE ('Employee Id: ' || empids(i));
+-    END LOOP;
+-    EXIT WHEN c1%NOTFOUND;
+-  END LOOP;
+-  CLOSE c1;
+-END;
+-/
++    FOR I IN STOCK_MANAGERS.first..STOCK_MANAGERS.last LOOP
++        DBMS_OUTPUT.put_line(1);
++  END LOOP;
++END;
++/
++
++DECLARE
++    TYPE NUMTAB IS TABLE OF number INDEX BY pls_integer;
++
++    CURSOR C1 IS
++      SELECT EMPLOYEE_ID
++      FROM EMPLOYEES
++      WHERE DEPARTMENT_ID = 80
++      ORDER BY EMPLOYEE_ID;
++
++    EMPIDS numtab;
++BEGIN
++    OPEN C1;
++    LOOP  -- Fetch 10 rows or fewer in each iteration
++        FETCH C1 BULK COLLECT INTO EMPIDS limit 10;
++        DBMS_OUTPUT.put_line('------- Results from One Bulk Fetch --------');
++        FOR I IN 1..EMPIDS.count LOOP
++            DBMS_OUTPUT.put_line('Employee Id: ' || empids(I));
++      END LOOP;
++        EXIT WHEN C1 % NOTFOUND;
++  END LOOP;
++    CLOSE C1;
++END;
++/
+
+loop limit=10 rule=TQ03 before_sha256=f1a5b4e24fc707b3e30894e3a74944732fbdfe3d0b4da138cadb357ce0a8b4e4 after_sha256=7341307d07a478d74b208496c3089b0dd87d327f48604218549fa37fdfb2b9d4
+--- <string> (before)
++++ <string> (after)
+@@ -1,154 +1,151 @@
+ DECLARE
+-  PROCEDURE p (
+-    sales  NUMBER,
+-    quota  NUMBER,
+-    emp_id NUMBER
+-  )
+-  IS
+-    bonus    NUMBER := 0;
+-    updated  VARCHAR2(3) := 'No';
+-  BEGIN
+-    IF sales > (quota + 200) THEN
+-      bonus := (sales - quota)/4;
++    PROCEDURE p (
++        sales                           number,
++        quota                           number,
++        emp_id                          number
++    ) IS
++        bonus                           number := 0;
++        updated                         varchar2(3) := 'No';
++    BEGIN
++        IF sales > (quota + 200) THEN
++            bonus := (sales - quota) / 4;
+ 
+-      UPDATE employees
+-      SET salary = salary + bonus
+-      WHERE employee_id = emp_id;
++            UPDATE employees SET
++                salary = salary + bonus
++            WHERE employee_id = emp_id;
+ 
+-      updated := 'Yes';
+-    END IF;
++            updated := 'Yes';
++        END IF;
+ 
+-    DBMS_OUTPUT.PUT_LINE (
+-      'Table updated?  ' || updated || ', ' ||
+-      'bonus = ' || bonus || '.'
+-    );
+-  END p;
++        DBMS_OUTPUT.put_line('Table updated?  ' || updated || ', ' || 'bonus = ' || bonus || '.');
++    END p;
+ BEGIN
+-  p(10100, 10000, 120);
+-  p(10500, 10000, 121);
+-END;
++    p(10100, 10000, 120);
++    p(10500, 10000, 121);
++END p;
+ /
+ 
+ DECLARE
+-  PROCEDURE p (
+-    sales  NUMBER,
+-    quota  NUMBER,
+-    emp_id NUMBER
+-  )
+-  IS
+-    bonus  NUMBER := 0;
+-  BEGIN
+-    IF sales > (quota + 200) THEN
+-      bonus := (sales - quota)/4;
+-    ELSE
+-      bonus := 50;
+-    END IF;
++    PROCEDURE p (
++        sales                           number,
++        quota                           number,
++        emp_id                          number
++    ) IS
++        bonus                           number := 0;
++    BEGIN
++        IF sales > (quota + 200) THEN
++            bonus := (sales - quota) / 4;
++        ELSE
++            bonus := 50;
++        END IF;
+ 
+-    DBMS_OUTPUT.PUT_LINE('bonus = ' || bonus);
++        DBMS_OUTPUT.put_line('bonus = ' || bonus);
+ 
+-    UPDATE employees
+-    SET salary = salary + bonus
+-    WHERE employee_id = emp_id;
+-  END p;
++        UPDATE employees SET
++            salary = salary + bonus
++        WHERE employee_id = emp_id;
++
++    END p;
+ BEGIN
+-  p(10100, 10000, 120);
+-  p(10500, 10000, 121);
+-END;
++    p(10100, 10000, 120);
++    p(10500, 10000, 121);
++END p;
+ /
+ 
+ DECLARE
+-  PROCEDURE p (
+-    sales  NUMBER,
+-    quota  NUMBER,
+-    emp_id NUMBER
+-  )
+-  IS
+-    bonus  NUMBER := 0;
+-  BEGIN
+-    IF sales > (quota + 200) THEN
+-      bonus := (sales - quota)/4;
+-    ELSE
+-      IF sales > quota THEN
+-        bonus := 50;
+-      ELSE
+-        bonus := 0;
+-      END IF;
+-    END IF;
++    PROCEDURE p (
++        sales                           number,
++        quota                           number,
++        emp_id                          number
++    ) IS
++        bonus                           number := 0;
++    BEGIN
++        IF sales > (quota + 200) THEN
++            bonus := (sales - quota) / 4;
++        ELSE
++            IF sales > quota THEN
++                bonus := 50;
++            ELSE
++                bonus := 0;
++            END IF;
++        END IF;
+ 
+-    DBMS_OUTPUT.PUT_LINE('bonus = ' || bonus);
++        DBMS_OUTPUT.put_line('bonus = ' || bonus);
+ 
+-    UPDATE employees
+-    SET salary = salary + bonus
+-    WHERE employee_id = emp_id;
+-  END p;
++        UPDATE employees SET
++            salary = salary + bonus
++        WHERE employee_id = emp_id;
++
++    END p;
+ BEGIN
+-  p(10100, 10000, 120);
+-  p(10500, 10000, 121);
+-  p(9500, 10000, 122);
+-END;
++    p(10100, 10000, 120);
++    p(10500, 10000, 121);
++    p(9500, 10000, 122);
++END p;
+ /
+ 
+ DECLARE
+-  PROCEDURE p (sales NUMBER)
+-  IS
+-    bonus  NUMBER := 0;
+-  BEGIN
+-    IF sales > 50000 THEN
+-      bonus := 1500;
+-    ELSIF sales > 35000 THEN
+-      bonus := 500;
+-    ELSE
+-      bonus := 100;
+-    END IF;
++    PROCEDURE p (
++        sales                           number
++    ) IS
++        bonus                           number := 0;
++    BEGIN
++        IF sales > 50000 THEN
++            bonus := 1500;
++        ELSIF sales > 35000 THEN
++            bonus := 500;
++        ELSE
++            bonus := 100;
++        END IF;
+ 
+-    DBMS_OUTPUT.PUT_LINE (
+-      'Sales = ' || sales || ', bonus = ' || bonus || '.'
+-    );
+-  END p;
++        DBMS_OUTPUT.put_line(
++            'Sales = ' || sales || ', bonus = ' || bonus || '.'
++        );
++    END p;
+ BEGIN
+-  p(55000);
+-  p(40000);
+-  p(30000);
+-END;
++    p(55000);
++    p(40000);
++    p(30000);
++END p;
+ /
+ 
+ -- IS [NOT] OF type predicate (Oracle OO PL/SQL)
+ DECLARE
+-  obj_ref SYS.ANYDATA;
++    obj_ref                             SYS.anydata;
+ BEGIN
+-  IF obj_ref IS OF (emp_t) THEN
+-    NULL;
+-  ELSIF obj_ref IS NOT OF (mgr_t, emp_t) THEN
+-    NULL;
+-  ELSIF obj_ref IS OF TYPE (worker_t) THEN
+-    NULL;
+-  ELSIF obj_ref IS NOT OF TYPE (mgr_t) THEN
+-    NULL;
+-  ELSIF obj_ref IS OF (ONLY emp_t) THEN
+-    NULL;
+-  ELSIF obj_ref IS NOT OF (ONLY mgr_t, ONLY emp_t) THEN
+-    NULL;
+-  END IF;
+-END;
++    IF obj_ref IS OF (emp_t) THEN
++        NULL;
++    ELSIF obj_ref IS NOT OF (mgr_t, emp_t) THEN
++        NULL;
++    ELSIF obj_ref IS OF TYPE (worker_t) THEN
++        NULL;
++    ELSIF obj_ref IS NOT OF TYPE (mgr_t) THEN
++        NULL;
++    ELSIF obj_ref IS OF (ONLY emp_t) THEN
++        NULL;
++    ELSIF obj_ref IS NOT OF (ONLY mgr_t, ONLY emp_t) THEN
++        NULL;
++    END IF;
++END p;
+ /
+ 
+ -- Anonymous block with IF/ELSIF/ELSE
+ DECLARE
+-  AUDITINFO VARCHAR2(2000);
+-  EVENT VARCHAR2(10);
++    auditinfo varchar2(2000);
++    event varchar2(10);
+ BEGIN
+-  IF 1 = 1 THEN
+-    AUDITINFO := 'Insert row into ';
+-    EVENT := 'INSERT';
+-  ELSIF 1 = 2 THEN
+-    AUDITINFO := 'Delete row from ';
+-    EVENT := 'DELETE';
+-  ELSIF 1 = 3 THEN
+-    AUDITINFO := 'Update row from ';
+-    EVENT := 'UPDATE';
+-  ELSE
+-    AUDITINFO := 'Unknow operation ';
+-    EVENT := 'UNKNOW';
+-  END IF;
+-END;
++    IF 1 = 1 THEN
++        auditinfo := 'Insert row into ';
++        event := 'INSERT';
++    ELSIF 1 = 2 THEN
++        auditinfo := 'Delete row from ';
++        event := 'DELETE';
++    ELSIF 1 = 3 THEN
++        auditinfo := 'Update row from ';
++        event := 'UPDATE';
++    ELSE
++        auditinfo := 'Unknow operation ';
++        event := 'UNKNOW';
++    END IF;
++END p;
+ /
+
+loop limit=10 rule=TQ03 before_sha256=784db7567376bc9de71c9c32dbdf589f3c4c6de26c6a34a2eba9910387fd81c5 after_sha256=ad7c8f0a90578002e6ebd122de8e787366af03532c633b1ce252291e087b1fba
+--- <string> (before)
++++ <string> (after)
+@@ -1,39 +1,44 @@
+ CREATE OR REPLACE PACKAGE BODY pkg_nested_access AS
+-  PROCEDURE CopyContactInfo IS
+-    TYPE udt_IdList IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+-    TYPE udt_Group IS RECORD (
+-      ClientId NUMBER,
+-      ContactInfoList udt_IdList
+-    );
+-    TYPE udt_Groups IS TABLE OF udt_Group INDEX BY PLS_INTEGER;
+-    t_Groups udt_Groups;
+-    t_IdList udt_IdList;
+-    t_Index PLS_INTEGER := 1;
++    /*----------------------------------------------------------------------------
++   * COPYCONTACTINFO()
++   *--------------------------------------------------------------------------*/
++  PROCEDURE COPYCONTACTINFO IS
++    TYPE udt_idlist IS TABLE OF number INDEX BY pls_integer;
++        TYPE udt_group IS record (
++          ClientId                      NUMBER,
++          ContactInfoList               udt_IdList
++        );
++    TYPE udt_groups IS TABLE OF udt_group INDEX BY pls_integer;
++    t_groups                        udt_groups;
++    t_idlist                        udt_idlist;
++    t_index                         pls_integer := 1;
+   BEGIN
+-    t_Index := t_Groups(1).ContactInfoList.COUNT + 1;
+-    t_Index := t_Groups(1).ContactInfoList.COUNT - 1;
+-    t_Index := (t_Groups(1).ContactInfoList.COUNT + 1) * 2;
+-    t_Index := NVL(t_Groups(1).ContactInfoList.COUNT + 1, 0);
+-    t_Index := pkg_Cache.t_Groups(1).ContactInfoList.COUNT + 1;
+-    t_Index := GetGroups(1).Details.COUNT + 1;
+-    t_Index := api.GetGroups(1).Details.COUNT + 1;
+-    t_Index := t_Groups(1)."ContactInfoList".COUNT + 1;
++    t_index := t_groups(1).contactinfolist.count + 1;
++    t_index := t_groups(1).contactinfolist.count - 1;
++    t_index := (t_groups(1).contactinfolist.count + 1) * 2;
++    t_index := COALESCE(t_groups(1).contactinfolist.count + 1, 0);
++    t_index := pkg_cache.t_groups(1).contactinfolist.count + 1;
++    t_index := getgroups(1).details.count + 1;
++    t_index := api.getgroups(1).details.count + 1;
++    t_index := t_groups(1)."ContactInfoList".count + 1;
+ 
+-    t_Groups(1).ContactInfoList(
+-      t_Groups(1).ContactInfoList.COUNT + 1
+-    ) := t_IdList(1);
+-    t_Groups(1).ContactInfoList(t_Index) := t_Groups(2).ContactInfoList(t_Index);
+-    t_Groups(1).ClientId := t_IdList(1);
++    t_groups(1).contactinfolist (
++        t_groups(1).contactinfolist.count + 1
++        ) := T_IDLIST(1);
++    t_groups(1).contactinfolist (t_index)
++        := t_groups(2).contactinfolist (t_index);
++    t_groups(1).clientid := T_IDLIST(1);
+ 
+-    IF t_Groups(1).ContactInfoList.COUNT + 1 > 0
+-      AND t_Groups(1).ClientId = 1 THEN
++    IF t_groups(1).contactinfolist.count + 1 > 0
++        AND t_groups(1).clientid = 1 THEN
+       NULL;
+     END IF;
+ 
+-    FOR x IN 1..t_Groups(1).ContactInfoList.COUNT + 1 LOOP
+-      t_Index := t_Groups(x).ContactInfoList.FIRST;
+-      t_Index := t_Groups(x).ContactInfoList.LAST;
++    FOR x IN 1..t_groups(1).contactinfolist.count + 1 LOOP
++      t_index := t_groups(x).contactinfolist.first;
++      t_index := t_groups(x).contactinfolist.last;
+     END LOOP;
+-  END CopyContactInfo;
++  END copycontactinfo;
+ END pkg_nested_access;
++
+ /
+
+loop limit=10 rule=TQ03 before_sha256=7e2e39bab50c21bb6abc5dbe08efe681d2e9d374643e9b3d7f1340fed2941a2a after_sha256=a41c7bdf7fc309a65ef58b9c177618acf45e78d770ebf564f9849bbe082ffe90
+--- <string> (before)
++++ <string> (after)
+@@ -1,77 +1,81 @@
+ DECLARE
+-  x INTEGER;
++    x integer;
+ 
+-  FUNCTION f (n INTEGER)
+-  RETURN INTEGER
+-  IS
+-  BEGIN
+-    RETURN (n*n);
+-  END;
++    FUNCTION f(
++      n integer
++    ) RETURN integer IS
++    BEGIN
++      return(n * n);
++    END;
+ 
+ BEGIN
+-  DBMS_OUTPUT.PUT_LINE (
+-    'f returns ' || f(2) || '. Execution returns here (1).'
+-  );
++    DBMS_OUTPUT.put_line(
++        'f returns ' || f(2) || '. Execution returns here (1).'
++    );
+ 
+-  x := f(2);
+-  DBMS_OUTPUT.PUT_LINE('Execution returns here (2).');
++    x := f(2);
++    DBMS_OUTPUT.put_line('Execution returns here (2).');
+ END;
+ /
+ 
+-CREATE OR REPLACE FUNCTION f (n INTEGER)
+-  RETURN INTEGER
+-  AUTHID DEFINER
+-IS
+-BEGIN
+-  IF n = 0 THEN
+-    RETURN 1;
+-  ELSIF n = 1 THEN
+-    RETURN n;
+-  END IF;
+-END;
+-/
++                  CREATE OR REPLACE FUNCTION f(
++                  n integer
++) RETURN integer
++                  AUTHID DEFINER IS
++                BEGIN
++                  IF n = 0 THEN
++                    RETURN 1;
++                  ELSIF n = 1 THEN
++                    RETURN n;
++                  END IF;
++                END;
++                  /
+ 
+-CREATE OR REPLACE FUNCTION f (n INTEGER)
+-  RETURN INTEGER
+-  AUTHID DEFINER
+-IS
+-BEGIN
+-  IF n = 0 THEN
+-    RETURN 1;
+-  ELSIF n = 1 THEN
+-    RETURN n;
+-  ELSE
+-    RETURN n*n;
+-  END IF;
+-END;
+-/
++CREATE OR REPLACE FUNCTION f(
++    n integer
++) RETURN integer
++AUTHID DEFINER IS
++                  BEGIN
++                    IF n = 0 THEN
++                      RETURN 1;
++                    ELSIF n = 1 THEN
++                      RETURN n;
++                    ELSE
++                      RETURN n * n;
++                    END IF;
++                END;
++                  /
+ 
+-BEGIN
+-  FOR i IN 0 .. 3 LOOP
+-    DBMS_OUTPUT.PUT_LINE('f(' || i || ') = ' || f(i));
+-  END LOOP;
+-END;
+-/
++                  BEGIN
++                    FOR i IN 0..3 LOOP
++                      DBMS_OUTPUT.put_line('f(' || i || ') = ' || f(i));
++                    END LOOP;
++                END;
++                  /
+ 
+ DECLARE
+-  PROCEDURE p IS
+-  BEGIN
+-    DBMS_OUTPUT.PUT_LINE('Inside p');
+-    RETURN;
+-    DBMS_OUTPUT.PUT_LINE('Unreachable statement.');
+-  END;
+-BEGIN
+-  p();
+-  DBMS_OUTPUT.PUT_LINE('Control returns here.');
+-END;
+-/
++    PROCEDURE p IS
++                  BEGIN
++                    DBMS_OUTPUT.put_line('Inside p');
++                    RETURN;
++                    DBMS_OUTPUT.put_line('Unreachable statement.');
++                END;
+ 
+-BEGIN
+-  BEGIN
+-    DBMS_OUTPUT.PUT_LINE('Inside inner block.');
+-    RETURN;
+-    DBMS_OUTPUT.PUT_LINE('Unreachable statement.');
+-  END;
+-  DBMS_OUTPUT.PUT_LINE('Inside outer block. Unreachable statement.');
+-END;
+-/
++                BEGIN
++                  p();
++                  DBMS_OUTPUT.put_line('Control returns here.');
++                END;
++                  /
++
++                  BEGIN
++
++                    BEGIN
++                      DBMS_OUTPUT.put_line('Inside inner block.');
++                      RETURN;
++                      DBMS_OUTPUT.put_line('Unreachable statement.');
++                    END;
++                    DBMS_OUTPUT.put_line(
++                        'Inside outer block. Unreachable statement.'
++                    );
++                END;
++                  /
+
+loop limit=10 rule=TQ03 before_sha256=353565bf196fb5739b3a983bec0d16dea7e629f81d557b78c023b9aeccffe796 after_sha256=4860793ee9c52097454839aca1ecf64ebad32d18c09819bde8ae4d1484758b55
+--- <string> (before)
++++ <string> (after)
+@@ -1,105 +1,117 @@
+ DECLARE
+-  dept_rec departments%ROWTYPE;
++    dept_rec                            departments % ROWTYPE;
+ BEGIN
+-  -- Assign values to fields:
++    -- Assign values to fields:
++    dept_rec.department_id := 10;
++    dept_rec.department_name := 'Administration';
++    dept_rec.manager_id := 200;
++    dept_rec.location_id := 1700;
+ 
+-  dept_rec.department_id   := 10;
+-  dept_rec.department_name := 'Administration';
+-  dept_rec.manager_id      := 200;
+-  dept_rec.location_id     := 1700;
++    -- Print fields:
+ 
+-  -- Print fields:
+-
+-  DBMS_OUTPUT.PUT_LINE('dept_id:   ' || dept_rec.department_id);
+-  DBMS_OUTPUT.PUT_LINE('dept_name: ' || dept_rec.department_name);
+-  DBMS_OUTPUT.PUT_LINE('mgr_id:    ' || dept_rec.manager_id);
+-  DBMS_OUTPUT.PUT_LINE('loc_id:    ' || dept_rec.location_id);
++    DBMS_OUTPUT.PUT_LINE('dept_id:   ' || dept_rec.department_id);
++    DBMS_OUTPUT.PUT_LINE('dept_name: ' || dept_rec.department_name);
++    DBMS_OUTPUT.PUT_LINE('mgr_id:    ' || dept_rec.manager_id);
++    DBMS_OUTPUT.PUT_LINE('loc_id:    ' || dept_rec.location_id);
+ END;
+ /
+ 
+ DECLARE
+-  t1_row t1%ROWTYPE;
++    t1_row                              t1 % ROWTYPE;
+ BEGIN
+-  DBMS_OUTPUT.PUT('t1.c1 = ');
+-  DBMS_OUTPUT.PUT_LINE(NVL(TO_CHAR(t1_row.c1), 'NULL'));
++    DBMS_OUTPUT.PUT('t1.c1 = ');
++    DBMS_OUTPUT.PUT_LINE(coalesce(to_char(t1_row.c1), 'NULL'));
+ 
+-  DBMS_OUTPUT.PUT('t1.c2 = '); print(t1_row.c2);
+-  DBMS_OUTPUT.PUT_LINE(NVL(TO_CHAR(t1_row.c2), 'NULL'));
++    DBMS_OUTPUT.PUT('t1.c2 = ');
++    PRINT(t1_row.c2);
++    DBMS_OUTPUT.PUT_LINE(coalesce(to_char(t1_row.c2), 'NULL'));
+ END;
+ /
+ 
+ DECLARE
+-  CURSOR c IS
+-    SELECT first_name, last_name, phone_number
+-    FROM employees;
++    CURSOR c IS
++        SELECT
++            first_name,
++            last_name,
++            phone_number
++        FROM employees;
+ 
+-  friend c%ROWTYPE;
++    friend                              c % ROWTYPE;
+ BEGIN
+-  friend.first_name   := 'John';
+-  friend.last_name    := 'Smith';
+-  friend.phone_number := '1-650-555-1234';
++    friend.first_name := 'John';
++    friend.last_name := 'Smith';
++    friend.phone_number := '1-650-555-1234';
+ 
+-  DBMS_OUTPUT.PUT_LINE (
+-    friend.first_name  || ' ' ||
+-    friend.last_name   || ', ' ||
+-    friend.phone_number
+-  );
++    DBMS_OUTPUT.PUT_LINE(
++        friend.first_name || ' ' || friend.last_name || ', ' || friend.phone_number
++    );
+ END;
+ /
+ 
+ DECLARE
+-  CURSOR c2 IS
+-    SELECT employee_id, email, employees.manager_id, location_id
+-    FROM employees, departments
+-    WHERE employees.department_id = departments.department_id;
++    CURSOR c2 IS
++        SELECT
++            employee_id,
++            email,
++            employees.manager_id,
++            location_id
++        FROM
++            employees,
++            departments
++        WHERE employees.department_id = departments.department_id;
+ 
+-  join_rec c2%ROWTYPE;  -- includes columns from two tables
+-
++    -- includes columns from two tables
++    join_rec                            c2 % ROWTYPE;
+ BEGIN
+-  NULL;
++    NULL;
+ END;
+ /
+ 
+ DECLARE
+-  t_rec t%ROWTYPE;  -- t_rec has fields a and b, but not c
++    -- t_rec has fields a and b, but not c
++    t_rec                               t % ROWTYPE;
+ BEGIN
+-  SELECT * INTO t_rec FROM t WHERE ROWNUM < 2;  -- t_rec(a)=1, t_rec(b)=2
+-  DBMS_OUTPUT.PUT_LINE('c = ' || t_rec.c);
++    SELECT *
++    INTO t_rec
++    FROM t
++    WHERE ROWNUM < 2;  -- t_rec(a)=1, t_rec(b)=2
++
++    DBMS_OUTPUT.PUT_LINE('c = ' || t_rec.c);
+ END;
+ /
+ 
+ DECLARE
+-  TYPE name_rec IS RECORD (
+-    first  employees.first_name%TYPE DEFAULT 'John',
+-    last   employees.last_name%TYPE DEFAULT 'Doe'
+-  );
++    TYPE name_rec IS record (
++        first                             employees.first_name % TYPE DEFAULT 'John',
++        last                              employees.last_name % TYPE DEFAULT 'Doe'
++    );
+ 
+-  CURSOR c IS
+-    SELECT first_name, last_name
+-    FROM employees;
++    CURSOR c IS
++        SELECT
++            first_name,
++            last_name
++        FROM employees;
+ 
+-  target name_rec;
+-  source c%ROWTYPE;
++    target                              name_rec;
++    source                              c % ROWTYPE;
++BEGIN
++    source.first_name := 'Jane';
++    source.last_name := 'Smith';
+ 
+-BEGIN
+-  source.first_name := 'Jane'; source.last_name := 'Smith';
++    DBMS_OUTPUT.PUT_LINE(
++        'source: ' || source.first_name || ' ' || source.last_name
++    );
+ 
+-  DBMS_OUTPUT.PUT_LINE (
+-    'source: ' || source.first_name || ' ' || source.last_name
+-  );
++    target := source;
+ 
+- target := source;
+-
+- DBMS_OUTPUT.PUT_LINE (
+-   'target: ' || target.first || ' ' || target.last
+- );
++    DBMS_OUTPUT.PUT_LINE('target: ' || target.first || ' ' || target.last);
+ END;
+ /
+ 
+-create or replace procedure MY_PROCEDURE(
+-    var1 table_name%rowtype
+-) is
+-begin
+-    null;
+-end;
++CREATE OR REPLACE PROCEDURE MY_PROCEDURE (
++    var1                                table_name % ROWTYPE
++) IS
++BEGIN
++    NULL;
++END;
+ /
+
+loop limit=10 rule=TQ03 before_sha256=6a941dc080a432bea78f5bf9c53760975822ad334afa2fa30b88b2a6f143565f after_sha256=8123d7e41abaa3bc387e57de6de10184d4c24d87e7ba2084d21bb7184c8df6fd
+--- <string> (before)
++++ <string> (after)
+@@ -1,149 +1,156 @@
+ DECLARE
+-  -- Associative array indexed by string:
++    -- Associative array indexed by string:
+ 
+-  TYPE population IS TABLE OF NUMBER  -- Associative array type
+-    INDEX BY VARCHAR2(64);            --  indexed by string
++    TYPE population IS TABLE OF number  -- Associative array type
++    INDEX BY varchar2(64);  --  indexed by string
+ 
+-  city_population  population;        -- Associative array variable
+-  i  VARCHAR2(64);                    -- Scalar variable
+-
++    -- Associative array variable
++    city_population population;
++    -- Scalar variable
++    i varchar2(64);
+ BEGIN
+   -- Add elements (key-value pairs) to associative array:
+-
+-  city_population('Smallville')  := 2000;
+-  city_population('Midland')     := 750000;
+-  city_population('Megalopolis') := 1000000;
++    city_population ('Smallville') := 2000;
++    city_population ('Midland') := 750000;
++    city_population ('Megalopolis') := 1000000;
+ 
+   -- Change value associated with key 'Smallville':
+ 
+-  city_population('Smallville') := 2001;
++    city_population ('Smallville') := 2001;
+ 
+   -- Print associative array:
+ 
+-  i := city_population.FIRST;  -- Get first element of array
++    i := city_population.first;  -- Get first element of array
+ 
+-  WHILE i IS NOT NULL LOOP
+-    DBMS_Output.PUT_LINE
+-      ('Population of ' || i || ' is ' || city_population(i));
+-    i := city_population.NEXT(i);  -- Get next element of array
++    WHILE i IS NOT NULL LOOP
++        DBMS_Output.PUT_LINE(
++            'Population of ' || i || ' is ' || CITY_POPULATION(i)
++        );
++        i := city_population.next(i);  -- Get next element of array
+   END LOOP;
+ END;
+ /
+ 
+ DECLARE
+-  TYPE sum_multiples IS TABLE OF PLS_INTEGER INDEX BY PLS_INTEGER;
+-  n  PLS_INTEGER := 5;   -- number of multiples to sum for display
+-  sn PLS_INTEGER := 10;  -- number of multiples to sum
+-  m  PLS_INTEGER := 3;   -- multiple
++    TYPE sum_multiples IS TABLE OF pls_integer INDEX BY pls_integer;
++    n pls_integer
++        := 5;  -- number of multiples to sum for display
++    sn pls_integer
++        := 10;  -- number of multiples to sum
++    m pls_integer := 3;  -- multiple
+ 
+-  FUNCTION get_sum_multiples (
+-    multiple IN PLS_INTEGER,
+-    num      IN PLS_INTEGER
+-  ) RETURN sum_multiples
+-  IS
+-    s sum_multiples;
++    FUNCTION GET_SUM_MULTIPLES(
++        multiple IN pls_integer,
++        num IN pls_integer
++    ) RETURN sum_multiples IS
++      s sum_multiples;
++        BEGIN
++        FOR i IN 1..num LOOP
++            s (i) := multiple * ((i * (i + 1)) / 2);  -- sum of multiples
++          END LOOP;
++        RETURN s;
++END get_sum_multiples;
+   BEGIN
+-    FOR i IN 1..num LOOP
+-      s(i) := multiple * ((i * (i + 1)) / 2);  -- sum of multiples
+-    END LOOP;
+-    RETURN s;
+-  END get_sum_multiples;
+-
+-BEGIN
+-  DBMS_OUTPUT.PUT_LINE (
+-    'Sum of the first ' || TO_CHAR(n) || ' multiples of ' ||
+-    TO_CHAR(m) || ' is ' || TO_CHAR(get_sum_multiples (m, sn)(n))
+-  );
++    DBMS_OUTPUT.PUT_LINE(
++        'Sum of the first ' || to_char(n) || ' multiples of ' || to_char(m) || ' is '
++        || to_char(GET_SUM_MULTIPLES(m, sn) (n)));
+ END;
+ /
+ 
+ DECLARE
+-  TYPE Foursome IS VARRAY(4) OF VARCHAR2(15);  -- VARRAY type
++    TYPE foursome IS varray(4) OF varchar2(15);  -- VARRAY type
+ 
+-  -- varray variable initialized with constructor:
++    -- varray variable initialized with constructor:
+ 
+-  team Foursome := Foursome('John', 'Mary', 'Alberto', 'Juanita');
++    team foursome
++        := FOURSOME('John', 'Mary', 'Alberto', 'Juanita');
+ 
+-  PROCEDURE print_team (heading VARCHAR2) IS
++    PROCEDURE PRINT_TEAM(
++        heading varchar2
++    ) IS
++      BEGIN
++        DBMS_OUTPUT.PUT_LINE(heading);
++
++        FOR i IN 1..4 LOOP
++            DBMS_OUTPUT.PUT_LINE(i || '.' || TEAM(i));
++        END LOOP;
++
++        DBMS_OUTPUT.PUT_LINE('---');
++END;
++
+   BEGIN
+-    DBMS_OUTPUT.PUT_LINE(heading);
++    PRINT_TEAM('2001 Team:');
+ 
+-    FOR i IN 1..4 LOOP
+-      DBMS_OUTPUT.PUT_LINE(i || '.' || team(i));
+-    END LOOP;
++    team (3) := 'Pierre';  -- Change values of two elements
++    team (4) := 'Yvonne';
++    PRINT_TEAM('2005 Team:');
+ 
+-    DBMS_OUTPUT.PUT_LINE('---');
+-  END;
++    -- Invoke constructor to assign new values to varray variable:
+ 
+-BEGIN
+-  print_team('2001 Team:');
+-
+-  team(3) := 'Pierre';  -- Change values of two elements
+-  team(4) := 'Yvonne';
+-  print_team('2005 Team:');
+-
+-  -- Invoke constructor to assign new values to varray variable:
+-
+-  team := Foursome('Arun', 'Amitha', 'Allan', 'Mae');
+-  print_team('2009 Team:');
++    team := FOURSOME('Arun', 'Amitha', 'Allan', 'Mae');
++    PRINT_TEAM('2009 Team:');
+ END;
+ /
+ 
+ DECLARE
+-  TYPE Roster IS TABLE OF VARCHAR2(15);  -- nested table type
++    TYPE roster IS TABLE OF varchar2(15);  -- nested table type
+ 
+-  -- nested table variable initialized with constructor:
++    -- nested table variable initialized with constructor:
+ 
+-  names Roster := Roster('D Caruso', 'J Hamil', 'D Piro', 'R Singh');
++    names roster
++        := ROSTER('D Caruso', 'J Hamil', 'D Piro', 'R Singh');
+ 
+-  PROCEDURE print_names (heading VARCHAR2) IS
++    PROCEDURE PRINT_NAMES(
++        heading varchar2
++    ) IS
++      BEGIN
++        DBMS_OUTPUT.PUT_LINE(heading);
++
++        FOR i IN names.first..names.last LOOP  -- For first to last element
++            DBMS_OUTPUT.PUT_LINE(NAMES(i));
++        END LOOP;
++
++        DBMS_OUTPUT.PUT_LINE('---');
++END;
++
+   BEGIN
+-    DBMS_OUTPUT.PUT_LINE(heading);
++    PRINT_NAMES('Initial Values:');
+ 
+-    FOR i IN names.FIRST .. names.LAST LOOP  -- For first to last element
+-      DBMS_OUTPUT.PUT_LINE(names(i));
+-    END LOOP;
++    names (3) := 'P Perez';  -- Change value of one element
++    PRINT_NAMES('Current Values:');
+ 
+-    DBMS_OUTPUT.PUT_LINE('---');
+-  END;
+-
+-BEGIN
+-  print_names('Initial Values:');
+-
+-  names(3) := 'P Perez';  -- Change value of one element
+-  print_names('Current Values:');
+-
+-  names := Roster('A Jansen', 'B Gupta');  -- Change entire table
+-  print_names('Current Values:');
++    names := ROSTER('A Jansen', 'B Gupta');  -- Change entire table
++    PRINT_NAMES('Current Values:');
+ END;
+ /
+ 
+ DECLARE
+-  TYPE employee_rec_type IS RECORD (
+-    employee_id   NUMBER,
+-    first_name    VARCHAR2(50),
+-    last_name     VARCHAR2(50),
+-    salary        NUMBER
+-  );
++    TYPE employee_rec_type IS record (
++      employee_id NUMBER,
++      first_name VARCHAR2 (50),
++      last_name VARCHAR2 (50),
++      salary NUMBER
++    );
+ 
+-  TYPE employee_array_type IS TABLE OF employee_rec_type INDEX BY PLS_INTEGER;
++    TYPE employee_array_type IS TABLE OF employee_rec_type INDEX BY pls_integer;
+ 
+-  l_employees employee_array_type;
++    l_employees employee_array_type;
++      BEGIN
++        -- Populate the array
++    l_employees(101).employee_id := 101;
++    l_employees(101).first_name := 'John';
++    l_employees(101).last_name := 'Doe';
++    l_employees(101).salary := 50000;
+ 
+-BEGIN
+-  -- Populate the array
+-  l_employees(101).employee_id := 101;
+-  l_employees(101).first_name := 'John';
+-  l_employees(101).last_name := 'Doe';
+-  l_employees(101).salary := 50000;
++    l_employees(102).employee_id := 102;
++    l_employees(102).first_name := 'Jane';
++    l_employees(102).last_name := 'Smith';
++    l_employees(102).salary := 60000;
+ 
+-  l_employees(102).employee_id := 102;
+-  l_employees(102).first_name := 'Jane';
+-  l_employees(102).last_name := 'Smith';
+-  l_employees(102).salary := 60000;
+-
+-  -- Access and display data
+-  DBMS_OUTPUT.PUT_LINE('Employee 101: ' || l_employees(101).first_name || ' ' || l_employees(101).last_name);
+-  DBMS_OUTPUT.PUT_LINE('Employee 102 Salary: ' || l_employees(102).salary);
++        -- Access and display data
++    DBMS_OUTPUT.PUT_LINE(
++        'Employee 101: ' || l_employees(101).first_name || ' ' || l_employees(101).last_name
++        );
++    DBMS_OUTPUT.PUT_LINE('Employee 102 Salary: ' || l_employees(102).salary);
+ END;
+ /

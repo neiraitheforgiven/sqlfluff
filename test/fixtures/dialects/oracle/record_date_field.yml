@@ -1,0 +1,288 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: 650252899192991ae39306b9c25d32b068cb91b358eca295bd93b64a8559aeaa
+file:
+- batch:
+    statement:
+      create_package_body_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: PACKAGE
+      - keyword: BODY
+      - package_reference:
+          naked_identifier: pkg_dates
+      - keyword: AS
+      - declare_segment:
+        - create_procedure_statement:
+          - keyword: PROCEDURE
+          - function_name:
+              function_name_identifier:
+                function_name_identifier: CheckDates
+          - keyword: IS
+          - declare_segment:
+            - collection_type:
+              - keyword: TYPE
+              - naked_identifier: error_rt
+              - keyword: IS
+              - plsql_data_type:
+                  data_type:
+                    data_type_identifier: RECORD
+                  bracketed:
+                  - start_bracket: (
+                  - word: Date
+                  - word: BOOLEAN
+                  - assignment_operator: :=
+                  - word: 'FALSE'
+                  - comma: ','
+                  - word: Flow
+                  - word: BOOLEAN
+                  - assignment_operator: :=
+                  - word: 'FALSE'
+                  - end_bracket: )
+            - statement_terminator: ;
+            - naked_identifier: t_Error
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: error_rt
+            - statement_terminator: ;
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                assignment_segment_statement:
+                  object_reference:
+                  - naked_identifier: t_Error
+                  - dot: .
+                  - naked_identifier: Date
+                  assignment_operator: :=
+                  expression:
+                    boolean_literal: 'TRUE'
+            - statement_terminator: ;
+            - statement:
+                if_then_statement:
+                - if_clause:
+                  - keyword: IF
+                  - expression:
+                      column_reference:
+                      - naked_identifier: t_Error
+                      - dot: .
+                      - naked_identifier: Date
+                  - keyword: THEN
+                - statement:
+                    null_statement:
+                      keyword: 'NULL'
+                - statement_terminator: ;
+                - keyword: END
+                - keyword: IF
+            - statement_terminator: ;
+            - statement:
+                if_then_statement:
+                - if_clause:
+                  - keyword: IF
+                  - expression:
+                    - keyword: NOT
+                    - column_reference:
+                      - naked_identifier: t_Error
+                      - dot: .
+                      - naked_identifier: Date
+                    - binary_operator: AND
+                    - column_reference:
+                      - naked_identifier: t_Error
+                      - dot: .
+                      - naked_identifier: Flow
+                  - keyword: THEN
+                - statement:
+                    null_statement:
+                      keyword: 'NULL'
+                - statement_terminator: ;
+                - keyword: END
+                - keyword: IF
+            - statement_terminator: ;
+            - statement:
+                if_then_statement:
+                - if_clause:
+                  - keyword: IF
+                  - expression:
+                      column_reference:
+                      - naked_identifier: t_Error
+                      - dot: .
+                      - naked_identifier: Date
+                      comparison_operator:
+                        raw_comparison_operator: '='
+                      boolean_literal: 'TRUE'
+                  - keyword: THEN
+                - statement:
+                    null_statement:
+                      keyword: 'NULL'
+                - statement_terminator: ;
+                - keyword: END
+                - keyword: IF
+            - statement_terminator: ;
+            - statement:
+                if_then_statement:
+                - if_clause:
+                  - keyword: IF
+                  - expression:
+                      column_reference:
+                      - naked_identifier: t_Error
+                      - dot: .
+                      - naked_identifier: Date
+                      keyword: IS
+                      null_literal: 'NULL'
+                  - keyword: THEN
+                - statement:
+                    null_statement:
+                      keyword: 'NULL'
+                - statement_terminator: ;
+                - keyword: END
+                - keyword: IF
+            - statement_terminator: ;
+            - statement:
+                if_then_statement:
+                - if_clause:
+                  - keyword: IF
+                  - expression:
+                      column_reference:
+                      - naked_identifier: t_Outer
+                      - dot: .
+                      - naked_identifier: Errors
+                      - dot: .
+                      - naked_identifier: Date
+                  - keyword: THEN
+                - statement:
+                    null_statement:
+                      keyword: 'NULL'
+                - statement_terminator: ;
+                - keyword: END
+                - keyword: IF
+            - statement_terminator: ;
+            - statement:
+                if_then_statement:
+                - if_clause:
+                  - keyword: IF
+                  - expression:
+                      column_reference:
+                      - naked_identifier: t_Errors
+                      - bracketed:
+                          start_bracket: (
+                          expression:
+                            numeric_literal: '1'
+                          end_bracket: )
+                      - dot: .
+                      - naked_identifier: Date
+                  - keyword: THEN
+                - statement:
+                    null_statement:
+                      keyword: 'NULL'
+                - statement_terminator: ;
+                - keyword: END
+                - keyword: IF
+            - statement_terminator: ;
+            - statement:
+                if_then_statement:
+                - if_clause:
+                  - keyword: IF
+                  - expression:
+                      column_reference:
+                      - naked_identifier: GetErrors
+                      - bracketed:
+                          start_bracket: (
+                          expression:
+                            numeric_literal: '1'
+                          end_bracket: )
+                      - dot: .
+                      - naked_identifier: Date
+                  - keyword: THEN
+                - statement:
+                    null_statement:
+                      keyword: 'NULL'
+                - statement_terminator: ;
+                - keyword: END
+                - keyword: IF
+            - statement_terminator: ;
+            - statement:
+                if_then_statement:
+                - if_clause:
+                  - keyword: IF
+                  - expression:
+                      column_reference:
+                      - naked_identifier: GetErrors
+                      - bracketed:
+                          start_bracket: (
+                          expression:
+                            numeric_literal: '1'
+                          end_bracket: )
+                      - dot: .
+                      - naked_identifier: Nested
+                      dot: .
+                      naked_identifier: Date
+                  - keyword: THEN
+                - statement:
+                    null_statement:
+                      keyword: 'NULL'
+                - statement_terminator: ;
+                - keyword: END
+                - keyword: IF
+            - statement_terminator: ;
+            - statement:
+                function:
+                  function_name:
+                    function_name_identifier:
+                      function_name_identifier: CheckValue
+                  function_contents:
+                    bracketed:
+                      start_bracket: (
+                      expression:
+                        column_reference:
+                        - naked_identifier: t_Error
+                        - dot: .
+                        - naked_identifier: Date
+                      end_bracket: )
+            - statement_terminator: ;
+            - keyword: END
+            - object_reference:
+                naked_identifier: CheckDates
+          - statement_terminator: ;
+        - create_procedure_statement:
+          - keyword: PROCEDURE
+          - function_name:
+              function_name_identifier:
+                function_name_identifier: CheckAgain
+          - keyword: IS
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - object_reference:
+                naked_identifier: CheckAgain
+          - statement_terminator: ;
+      - keyword: END
+      - package_reference:
+          naked_identifier: pkg_dates
+      - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            expression:
+              data_type:
+                data_type_identifier: DATE
+              quoted_literal: "'2026-01-01'"
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                  naked_identifier: dual
+    statement_terminator: ;

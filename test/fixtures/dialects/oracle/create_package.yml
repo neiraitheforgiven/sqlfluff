@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: fea5dcf06ab2e1a5011eec28403313190e9ac87ff9c04cd370cffa6a6d57bbbd
+_hash: b8a8def6327ed9cceb35e2b0906a779cbb84c3bf1873bd91dae391b612c412ad
 file:
 - batch:
     statement:
@@ -73,52 +73,66 @@ file:
           - data_type:
               data_type_identifier: NUMBER
           - statement_terminator: ;
-        - naked_identifier: PROCEDURE
-        - plsql_data_type:
-            data_type:
-              data_type_identifier: remove_emp
-            bracketed:
-            - start_bracket: (
-            - word: employee_id
-            - word: NUMBER
-            - end_bracket: )
-        - statement_terminator: ;
-        - naked_identifier: PROCEDURE
-        - plsql_data_type:
-            data_type:
-              data_type_identifier: remove_dept
-            bracketed:
-            - start_bracket: (
-            - word: department_id
-            - word: NUMBER
-            - end_bracket: )
-        - statement_terminator: ;
-        - naked_identifier: PROCEDURE
-        - plsql_data_type:
-            data_type:
-              data_type_identifier: increase_sal
-            bracketed:
-            - start_bracket: (
-            - word: employee_id
-            - word: NUMBER
-            - comma: ','
-            - word: salary_incr
-            - word: NUMBER
-            - end_bracket: )
-        - statement_terminator: ;
-        - naked_identifier: PROCEDURE
-        - plsql_data_type:
-            data_type:
-              data_type_identifier: increase_comm
-            bracketed:
-            - start_bracket: (
-            - word: employee_id
-            - word: NUMBER
-            - comma: ','
-            - word: comm_incr
-            - word: NUMBER
-            - end_bracket: )
-        - statement_terminator: ;
+        - create_procedure_statement:
+            keyword: PROCEDURE
+            function_name:
+              function_name_identifier:
+                function_name_identifier: remove_emp
+            function_parameter_list:
+              bracketed:
+                start_bracket: (
+                parameter: employee_id
+                data_type:
+                  data_type_identifier: NUMBER
+                end_bracket: )
+            statement_terminator: ;
+        - create_procedure_statement:
+            keyword: PROCEDURE
+            function_name:
+              function_name_identifier:
+                function_name_identifier: remove_dept
+            function_parameter_list:
+              bracketed:
+                start_bracket: (
+                parameter: department_id
+                data_type:
+                  data_type_identifier: NUMBER
+                end_bracket: )
+            statement_terminator: ;
+        - create_procedure_statement:
+            keyword: PROCEDURE
+            function_name:
+              function_name_identifier:
+                function_name_identifier: increase_sal
+            function_parameter_list:
+              bracketed:
+              - start_bracket: (
+              - parameter: employee_id
+              - data_type:
+                  data_type_identifier: NUMBER
+              - comma: ','
+              - parameter: salary_incr
+              - data_type:
+                  data_type_identifier: NUMBER
+              - end_bracket: )
+            statement_terminator: ;
+        - create_procedure_statement:
+            keyword: PROCEDURE
+            function_name:
+              function_name_identifier:
+                function_name_identifier: increase_comm
+            function_parameter_list:
+              bracketed:
+              - start_bracket: (
+              - parameter: employee_id
+              - data_type:
+                  data_type_identifier: NUMBER
+              - comma: ','
+              - parameter: comm_incr
+              - data_type:
+                  data_type_identifier: NUMBER
+              - end_bracket: )
+            statement_terminator: ;
         - naked_identifier: no_comm
         - plsql_data_type:
             data_type:
@@ -294,6 +308,85 @@ file:
       - keyword: END
       - package_reference:
           naked_identifier: skip_col_pkg
+      - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      create_package_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: PACKAGE
+      - package_reference:
+          naked_identifier: pkg_dates
+      - keyword: IS
+      - declare_segment:
+          subtype_definition:
+          - keyword: SUBTYPE
+          - naked_identifier: udt_Date
+          - keyword: IS
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: DATE
+          statement_terminator: ;
+          create_procedure_statement:
+            keyword: PROCEDURE
+            function_name:
+              function_name_identifier:
+                function_name_identifier: CheckDates
+            function_parameter_list:
+              bracketed:
+              - start_bracket: (
+              - parameter: a_AsOfDate
+              - data_type:
+                  data_type_identifier: Date
+              - comma: ','
+              - parameter: a_Input
+              - keyword: IN
+              - data_type:
+                  data_type_identifier: DATE
+              - comma: ','
+              - parameter: a_Output
+              - keyword: OUT
+              - data_type:
+                  data_type_identifier: DATE
+              - comma: ','
+              - parameter: a_Result
+              - keyword: IN
+              - keyword: OUT
+              - keyword: NOCOPY
+              - data_type:
+                  data_type_identifier: DATE
+              - comma: ','
+              - parameter: a_Custom
+              - data_type:
+                  data_type_identifier: udt_Date
+              - comma: ','
+              - parameter: a_Quoted
+              - data_type:
+                  quoted_identifier: '"Date"'
+              - end_bracket: )
+            statement_terminator: ;
+          create_function_statement:
+          - keyword: FUNCTION
+          - function_name:
+              function_name_identifier:
+                function_name_identifier: GetDate
+          - function_parameter_list:
+              bracketed:
+                start_bracket: (
+                parameter: a_AsOfDate
+                data_type:
+                  data_type_identifier: Date
+                end_bracket: )
+          - keyword: RETURN
+          - data_type:
+              data_type_identifier: DATE
+          - statement_terminator: ;
+      - keyword: END
+      - package_reference:
+          naked_identifier: pkg_dates
       - statement_terminator: ;
     slash_buffer_executor:
       slash: /

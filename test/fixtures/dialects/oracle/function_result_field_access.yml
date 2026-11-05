@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: a0217be325005904669dbf3ac0b1d9df6dfff3a6e3cfdac3efc1445dfffee7a2
+_hash: 57a77051f009474b6dcd27ef8301d31d69c87031008ca8011aaa2ff05663c596
 file:
   batch:
     statement:
@@ -143,7 +143,7 @@ file:
                     naked_identifier: t_Amount
                   assignment_operator: :=
                   expression:
-                    object_reference:
+                    column_reference:
                     - naked_identifier: GetResult
                     - bracketed:
                         start_bracket: (
@@ -151,9 +151,7 @@ file:
                     - dot: .
                     - naked_identifier: Details
                     dot: .
-            - statement:
-                procedure_call_statement:
-                  naked_identifier: Fee
+                    naked_identifier: Fee
             - statement_terminator: ;
             - statement:
                 assignment_segment_statement:

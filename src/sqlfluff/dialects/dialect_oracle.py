@@ -170,6 +170,10 @@ oracle_dialect.insert_lexer_matchers(
 )
 
 oracle_dialect.add(
+    OracleRecordFieldIdentifierGrammar=OneOf(
+        Ref("SingleIdentifierGrammar"),
+        StringParser("DATE", IdentifierSegment, type="naked_identifier"),
+    ),
     InquiryDirectiveSegment=TypedParser(
         "inquiry_directive", LiteralSegment, type="inquiry_directive"
     ),
@@ -716,6 +720,17 @@ oracle_dialect.replace(
         Sequence("MEMBER", "OF"),
         Sequence("NOT", "MEMBER", "OF"),
     ),
+    InOperatorGrammar=OneOf(
+        ansi_dialect.get_grammar("InOperatorGrammar"),
+        Sequence(
+            Ref.keyword("NOT", optional=True),
+            "IN",
+            OneOf(
+                Ref("InVariableReferenceSegment"),
+                Ref("BindVariableSegment"),
+            ),
+        ),
+    ),
     ColumnConstraintDefaultGrammar=OneOf(
         ansi_dialect.get_grammar("ColumnConstraintDefaultGrammar"),
         Ref("SequencePseudocolumnGrammar"),
@@ -899,7 +914,6 @@ oracle_dialect.replace(
                     ),
                     optional=True,
                 ),
-                Ref("DotSegment", optional=True),
             ),
             terminators=[Ref("CommaSegment")],
         ),
@@ -911,7 +925,7 @@ oracle_dialect.replace(
         Ref("ArrayAccessorSegment"),
         Sequence(
             Ref("DotSegment"),
-            Ref("SingleIdentifierGrammar"),
+            Ref("OracleRecordFieldIdentifierGrammar"),
             allow_gaps=False,
         ),
     ),
@@ -2074,23 +2088,23 @@ class ObjectReferenceSegment(ansi.ObjectReferenceSegment):
         Sequence(
             Ref("SingleIdentifierGrammar"),
             Ref("ObjectReferenceDelimiterGrammar"),
-            Ref("SingleIdentifierGrammar"),
+            Ref("OracleRecordFieldIdentifierGrammar"),
             Ref("ObjectReferenceDelimiterGrammar"),
-            Ref("SingleIdentifierGrammar"),
+            Ref("OracleRecordFieldIdentifierGrammar"),
             OneOf(
                 Bracketed(Ref("ExpressionSegment")),
                 Ref("FunctionContentsSegment"),
             ),
             Ref("ObjectReferenceDelimiterGrammar"),
-            Ref("SingleIdentifierGrammar"),
+            Ref("OracleRecordFieldIdentifierGrammar"),
             allow_gaps=True,
         ),
         Sequence(
             Ref("SingleIdentifierGrammar"),
             Ref("ObjectReferenceDelimiterGrammar"),
-            Ref("SingleIdentifierGrammar"),
+            Ref("OracleRecordFieldIdentifierGrammar"),
             Ref("ObjectReferenceDelimiterGrammar"),
-            Ref("SingleIdentifierGrammar"),
+            Ref("OracleRecordFieldIdentifierGrammar"),
             Ref("FunctionContentsSegment"),
             Bracketed(Ref("ExpressionSegment")),
             allow_gaps=True,
@@ -2098,20 +2112,38 @@ class ObjectReferenceSegment(ansi.ObjectReferenceSegment):
         Sequence(
             Ref("SingleIdentifierGrammar"),
             Ref("ObjectReferenceDelimiterGrammar"),
-            Ref("SingleIdentifierGrammar"),
+            Ref("OracleRecordFieldIdentifierGrammar"),
             OneOf(
                 Bracketed(Ref("ExpressionSegment")),
                 Ref("FunctionContentsSegment"),
             ),
             Ref("ObjectReferenceDelimiterGrammar"),
-            Ref("SingleIdentifierGrammar"),
+            Ref("OracleRecordFieldIdentifierGrammar"),
             allow_gaps=True,
         ),
         Sequence(
             Ref("SingleIdentifierGrammar"),
             Bracketed(Ref("ExpressionSegment")),
             Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("OracleRecordFieldIdentifierGrammar"),
+            allow_gaps=True,
+        ),
+        Sequence(
             Ref("SingleIdentifierGrammar"),
+            AnyNumberOf(
+                Sequence(
+                    Ref("ObjectReferenceDelimiterGrammar"),
+                    Ref("SingleIdentifierGrammar"),
+                ),
+            ),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            StringParser("DATE", IdentifierSegment, type="naked_identifier"),
+            AnyNumberOf(
+                Sequence(
+                    Ref("ObjectReferenceDelimiterGrammar"),
+                    Ref("OracleRecordFieldIdentifierGrammar"),
+                ),
+            ),
             allow_gaps=True,
         ),
         Delimited(
@@ -2129,6 +2161,16 @@ class ColumnReferenceSegment(ObjectReferenceSegment):
     type = "column_reference"
 
     match_grammar = OneOf(
+        Sequence(
+            Delimited(
+                Ref("SingleIdentifierGrammar"),
+                delimiter=Ref("DotSegment"),
+                allow_gaps=False,
+            ),
+            Ref("DotSegment"),
+            OneOf("COLUMN_VALUE", "ROWNUM"),
+            allow_gaps=False,
+        ),
         Sequence(
             Ref("NakedIdentifierSegment"),
             Ref("DotSegment"),
@@ -2154,6 +2196,18 @@ class ColumnReferenceSegment(ObjectReferenceSegment):
             allow_gaps=False,
         ),
         ObjectReferenceSegment.match_grammar,
+    )
+
+
+class InVariableReferenceSegment(BaseSegment):
+    """An unparenthesized variable operand of an Oracle IN predicate."""
+
+    type = "variable_reference"
+
+    match_grammar = Delimited(
+        Ref("SingleIdentifierGrammar"),
+        delimiter=Ref("DotSegment"),
+        allow_gaps=True,
     )
 
 
@@ -2803,6 +2857,8 @@ class DeclareSegment(BaseSegment):
         AnyNumberOf(
             Delimited(
                 OneOf(
+                    Ref("CreateProcedureStatementSegment"),
+                    Ref("CreateFunctionStatementSegment"),
                     Sequence(
                         OneOf(
                             Sequence(
@@ -2835,8 +2891,6 @@ class DeclareSegment(BaseSegment):
                         ),
                         Ref("DelimiterGrammar"),
                     ),
-                    Ref("CreateProcedureStatementSegment"),
-                    Ref("CreateFunctionStatementSegment"),
                     Ref("DeclareCursorVariableSegment"),
                 ),
                 delimiter=Ref("DelimiterGrammar"),
@@ -3200,7 +3254,7 @@ class RecordTypeDefinitionSegment(BaseSegment):
         Bracketed(
             Delimited(
                 Sequence(
-                    Ref("SingleIdentifierGrammar"),
+                    Ref("OracleRecordFieldIdentifierGrammar"),
                     OneOf(
                         Ref("PlsqlDatatypeSegment"),
                         Ref("ColumnTypeReferenceSegment"),

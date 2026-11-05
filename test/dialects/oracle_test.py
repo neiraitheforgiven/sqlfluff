@@ -18,11 +18,12 @@ def _violations(sql: str) -> list:
     Top-level parse failures surface in parsed.violations, but content that
     cannot be matched inside a Bracketed clause is silently wrapped in an
     unparsable tree node without raising a SQLParseError. We collect both so
-    that rejection tests for STORAGE(...) sub-parameters work correctly.
+    that rejection tests for STORAGE(...) sub-parameters work correctly. A
+    top-level parsing error does not require a successfully parsed root tree.
     """
     parsed = Linter(dialect="oracle").parse_string(sql)
     violations: list = list(parsed.violations)
-    if parsed.tree:
+    if not violations and parsed.tree:
         violations += list(parsed.tree.recursive_crawl("unparsable"))
     return violations
 
@@ -101,6 +102,92 @@ def test_malformed_delete_alias_without_from_rejected(alias: str) -> None:
 def test_malformed_function_result_field_access_rejected(suffix: str) -> None:
     """Each dot after a function call must introduce a complete field name."""
     assert _violations(f"BEGIN t_Amount := GetFees(1, 'GR'){suffix}; END;\n/\n")
+
+
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "t_Groups(1).ContactInfoList.",
+        "t_Groups(1).ContactInfoList.COUNT.",
+        "t_Groups(1).ContactInfoList..COUNT + 1",
+        "t_Groups(1).ContactInfoList.COUNT +",
+        "t_Groups(1).ContactInfoList(t_Index",
+        "t_Groups(1).ContactInfoList.COUNT + (1",
+    ],
+)
+def test_malformed_nested_collection_access_rejected(expression: str) -> None:
+    """Collection accessors still require complete fields, subscripts and operands."""
+    assert _violations(f"BEGIN t_Value := {expression}; END;\n/\n")
+
+
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "ids..COLUMN_VALUE",
+        "ids.COLUMN_VALUE.",
+        "ids.SELECT",
+        "ids.FROM",
+    ],
+)
+def test_malformed_column_value_reference_rejected(expression: str) -> None:
+    """Pseudocolumn support must not admit malformed or reserved field names."""
+    assert _violations(f"SELECT {expression} FROM TABLE(t_Ids) ids;")
+
+
+@pytest.mark.parametrize(
+    "expression",
+    ["j..ROWNUM", "j.ROWNUM.", "j.ROWNUM..field", ".ROWNUM", "j.SELECT"],
+)
+def test_malformed_cursor_rownum_reference_rejected(expression: str) -> None:
+    """Cursor ROWNUM fields must have a complete, well-formed reference path."""
+    assert _violations(f"BEGIN t_Ids({expression}) := 1; END;\n/\n")
+
+
+@pytest.mark.parametrize(
+    "expression",
+    ["t_Error.Date.", "t_Error..Date.", "GetErrors(1).Date.", "t_Error.SELECT"],
+)
+def test_malformed_record_date_field_rejected(expression: str) -> None:
+    """Contextual DATE fields must still have complete reference paths."""
+    assert _violations(f"BEGIN t_Value := {expression}; END;\n/\n")
+
+
+def test_date_remains_reserved_as_unqualified_sql_identifier() -> None:
+    """Record field support must not unreserve DATE in ordinary SQL."""
+    assert _violations("SELECT DATE FROM dual;")
+
+
+@pytest.mark.parametrize("operator", ["IN", "NOT IN"])
+@pytest.mark.parametrize(
+    "operand",
+    [
+        "",
+        "AND ObjectId = 1",
+        "t_EndPointId.",
+        ".t_EndPointId",
+        "pkg_Config..t_EndPointId",
+        "t_EndPointId, a_OtherEndPointId",
+        "SELECT EndPointId FROM api.EndPoints",
+        "(t_EndPointId,,a_OtherEndPointId)",
+    ],
+)
+def test_malformed_in_variable_operand_rejected(operator: str, operand: str) -> None:
+    """Unparenthesized IN must still have a complete, single operand."""
+    assert _violations(
+        f"SELECT ObjectId FROM api.Objects WHERE EndPointId {operator} {operand};"
+    )
+
+
+@pytest.mark.parametrize("dialect", ["ansi", "postgres"])
+@pytest.mark.parametrize("operator", ["IN", "NOT IN"])
+def test_unparenthesized_in_variable_remains_oracle_only(
+    dialect: str, operator: str
+) -> None:
+    """Oracle's variable operand must not broaden other dialects."""
+    parsed = Linter(dialect=dialect).parse_string(
+        f"SELECT ObjectId FROM objects WHERE EndPointId {operator} t_EndPointId;"
+    )
+    assert parsed.violations or list(parsed.tree.recursive_crawl("unparsable"))
 
 
 # OraclePhysicalAttributesSegment - table-level attributes
