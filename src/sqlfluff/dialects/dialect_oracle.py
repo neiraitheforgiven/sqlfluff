@@ -5000,3 +5000,17 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+class IndexColumnDefinitionSegment(BaseSegment):
+    """Oracle index columns, including function-based expressions."""
+
+    type = "index_column_definition"
+
+    match_grammar: Matchable = Sequence(
+        OneOf(
+            Ref("SingleIdentifierGrammar"),
+            Ref("FunctionSegment"),
+        ),
+        OneOf("ASC", "DESC", optional=True),
+    )
