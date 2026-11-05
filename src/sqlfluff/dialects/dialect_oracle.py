@@ -468,7 +468,18 @@ oracle_dialect.add(
                 OneOf(
                     Sequence(
                         Ref("SingleIdentifierGrammar"),
-                        Ref("DatatypeSegment"),
+                        OneOf(
+                            Sequence(
+                                "VARCHAR2",
+                                Bracketed(
+                                    Sequence(
+                                        Ref("NumericLiteralSegment"),
+                                        OneOf("CHAR", "BYTE", optional=True),
+                                    )
+                                ),
+                            ),
+                            Ref("DatatypeSegment"),
+                        ),
                     ),
                     Ref("ElementSpecificationGrammar"),
                 )

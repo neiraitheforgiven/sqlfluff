@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: b10c544bc2d8d6374985867e1ba3ea443d29baed3deff5100566623b66301a8d
+_hash: c6e0d5b2f5052a47d4692f521c08a7003ed7e2c7985732fa183b6ec8301176d8
 file:
 - batch:
     statement:
@@ -26,22 +26,18 @@ file:
                 end_bracket: )
         - comma: ','
         - naked_identifier: cust_first_name
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '20'
-                end_bracket: )
+        - keyword: VARCHAR2
+        - bracketed:
+            start_bracket: (
+            numeric_literal: '20'
+            end_bracket: )
         - comma: ','
         - naked_identifier: cust_last_name
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '20'
-                end_bracket: )
+        - keyword: VARCHAR2
+        - bracketed:
+            start_bracket: (
+            numeric_literal: '20'
+            end_bracket: )
         - comma: ','
         - naked_identifier: cust_address
         - data_type:
@@ -52,22 +48,18 @@ file:
             data_type_identifier: PHONE_LIST_TYP
         - comma: ','
         - naked_identifier: nls_language
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '3'
-                end_bracket: )
+        - keyword: VARCHAR2
+        - bracketed:
+            start_bracket: (
+            numeric_literal: '3'
+            end_bracket: )
         - comma: ','
         - naked_identifier: nls_territory
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '30'
-                end_bracket: )
+        - keyword: VARCHAR2
+        - bracketed:
+            start_bracket: (
+            numeric_literal: '30'
+            end_bracket: )
         - comma: ','
         - naked_identifier: credit_limit
         - data_type:
@@ -81,13 +73,11 @@ file:
               - end_bracket: )
         - comma: ','
         - naked_identifier: cust_email
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '30'
-                end_bracket: )
+        - keyword: VARCHAR2
+        - bracketed:
+            start_bracket: (
+            numeric_literal: '30'
+            end_bracket: )
         - comma: ','
         - naked_identifier: cust_orders
         - data_type:
@@ -166,13 +156,11 @@ file:
       - bracketed:
         - start_bracket: (
         - naked_identifier: name
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '100'
-                end_bracket: )
+        - keyword: VARCHAR2
+        - bracketed:
+            start_bracket: (
+            numeric_literal: '100'
+            end_bracket: )
         - comma: ','
         - naked_identifier: ssn
         - data_type:
@@ -330,13 +318,11 @@ file:
       - bracketed:
         - start_bracket: (
         - naked_identifier: document_typ
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '32'
-                end_bracket: )
+        - keyword: VARCHAR2
+        - bracketed:
+            start_bracket: (
+            numeric_literal: '32'
+            end_bracket: )
         - comma: ','
         - naked_identifier: formatted_doc
         - data_type:
@@ -372,40 +358,32 @@ file:
       - bracketed:
         - start_bracket: (
         - naked_identifier: street_address
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '40'
-                end_bracket: )
+        - keyword: VARCHAR2
+        - bracketed:
+            start_bracket: (
+            numeric_literal: '40'
+            end_bracket: )
         - comma: ','
         - naked_identifier: postal_code
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '10'
-                end_bracket: )
+        - keyword: VARCHAR2
+        - bracketed:
+            start_bracket: (
+            numeric_literal: '10'
+            end_bracket: )
         - comma: ','
         - naked_identifier: city
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '30'
-                end_bracket: )
+        - keyword: VARCHAR2
+        - bracketed:
+            start_bracket: (
+            numeric_literal: '30'
+            end_bracket: )
         - comma: ','
         - naked_identifier: state_province
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '10'
-                end_bracket: )
+        - keyword: VARCHAR2
+        - bracketed:
+            start_bracket: (
+            numeric_literal: '10'
+            end_bracket: )
         - comma: ','
         - naked_identifier: country_id
         - data_type:
