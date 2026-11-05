@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 13e90d685982137f6dce3fd3075b5db9f306245d3ee5af17f28e1f749812bb2f
+_hash: 40ce5b19362e5db6328d51d2edea5c8eeba012f0f6b099ae5d43590cd59b05d5
 file:
 - batch:
     statement:
@@ -12,9 +12,8 @@ file:
           keyword: DECLARE
           naked_identifier: dept_rec
           row_type_reference:
-            table_reference:
-              naked_identifier: departments
-            attribute_indicator: '%'
+            naked_identifier: departments
+            binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
       - keyword: BEGIN
@@ -149,9 +148,8 @@ file:
           keyword: DECLARE
           naked_identifier: t1_row
           row_type_reference:
-            table_reference:
-              naked_identifier: t1
-            attribute_indicator: '%'
+            naked_identifier: t1
+            binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
       - keyword: BEGIN
@@ -302,9 +300,8 @@ file:
           - statement_terminator: ;
           naked_identifier: friend
           row_type_reference:
-            table_reference:
-              naked_identifier: c
-            attribute_indicator: '%'
+            naked_identifier: c
+            binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
       - keyword: BEGIN
@@ -438,9 +435,8 @@ file:
           - statement_terminator: ;
           naked_identifier: join_rec
           row_type_reference:
-            table_reference:
-              naked_identifier: c2
-            attribute_indicator: '%'
+            naked_identifier: c2
+            binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
       - keyword: BEGIN
@@ -459,9 +455,8 @@ file:
           keyword: DECLARE
           naked_identifier: t_rec
           row_type_reference:
-            table_reference:
-              naked_identifier: t
-            attribute_indicator: '%'
+            naked_identifier: t
+            binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
       - keyword: BEGIN
@@ -529,24 +524,22 @@ file:
             - start_bracket: (
             - naked_identifier: first
             - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: first_name
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: employees
+              - dot: .
+              - naked_identifier: first_name
+              - binary_operator: '%'
+              - keyword: TYPE
             - keyword: DEFAULT
             - expression:
                 quoted_literal: "'John'"
             - comma: ','
             - naked_identifier: last
             - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: last_name
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: employees
+              - dot: .
+              - naked_identifier: last_name
+              - binary_operator: '%'
+              - keyword: TYPE
             - keyword: DEFAULT
             - expression:
                 quoted_literal: "'Doe'"
@@ -580,9 +573,8 @@ file:
         - statement_terminator: ;
         - naked_identifier: source
         - row_type_reference:
-            table_reference:
-              naked_identifier: c
-            attribute_indicator: '%'
+            naked_identifier: c
+            binary_operator: '%'
             keyword: ROWTYPE
         - statement_terminator: ;
       - keyword: BEGIN
@@ -695,9 +687,8 @@ file:
             start_bracket: (
             parameter: var1
             row_type_reference:
-              table_reference:
-                naked_identifier: table_name
-              attribute_indicator: '%'
+              naked_identifier: table_name
+              binary_operator: '%'
               keyword: rowtype
             end_bracket: )
       - keyword: is

@@ -182,6 +182,11 @@ oracle_dialect.add(
             Ref("NakedIdentifierSegment"),
             Ref("DotSegment"),
             OneOf("NEXTVAL", "CURRVAL"),
+            Sequence(
+                Ref("AtSignSegment"),
+                Ref("DatabaseLinkReferenceSegment"),
+                optional=True,
+            ),
             allow_gaps=False,
         ),
         # 2-part: sequence.{NEXTVAL|CURRVAL}
@@ -189,6 +194,11 @@ oracle_dialect.add(
             Ref("NakedIdentifierSegment"),
             Ref("DotSegment"),
             OneOf("NEXTVAL", "CURRVAL"),
+            Sequence(
+                Ref("AtSignSegment"),
+                Ref("DatabaseLinkReferenceSegment"),
+                optional=True,
+            ),
             allow_gaps=False,
         ),
     ),
@@ -2248,6 +2258,34 @@ class ColumnReferenceSegment(ObjectReferenceSegment):
 
     type = "column_reference"
 
+    match_grammar = OneOf(
+        Sequence(
+            Ref("NakedIdentifierSegment"),
+            Ref("DotSegment"),
+            Ref("NakedIdentifierSegment"),
+            Ref("DotSegment"),
+            OneOf("NEXTVAL", "CURRVAL"),
+            Sequence(
+                Ref("AtSignSegment"),
+                Ref("DatabaseLinkReferenceSegment"),
+                optional=True,
+            ),
+            allow_gaps=False,
+        ),
+        Sequence(
+            Ref("NakedIdentifierSegment"),
+            Ref("DotSegment"),
+            OneOf("NEXTVAL", "CURRVAL"),
+            Sequence(
+                Ref("AtSignSegment"),
+                Ref("DatabaseLinkReferenceSegment"),
+                optional=True,
+            ),
+            allow_gaps=False,
+        ),
+        ObjectReferenceSegment.match_grammar,
+    )
+
 
 class FunctionNameSegment(BaseSegment):
     """Function name, including any prefix bits, e.g. project or schema."""
@@ -2998,7 +3036,18 @@ class ColumnTypeReferenceSegment(BaseSegment):
     type = "column_type_reference"
 
     match_grammar = Sequence(
-        Ref("ColumnReferenceSegment"), Ref("AttributeIndicatorSegment"), "TYPE"
+        Delimited(
+            Ref("SingleIdentifierGrammar"),
+            delimiter=Ref("DotSegment"),
+            allow_gaps=False,
+        ),
+        Sequence(
+            Ref("AtSignSegment"),
+            Ref("DatabaseLinkReferenceSegment"),
+            optional=True,
+        ),
+        Ref("ModuloSegment"),
+        "TYPE",
     )
 
 
@@ -3011,7 +3060,18 @@ class RowTypeReferenceSegment(BaseSegment):
     type = "row_type_reference"
 
     match_grammar = Sequence(
-        Ref("TableReferenceSegment"), Ref("AttributeIndicatorSegment"), "ROWTYPE"
+        Delimited(
+            Ref("SingleIdentifierGrammar"),
+            delimiter=Ref("DotSegment"),
+            allow_gaps=False,
+        ),
+        Sequence(
+            Ref("AtSignSegment"),
+            Ref("DatabaseLinkReferenceSegment"),
+            optional=True,
+        ),
+        Ref("ModuloSegment"),
+        "ROWTYPE",
     )
 
 

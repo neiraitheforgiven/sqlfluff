@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 5fff04d594be9b0316ed4fbf1d242ec0a6e9ec6d23aa44e97efec09672d5f02c
+_hash: a2cabaaea5c1b8df126ce6712cc9ee7fcf05becb9dbbb5d9bdb3a6d61c346039
 file:
 - batch:
     statement:
@@ -18,9 +18,8 @@ file:
           - keyword: CURSOR
           - keyword: RETURN
           - row_type_reference:
-              table_reference:
-                naked_identifier: employees
-              attribute_indicator: '%'
+              naked_identifier: employees
+              binary_operator: '%'
               keyword: ROWTYPE
         - statement_terminator: ;
         - ref_cursor_type:
@@ -50,9 +49,8 @@ file:
           - keyword: CURSOR
           - keyword: RETURN
           - row_type_reference:
-              table_reference:
-                naked_identifier: departments
-              attribute_indicator: '%'
+              naked_identifier: departments
+              binary_operator: '%'
               keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: dept_cv
@@ -135,21 +133,19 @@ file:
         - keyword: DECLARE
         - naked_identifier: sal
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: salary
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: salary
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: sal_multiple
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: salary
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: salary
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: factor
         - data_type:
@@ -303,21 +299,19 @@ file:
         - keyword: DECLARE
         - naked_identifier: sal
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: salary
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: salary
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: sal_multiple
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: salary
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: salary
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: factor
         - data_type:
@@ -715,9 +709,8 @@ file:
           - naked_identifier: c1
           - keyword: RETURN
           - row_type_reference:
-              table_reference:
-                naked_identifier: departments
-              attribute_indicator: '%'
+              naked_identifier: departments
+              binary_operator: '%'
               keyword: ROWTYPE
           - statement_terminator: ;
         - cursor_variable:
@@ -759,9 +752,8 @@ file:
           - naked_identifier: c1
           - keyword: RETURN
           - row_type_reference:
-              table_reference:
-                naked_identifier: departments
-              attribute_indicator: '%'
+              naked_identifier: departments
+              binary_operator: '%'
               keyword: ROWTYPE
           - keyword: IS
           - select_statement:
@@ -792,9 +784,8 @@ file:
           - naked_identifier: c3
           - keyword: RETURN
           - row_type_reference:
-              table_reference:
-                naked_identifier: locations
-              attribute_indicator: '%'
+              naked_identifier: locations
+              binary_operator: '%'
               keyword: ROWTYPE
           - statement_terminator: ;
         - cursor_variable:
@@ -840,21 +831,19 @@ file:
         - keyword: DECLARE
         - naked_identifier: sal
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: salary
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: salary
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: sal_multiple
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: salary
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: salary
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: factor
         - data_type:
@@ -1008,21 +997,19 @@ file:
         - keyword: DECLARE
         - naked_identifier: sal
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: salary
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: salary
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: sal_multiple
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: salary
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: salary
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: factor
         - data_type:
@@ -1308,9 +1295,8 @@ file:
           - statement_terminator: ;
           naked_identifier: emp_rec
           row_type_reference:
-            table_reference:
-              naked_identifier: c1
-            attribute_indicator: '%'
+            naked_identifier: c1
+            binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
       - keyword: BEGIN
@@ -1463,30 +1449,27 @@ file:
           - declare_segment:
             - naked_identifier: last_name_
             - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: last_name
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: employees
+              - dot: .
+              - naked_identifier: last_name
+              - binary_operator: '%'
+              - keyword: TYPE
             - statement_terminator: ;
             - naked_identifier: first_name_
             - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: first_name
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: employees
+              - dot: .
+              - naked_identifier: first_name
+              - binary_operator: '%'
+              - keyword: TYPE
             - statement_terminator: ;
             - naked_identifier: overpayment_
             - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: salary
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: employees
+              - dot: .
+              - naked_identifier: salary
+              - binary_operator: '%'
+              - keyword: TYPE
             - statement_terminator: ;
           - begin_end_block:
             - keyword: BEGIN
@@ -1811,30 +1794,27 @@ file:
           - declare_segment:
             - naked_identifier: dept_name
             - column_type_reference:
-                column_reference:
-                - naked_identifier: departments
-                - dot: .
-                - naked_identifier: department_name
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: departments
+              - dot: .
+              - naked_identifier: department_name
+              - binary_operator: '%'
+              - keyword: TYPE
             - statement_terminator: ;
             - naked_identifier: mgr_name
             - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: last_name
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: employees
+              - dot: .
+              - naked_identifier: last_name
+              - binary_operator: '%'
+              - keyword: TYPE
             - statement_terminator: ;
             - naked_identifier: city_name
             - column_type_reference:
-                column_reference:
-                - naked_identifier: locations
-                - dot: .
-                - naked_identifier: city
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: locations
+              - dot: .
+              - naked_identifier: city
+              - binary_operator: '%'
+              - keyword: TYPE
             - statement_terminator: ;
           - begin_end_block:
             - keyword: BEGIN
@@ -2141,30 +2121,27 @@ file:
           - declare_segment:
             - naked_identifier: last_name_
             - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: last_name
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: employees
+              - dot: .
+              - naked_identifier: last_name
+              - binary_operator: '%'
+              - keyword: TYPE
             - statement_terminator: ;
             - naked_identifier: first_name_
             - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: first_name
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: employees
+              - dot: .
+              - naked_identifier: first_name
+              - binary_operator: '%'
+              - keyword: TYPE
             - statement_terminator: ;
             - naked_identifier: overpayment_
             - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: salary
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: employees
+              - dot: .
+              - naked_identifier: salary
+              - binary_operator: '%'
+              - keyword: TYPE
             - statement_terminator: ;
           - begin_end_block:
             - keyword: BEGIN
@@ -2682,21 +2659,19 @@ file:
         - statement_terminator: ;
         - naked_identifier: dept_name
         - column_type_reference:
-            column_reference:
-            - naked_identifier: departments
-            - dot: .
-            - naked_identifier: department_name
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: departments
+          - dot: .
+          - naked_identifier: department_name
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: emp_name
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: last_name
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: last_name
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
         - cursor_variable:
           - keyword: CURSOR
@@ -2914,9 +2889,8 @@ file:
           - statement_terminator: ;
           naked_identifier: emp_rec
           row_type_reference:
-            table_reference:
-              naked_identifier: emp
-            attribute_indicator: '%'
+            naked_identifier: emp
+            binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
       - keyword: BEGIN

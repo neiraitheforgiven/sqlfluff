@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 46b83d97598b4ccfc27088feaf6be1f1e2e29baa7ad1e1d15133badbfd0b04c6
+_hash: 9e63b3073781493f067ea66665405c6dbb14fa056bd22d552dfd11c9f8f690f6
 file:
 - batch:
     statement:
@@ -103,12 +103,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: parts1
-              - dot: .
-              - naked_identifier: pnum
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: parts1
+            - dot: .
+            - naked_identifier: pnum
+            - binary_operator: '%'
+            - keyword: TYPE
           - keyword: INDEX
           - keyword: BY
           - data_type:
@@ -121,12 +120,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: parts1
-              - dot: .
-              - naked_identifier: pname
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: parts1
+            - dot: .
+            - naked_identifier: pname
+            - binary_operator: '%'
+            - keyword: TYPE
           - keyword: INDEX
           - keyword: BY
           - data_type:

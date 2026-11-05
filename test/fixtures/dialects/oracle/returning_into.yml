@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: b69491eeb30a90ecd2d4ddeeb37ba2eea0e9d237e36fe309b6f3fc4c13b93a35
+_hash: 872bef35e4481d93393988627b6cc1ba6f4435b13190aff8f84afbf549d66e10
 file:
 - batch:
     statement:
@@ -19,21 +19,19 @@ file:
             - start_bracket: (
             - naked_identifier: last_name
             - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: last_name
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: employees
+              - dot: .
+              - naked_identifier: last_name
+              - binary_operator: '%'
+              - keyword: TYPE
             - comma: ','
             - naked_identifier: salary
             - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: salary
-                attribute_indicator: '%'
-                keyword: TYPE
+              - naked_identifier: employees
+              - dot: .
+              - naked_identifier: salary
+              - binary_operator: '%'
+              - keyword: TYPE
             - end_bracket: )
         - statement_terminator: ;
         - naked_identifier: emp_info
@@ -42,12 +40,11 @@ file:
         - statement_terminator: ;
         - naked_identifier: old_salary
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees
-            - dot: .
-            - naked_identifier: salary
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees
+          - dot: .
+          - naked_identifier: salary
+          - binary_operator: '%'
+          - keyword: TYPE
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -161,36 +158,33 @@ file:
         - keyword: DECLARE
         - naked_identifier: emp_id
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees_temp
-            - dot: .
-            - naked_identifier: employee_id
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees_temp
+          - dot: .
+          - naked_identifier: employee_id
+          - binary_operator: '%'
+          - keyword: TYPE
         - assignment_operator: :=
         - expression:
             numeric_literal: '299'
         - statement_terminator: ;
         - naked_identifier: emp_first_name
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees_temp
-            - dot: .
-            - naked_identifier: first_name
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees_temp
+          - dot: .
+          - naked_identifier: first_name
+          - binary_operator: '%'
+          - keyword: TYPE
         - assignment_operator: :=
         - expression:
             quoted_literal: "'Bob'"
         - statement_terminator: ;
         - naked_identifier: emp_last_name
         - column_type_reference:
-            column_reference:
-            - naked_identifier: employees_temp
-            - dot: .
-            - naked_identifier: last_name
-            attribute_indicator: '%'
-            keyword: TYPE
+          - naked_identifier: employees_temp
+          - dot: .
+          - naked_identifier: last_name
+          - binary_operator: '%'
+          - keyword: TYPE
         - assignment_operator: :=
         - expression:
             quoted_literal: "'Henry'"
@@ -326,12 +320,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: employees
-              - dot: .
-              - naked_identifier: employee_id
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: employees
+            - dot: .
+            - naked_identifier: employee_id
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: enums
         - data_type:
@@ -344,12 +337,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: employees
-              - dot: .
-              - naked_identifier: last_name
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: employees
+            - dot: .
+            - naked_identifier: last_name
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: names
         - data_type:
@@ -487,12 +479,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: employees
-              - dot: .
-              - naked_identifier: salary
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: employees
+            - dot: .
+            - naked_identifier: salary
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: old_sals
         - data_type:
@@ -509,12 +500,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: employees
-              - dot: .
-              - naked_identifier: last_name
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: employees
+            - dot: .
+            - naked_identifier: last_name
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: names
         - data_type:
@@ -708,12 +698,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: employees
-              - dot: .
-              - naked_identifier: employee_id
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: employees
+            - dot: .
+            - naked_identifier: employee_id
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: e_ids
         - data_type:
@@ -726,12 +715,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: employees
-              - dot: .
-              - naked_identifier: department_id
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: employees
+            - dot: .
+            - naked_identifier: department_id
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: d_ids
         - data_type:
@@ -890,12 +878,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: t1
-              - dot: .
-              - naked_identifier: description
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: t1
+            - dot: .
+            - naked_identifier: description
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -904,12 +891,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: t1
-              - dot: .
-              - naked_identifier: id
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: t1
+            - dot: .
+            - naked_identifier: id
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -918,12 +904,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: t1
-              - dot: .
-              - naked_identifier: description
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: t1
+            - dot: .
+            - naked_identifier: description
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: l_desc_tab
         - data_type:
@@ -979,9 +964,9 @@ file:
                 - start_bracket: (
                 - expression:
                     column_reference:
-                    - naked_identifier: t1_seq
-                    - dot: .
-                    - naked_identifier: NEXTVAL
+                      naked_identifier: t1_seq
+                      dot: .
+                      keyword: NEXTVAL
                 - comma: ','
                 - expression:
                     function:
@@ -1089,12 +1074,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: emp
-              - dot: .
-              - naked_identifier: sal
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: emp
+            - dot: .
+            - naked_identifier: sal
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -1103,12 +1087,11 @@ file:
           - keyword: TABLE
           - keyword: OF
           - column_type_reference:
-              column_reference:
-              - naked_identifier: emp
-              - dot: .
-              - naked_identifier: empno
-              attribute_indicator: '%'
-              keyword: TYPE
+            - naked_identifier: emp
+            - dot: .
+            - naked_identifier: empno
+            - binary_operator: '%'
+            - keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: l_empno
         - data_type:

@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: ed43d43abd19acebf123927b3433b5e73a8e519936dd532cd4a8a69f6ef26297
+_hash: 72cb99b04b172ddc7c2e5987c6a8fc75d5f9441c719cce64b66a72d95bc93353
 file:
 - batch:
     statement:
@@ -537,9 +537,8 @@ file:
           keyword: DECLARE
           naked_identifier: v_employees
           row_type_reference:
-            table_reference:
-              naked_identifier: employees
-            attribute_indicator: '%'
+            naked_identifier: employees
+            binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
           cursor_variable:
@@ -614,9 +613,8 @@ file:
           keyword: DECLARE
           naked_identifier: v_employees
           row_type_reference:
-            table_reference:
-              naked_identifier: employees
-            attribute_indicator: '%'
+            naked_identifier: employees
+            binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
           cursor_variable:
@@ -707,9 +705,8 @@ file:
           keyword: DECLARE
           naked_identifier: v_employees
           row_type_reference:
-            table_reference:
-              naked_identifier: employees
-            attribute_indicator: '%'
+            naked_identifier: employees
+            binary_operator: '%'
             keyword: ROWTYPE
           statement_terminator: ;
           cursor_variable:

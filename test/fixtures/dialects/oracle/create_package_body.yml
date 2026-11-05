@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 0c26399034de07c8c1df551ba8c6670411aea124f1686bd20e087c87439f43e9
+_hash: f89ffa6d051861284a33030bc9b493840f50d3a569b08ae77deab272edc55b4b
 file:
 - batch:
     statement:
@@ -228,9 +228,9 @@ file:
                     keyword: SELECT
                     select_clause_element:
                       column_reference:
-                      - naked_identifier: employees_seq
-                      - dot: .
-                      - naked_identifier: NEXTVAL
+                        naked_identifier: employees_seq
+                        dot: .
+                        keyword: NEXTVAL
                   into_clause:
                     keyword: INTO
                     naked_identifier: new_empno
@@ -348,9 +348,9 @@ file:
                     keyword: SELECT
                     select_clause_element:
                       column_reference:
-                      - naked_identifier: departments_seq
-                      - dot: .
-                      - naked_identifier: NEXTVAL
+                        naked_identifier: departments_seq
+                        dot: .
+                        keyword: NEXTVAL
                   into_clause:
                     keyword: INTO
                     naked_identifier: new_deptno

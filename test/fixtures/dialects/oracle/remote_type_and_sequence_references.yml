@@ -1,0 +1,72 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: d23361304352bf776c2afbeeefa52558fc05a46c776986abe8865f94eb97d068
+file:
+  batch:
+  - statement:
+      select_statement:
+        select_clause:
+        - keyword: SELECT
+        - select_clause_element:
+            column_reference:
+              naked_identifier: example_seq
+              dot: .
+              keyword: NEXTVAL
+              at_sign: '@'
+              database_link_reference:
+                naked_identifier: remote_db
+        - comma: ','
+        - select_clause_element:
+            column_reference:
+            - naked_identifier: example_schema
+            - dot: .
+            - naked_identifier: example_seq
+            - dot: .
+            - keyword: CURRVAL
+            - at_sign: '@'
+            - database_link_reference:
+                naked_identifier: remote_db
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                  naked_identifier: dual
+  - statement_terminator: ;
+  - statement:
+      begin_end_block:
+      - declare_segment:
+        - keyword: DECLARE
+        - naked_identifier: v_id
+        - column_type_reference:
+          - naked_identifier: example_table
+          - dot: .
+          - naked_identifier: id
+          - at_sign: '@'
+          - database_link_reference:
+              naked_identifier: remote_db
+          - binary_operator: '%'
+          - keyword: TYPE
+        - statement_terminator: ;
+        - naked_identifier: v_row
+        - row_type_reference:
+            naked_identifier: example_table
+            at_sign: '@'
+            database_link_reference:
+              naked_identifier: remote_db
+            binary_operator: '%'
+            keyword: ROWTYPE
+        - statement_terminator: ;
+      - keyword: BEGIN
+      - statement:
+          null_statement:
+            keyword: 'NULL'
+      - statement_terminator: ;
+      - keyword: END
+  - statement_terminator: ;
+  - slash_buffer_executor:
+      slash: /
