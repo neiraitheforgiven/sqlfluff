@@ -1,0 +1,98 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: a5fd38470e4785efd7825475aff13e20a4f38adfcb22a93639e249e1bb02da9b
+file:
+  batch:
+    statement:
+      begin_end_block:
+      - declare_segment:
+          keyword: DECLARE
+          cursor_variable:
+          - keyword: CURSOR
+          - naked_identifier: c_items
+          - keyword: IS
+          - bracketed:
+              start_bracket: (
+              set_expression:
+              - select_statement:
+                  select_clause:
+                    keyword: SELECT
+                    select_clause_element:
+                      numeric_literal: '1'
+                      alias_expression:
+                        naked_identifier: value
+                  from_clause:
+                    keyword: FROM
+                    from_expression:
+                      from_expression_element:
+                        table_expression:
+                          table_reference:
+                            naked_identifier: dual
+              - set_operator:
+                - keyword: UNION
+                - keyword: ALL
+              - select_statement:
+                  select_clause:
+                    keyword: SELECT
+                    select_clause_element:
+                      numeric_literal: '2'
+                      alias_expression:
+                        naked_identifier: value
+                  from_clause:
+                    keyword: FROM
+                    from_expression:
+                      from_expression_element:
+                        table_expression:
+                          table_reference:
+                            naked_identifier: dual
+              end_bracket: )
+          - statement_terminator: ;
+      - keyword: BEGIN
+      - statement:
+          for_loop_statement:
+          - keyword: FOR
+          - naked_identifier: v_item
+          - keyword: IN
+          - expression:
+              bracketed:
+                start_bracket: (
+                select_statement:
+                  bracketed:
+                    start_bracket: (
+                    select_statement:
+                      select_clause:
+                        keyword: SELECT
+                        select_clause_element:
+                          numeric_literal: '1'
+                          alias_expression:
+                            naked_identifier: value
+                      from_clause:
+                        keyword: FROM
+                        from_expression:
+                          from_expression_element:
+                            table_expression:
+                              table_reference:
+                                naked_identifier: dual
+                    end_bracket: )
+                  orderby_clause:
+                  - keyword: ORDER
+                  - keyword: BY
+                  - column_reference:
+                      naked_identifier: value
+                end_bracket: )
+          - loop_statement:
+            - keyword: LOOP
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - keyword: LOOP
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /

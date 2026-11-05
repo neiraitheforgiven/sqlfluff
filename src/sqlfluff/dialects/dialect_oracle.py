@@ -3119,7 +3119,25 @@ class DeclareCursorVariableSegment(BaseSegment):
             ),
             optional=True,
         ),
-        Sequence("IS", Indent, Ref("SelectStatementSegment"), Dedent, optional=True),
+        Sequence(
+            "IS",
+            Indent,
+            OneOf(
+                Ref("ParenthesizedQuerySegment"),
+                Ref("SetExpressionSegment"),
+                Ref("SelectStatementSegment"),
+                Ref("WithCompoundStatementSegment"),
+                Bracketed(Ref("SetExpressionSegment")),
+                Bracketed(
+                    OneOf(
+                        Ref("ParenthesizedQuerySegment"),
+                        Ref("SelectStatementSegment"),
+                    )
+                ),
+            ),
+            Dedent,
+            optional=True,
+        ),
         Ref("DelimiterGrammar", optional=True),
     )
 
@@ -4016,7 +4034,12 @@ class ForLoopStatementSegment(BaseSegment):
                         "OF",
                         Ref("SingleIdentifierGrammar"),
                     ),
-                    Bracketed(Ref("SelectStatementSegment")),
+                    Bracketed(
+                        OneOf(
+                            Ref("ParenthesizedQuerySegment"),
+                            Ref("SelectStatementSegment"),
+                        )
+                    ),
                 ),
                 Sequence("WHILE", Ref("ExpressionSegment"), optional=True),
                 Sequence("WHEN", Ref("ExpressionSegment"), optional=True),
@@ -4134,6 +4157,7 @@ class OpenForStatementSegment(BaseSegment):
         "FOR",
         OneOf(
             Ref("SingleQuotedIdentifierSegment"),
+            Ref("ParenthesizedQuerySegment"),
             Ref("SelectStatementSegment"),
             Ref("SingleIdentifierGrammar"),
         ),
@@ -5000,3 +5024,23 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+class ParenthesizedQuerySegment(BaseSegment):
+    """A parenthesized Oracle query with an outer ORDER BY clause."""
+
+    type = "select_statement"
+
+    match_grammar = Sequence(
+        Bracketed(Ref("SelectableGrammar")),
+        Ref("OrderByClauseSegment"),
+        Ref("FetchClauseSegment", optional=True),
+        Ref("ForUpdateGrammar", optional=True),
+    )
+
+
+oracle_dialect.replace(
+    SelectableGrammar=ansi_dialect.get_grammar("SelectableGrammar").copy(
+        insert=[Ref("ParenthesizedQuerySegment")],
+    ),
+)
