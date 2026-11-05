@@ -797,6 +797,7 @@ oracle_dialect.replace(
         insert=[
             Ref("TriggerCorrelationReferenceSegment"),
             Ref("BindVariableSegment"),
+            Ref("InquiryDirectiveSegment"),
             Ref.keyword("LEVEL"),
             Ref.keyword("ROWNUM"),
             Ref.keyword("ANY"),
@@ -5000,3 +5001,14 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+oracle_dialect.insert_lexer_matchers(
+    [RegexLexer("inquiry_directive", r"\$\$[\p{L}][\p{L}\p{N}_$#]*", CodeSegment)],
+    before="dollar_quote",
+)
+oracle_dialect.add(
+    InquiryDirectiveSegment=TypedParser(
+        "inquiry_directive", LiteralSegment, type="inquiry_directive"
+    ),
+)
