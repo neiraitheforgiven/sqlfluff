@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: b69491eeb30a90ecd2d4ddeeb37ba2eea0e9d237e36fe309b6f3fc4c13b93a35
+_hash: b15fe9b156da0ec2fa33f1ffb92ef855481479503797e207288ff8c93d714dda
 file:
 - batch:
     statement:
@@ -415,14 +415,18 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: enums
+          - expression:
+              column_reference:
+              - naked_identifier: enums
+              - dot: .
+              - naked_identifier: FIRST
           - dot: .
-          - naked_identifier: FIRST
           - dot: .
-          - dot: .
-          - naked_identifier: enums
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: enums
+              - dot: .
+              - naked_identifier: LAST
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -593,14 +597,18 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: old_sals
+          - expression:
+              column_reference:
+              - naked_identifier: old_sals
+              - dot: .
+              - naked_identifier: FIRST
           - dot: .
-          - naked_identifier: FIRST
           - dot: .
-          - dot: .
-          - naked_identifier: old_sals
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: old_sals
+              - dot: .
+              - naked_identifier: LAST
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -743,14 +751,18 @@ file:
           - keyword: FORALL
           - naked_identifier: j
           - keyword: IN
-          - naked_identifier: depts
+          - expression:
+              column_reference:
+              - naked_identifier: depts
+              - dot: .
+              - naked_identifier: FIRST
           - dot: .
-          - naked_identifier: FIRST
           - dot: .
-          - dot: .
-          - naked_identifier: depts
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: depts
+              - dot: .
+              - naked_identifier: LAST
           - delete_statement:
               keyword: DELETE
               from_clause:
@@ -818,14 +830,18 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: e_ids
+          - expression:
+              column_reference:
+              - naked_identifier: e_ids
+              - dot: .
+              - naked_identifier: FIRST
           - dot: .
-          - naked_identifier: FIRST
           - dot: .
-          - dot: .
-          - naked_identifier: e_ids
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: e_ids
+              - dot: .
+              - naked_identifier: LAST
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -960,14 +976,18 @@ file:
           - keyword: FORALL
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: l_desc_tab
+          - expression:
+              column_reference:
+              - naked_identifier: l_desc_tab
+              - dot: .
+              - naked_identifier: FIRST
           - dot: .
-          - naked_identifier: FIRST
           - dot: .
-          - dot: .
-          - naked_identifier: l_desc_tab
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: l_desc_tab
+              - dot: .
+              - naked_identifier: LAST
           - insert_statement:
             - keyword: INSERT
             - keyword: INTO
@@ -1013,14 +1033,18 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: l_id_tab
+          - expression:
+              column_reference:
+              - naked_identifier: l_id_tab
+              - dot: .
+              - naked_identifier: FIRST
           - dot: .
-          - naked_identifier: FIRST
           - dot: .
-          - dot: .
-          - naked_identifier: l_id_tab
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: l_id_tab
+              - dot: .
+              - naked_identifier: LAST
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -1210,14 +1234,18 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: l_salo
+          - expression:
+              column_reference:
+              - naked_identifier: l_salo
+              - dot: .
+              - naked_identifier: first
           - dot: .
-          - naked_identifier: first
           - dot: .
-          - dot: .
-          - naked_identifier: l_salo
-          - dot: .
-          - naked_identifier: last
+          - expression:
+              column_reference:
+              - naked_identifier: l_salo
+              - dot: .
+              - naked_identifier: last
           - loop_statement:
             - keyword: LOOP
             - statement:

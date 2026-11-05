@@ -111,7 +111,7 @@ oracle_dialect.patch_lexer_matchers(
             # numerics (1.) via \d+\.(?![\.\w]), keep (?=\b) for digit/identifier
             # splits, and also allow Oracle size suffixes (256K / 10P / 10E)
             # matching SizeClauseGrammar's K/M/G/T/P/E (case-insensitive) (#8110).
-            r"(?>\d+\.\d+|\d+\.(?![\.\w])|\d+)(\.?[eE][+-]?\d+)?((?<=\.)|(?=\b)|(?=[KMGTPEkmgtpe]\b))",
+            r"(?>\d+\.\d+|\d+\.(?![\.\w])|\.\d+|\d+)(\.?[eE][+-]?\d+)?((?<=\.)|(?=\b)|(?=[KMGTPEkmgtpe]\b))",
             LiteralSegment,
         ),
     ]
@@ -346,6 +346,10 @@ oracle_dialect.add(
         ),
     ),
     IterationBoundsGrammar=OneOf(
+        Ref(
+            "ExpressionSegment",
+            terminators=[Sequence(Ref("DotSegment"), Ref("DotSegment"))],
+        ),
         Ref("NumericLiteralSegment"),
         Ref("FunctionSegment"),
         Ref("SingleIdentifierGrammar"),
@@ -5000,3 +5004,16 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+oracle_dialect.insert_lexer_matchers(
+    [
+        StringLexer(
+            "range_operator",
+            "..",
+            CodeSegment,
+            subdivider=StringLexer("dot", ".", CodeSegment),
+        )
+    ],
+    before="numeric_literal",
+)

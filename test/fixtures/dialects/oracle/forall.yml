@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 46b83d97598b4ccfc27088feaf6be1f1e2e29baa7ad1e1d15133badbfd0b04c6
+_hash: 1f4cc595fbb4b30a30a0649ba374787114da2284263bd98258c0727e7451737f
 file:
 - batch:
     statement:
@@ -52,14 +52,18 @@ file:
           - keyword: FORALL
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: depts
+          - expression:
+              column_reference:
+              - naked_identifier: depts
+              - dot: .
+              - naked_identifier: FIRST
           - dot: .
-          - naked_identifier: FIRST
           - dot: .
-          - dot: .
-          - naked_identifier: depts
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: depts
+              - dot: .
+              - naked_identifier: LAST
           - delete_statement:
               keyword: DELETE
               from_clause:
@@ -166,10 +170,13 @@ file:
           - keyword: FOR
           - naked_identifier: j
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - naked_identifier: iterations
+          - expression:
+              column_reference:
+                naked_identifier: iterations
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -231,10 +238,13 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - naked_identifier: iterations
+          - expression:
+              column_reference:
+                naked_identifier: iterations
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -299,10 +309,13 @@ file:
           - keyword: FORALL
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - naked_identifier: iterations
+          - expression:
+              column_reference:
+                naked_identifier: iterations
           - insert_statement:
             - keyword: INSERT
             - keyword: INTO
@@ -528,10 +541,12 @@ file:
           - keyword: FORALL
           - naked_identifier: j
           - keyword: IN
-          - numeric_literal: '4'
+          - expression:
+              numeric_literal: '4'
           - dot: .
           - dot: .
-          - numeric_literal: '7'
+          - expression:
+              numeric_literal: '7'
           - delete_statement:
               keyword: DELETE
               from_clause:
@@ -695,14 +710,18 @@ file:
             - keyword: FORALL
             - naked_identifier: j
             - keyword: IN
-            - naked_identifier: depts
+            - expression:
+                column_reference:
+                - naked_identifier: depts
+                - dot: .
+                - naked_identifier: FIRST
             - dot: .
-            - naked_identifier: FIRST
             - dot: .
-            - dot: .
-            - naked_identifier: depts
-            - dot: .
-            - naked_identifier: LAST
+            - expression:
+                column_reference:
+                - naked_identifier: depts
+                - dot: .
+                - naked_identifier: LAST
             - update_statement:
                 keyword: UPDATE
                 table_reference:

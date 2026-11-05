@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 67c2be6346dd96263b85a4d9fad479f70dcf1622264e37f5085e2ba0626d40ee
+_hash: 808d5ba24b6255c83c46ce7053c25520fad87049230c433f4a0454f7789f2e76
 file:
 - batch:
     statement:
@@ -636,12 +636,15 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - naked_identifier: emp_ids
-          - dot: .
-          - naked_identifier: COUNT
+          - expression:
+              column_reference:
+              - naked_identifier: emp_ids
+              - dot: .
+              - naked_identifier: COUNT
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -812,12 +815,15 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - naked_identifier: updated_ids
-          - dot: .
-          - naked_identifier: COUNT
+          - expression:
+              column_reference:
+              - naked_identifier: updated_ids
+              - dot: .
+              - naked_identifier: COUNT
           - loop_statement:
             - keyword: LOOP
             - statement:

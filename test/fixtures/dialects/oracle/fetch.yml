@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 6288c34f8fe941b43daa1c2fad7e3792a8683e7b770743e8180618e67b97b591
+_hash: dd48d43850c9aa33cf99e186ee9f3074bb9d9faaa99fedb52c4623c69c3c9972
 file:
 - batch:
     statement:
@@ -107,10 +107,13 @@ file:
                 - keyword: FOR
                 - naked_identifier: i
                 - keyword: IN
-                - numeric_literal: '1'
+                - expression:
+                    numeric_literal: '1'
                 - dot: .
                 - dot: .
-                - naked_identifier: n
+                - expression:
+                    column_reference:
+                      naked_identifier: n
                 - loop_statement:
                   - keyword: LOOP
                   - statement:
@@ -1171,14 +1174,18 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: names
+          - expression:
+              column_reference:
+              - naked_identifier: names
+              - dot: .
+              - naked_identifier: FIRST
           - dot: .
-          - naked_identifier: FIRST
           - dot: .
-          - dot: .
-          - naked_identifier: names
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: names
+              - dot: .
+              - naked_identifier: LAST
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -1610,14 +1617,18 @@ file:
                     - keyword: FOR
                     - naked_identifier: i
                     - keyword: IN
-                    - naked_identifier: names
+                    - expression:
+                        column_reference:
+                        - naked_identifier: names
+                        - dot: .
+                        - naked_identifier: FIRST
                     - dot: .
-                    - naked_identifier: FIRST
                     - dot: .
-                    - dot: .
-                    - naked_identifier: names
-                    - dot: .
-                    - naked_identifier: LAST
+                    - expression:
+                        column_reference:
+                        - naked_identifier: names
+                        - dot: .
+                        - naked_identifier: LAST
                     - loop_statement:
                       - keyword: LOOP
                       - statement:
@@ -1823,14 +1834,18 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: recs
+          - expression:
+              column_reference:
+              - naked_identifier: recs
+              - dot: .
+              - naked_identifier: FIRST
           - dot: .
-          - naked_identifier: FIRST
           - dot: .
-          - dot: .
-          - naked_identifier: recs
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: recs
+              - dot: .
+              - naked_identifier: LAST
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -1972,14 +1987,18 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - naked_identifier: stock_managers
+          - expression:
+              column_reference:
+              - naked_identifier: stock_managers
+              - dot: .
+              - naked_identifier: FIRST
           - dot: .
-          - naked_identifier: FIRST
           - dot: .
-          - dot: .
-          - naked_identifier: stock_managers
-          - dot: .
-          - naked_identifier: LAST
+          - expression:
+              column_reference:
+              - naked_identifier: stock_managers
+              - dot: .
+              - naked_identifier: LAST
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -2094,12 +2113,15 @@ file:
               - keyword: FOR
               - naked_identifier: i
               - keyword: IN
-              - numeric_literal: '1'
+              - expression:
+                  numeric_literal: '1'
               - dot: .
               - dot: .
-              - naked_identifier: empids
-              - dot: .
-              - naked_identifier: COUNT
+              - expression:
+                  column_reference:
+                  - naked_identifier: empids
+                  - dot: .
+                  - naked_identifier: COUNT
               - loop_statement:
                 - keyword: LOOP
                 - statement:

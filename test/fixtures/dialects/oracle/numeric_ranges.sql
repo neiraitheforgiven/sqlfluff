@@ -1,0 +1,28 @@
+BEGIN
+  FOR i IN 1..10000 LOOP
+    NULL;
+  END LOOP;
+  FOR i IN REVERSE 1 ..100 LOOP
+    NULL;
+  END LOOP;
+  FOR i IN 1.. 100 LOOP
+    NULL;
+  END LOOP;
+  FOR i IN 1 .. 100 LOOP
+    NULL;
+  END LOOP;
+  FOR i IN -3..-1 LOOP
+    NULL;
+  END LOOP;
+  FOR i IN 1.0..3.0 LOOP
+    NULL;
+  END LOOP;
+  FOR i IN 1e0..3e0 LOOP
+    NULL;
+  END LOOP;
+  FORALL i IN 1..3
+    INSERT INTO t_demo (value) VALUES (i);
+END;
+/
+
+SELECT 0.5, .5, 1.25, 1e2, 1.e2, 1.5e-2 FROM dual;

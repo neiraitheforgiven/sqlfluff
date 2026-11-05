@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: ed43d43abd19acebf123927b3433b5e73a8e519936dd532cd4a8a69f6ef26297
+_hash: c0a1cb49a2ff72bca2388216699409e10c78f3c340ba51a3f8480ad11c034307
 file:
 - batch:
     statement:
@@ -14,10 +14,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -51,10 +53,12 @@ file:
           - naked_identifier: i
           - keyword: IN
           - keyword: REVERSE
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -203,10 +207,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -286,10 +292,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -369,10 +377,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -438,10 +448,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '3'
+          - expression:
+              numeric_literal: '3'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -449,10 +461,12 @@ file:
                 - keyword: FOR
                 - naked_identifier: i
                 - keyword: IN
-                - numeric_literal: '1'
+                - expression:
+                    numeric_literal: '1'
                 - dot: .
                 - dot: .
-                - numeric_literal: '3'
+                - expression:
+                    numeric_literal: '3'
                 - loop_statement:
                   - keyword: LOOP
                   - statement:
@@ -572,10 +586,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '10'
+          - expression:
+              numeric_literal: '10'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -649,10 +665,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '10'
+          - expression:
+              numeric_literal: '10'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -660,10 +678,12 @@ file:
                 - keyword: FOR
                 - naked_identifier: j
                 - keyword: IN
-                - numeric_literal: '1'
+                - expression:
+                    numeric_literal: '1'
                 - dot: .
                 - dot: .
-                - numeric_literal: '10'
+                - expression:
+                    numeric_literal: '10'
                 - loop_statement:
                   - keyword: LOOP
                   - statement:
@@ -742,10 +762,12 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - numeric_literal: '10'
+          - expression:
+              numeric_literal: '10'
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -753,10 +775,12 @@ file:
                 - keyword: FOR
                 - naked_identifier: j
                 - keyword: IN
-                - numeric_literal: '1'
+                - expression:
+                    numeric_literal: '1'
                 - dot: .
                 - dot: .
-                - numeric_literal: '10'
+                - expression:
+                    numeric_literal: '10'
                 - loop_statement:
                   - keyword: LOOP
                   - statement:
@@ -802,19 +826,21 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - function:
-              function_name:
-                function_name_identifier: LENGTH
-              function_contents:
-                bracketed:
-                  start_bracket: (
-                  expression:
-                    column_reference:
-                      naked_identifier: v_str
-                  end_bracket: )
+          - expression:
+              function:
+                function_name:
+                  function_name_identifier: LENGTH
+                function_contents:
+                  bracketed:
+                    start_bracket: (
+                    expression:
+                      column_reference:
+                        naked_identifier: v_str
+                    end_bracket: )
           - loop_statement:
             - keyword: LOOP
             - statement:
@@ -847,18 +873,20 @@ file:
           - keyword: FOR
           - naked_identifier: i
           - keyword: IN
-          - numeric_literal: '1'
+          - expression:
+              numeric_literal: '1'
           - dot: .
           - dot: .
-          - function:
-              function_name:
-                naked_identifier: v_arr
-                dot: .
-                function_name_identifier: COUNT
-              function_contents:
-                bracketed:
-                  start_bracket: (
-                  end_bracket: )
+          - expression:
+              function:
+                function_name:
+                  naked_identifier: v_arr
+                  dot: .
+                  function_name_identifier: COUNT
+                function_contents:
+                  bracketed:
+                    start_bracket: (
+                    end_bracket: )
           - loop_statement:
             - keyword: LOOP
             - statement:
