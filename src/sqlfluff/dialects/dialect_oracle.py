@@ -759,7 +759,15 @@ oracle_dialect.replace(
         Ref.keyword("DEFAULT"),
     ),
     FunctionContentsGrammar=ansi_dialect.get_grammar("FunctionContentsGrammar").copy(
-        insert=[Ref("ListaggOverflowClauseSegment"), Ref("JSONObjectContentSegment")]
+        insert=[
+            Sequence(
+                Ref("ExpressionSegment"),
+                "AS",
+                Ref("PlsqlDatatypeSegment"),
+            ),
+            Ref("ListaggOverflowClauseSegment"),
+            Ref("JSONObjectContentSegment"),
+        ]
     ),
     TemporaryGrammar=Sequence(
         OneOf("GLOBAL", "PRIVATE"),
@@ -4999,4 +5007,26 @@ class ValuesClauseSegment(BaseSegment):
             ),
         ),
         Dedent,
+    )
+
+
+oracle_dialect.replace(
+    CharCharacterSetGrammar=OneOf("BYTE", "CHAR"),
+)
+
+
+class PlsqlDatatypeSegment(BaseSegment):
+    """Oracle PL/SQL datatype allowing BYTE/CHAR length semantics."""
+
+    type = "plsql_data_type"
+
+    match_grammar = Sequence(
+        Ref("DatatypeSegment"),
+        Bracketed(
+            Sequence(
+                Anything(),
+                OneOf("BYTE", "CHAR", optional=True),
+            ),
+            optional=True,
+        ),
     )
