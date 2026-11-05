@@ -18,11 +18,12 @@ def _violations(sql: str) -> list:
     Top-level parse failures surface in parsed.violations, but content that
     cannot be matched inside a Bracketed clause is silently wrapped in an
     unparsable tree node without raising a SQLParseError. We collect both so
-    that rejection tests for STORAGE(...) sub-parameters work correctly.
+    that rejection tests for STORAGE(...) sub-parameters work correctly. A
+    top-level parsing error does not require a successfully parsed root tree.
     """
     parsed = Linter(dialect="oracle").parse_string(sql)
     violations: list = list(parsed.violations)
-    if parsed.tree:
+    if not violations and parsed.tree:
         violations += list(parsed.tree.recursive_crawl("unparsable"))
     return violations
 
@@ -161,3 +162,18 @@ def test_inmemory_subclauses_rejected(sql: str) -> None:
 def test_index_physical_attrs_rejected(sql: str) -> None:
     """Duplicate or mutually-exclusive index physical attributes must produce a parse violation."""
     assert _violations(sql) != [], f"Expected violations but got none for:\n{sql}"
+
+
+@pytest.mark.parametrize(
+    "condition",
+    [
+        "UTL_SMTP.TRANSIENT_ERROR OR",
+        "OR UTL_SMTP.PERMANENT_ERROR",
+        "UTL_SMTP.TRANSIENT_ERROR OR OR NO_DATA_FOUND",
+        "UTL_SMTP.TRANSIENT_ERROR OR UTL_SMTP.",
+        "UTL_SMTP.TRANSIENT_ERROR OR .PERMANENT_ERROR",
+    ],
+)
+def test_malformed_exception_choices_rejected(condition: str) -> None:
+    """Each OR alternative must contain a complete exception name."""
+    assert _violations(f"BEGIN NULL; EXCEPTION WHEN {condition} THEN NULL; END;\n/\n")
