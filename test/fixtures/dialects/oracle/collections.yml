@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: e5ab5335dffbb28f013bacd3b11906004a8152f6de4fad4148cd51ceae393dde
+_hash: 42f066f826f11c9c4d732cea533900947af1c023931a2895b7885a3648a5bc03
 file:
 - batch:
     statement:
@@ -989,22 +989,23 @@ file:
               function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
-              - start_bracket: (
-              - expression:
-                  quoted_literal: "'Employee 101: '"
-                  binary_operator:
+                start_bracket: (
+                expression:
+                - quoted_literal: "'Employee 101: '"
+                - binary_operator:
                   - pipe: '|'
                   - pipe: '|'
-                  object_reference:
-                    naked_identifier: l_employees
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '101'
-                    end_bracket: )
-                  dot: .
-              - expression:
-                - column_reference:
-                    naked_identifier: first_name
+                - function:
+                    function_name:
+                      function_name_identifier: l_employees
+                    function_contents:
+                      bracketed:
+                        start_bracket: (
+                        expression:
+                          numeric_literal: '101'
+                        end_bracket: )
+                - dot: .
+                - naked_identifier: first_name
                 - binary_operator:
                   - pipe: '|'
                   - pipe: '|'
@@ -1012,17 +1013,18 @@ file:
                 - binary_operator:
                   - pipe: '|'
                   - pipe: '|'
-                - object_reference:
-                    naked_identifier: l_employees
-                - bracketed:
-                    start_bracket: (
-                    numeric_literal: '101'
-                    end_bracket: )
+                - function:
+                    function_name:
+                      function_name_identifier: l_employees
+                    function_contents:
+                      bracketed:
+                        start_bracket: (
+                        expression:
+                          numeric_literal: '101'
+                        end_bracket: )
                 - dot: .
-              - expression:
-                  column_reference:
-                    naked_identifier: last_name
-              - end_bracket: )
+                - naked_identifier: last_name
+                end_bracket: )
       - statement_terminator: ;
       - statement:
           function:
@@ -1032,23 +1034,24 @@ file:
               function_name_identifier: PUT_LINE
             function_contents:
               bracketed:
-              - start_bracket: (
-              - expression:
+                start_bracket: (
+                expression:
                   quoted_literal: "'Employee 102 Salary: '"
                   binary_operator:
                   - pipe: '|'
                   - pipe: '|'
-                  object_reference:
-                    naked_identifier: l_employees
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '102'
-                    end_bracket: )
+                  function:
+                    function_name:
+                      function_name_identifier: l_employees
+                    function_contents:
+                      bracketed:
+                        start_bracket: (
+                        expression:
+                          numeric_literal: '102'
+                        end_bracket: )
                   dot: .
-              - expression:
-                  column_reference:
-                    naked_identifier: salary
-              - end_bracket: )
+                  naked_identifier: salary
+                end_bracket: )
       - statement_terminator: ;
       - keyword: END
     statement_terminator: ;

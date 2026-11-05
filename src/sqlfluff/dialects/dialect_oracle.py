@@ -881,7 +881,6 @@ oracle_dialect.replace(
                     ),
                     optional=True,
                 ),
-                Ref("DotSegment", optional=True),
             ),
             terminators=[Ref("CommaSegment")],
         ),
@@ -2235,11 +2234,30 @@ class ObjectReferenceSegment(ansi.ObjectReferenceSegment):
     """A reference to an object."""
 
     # Allow whitespace
-    match_grammar: Matchable = Delimited(
-        Ref("SingleIdentifierGrammar"),
-        delimiter=Ref("ObjectReferenceDelimiterGrammar"),
-        terminators=[Ref("ObjectReferenceTerminatorGrammar")],
-        allow_gaps=True,
+    match_grammar: Matchable = OneOf(
+        Sequence(
+            Ref("SingleIdentifierGrammar"),
+            AnyNumberOf(
+                Sequence(
+                    Ref("ObjectReferenceDelimiterGrammar"),
+                    Ref("SingleIdentifierGrammar"),
+                )
+            ),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            StringParser("DATE", IdentifierSegment, type="naked_identifier"),
+            AnyNumberOf(
+                Sequence(
+                    Ref("ObjectReferenceDelimiterGrammar"),
+                    Ref("OracleRecordFieldIdentifierGrammar"),
+                )
+            ),
+        ),
+        Delimited(
+            Ref("SingleIdentifierGrammar"),
+            delimiter=Ref("ObjectReferenceDelimiterGrammar"),
+            terminators=[Ref("ObjectReferenceTerminatorGrammar")],
+            allow_gaps=True,
+        ),
     )
 
 
@@ -3055,7 +3073,7 @@ class RecordTypeDefinitionSegment(BaseSegment):
         Bracketed(
             Delimited(
                 Sequence(
-                    Ref("SingleIdentifierGrammar"),
+                    Ref("OracleRecordFieldIdentifierGrammar"),
                     OneOf(Ref("DatatypeSegment"), Ref("ColumnTypeReferenceSegment")),
                     Sequence(
                         Sequence("NOT", "NULL", optional=True),
@@ -5000,3 +5018,23 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+oracle_dialect.add(
+    OracleRecordFieldIdentifierGrammar=OneOf(
+        Ref("SingleIdentifierGrammar"),
+        StringParser("DATE", IdentifierSegment, type="naked_identifier"),
+    ),
+)
+
+
+oracle_dialect.replace(
+    AccessorGrammar=AnyNumberOf(
+        Ref("ArrayAccessorSegment"),
+        Sequence(
+            Ref("DotSegment"),
+            Ref("OracleRecordFieldIdentifierGrammar"),
+            allow_gaps=False,
+        ),
+    ),
+)

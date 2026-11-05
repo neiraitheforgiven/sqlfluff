@@ -1,0 +1,87 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: 30b7673df704048ab2bffa8fff67a6335e41b263fada44056ff651c663a87793
+file:
+- batch:
+    statement:
+      begin_end_block:
+      - declare_segment:
+        - keyword: DECLARE
+        - record_type:
+          - keyword: TYPE
+          - naked_identifier: example_record
+          - keyword: IS
+          - keyword: RECORD
+          - bracketed:
+            - start_bracket: (
+            - naked_identifier: Date
+            - data_type:
+                data_type_identifier: DATE
+            - comma: ','
+            - naked_identifier: value
+            - data_type:
+                data_type_identifier: NUMBER
+            - end_bracket: )
+        - statement_terminator: ;
+        - naked_identifier: v_record
+        - data_type:
+            data_type_identifier: example_record
+        - statement_terminator: ;
+      - keyword: BEGIN
+      - statement:
+          assignment_segment_statement:
+            object_reference:
+            - naked_identifier: v_record
+            - dot: .
+            - naked_identifier: Date
+            assignment_operator: :=
+            expression:
+              bare_function: SYSDATE
+      - statement_terminator: ;
+      - statement:
+          assignment_segment_statement:
+            object_reference:
+            - naked_identifier: v_record
+            - dot: .
+            - naked_identifier: Date
+            assignment_operator: :=
+            expression:
+              function:
+                function_name:
+                  function_name_identifier: GetDates
+                function_contents:
+                  bracketed:
+                    start_bracket: (
+                    expression:
+                      numeric_literal: '1'
+                    end_bracket: )
+              dot: .
+              naked_identifier: Date
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            column_reference:
+            - naked_identifier: example_alias
+            - dot: .
+            - naked_identifier: Date
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                  naked_identifier: example_table
+              alias_expression:
+                naked_identifier: example_alias
+    statement_terminator: ;
