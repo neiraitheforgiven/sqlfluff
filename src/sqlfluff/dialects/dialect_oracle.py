@@ -1926,6 +1926,7 @@ class CreateTableStatementSegment(BaseSegment):
                 Ref("CommentClauseSegment", optional=True),
                 Ref("OnCommitGrammar", optional=True),
                 Ref("OraclePhysicalAttributesSegment", optional=True),
+                Ref("TableOrganizationSegment", optional=True),
             ),
             # Create AS syntax:
             Sequence(
@@ -5000,3 +5001,21 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+class TableOrganizationSegment(BaseSegment):
+    """Oracle index-organized table physical property."""
+
+    type = "table_organization_segment"
+
+    match_grammar: Matchable = Sequence(
+        "ORGANIZATION",
+        "INDEX",
+        Sequence("TABLESPACE", Ref("ObjectReferenceSegment"), optional=True),
+    )
+
+
+oracle_dialect.sets("reserved_keywords").update({"ORGANIZATION"})
+
+
+oracle_dialect.sets("reserved_keywords").update({"ORGANIZATION"})

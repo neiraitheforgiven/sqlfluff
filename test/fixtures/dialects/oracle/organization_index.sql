@@ -1,0 +1,5 @@
+
+CREATE TABLE example_indexed_table (id NUMBER PRIMARY KEY)
+ORGANIZATION INDEX TABLESPACE example_data;
+CREATE TABLE another_indexed_table (id NUMBER PRIMARY KEY)
+ORGANIZATION INDEX;
