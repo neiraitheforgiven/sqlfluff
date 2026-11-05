@@ -396,15 +396,14 @@ oracle_dialect.add(
             optional=True,
         ),
     ),
-    PipelinedClauseGrammar=Sequence(
+    PipelinedClauseGrammar=OneOf(
         "PIPELINED",
-        OneOf(
+        Sequence("PIPELINED", "USING", Ref("ObjectReferenceSegment")),
+        Sequence(
+            "PIPELINED",
+            OneOf("ROW", "TABLE"),
+            "POLYMORPHIC",
             Sequence("USING", Ref("ObjectReferenceSegment"), optional=True),
-            Sequence(
-                OneOf("ROW", "TABLE"),
-                "POLYMORPHIC",
-                Sequence("USING", Ref("ObjectReferenceSegment"), optional=True),
-            ),
         ),
     ),
     OracleDeferrableGrammar=OneOf(
@@ -1341,6 +1340,7 @@ class PlsqlStatementSegment(StatementSegment):
 
     match_grammar = StatementSegment.match_grammar.copy(
         insert=[
+            Ref("PipeRowStatementSegment"),
             # Must be last: bare reference or call without parentheses used as
             # a statement (procedure call).  More specific segments above take
             # priority when the lookahead matches their keywords.
@@ -5000,3 +5000,18 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+class PipeRowStatementSegment(BaseSegment):
+    """Oracle pipelined-function row emission statement."""
+
+    type = "pipe_row_statement"
+
+    match_grammar = Sequence(
+        Ref.keyword("PIPE"),
+        Ref.keyword("ROW"),
+        Bracketed(Delimited(Ref("FunctionContentsExpressionGrammar"))),
+    )
+
+
+oracle_dialect.sets("reserved_keywords").update({"PIPE", "PIPELINED"})
