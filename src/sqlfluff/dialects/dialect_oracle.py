@@ -2795,15 +2795,21 @@ class TableConstraintSegment(ansi.TableConstraintSegment):
             Sequence(  # UNIQUE ( column_name [, ... ] )
                 "UNIQUE",
                 Ref("BracketedColumnReferenceListGrammar"),
-                Ref("UsingIndexClauseSegment", optional=True),
-                Ref("OracleConstraintStateGrammar", optional=True),
+                AnySetOf(
+                    Ref("UsingIndexClauseSegment"),
+                    Ref("OracleConstraintStateGrammar"),
+                    optional=True,
+                ),
             ),
             Sequence(  # PRIMARY KEY ( column_name [, ... ] ) index_parameters
                 Ref("PrimaryKeyGrammar"),
                 # Columns making up PRIMARY KEY constraint
                 Ref("BracketedColumnReferenceListGrammar"),
-                Ref("UsingIndexClauseSegment", optional=True),
-                Ref("OracleConstraintStateGrammar", optional=True),
+                AnySetOf(
+                    Ref("UsingIndexClauseSegment"),
+                    Ref("OracleConstraintStateGrammar"),
+                    optional=True,
+                ),
             ),
             Sequence(  # FOREIGN KEY ( column_name [, ... ] )
                 # REFERENCES reftable [ ( refcolumn [, ... ] ) ]
