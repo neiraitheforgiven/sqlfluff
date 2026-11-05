@@ -1,0 +1,73 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: 9bdcfda91240e1ea50177c94220a2ded8f99d3431b0ab1b3974640bf63094220
+file:
+  batch:
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_modifier:
+            keyword: UNIQUE
+          select_clause_element:
+            column_reference:
+              naked_identifier: value
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                  naked_identifier: example_table
+  - statement_terminator: ;
+  - statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            keyword: CONNECT_BY_ROOT
+            object_reference:
+            - naked_identifier: t
+            - dot: .
+            - naked_identifier: value
+            alias_expression:
+              naked_identifier: root_value
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                  naked_identifier: example_table
+              alias_expression:
+                naked_identifier: t
+        hierarchical_query_clause:
+          startwith_clause:
+          - keyword: START
+          - keyword: WITH
+          - expression:
+              column_reference:
+              - naked_identifier: t
+              - dot: .
+              - naked_identifier: parent_id
+              keyword: IS
+              null_literal: 'NULL'
+          connectby_clause:
+          - keyword: CONNECT
+          - keyword: BY
+          - expression:
+            - keyword: PRIOR
+            - column_reference:
+              - naked_identifier: t
+              - dot: .
+              - naked_identifier: id
+            - comparison_operator:
+                raw_comparison_operator: '='
+            - column_reference:
+              - naked_identifier: t
+              - dot: .
+              - naked_identifier: parent_id
+  - statement_terminator: ;

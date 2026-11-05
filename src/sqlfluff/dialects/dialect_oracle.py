@@ -218,7 +218,13 @@ oracle_dialect.add(
             Sequence(OneOf("DELETE", "PRESERVE"), Ref.keyword("ROWS")),
         ),
     ),
-    ConnectByRootGrammar=Sequence("CONNECT_BY_ROOT", Ref("NakedIdentifierSegment")),
+    ConnectByRootGrammar=Sequence(
+        "CONNECT_BY_ROOT",
+        OneOf(
+            Ref("ObjectReferenceSegment"),
+            Ref("NakedIdentifierSegment"),
+        ),
+    ),
     PlusJoinSegment=Sequence(
         Ref("StartBracketSegment"),
         StringParser("+", SymbolSegment, type="plus_join_symbol"),
@@ -2088,7 +2094,6 @@ class UnorderedSelectStatementSegment(ansi.UnorderedSelectStatementSegment):
         ],
         before=Ref("GroupByClauseSegment", optional=True),
         terminators=[
-            Ref("HierarchicalQueryClauseSegment"),
             "LOG",
         ],
     ).copy(
@@ -5000,3 +5005,12 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+class OracleSelectClauseModifierSegment(ansi.SelectClauseModifierSegment):
+    """Oracle SELECT modifiers, including UNIQUE as a DISTINCT synonym."""
+
+    match_grammar = OneOf("DISTINCT", "UNIQUE", "ALL")
+
+
+oracle_dialect.replace(SelectClauseModifierSegment=OracleSelectClauseModifierSegment)
