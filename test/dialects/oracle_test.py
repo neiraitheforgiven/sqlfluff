@@ -18,11 +18,12 @@ def _violations(sql: str) -> list:
     Top-level parse failures surface in parsed.violations, but content that
     cannot be matched inside a Bracketed clause is silently wrapped in an
     unparsable tree node without raising a SQLParseError. We collect both so
-    that rejection tests for STORAGE(...) sub-parameters work correctly.
+    that rejection tests for STORAGE(...) sub-parameters work correctly. A
+    top-level parsing error does not require a successfully parsed root tree.
     """
     parsed = Linter(dialect="oracle").parse_string(sql)
     violations: list = list(parsed.violations)
-    if parsed.tree:
+    if not violations and parsed.tree:
         violations += list(parsed.tree.recursive_crawl("unparsable"))
     return violations
 
@@ -161,3 +162,25 @@ def test_inmemory_subclauses_rejected(sql: str) -> None:
 def test_index_physical_attrs_rejected(sql: str) -> None:
     """Duplicate or mutually-exclusive index physical attributes must produce a parse violation."""
     assert _violations(sql) != [], f"Expected violations but got none for:\n{sql}"
+
+
+@pytest.mark.parametrize("suffix", [".", "..Fee", ".Fee."])
+def test_malformed_function_result_field_access_rejected(suffix: str) -> None:
+    """Each dot after a function call must introduce a complete field name."""
+    assert _violations(f"BEGIN t_Amount := GetFees(1, 'GR'){suffix}; END;\n/\n")
+
+
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "t_Groups(1).ContactInfoList.",
+        "t_Groups(1).ContactInfoList.COUNT.",
+        "t_Groups(1).ContactInfoList..COUNT + 1",
+        "t_Groups(1).ContactInfoList.COUNT +",
+        "t_Groups(1).ContactInfoList(t_Index",
+        "t_Groups(1).ContactInfoList.COUNT + (1",
+    ],
+)
+def test_malformed_nested_collection_access_rejected(expression: str) -> None:
+    """Collection accessors still require complete fields, subscripts and operands."""
+    assert _violations(f"BEGIN t_Value := {expression}; END;\n/\n")

@@ -881,7 +881,6 @@ oracle_dialect.replace(
                     ),
                     optional=True,
                 ),
-                Ref("DotSegment", optional=True),
             ),
             terminators=[Ref("CommaSegment")],
         ),
@@ -2235,11 +2234,56 @@ class ObjectReferenceSegment(ansi.ObjectReferenceSegment):
     """A reference to an object."""
 
     # Allow whitespace
-    match_grammar: Matchable = Delimited(
-        Ref("SingleIdentifierGrammar"),
-        delimiter=Ref("ObjectReferenceDelimiterGrammar"),
-        terminators=[Ref("ObjectReferenceTerminatorGrammar")],
-        allow_gaps=True,
+    match_grammar: Matchable = OneOf(
+        Sequence(
+            Ref("SingleIdentifierGrammar"),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            OneOf(
+                Bracketed(Ref("ExpressionSegment")),
+                Ref("FunctionContentsSegment"),
+            ),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            allow_gaps=True,
+        ),
+        Sequence(
+            Ref("SingleIdentifierGrammar"),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            Ref("FunctionContentsSegment"),
+            Bracketed(Ref("ExpressionSegment")),
+            allow_gaps=True,
+        ),
+        Sequence(
+            Ref("SingleIdentifierGrammar"),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            OneOf(
+                Bracketed(Ref("ExpressionSegment")),
+                Ref("FunctionContentsSegment"),
+            ),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            allow_gaps=True,
+        ),
+        Sequence(
+            Ref("SingleIdentifierGrammar"),
+            Bracketed(Ref("ExpressionSegment")),
+            Ref("ObjectReferenceDelimiterGrammar"),
+            Ref("SingleIdentifierGrammar"),
+            allow_gaps=True,
+        ),
+        Delimited(
+            Ref("SingleIdentifierGrammar"),
+            delimiter=Ref("ObjectReferenceDelimiterGrammar"),
+            terminators=[Ref("ObjectReferenceTerminatorGrammar")],
+            allow_gaps=True,
+        ),
     )
 
 
@@ -5000,3 +5044,15 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+oracle_dialect.replace(
+    AccessorGrammar=AnyNumberOf(
+        Ref("ArrayAccessorSegment"),
+        Sequence(
+            Ref("DotSegment"),
+            Ref("SingleIdentifierGrammar"),
+            allow_gaps=False,
+        ),
+    ),
+)
