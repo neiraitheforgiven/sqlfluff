@@ -815,6 +815,7 @@ oracle_dialect.replace(
         OneOf(
             Ref("PlusJoinGrammar"),
             Ref("BareFunctionSegment"),
+            Ref("OracleValueFunctionSegment"),
             Ref("FunctionSegment"),
             Ref("TriggerCorrelationReferenceSegment"),
             Bracketed(
@@ -4999,4 +5000,14 @@ class ValuesClauseSegment(BaseSegment):
             ),
         ),
         Dedent,
+    )
+
+
+class OracleValueFunctionSegment(BaseSegment):
+    """The PL/SQL VALUE function, which collides with the VALUES clause."""
+
+    type = "function"
+    match_grammar: Matchable = Sequence(
+        "VALUE",
+        Ref("FunctionContentsSegment"),
     )
