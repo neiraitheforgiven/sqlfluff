@@ -5000,3 +5000,7 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+oracle_dialect.sets("reserved_keywords").discard("INDEXTYPE")
+oracle_dialect.sets("unreserved_keywords").add("INDEXTYPE")
