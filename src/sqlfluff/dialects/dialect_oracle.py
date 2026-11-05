@@ -1289,6 +1289,7 @@ class StatementSegment(ansi.StatementSegment):
             Ref("ExecuteImmediateSegment"),
             Ref("FunctionSegment"),
             Ref("IfExpressionStatement"),
+            Ref("CaseStatementSegment"),
             Ref("CaseExpressionSegment"),
             Ref("NullStatementSegment"),
             Ref("ForLoopStatementSegment"),
@@ -3655,6 +3656,8 @@ class ProcedureCallStatementSegment(BaseSegment):
         Ref.keyword("END"),
         Ref.keyword("EXCEPTION"),
         Ref.keyword("ELSIF"),
+        Ref.keyword("ELSE"),
+        Ref.keyword("WHEN"),
     )
 
     match_grammar = Sequence(
@@ -4999,4 +5002,57 @@ class ValuesClauseSegment(BaseSegment):
             ),
         ),
         Dedent,
+    )
+
+
+class CaseStatementWhenSegment(BaseSegment):
+    """A WHEN arm in an executable CASE statement."""
+
+    type = "case_statement_when"
+    match_grammar: Matchable = Sequence(
+        "WHEN",
+        Ref("ExpressionSegment"),
+        "THEN",
+        Indent,
+        Ref("OneOrMoreStatementsGrammar"),
+        Dedent,
+    )
+
+
+class CaseStatementSegment(BaseSegment):
+    """An executable PL/SQL CASE statement."""
+
+    type = "case_statement"
+    match_grammar: Matchable = OneOf(
+        Sequence(
+            "CASE",
+            Ref("ExpressionSegment"),
+            Indent,
+            AnyNumberOf(Ref("CaseStatementWhenSegment"), min_times=1),
+            Sequence(
+                "ELSE",
+                Indent,
+                Ref("OneOrMoreStatementsGrammar"),
+                Dedent,
+                optional=True,
+            ),
+            Dedent,
+            "END",
+            "CASE",
+        ),
+        Sequence(
+            "CASE",
+            Indent,
+            AnyNumberOf(Ref("CaseStatementWhenSegment"), min_times=1),
+            Sequence(
+                "ELSE",
+                Indent,
+                Ref("OneOrMoreStatementsGrammar"),
+                Dedent,
+                optional=True,
+            ),
+            Dedent,
+            "END",
+            "CASE",
+        ),
     )
