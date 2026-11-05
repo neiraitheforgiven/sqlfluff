@@ -1,0 +1,82 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: 5aef44f2ecb7bde8cca91d3c4022718b6c7caa681fd7f314251464a2f2cab06a
+file:
+  batch:
+  - statement:
+      create_table_statement:
+      - keyword: CREATE
+      - keyword: TABLE
+      - table_reference:
+          naked_identifier: t_lob_storage
+      - bracketed:
+        - start_bracket: (
+        - column_definition:
+            naked_identifier: id
+            data_type:
+              data_type_identifier: NUMBER
+        - comma: ','
+        - column_definition:
+            naked_identifier: payload
+            data_type:
+              data_type_identifier: CLOB
+        - end_bracket: )
+      - oracle_physical_attributes:
+          keyword: TABLESPACE
+          object_reference:
+            naked_identifier: data_ts
+      - table_end_clause_segment:
+        - keyword: LOB
+        - bracketed:
+            start_bracket: (
+            naked_identifier: payload
+            end_bracket: )
+        - keyword: STORE
+        - keyword: AS
+        - bracketed:
+          - start_bracket: (
+          - keyword: TABLESPACE
+          - object_reference:
+              naked_identifier: lob_ts
+          - keyword: DISABLE
+          - keyword: STORAGE
+          - keyword: IN
+          - keyword: ROW
+          - end_bracket: )
+  - statement_terminator: ;
+  - statement:
+      create_table_statement:
+      - keyword: CREATE
+      - keyword: TABLE
+      - table_reference:
+          naked_identifier: t_lob_storage_default
+      - bracketed:
+        - start_bracket: (
+        - column_definition:
+            naked_identifier: id
+            data_type:
+              data_type_identifier: NUMBER
+        - comma: ','
+        - column_definition:
+            naked_identifier: payload
+            data_type:
+              data_type_identifier: BLOB
+        - end_bracket: )
+      - table_end_clause_segment:
+        - keyword: LOB
+        - bracketed:
+            start_bracket: (
+            naked_identifier: payload
+            end_bracket: )
+        - keyword: STORE
+        - keyword: AS
+        - bracketed:
+            start_bracket: (
+            keyword: TABLESPACE
+            object_reference:
+              naked_identifier: lob_ts
+            end_bracket: )
+  - statement_terminator: ;

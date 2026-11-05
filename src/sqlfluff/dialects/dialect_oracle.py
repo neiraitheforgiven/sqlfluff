@@ -5000,3 +5000,28 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+class TableEndClauseSegment(BaseSegment):
+    """Oracle LOB storage clauses following a CREATE TABLE definition."""
+
+    type = "table_end_clause_segment"
+
+    match_grammar: Matchable = AnyNumberOf(
+        Sequence(
+            "LOB",
+            Bracketed(Ref("SingleIdentifierGrammar")),
+            "STORE",
+            "AS",
+            Bracketed(
+                AnySetOf(
+                    Sequence("TABLESPACE", Ref("ObjectReferenceSegment")),
+                    Sequence("DISABLE", "STORAGE", "IN", "ROW"),
+                )
+            ),
+        ),
+        min_times=1,
+    )
+
+
+oracle_dialect.sets("reserved_keywords").update({"LOB"})
