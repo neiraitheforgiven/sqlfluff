@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 46b83d97598b4ccfc27088feaf6be1f1e2e29baa7ad1e1d15133badbfd0b04c6
+_hash: b7eed059180ec5b0b31059829018e6ffe0fff193d9b13d48b545e155ecafb9ae
 file:
 - batch:
     statement:
@@ -14,20 +14,23 @@ file:
           - keyword: TYPE
           - naked_identifier: NumList
           - keyword: IS
-          - data_type:
-              data_type_identifier: VARRAY
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '20'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARRAY
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '20'
+                    end_bracket: )
           - keyword: OF
-          - data_type:
-              data_type_identifier: NUMBER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: NUMBER
         - statement_terminator: ;
         - naked_identifier: depts
-        - data_type:
-            data_type_identifier: NumList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NumList
         - assignment_operator: :=
         - expression:
             function:
@@ -111,8 +114,9 @@ file:
               keyword: TYPE
           - keyword: INDEX
           - keyword: BY
-          - data_type:
-              data_type_identifier: PLS_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: PLS_INTEGER
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -129,36 +133,43 @@ file:
               keyword: TYPE
           - keyword: INDEX
           - keyword: BY
-          - data_type:
-              data_type_identifier: PLS_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: PLS_INTEGER
         - statement_terminator: ;
         - naked_identifier: pnums
-        - data_type:
-            data_type_identifier: NumTab
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NumTab
         - statement_terminator: ;
         - naked_identifier: pnames
-        - data_type:
-            data_type_identifier: NameTab
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NameTab
         - statement_terminator: ;
         - naked_identifier: iterations
         - keyword: CONSTANT
-        - data_type:
-            data_type_identifier: PLS_INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: PLS_INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '50000'
         - statement_terminator: ;
         - naked_identifier: t1
-        - data_type:
-            data_type_identifier: INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: INTEGER
         - statement_terminator: ;
         - naked_identifier: t2
-        - data_type:
-            data_type_identifier: INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: INTEGER
         - statement_terminator: ;
         - naked_identifier: t3
-        - data_type:
-            data_type_identifier: INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: INTEGER
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -469,20 +480,23 @@ file:
           - keyword: TYPE
           - naked_identifier: NumList
           - keyword: IS
-          - data_type:
-              data_type_identifier: VARRAY
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '10'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARRAY
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '10'
+                    end_bracket: )
           - keyword: OF
-          - data_type:
-              data_type_identifier: NUMBER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: NUMBER
         - statement_terminator: ;
         - naked_identifier: depts
-        - data_type:
-            data_type_identifier: NumList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NumList
         - assignment_operator: :=
         - expression:
             function:
@@ -582,12 +596,14 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: NUMBER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: NUMBER
         - statement_terminator: ;
         - naked_identifier: depts
-        - data_type:
-            data_type_identifier: NumList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NumList
         - assignment_operator: :=
         - expression:
             function:
@@ -607,13 +623,14 @@ file:
                 - end_bracket: )
         - statement_terminator: ;
         - naked_identifier: error_message
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '100'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '100'
+                  end_bracket: )
         - statement_terminator: ;
       - begin_end_block:
         - keyword: BEGIN

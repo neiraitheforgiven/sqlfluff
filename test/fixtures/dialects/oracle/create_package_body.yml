@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 0c26399034de07c8c1df551ba8c6670411aea124f1686bd20e087c87439f43e9
+_hash: c04dd91a87e23c4a0f79c57f78690a8298c6fc7fb59610c17200f74f68939ab4
 file:
 - batch:
     statement:
@@ -90,8 +90,9 @@ file:
       - keyword: AS
       - declare_segment:
           naked_identifier: v_counter
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           assignment_operator: :=
           expression:
             numeric_literal: '0'
@@ -124,8 +125,9 @@ file:
       - keyword: AS
       - declare_segment:
           naked_identifier: v_init
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           assignment_operator: :=
           expression:
             numeric_literal: '0'
@@ -173,12 +175,14 @@ file:
       - keyword: AS
       - declare_segment:
         - naked_identifier: tot_emps
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - statement_terminator: ;
         - naked_identifier: tot_depts
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - statement_terminator: ;
         - create_function_statement:
           - keyword: FUNCTION
@@ -218,8 +222,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: new_empno
-                data_type:
-                  data_type_identifier: NUMBER
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: NUMBER
                 statement_terminator: ;
             - keyword: BEGIN
             - statement:
@@ -338,8 +343,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: new_deptno
-                data_type:
-                  data_type_identifier: NUMBER
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: NUMBER
                 statement_terminator: ;
             - keyword: BEGIN
             - statement:
@@ -558,8 +564,9 @@ file:
           - keyword: IS
           - declare_segment:
               naked_identifier: curr_sal
-              data_type:
-                data_type_identifier: NUMBER
+              plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
               statement_terminator: ;
           - begin_end_block:
             - keyword: BEGIN
@@ -663,8 +670,9 @@ file:
           - keyword: IS
           - declare_segment:
               naked_identifier: curr_comm
-              data_type:
-                data_type_identifier: NUMBER
+              plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
               statement_terminator: ;
           - begin_end_block:
             - keyword: BEGIN
@@ -770,8 +778,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: var_1
-                data_type:
-                  data_type_identifier: NUMBER
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: NUMBER
                 assignment_operator: :=
                 expression:
                   numeric_literal: '0'

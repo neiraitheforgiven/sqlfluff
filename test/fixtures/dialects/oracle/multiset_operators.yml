@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: ec24b6baf97659f7b5ce55f4aba60c9adbd732441150259421cf037faadabc0b
+_hash: 9be0e2f92419a3c11d7bc7c178f583f643f355e6e0a6d6df5c147bca3f28b2d7
 file:
 - batch:
   - statement:
@@ -392,17 +392,19 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: varchar2
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '100'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: varchar2
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '100'
+                    end_bracket: )
         - statement_terminator: ;
         - naked_identifier: happyfamily
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:
@@ -414,8 +416,9 @@ file:
                   end_bracket: )
         - statement_terminator: ;
         - naked_identifier: children
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:
@@ -427,8 +430,9 @@ file:
                   end_bracket: )
         - statement_terminator: ;
         - naked_identifier: parents
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:
@@ -566,17 +570,19 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: varchar2
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '100'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: varchar2
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '100'
+                    end_bracket: )
         - statement_terminator: ;
         - naked_identifier: a
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:
@@ -588,8 +594,9 @@ file:
                   end_bracket: )
         - statement_terminator: ;
         - naked_identifier: b
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:
@@ -601,8 +608,9 @@ file:
                   end_bracket: )
         - statement_terminator: ;
         - naked_identifier: c
-        - data_type:
-            data_type_identifier: list_of_names_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: list_of_names_t
         - assignment_operator: :=
         - expression:
             function:

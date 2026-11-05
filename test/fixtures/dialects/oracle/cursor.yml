@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 5fff04d594be9b0316ed4fbf1d242ec0a6e9ec6d23aa44e97efec09672d5f02c
+_hash: 160fcc19d9d72afc4165a6f2da838c686d9f1a9e5b6d40ecbe5111f8bd5e535b
 file:
 - batch:
     statement:
@@ -31,16 +31,19 @@ file:
           - keyword: CURSOR
         - statement_terminator: ;
         - naked_identifier: cursor1
-        - data_type:
-            data_type_identifier: empcurtyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: empcurtyp
         - statement_terminator: ;
         - naked_identifier: cursor2
-        - data_type:
-            data_type_identifier: genericcurtyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: genericcurtyp
         - statement_terminator: ;
         - naked_identifier: my_cursor
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
         - ref_cursor_type:
           - keyword: TYPE
@@ -56,8 +59,9 @@ file:
               keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: dept_cv
-        - data_type:
-            data_type_identifier: deptcurtyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: deptcurtyp
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -73,37 +77,34 @@ file:
       begin_end_block:
       - declare_segment:
         - keyword: DECLARE
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: EmpRecTyp
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: employee_id
-            - data_type:
-                data_type_identifier: NUMBER
-            - comma: ','
-            - naked_identifier: last_name
-            - data_type:
-                data_type_identifier: VARCHAR2
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '25'
-                    end_bracket: )
-            - comma: ','
-            - naked_identifier: salary
-            - data_type:
-                data_type_identifier: NUMBER
-                bracketed_arguments:
-                  bracketed:
-                  - start_bracket: (
-                  - numeric_literal: '8'
-                  - comma: ','
-                  - numeric_literal: '2'
-                  - end_bracket: )
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: employee_id
+              - word: NUMBER
+              - comma: ','
+              - word: last_name
+              - word: VARCHAR2
+              - bracketed:
+                  start_bracket: (
+                  numeric_literal: '25'
+                  end_bracket: )
+              - comma: ','
+              - word: salary
+              - word: NUMBER
+              - bracketed:
+                - start_bracket: (
+                - numeric_literal: '8'
+                - comma: ','
+                - numeric_literal: '2'
+                - end_bracket: )
+              - end_bracket: )
         - statement_terminator: ;
         - ref_cursor_type:
           - keyword: TYPE
@@ -116,8 +117,9 @@ file:
               naked_identifier: EmpRecTyp
         - statement_terminator: ;
         - naked_identifier: emp_cv
-        - data_type:
-            data_type_identifier: EmpCurTyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EmpCurTyp
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -152,15 +154,17 @@ file:
             keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: factor
-        - data_type:
-            data_type_identifier: INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '2'
         - statement_terminator: ;
         - naked_identifier: cv
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -320,15 +324,17 @@ file:
             keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: factor
-        - data_type:
-            data_type_identifier: INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '2'
         - statement_terminator: ;
         - naked_identifier: cv
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -583,20 +589,23 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: v1
-        - data_type:
-            naked_identifier: pkg
-            dot: .
-            data_type_identifier: mytab
+        - plsql_data_type:
+            data_type:
+              naked_identifier: pkg
+              dot: .
+              data_type_identifier: mytab
         - statement_terminator: ;
         - naked_identifier: v2
-        - data_type:
-            naked_identifier: pkg
-            dot: .
-            data_type_identifier: rec
+        - plsql_data_type:
+            data_type:
+              naked_identifier: pkg
+              dot: .
+              data_type_identifier: rec
         - statement_terminator: ;
         - naked_identifier: c1
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -857,8 +866,9 @@ file:
             keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: factor
-        - data_type:
-            data_type_identifier: INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '2'
@@ -1025,8 +1035,9 @@ file:
             keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: factor
-        - data_type:
-            data_type_identifier: INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '2'
@@ -2677,8 +2688,9 @@ file:
           - keyword: CURSOR
         - statement_terminator: ;
         - naked_identifier: emp_cur
-        - data_type:
-            data_type_identifier: emp_cur_typ
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: emp_cur_typ
         - statement_terminator: ;
         - naked_identifier: dept_name
         - column_type_reference:

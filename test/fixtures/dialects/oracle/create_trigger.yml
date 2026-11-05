@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: f4ae9f6bbb34e4cae76e4bc6f58042b9cb9d00e8ebb29a32732373b2de629ce5
+_hash: 0d2be330eff2081c1635752008485f9c75a8b47addd9a3a6c8e3399edf3d9b06
 file:
 - batch:
     statement:
@@ -140,25 +140,21 @@ file:
           - declare_segment:
             - keyword: DECLARE
             - naked_identifier: duplicate_info
-            - data_type:
-                data_type_identifier: EXCEPTION
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: EXCEPTION
             - statement_terminator: ;
-            - keyword: PRAGMA
-            - function:
-                function_name:
-                  function_name_identifier: EXCEPTION_INIT
-                function_contents:
-                  bracketed:
-                  - start_bracket: (
-                  - expression:
-                      column_reference:
-                        naked_identifier: duplicate_info
-                  - comma: ','
-                  - expression:
-                      numeric_literal:
-                        sign_indicator: '-'
-                        numeric_literal: '00001'
-                  - end_bracket: )
+            - naked_identifier: PRAGMA
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: EXCEPTION_INIT
+                bracketed:
+                  start_bracket: (
+                  word: duplicate_info
+                  comma: ','
+                  minus: '-'
+                  numeric_literal: '00001'
+                  end_bracket: )
             - statement_terminator: ;
           - keyword: BEGIN
           - statement:
@@ -422,8 +418,9 @@ file:
         - declare_segment:
           - naked_identifier: threshhold
           - keyword: CONSTANT
-          - data_type:
-              data_type_identifier: SIMPLE_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: SIMPLE_INTEGER
           - assignment_operator: :=
           - expression:
               numeric_literal: '7'
@@ -441,16 +438,19 @@ file:
                 keyword: ROWTYPE
             - keyword: INDEX
             - keyword: BY
-            - data_type:
-                data_type_identifier: SIMPLE_INTEGER
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: SIMPLE_INTEGER
           - statement_terminator: ;
           - naked_identifier: salaries
-          - data_type:
-              data_type_identifier: salaries_t
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: salaries_t
           - statement_terminator: ;
           - naked_identifier: idx
-          - data_type:
-              data_type_identifier: SIMPLE_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: SIMPLE_INTEGER
           - assignment_operator: :=
           - expression:
               numeric_literal: '0'
@@ -463,8 +463,9 @@ file:
             - declare_segment:
                 naked_identifier: n
                 keyword: CONSTANT
-                data_type:
-                  data_type_identifier: SIMPLE_INTEGER
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: SIMPLE_INTEGER
                 assignment_operator: :=
                 expression:
                   function:

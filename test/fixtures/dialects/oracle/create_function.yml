@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 9092f83cabc20c555bac84f7a122686cddd4b04a9cbd50a6dcba07834a3839e5
+_hash: 518bf77410b793259bf5f21942425a29ae2bd71c7558f24b4cf96264ed54036f
 file:
 - batch:
     statement:
@@ -30,15 +30,16 @@ file:
       - begin_end_block:
         - declare_segment:
             naked_identifier: acc_bal
-            data_type:
-              data_type_identifier: NUMBER
-              bracketed_arguments:
-                bracketed:
-                - start_bracket: (
-                - numeric_literal: '11'
-                - comma: ','
-                - numeric_literal: '2'
-                - end_bracket: )
+            plsql_data_type:
+              data_type:
+                data_type_identifier: NUMBER
+                bracketed_arguments:
+                  bracketed:
+                  - start_bracket: (
+                  - numeric_literal: '11'
+                  - comma: ','
+                  - numeric_literal: '2'
+                  - end_bracket: )
             statement_terminator: ;
         - keyword: BEGIN
         - statement:
@@ -151,8 +152,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: original_squared
-                data_type:
-                  data_type_identifier: NUMBER
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: NUMBER
                 statement_terminator: ;
             - keyword: BEGIN
             - statement:
@@ -208,8 +210,9 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: x
-          data_type:
-            data_type_identifier: INTEGER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: INTEGER
           statement_terminator: ;
           create_function_statement:
           - keyword: FUNCTION

@@ -1,0 +1,135 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: 3d8ad12037117008c56b5b98ccafc6cbccabda4a3a44e20cd3cf7288a4a0dc99
+file:
+- batch:
+    statement:
+      begin_end_block:
+      - declare_segment:
+        - keyword: DECLARE
+        - subtype_definition:
+          - keyword: SUBTYPE
+          - naked_identifier: short_text
+          - keyword: IS
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARCHAR2
+              bracketed:
+                start_bracket: (
+                numeric_literal: '20'
+                word: CHAR
+                end_bracket: )
+        - statement_terminator: ;
+        - collection_type:
+          - keyword: TYPE
+          - naked_identifier: text_list
+          - keyword: IS
+          - keyword: TABLE
+          - keyword: OF
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARCHAR2
+              bracketed:
+                start_bracket: (
+                numeric_literal: '100'
+                word: BYTE
+                end_bracket: )
+          - keyword: INDEX
+          - keyword: BY
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: PLS_INTEGER
+        - statement_terminator: ;
+        - collection_type:
+          - keyword: TYPE
+          - naked_identifier: custom_list
+          - keyword: IS
+          - keyword: TABLE
+          - keyword: OF
+          - plsql_data_type:
+              data_type:
+                naked_identifier: example_pkg
+                dot: .
+                data_type_identifier: item_type
+        - statement_terminator: ;
+        - collection_type:
+          - keyword: TYPE
+          - naked_identifier: row_record
+          - keyword: IS
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: label
+              - word: VARCHAR2
+              - bracketed:
+                  start_bracket: (
+                  numeric_literal: '50'
+                  word: CHAR
+                  end_bracket: )
+              - comma: ','
+              - word: value
+              - word: NUMBER
+              - end_bracket: )
+        - statement_terminator: ;
+        - naked_identifier: v_items
+        - plsql_data_type:
+            data_type:
+              naked_identifier: example_pkg
+              dot: .
+              data_type_identifier: item_list
+        - statement_terminator: ;
+        - naked_identifier: v_row
+        - plsql_data_type:
+            data_type:
+              naked_identifier: example_pkg
+              dot: .
+              data_type_identifier: item_type
+        - statement_terminator: ;
+      - keyword: BEGIN
+      - statement:
+          null_statement:
+            keyword: 'NULL'
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      create_function_statement:
+      - keyword: CREATE
+      - keyword: FUNCTION
+      - function_name:
+          function_name_identifier: get_item
+      - keyword: RETURN
+      - data_type:
+          naked_identifier: example_pkg
+          dot: .
+          data_type_identifier: item_type
+      - keyword: IS
+      - begin_end_block:
+        - declare_segment:
+            naked_identifier: v_item
+            plsql_data_type:
+              data_type:
+                naked_identifier: example_pkg
+                dot: .
+                data_type_identifier: item_type
+            statement_terminator: ;
+        - keyword: BEGIN
+        - statement:
+            return_statement:
+              keyword: RETURN
+              expression:
+                column_reference:
+                  naked_identifier: v_item
+        - statement_terminator: ;
+        - keyword: END
+      - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /

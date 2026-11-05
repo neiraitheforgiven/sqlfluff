@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: a0c03d40496175d333588e3885e1ab5049edb8cabed6162ebce122da4071846f
+_hash: 0725829b873942a2924200c5ddea06fc6db0ebb02529333524658540c7345552
 file:
 - batch:
     statement:
@@ -46,22 +46,24 @@ file:
           - declare_segment:
             - keyword: DECLARE
             - naked_identifier: AUDITINFO
-            - data_type:
-                data_type_identifier: VARCHAR2
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '2000'
-                    end_bracket: )
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: VARCHAR2
+                  bracketed_arguments:
+                    bracketed:
+                      start_bracket: (
+                      numeric_literal: '2000'
+                      end_bracket: )
             - statement_terminator: ;
             - naked_identifier: EVENT
-            - data_type:
-                data_type_identifier: VARCHAR2
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '10'
-                    end_bracket: )
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: VARCHAR2
+                  bracketed_arguments:
+                    bracketed:
+                      start_bracket: (
+                      numeric_literal: '10'
+                      end_bracket: )
             - statement_terminator: ;
           - keyword: BEGIN
           - statement:
@@ -179,13 +181,14 @@ file:
           - declare_segment:
               keyword: DECLARE
               naked_identifier: EVENT
-              data_type:
-                data_type_identifier: VARCHAR2
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '10'
-                    end_bracket: )
+              plsql_data_type:
+                data_type:
+                  data_type_identifier: VARCHAR2
+                  bracketed_arguments:
+                    bracketed:
+                      start_bracket: (
+                      numeric_literal: '10'
+                      end_bracket: )
               statement_terminator: ;
           - keyword: BEGIN
           - statement:

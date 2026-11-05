@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: a71dfc33c4448d07e9153eab909f88acea3eceefee21e017f90d7eccb59bbf3d
+_hash: 99dac9659dd6f7113b903b1492733bc95432acf53ed9a653882a5348013c68da
 file:
   batch:
   - statement:
@@ -63,8 +63,9 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: v_value
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           statement_terminator: ;
       - keyword: BEGIN
       - statement:

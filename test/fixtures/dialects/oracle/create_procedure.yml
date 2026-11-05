@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 40411257950619d71da8bc7c6593ce9e1df059d414667fd0f58777884ce64011
+_hash: 2ede81826906ba157c0752193e8a81819e447865f07725a199322daf86e5d546
 file:
 - batch:
     statement:
@@ -25,8 +25,9 @@ file:
       - keyword: AS
       - declare_segment:
           naked_identifier: tot_emps
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           statement_terminator: ;
       - begin_end_block:
         - keyword: BEGIN
@@ -178,20 +179,22 @@ file:
       - keyword: IS
       - declare_segment:
         - naked_identifier: bonus
-        - data_type:
-            data_type_identifier: NUMBER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
         - assignment_operator: :=
         - expression:
             numeric_literal: '0'
         - statement_terminator: ;
         - naked_identifier: updated
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '3'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '3'
+                  end_bracket: )
         - assignment_operator: :=
         - expression:
             quoted_literal: "'No'"
@@ -337,8 +340,9 @@ file:
       - keyword: IS
       - declare_segment:
           naked_identifier: bonus
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           assignment_operator: :=
           expression:
             numeric_literal: '0'
@@ -492,13 +496,14 @@ file:
       - keyword: IS
       - declare_segment:
           naked_identifier: error_message
-          data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '30'
-                end_bracket: )
+          plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '30'
+                  end_bracket: )
           assignment_operator: :=
           expression:
             quoted_literal: "'Email address is too long.'"

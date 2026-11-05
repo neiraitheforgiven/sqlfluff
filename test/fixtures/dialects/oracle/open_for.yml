@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: a0959e6f5dadb7733c9e7a718b62ac8302c204c7960f1857c6af822142c2c688
+_hash: 93df19ac073c018a7a69c84795ed2633083a164acdab8880481990bd2f750fba
 file:
 - batch:
     statement:
@@ -11,8 +11,9 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: cv
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
         - naked_identifier: v_lastname
         - column_type_reference:
@@ -33,13 +34,14 @@ file:
             keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: query_2
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '200'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '200'
+                  end_bracket: )
         - assignment_operator: :=
         - expression:
             quoted_literal: "'SELECT * FROM employees\n    WHERE REGEXP_LIKE (job_id,\
@@ -250,20 +252,23 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: v1
-        - data_type:
-            naked_identifier: pkg
-            dot: .
-            data_type_identifier: mytab
+        - plsql_data_type:
+            data_type:
+              naked_identifier: pkg
+              dot: .
+              data_type_identifier: mytab
         - statement_terminator: ;
         - naked_identifier: v2
-        - data_type:
-            naked_identifier: pkg
-            dot: .
-            data_type_identifier: rec
+        - plsql_data_type:
+            data_type:
+              naked_identifier: pkg
+              dot: .
+              data_type_identifier: rec
         - statement_terminator: ;
         - naked_identifier: c1
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -385,8 +390,9 @@ file:
           - keyword: CURSOR
         - statement_terminator: ;
         - naked_identifier: v_emp_cursor
-        - data_type:
-            data_type_identifier: EmpCurTyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EmpCurTyp
         - statement_terminator: ;
         - naked_identifier: emp_record
         - row_type_reference:
@@ -396,13 +402,14 @@ file:
             keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: v_stmt_str
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '200'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '200'
+                  end_bracket: )
         - statement_terminator: ;
         - naked_identifier: v_e_job
         - column_type_reference:
@@ -469,20 +476,23 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: v1
-        - data_type:
-            naked_identifier: pkg
-            dot: .
-            data_type_identifier: mytab
+        - plsql_data_type:
+            data_type:
+              naked_identifier: pkg
+              dot: .
+              data_type_identifier: mytab
         - statement_terminator: ;
         - naked_identifier: v2
-        - data_type:
-            naked_identifier: pkg
-            dot: .
-            data_type_identifier: rec
+        - plsql_data_type:
+            data_type:
+              naked_identifier: pkg
+              dot: .
+              data_type_identifier: rec
         - statement_terminator: ;
         - naked_identifier: c1
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:

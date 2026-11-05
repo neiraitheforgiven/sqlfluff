@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 268bd7cc54dc13f315a6c992c59fb9791fc0c1274d5a5fefa8940dba4b622271
+_hash: f91e633c1e103dcb97ac9546f6603f7c0815cbd6bf9957bc24b028eb5a673142
 file:
 - batch:
     statement:
@@ -128,12 +128,14 @@ file:
               - end_bracket: )
             statement_terminator: ;
         - naked_identifier: no_comm
-        - data_type:
-            data_type_identifier: EXCEPTION
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EXCEPTION
         - statement_terminator: ;
         - naked_identifier: no_sal
-        - data_type:
-            data_type_identifier: EXCEPTION
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EXCEPTION
         - statement_terminator: ;
       - keyword: END
       - package_reference:

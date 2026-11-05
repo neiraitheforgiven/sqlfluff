@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: ed43d43abd19acebf123927b3433b5e73a8e519936dd532cd4a8a69f6ef26297
+_hash: 3f22de8f047990433ceefc590f148b8742c1744b4b2f6d948a9dd16abb633a0e
 file:
 - batch:
     statement:
@@ -274,8 +274,9 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: i
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           assignment_operator: :=
           expression:
             numeric_literal: '5'
@@ -357,8 +358,9 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: i
-          data_type:
-            data_type_identifier: NUMBER
+          plsql_data_type:
+            data_type:
+              data_type_identifier: NUMBER
           assignment_operator: :=
           expression:
             numeric_literal: '5'

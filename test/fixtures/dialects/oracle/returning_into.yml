@@ -3,42 +3,41 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: b69491eeb30a90ecd2d4ddeeb37ba2eea0e9d237e36fe309b6f3fc4c13b93a35
+_hash: 00619340bbaa893c3c832a19b974bf3f2334d1203fb769bb825f3e8e74d26f0e
 file:
 - batch:
     statement:
       begin_end_block:
       - declare_segment:
         - keyword: DECLARE
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: EmpRec
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: last_name
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: last_name
-                attribute_indicator: '%'
-                keyword: TYPE
-            - comma: ','
-            - naked_identifier: salary
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: salary
-                attribute_indicator: '%'
-                keyword: TYPE
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: last_name
+              - word: employees
+              - dot: .
+              - word: last_name
+              - percent: '%'
+              - word: TYPE
+              - comma: ','
+              - word: salary
+              - word: employees
+              - dot: .
+              - word: salary
+              - percent: '%'
+              - word: TYPE
+              - end_bracket: )
         - statement_terminator: ;
         - naked_identifier: emp_info
-        - data_type:
-            data_type_identifier: EmpRec
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EmpRec
         - statement_terminator: ;
         - naked_identifier: old_salary
         - column_type_reference:
@@ -334,8 +333,9 @@ file:
               keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: enums
-        - data_type:
-            data_type_identifier: NumList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NumList
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -352,8 +352,9 @@ file:
               keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: names
-        - data_type:
-            data_type_identifier: NameList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NameList
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -495,12 +496,14 @@ file:
               keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: old_sals
-        - data_type:
-            data_type_identifier: SalList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SalList
         - statement_terminator: ;
         - naked_identifier: new_sals
-        - data_type:
-            data_type_identifier: SalList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SalList
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -517,8 +520,9 @@ file:
               keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: names
-        - data_type:
-            data_type_identifier: NameList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NameList
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -677,12 +681,14 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: NUMBER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: NUMBER
         - statement_terminator: ;
         - naked_identifier: depts
-        - data_type:
-            data_type_identifier: NumList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NumList
         - assignment_operator: :=
         - expression:
             function:
@@ -716,8 +722,9 @@ file:
               keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: e_ids
-        - data_type:
-            data_type_identifier: enum_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: enum_t
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -734,8 +741,9 @@ file:
               keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: d_ids
-        - data_type:
-            data_type_identifier: dept_t
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: dept_t
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -926,8 +934,9 @@ file:
               keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: l_desc_tab
-        - data_type:
-            data_type_identifier: t_desc_tab
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: t_desc_tab
         - assignment_operator: :=
         - expression:
             function:
@@ -947,12 +956,14 @@ file:
                 - end_bracket: )
         - statement_terminator: ;
         - naked_identifier: l_id_tab
-        - data_type:
-            data_type_identifier: t_id_tab
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: t_id_tab
         - statement_terminator: ;
         - naked_identifier: l_desc_out_tab
-        - data_type:
-            data_type_identifier: t_desc_out_tab
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: t_desc_out_tab
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -1111,16 +1122,19 @@ file:
               keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: l_empno
-        - data_type:
-            data_type_identifier: t_empno_tab
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: t_empno_tab
         - statement_terminator: ;
         - naked_identifier: l_salo
-        - data_type:
-            data_type_identifier: t_sal_tab
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: t_sal_tab
         - statement_terminator: ;
         - naked_identifier: l_saln
-        - data_type:
-            data_type_identifier: t_sal_tab
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: t_sal_tab
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:

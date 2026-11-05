@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 13e90d685982137f6dce3fd3075b5db9f306245d3ee5af17f28e1f749812bb2f
+_hash: c7a68e7aa9e14b7de7b617cac02eab0ecab88964c74f4c804cacc6a9115764ba
 file:
 - batch:
     statement:
@@ -520,37 +520,33 @@ file:
       begin_end_block:
       - declare_segment:
         - keyword: DECLARE
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: name_rec
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: first
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: first_name
-                attribute_indicator: '%'
-                keyword: TYPE
-            - keyword: DEFAULT
-            - expression:
-                quoted_literal: "'John'"
-            - comma: ','
-            - naked_identifier: last
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: last_name
-                attribute_indicator: '%'
-                keyword: TYPE
-            - keyword: DEFAULT
-            - expression:
-                quoted_literal: "'Doe'"
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: first
+              - word: employees
+              - dot: .
+              - word: first_name
+              - percent: '%'
+              - word: TYPE
+              - word: DEFAULT
+              - single_quote: "'John'"
+              - comma: ','
+              - word: last
+              - word: employees
+              - dot: .
+              - word: last_name
+              - percent: '%'
+              - word: TYPE
+              - word: DEFAULT
+              - single_quote: "'Doe'"
+              - end_bracket: )
         - statement_terminator: ;
         - cursor_variable:
           - keyword: CURSOR
@@ -575,8 +571,9 @@ file:
                         naked_identifier: employees
           - statement_terminator: ;
         - naked_identifier: target
-        - data_type:
-            data_type_identifier: name_rec
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: name_rec
         - statement_terminator: ;
         - naked_identifier: source
         - row_type_reference:

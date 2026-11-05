@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: e5ab5335dffbb28f013bacd3b11906004a8152f6de4fad4148cd51ceae393dde
+_hash: d4251f5ba5806fc020c0439adef26833b1407e9575ad5d3b58e6eadc8404be40
 file:
 - batch:
     statement:
@@ -16,30 +16,34 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: NUMBER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: NUMBER
           - keyword: INDEX
           - keyword: BY
-          - data_type:
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARCHAR2
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '64'
+                    end_bracket: )
+        - statement_terminator: ;
+        - naked_identifier: city_population
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: population
+        - statement_terminator: ;
+        - naked_identifier: i
+        - plsql_data_type:
+            data_type:
               data_type_identifier: VARCHAR2
               bracketed_arguments:
                 bracketed:
                   start_bracket: (
                   numeric_literal: '64'
                   end_bracket: )
-        - statement_terminator: ;
-        - naked_identifier: city_population
-        - data_type:
-            data_type_identifier: population
-        - statement_terminator: ;
-        - naked_identifier: i
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '64'
-                end_bracket: )
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -184,30 +188,35 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: PLS_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: PLS_INTEGER
           - keyword: INDEX
           - keyword: BY
-          - data_type:
-              data_type_identifier: PLS_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: PLS_INTEGER
         - statement_terminator: ;
         - naked_identifier: n
-        - data_type:
-            data_type_identifier: PLS_INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: PLS_INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '5'
         - statement_terminator: ;
         - naked_identifier: sn
-        - data_type:
-            data_type_identifier: PLS_INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: PLS_INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '10'
         - statement_terminator: ;
         - naked_identifier: m
-        - data_type:
-            data_type_identifier: PLS_INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: PLS_INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '3'
@@ -236,8 +245,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: s
-                data_type:
-                  data_type_identifier: sum_multiples
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: sum_multiples
                 statement_terminator: ;
             - keyword: BEGIN
             - statement:
@@ -394,25 +404,28 @@ file:
           - keyword: TYPE
           - naked_identifier: Foursome
           - keyword: IS
-          - data_type:
-              data_type_identifier: VARRAY
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '4'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARRAY
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '4'
+                    end_bracket: )
           - keyword: OF
-          - data_type:
-              data_type_identifier: VARCHAR2
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '15'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARCHAR2
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '15'
+                    end_bracket: )
         - statement_terminator: ;
         - naked_identifier: team
-        - data_type:
-            data_type_identifier: Foursome
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: Foursome
         - assignment_operator: :=
         - expression:
             function:
@@ -620,17 +633,19 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: VARCHAR2
-              bracketed_arguments:
-                bracketed:
-                  start_bracket: (
-                  numeric_literal: '15'
-                  end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: VARCHAR2
+                bracketed_arguments:
+                  bracketed:
+                    start_bracket: (
+                    numeric_literal: '15'
+                    end_bracket: )
         - statement_terminator: ;
         - naked_identifier: names
-        - data_type:
-            data_type_identifier: Roster
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: Roster
         - assignment_operator: :=
         - expression:
             function:
@@ -809,39 +824,35 @@ file:
       begin_end_block:
       - declare_segment:
         - keyword: DECLARE
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: employee_rec_type
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: employee_id
-            - data_type:
-                data_type_identifier: NUMBER
-            - comma: ','
-            - naked_identifier: first_name
-            - data_type:
-                data_type_identifier: VARCHAR2
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '50'
-                    end_bracket: )
-            - comma: ','
-            - naked_identifier: last_name
-            - data_type:
-                data_type_identifier: VARCHAR2
-                bracketed_arguments:
-                  bracketed:
-                    start_bracket: (
-                    numeric_literal: '50'
-                    end_bracket: )
-            - comma: ','
-            - naked_identifier: salary
-            - data_type:
-                data_type_identifier: NUMBER
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: employee_id
+              - word: NUMBER
+              - comma: ','
+              - word: first_name
+              - word: VARCHAR2
+              - bracketed:
+                  start_bracket: (
+                  numeric_literal: '50'
+                  end_bracket: )
+              - comma: ','
+              - word: last_name
+              - word: VARCHAR2
+              - bracketed:
+                  start_bracket: (
+                  numeric_literal: '50'
+                  end_bracket: )
+              - comma: ','
+              - word: salary
+              - word: NUMBER
+              - end_bracket: )
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -849,16 +860,19 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: employee_rec_type
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: employee_rec_type
           - keyword: INDEX
           - keyword: BY
-          - data_type:
-              data_type_identifier: PLS_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: PLS_INTEGER
         - statement_terminator: ;
         - naked_identifier: l_employees
-        - data_type:
-            data_type_identifier: employee_array_type
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: employee_array_type
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:

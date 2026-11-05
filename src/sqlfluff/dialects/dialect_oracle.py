@@ -919,6 +919,7 @@ oracle_dialect.replace(
                 Ref.keyword("IN", optional=True),
                 OneOf(
                     Ref("DatatypeSegment"),
+                    Ref("ObjectReferenceSegment"),
                     Ref("ColumnTypeReferenceSegment"),
                     Ref("RowTypeReferenceSegment"),
                 ),
@@ -934,6 +935,7 @@ oracle_dialect.replace(
                 Ref.keyword("NOCOPY", optional=True),
                 OneOf(
                     Ref("DatatypeSegment"),
+                    Ref("ObjectReferenceSegment"),
                     Ref("ColumnTypeReferenceSegment"),
                     Ref("RowTypeReferenceSegment"),
                 ),
@@ -2946,13 +2948,16 @@ class DeclareSegment(BaseSegment):
         AnyNumberOf(
             Delimited(
                 OneOf(
+                    Ref("CreateProcedureStatementSegment"),
+                    Ref("CreateFunctionStatementSegment"),
                     Sequence(
                         OneOf(
                             Sequence(
                                 Ref("SingleIdentifierGrammar"),
                                 Ref.keyword("CONSTANT", optional=True),
                                 OneOf(
-                                    Ref("DatatypeSegment"),
+                                    Ref("PlsqlDatatypeSegment"),
+                                    Ref("ObjectReferenceSegment"),
                                     Ref("ColumnTypeReferenceSegment"),
                                     Ref("RowTypeReferenceSegment"),
                                 ),
@@ -2961,6 +2966,7 @@ class DeclareSegment(BaseSegment):
                                 "PRAGMA",
                                 Ref("FunctionSegment"),
                             ),
+                            Ref("SubtypeDefinitionSegment"),
                             Ref("CollectionTypeDefinitionSegment"),
                             Ref("RecordTypeDefinitionSegment"),
                             Ref("RefCursorTypeDefinitionSegment"),
@@ -2976,8 +2982,6 @@ class DeclareSegment(BaseSegment):
                         ),
                         Ref("DelimiterGrammar"),
                     ),
-                    Ref("CreateProcedureStatementSegment"),
-                    Ref("CreateFunctionStatementSegment"),
                     Ref("DeclareCursorVariableSegment"),
                 ),
                 delimiter=Ref("DelimiterGrammar"),
@@ -3029,13 +3033,22 @@ class CollectionTypeDefinitionSegment(BaseSegment):
         "IS",
         Sequence("TABLE", "OF", optional=True),
         OneOf(
-            Ref("DatatypeSegment"),
+            Ref("PlsqlDatatypeSegment"),
             Ref("ColumnTypeReferenceSegment"),
             Ref("RowTypeReferenceSegment"),
+            Ref("ObjectReferenceSegment"),
         ),
-        Sequence("OF", Ref("DatatypeSegment"), optional=True),
+        Sequence("OF", Ref("PlsqlDatatypeSegment"), optional=True),
         Sequence("NOT", "NULL", optional=True),
-        Sequence("INDEX", "BY", Ref("DatatypeSegment"), optional=True),
+        Sequence(
+            "INDEX",
+            "BY",
+            OneOf(
+                Ref("PlsqlDatatypeSegment"),
+                Ref("ObjectReferenceSegment"),
+            ),
+            optional=True,
+        ),
     )
 
 
@@ -3056,7 +3069,10 @@ class RecordTypeDefinitionSegment(BaseSegment):
             Delimited(
                 Sequence(
                     Ref("SingleIdentifierGrammar"),
-                    OneOf(Ref("DatatypeSegment"), Ref("ColumnTypeReferenceSegment")),
+                    OneOf(
+                        Ref("PlsqlDatatypeSegment"),
+                        Ref("ColumnTypeReferenceSegment"),
+                    ),
                     Sequence(
                         Sequence("NOT", "NULL", optional=True),
                         OneOf(
@@ -3205,7 +3221,12 @@ class CreateFunctionStatementSegment(BaseSegment):
         OneOf(
             Ref("ColumnTypeReferenceSegment"),
             Ref("RowTypeReferenceSegment"),
-            Ref("DatatypeSegment"),
+            OneOf(
+                Ref("DatatypeSegment"),
+                Ref("ObjectReferenceSegment"),
+                Ref("ColumnTypeReferenceSegment"),
+                Ref("RowTypeReferenceSegment"),
+            ),
         ),
         Ref("SharingClauseGrammar", optional=True),
         AnyNumberOf(
@@ -5000,3 +5021,46 @@ class ValuesClauseSegment(BaseSegment):
         ),
         Dedent,
     )
+
+
+class PlsqlDatatypeSegment(BaseSegment):
+    """Oracle PL/SQL datatype allowing BYTE/CHAR length semantics."""
+
+    type = "plsql_data_type"
+
+    match_grammar = Sequence(
+        Ref("DatatypeSegment"),
+        Bracketed(
+            Sequence(
+                Anything(),
+                OneOf("BYTE", "CHAR", optional=True),
+            ),
+            optional=True,
+        ),
+    )
+
+
+class SubtypeDefinitionSegment(BaseSegment):
+    """A `SUBTYPE` declaration.
+
+    https://docs.oracle.com/en/database/oracle/oracle-database/26/lnpls/SUBTYPE-statement.html
+    """
+
+    type = "subtype_definition"
+
+    match_grammar = Sequence(
+        StringParser("SUBTYPE", WordSegment, type="keyword"),
+        Ref("SingleIdentifierGrammar"),
+        "IS",
+        OneOf(
+            Ref("PlsqlDatatypeSegment"),
+            Ref("ColumnTypeReferenceSegment"),
+            Ref("RowTypeReferenceSegment"),
+            Ref("ObjectReferenceSegment"),
+        ),
+    )
+
+
+oracle_dialect.replace(
+    CharCharacterSetGrammar=OneOf("BYTE", "CHAR"),
+)

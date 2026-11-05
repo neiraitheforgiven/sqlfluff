@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 5d6fc371d461be400d3e242901c3663f52e16285e742b31d3af4e596e4c57b68
+_hash: 8779c0228c0ded924643cd74b80d5ace76584a5c4cfa55cb36492a2173a16ce9
 file:
   batch:
     statement:
@@ -24,25 +24,26 @@ file:
             end_bracket: )
       - keyword: IS
       - declare_segment:
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: t_rec
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: a
-            - data_type:
-                data_type_identifier: NUMBER
-            - comma: ','
-            - naked_identifier: b
-            - data_type:
-                data_type_identifier: NUMBER
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: a
+              - word: NUMBER
+              - comma: ','
+              - word: b
+              - word: NUMBER
+              - end_bracket: )
         - statement_terminator: ;
         - naked_identifier: out_metrics
-        - data_type:
-            data_type_identifier: t_rec
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: t_rec
         - statement_terminator: ;
       - begin_end_block:
         - keyword: BEGIN

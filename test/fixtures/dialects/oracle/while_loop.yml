@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: d902632d8a243de280943a658b69eb8e24130967b05a4238c1da6c6260d037c9
+_hash: 67e7263baf958cee8d30cde30916015b90004120e558c73f8afe3d4855eb85a1
 file:
 - batch:
     statement:
@@ -11,8 +11,9 @@ file:
       - declare_segment:
           keyword: DECLARE
           naked_identifier: done
-          data_type:
-            data_type_identifier: BOOLEAN
+          plsql_data_type:
+            data_type:
+              data_type_identifier: BOOLEAN
           assignment_operator: :=
           expression:
             boolean_literal: 'FALSE'

@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 8fea9c1ab8f82357d19f68a008d76c04a579f2eed3281ea490e6b5e17467aff8
+_hash: 68fc26f7113e037a237b8ed9661417d7636c6193702d15c5e3dd492caa146996
 file:
   batch:
     statement:
@@ -16,15 +16,14 @@ file:
           naked_identifier: ex_pkg
       - keyword: is
       - declare_segment:
-          keyword: pragma
-          function:
-            function_name:
-              function_name_identifier: restrict_references
-            function_contents:
-              bracketed:
-                start_bracket: (
-                keyword: default
-                end_bracket: )
+          naked_identifier: pragma
+          plsql_data_type:
+            data_type:
+              data_type_identifier: restrict_references
+            bracketed:
+              start_bracket: (
+              word: default
+              end_bracket: )
           statement_terminator: ;
       - keyword: end
       - package_reference:

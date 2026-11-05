@@ -3,38 +3,36 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 6288c34f8fe941b43daa1c2fad7e3792a8683e7b770743e8180618e67b97b591
+_hash: 8e69ada2a057e25ed34549593c4e2e08a2b9ce7e6e6546c38a3d31341637b42d
 file:
 - batch:
     statement:
       begin_end_block:
       - declare_segment:
         - keyword: DECLARE
-        - record_type:
+        - collection_type:
           - keyword: TYPE
           - naked_identifier: EmpRecTyp
           - keyword: IS
-          - keyword: RECORD
-          - bracketed:
-            - start_bracket: (
-            - naked_identifier: emp_id
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: employee_id
-                attribute_indicator: '%'
-                keyword: TYPE
-            - comma: ','
-            - naked_identifier: salary
-            - column_type_reference:
-                column_reference:
-                - naked_identifier: employees
-                - dot: .
-                - naked_identifier: salary
-                attribute_indicator: '%'
-                keyword: TYPE
-            - end_bracket: )
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: RECORD
+              bracketed:
+              - start_bracket: (
+              - word: emp_id
+              - word: employees
+              - dot: .
+              - word: employee_id
+              - percent: '%'
+              - word: TYPE
+              - comma: ','
+              - word: salary
+              - word: employees
+              - dot: .
+              - word: salary
+              - percent: '%'
+              - word: TYPE
+              - end_bracket: )
         - statement_terminator: ;
         - cursor_variable:
           - keyword: CURSOR
@@ -68,12 +66,14 @@ file:
               - keyword: DESC
           - statement_terminator: ;
         - naked_identifier: highest_paid_emp
-        - data_type:
-            data_type_identifier: EmpRecTyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EmpRecTyp
         - statement_terminator: ;
         - naked_identifier: next_highest_paid_emp
-        - data_type:
-            data_type_identifier: EmpRecTyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EmpRecTyp
         - statement_terminator: ;
         - create_function_statement:
           - keyword: FUNCTION
@@ -93,8 +93,9 @@ file:
           - begin_end_block:
             - declare_segment:
                 naked_identifier: emp_rec
-                data_type:
-                  data_type_identifier: EmpRecTyp
+                plsql_data_type:
+                  data_type:
+                    data_type_identifier: EmpRecTyp
                 statement_terminator: ;
             - keyword: BEGIN
             - statement:
@@ -826,8 +827,9 @@ file:
       - declare_segment:
         - keyword: DECLARE
         - naked_identifier: cv
-        - data_type:
-            data_type_identifier: SYS_REFCURSOR
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SYS_REFCURSOR
         - statement_terminator: ;
         - naked_identifier: v_lastname
         - column_type_reference:
@@ -848,13 +850,14 @@ file:
             keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: query_2
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '200'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '200'
+                  end_bracket: )
         - assignment_operator: :=
         - expression:
             quoted_literal: "'SELECT * FROM employees\n    WHERE REGEXP_LIKE (job_id,\
@@ -1100,16 +1103,19 @@ file:
               keyword: TYPE
         - statement_terminator: ;
         - naked_identifier: emp_cv
-        - data_type:
-            data_type_identifier: empcurtyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: empcurtyp
         - statement_terminator: ;
         - naked_identifier: names
-        - data_type:
-            data_type_identifier: namelist
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: namelist
         - statement_terminator: ;
         - naked_identifier: sals
-        - data_type:
-            data_type_identifier: sallist
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: sallist
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -1376,8 +1382,9 @@ file:
           - keyword: CURSOR
         - statement_terminator: ;
         - naked_identifier: v_emp_cursor
-        - data_type:
-            data_type_identifier: EmpCurTyp
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: EmpCurTyp
         - statement_terminator: ;
         - naked_identifier: emp_record
         - row_type_reference:
@@ -1387,13 +1394,14 @@ file:
             keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: v_stmt_str
-        - data_type:
-            data_type_identifier: VARCHAR2
-            bracketed_arguments:
-              bracketed:
-                start_bracket: (
-                numeric_literal: '200'
-                end_bracket: )
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: VARCHAR2
+              bracketed_arguments:
+                bracketed:
+                  start_bracket: (
+                  numeric_literal: '200'
+                  end_bracket: )
         - statement_terminator: ;
         - naked_identifier: v_e_job
         - column_type_reference:
@@ -1523,12 +1531,14 @@ file:
                   naked_identifier: last_name
           - statement_terminator: ;
         - naked_identifier: names
-        - data_type:
-            data_type_identifier: NameList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NameList
         - statement_terminator: ;
         - naked_identifier: sals
-        - data_type:
-            data_type_identifier: SalList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: SalList
         - statement_terminator: ;
         - collection_type:
           - keyword: TYPE
@@ -1543,12 +1553,14 @@ file:
               keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: recs
-        - data_type:
-            data_type_identifier: RecList
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: RecList
         - statement_terminator: ;
         - naked_identifier: v_limit
-        - data_type:
-            data_type_identifier: PLS_INTEGER
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: PLS_INTEGER
         - assignment_operator: :=
         - expression:
             numeric_literal: '10'
@@ -1897,8 +1909,9 @@ file:
               keyword: ROWTYPE
         - statement_terminator: ;
         - naked_identifier: stock_managers
-        - data_type:
-            data_type_identifier: NameSet
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: NameSet
         - statement_terminator: ;
         - ref_cursor_type:
           - keyword: TYPE
@@ -1908,8 +1921,9 @@ file:
           - keyword: CURSOR
         - statement_terminator: ;
         - naked_identifier: cv
-        - data_type:
-            data_type_identifier: cursor_var_type
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: cursor_var_type
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
@@ -2013,12 +2027,14 @@ file:
           - keyword: IS
           - keyword: TABLE
           - keyword: OF
-          - data_type:
-              data_type_identifier: NUMBER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: NUMBER
           - keyword: INDEX
           - keyword: BY
-          - data_type:
-              data_type_identifier: PLS_INTEGER
+          - plsql_data_type:
+              data_type:
+                data_type_identifier: PLS_INTEGER
         - statement_terminator: ;
         - cursor_variable:
           - keyword: CURSOR
@@ -2052,8 +2068,9 @@ file:
                   naked_identifier: employee_id
           - statement_terminator: ;
         - naked_identifier: empids
-        - data_type:
-            data_type_identifier: numtab
+        - plsql_data_type:
+            data_type:
+              data_type_identifier: numtab
         - statement_terminator: ;
       - keyword: BEGIN
       - statement:
