@@ -1,0 +1,170 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: be173e9773be2b7d775bc9fd209657927a96c49568a26f1f658b44d63a18c41b
+file:
+  batch:
+    statement:
+      create_package_body_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: PACKAGE
+      - keyword: BODY
+      - package_reference:
+          naked_identifier: pkg_collections
+      - keyword: IS
+      - declare_segment:
+          create_procedure_statement:
+          - keyword: PROCEDURE
+          - function_name:
+              function_name_identifier:
+                function_name_identifier: UpdateValues
+          - keyword: IS
+          - declare_segment:
+            - collection_type:
+              - keyword: TYPE
+              - naked_identifier: udt_numbers
+              - keyword: IS
+              - keyword: TABLE
+              - keyword: OF
+              - plsql_data_type:
+                  data_type:
+                    data_type_identifier: NUMBER
+              - keyword: INDEX
+              - keyword: BY
+              - plsql_data_type:
+                  data_type:
+                    data_type_identifier: PLS_INTEGER
+            - statement_terminator: ;
+            - collection_type:
+              - keyword: TYPE
+              - naked_identifier: udt_matrix
+              - keyword: IS
+              - keyword: TABLE
+              - keyword: OF
+              - plsql_data_type:
+                  data_type:
+                    data_type_identifier: udt_numbers
+              - keyword: INDEX
+              - keyword: BY
+              - plsql_data_type:
+                  data_type:
+                    data_type_identifier: PLS_INTEGER
+            - statement_terminator: ;
+            - naked_identifier: t_matrix
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: udt_matrix
+            - statement_terminator: ;
+            - naked_identifier: t_total
+            - plsql_data_type:
+                data_type:
+                  data_type_identifier: NUMBER
+            - statement_terminator: ;
+          - begin_end_block:
+            - keyword: BEGIN
+            - statement:
+                assignment_segment_statement:
+                - object_reference:
+                    naked_identifier: t_matrix
+                - bracketed:
+                    start_bracket: (
+                    expression:
+                      numeric_literal: '1'
+                    end_bracket: )
+                - bracketed:
+                    start_bracket: (
+                    expression:
+                      numeric_literal: '2'
+                    end_bracket: )
+                - assignment_operator: :=
+                - expression:
+                    function:
+                      function_name:
+                        function_name_identifier:
+                          function_name_identifier: t_matrix
+                      function_contents:
+                        bracketed:
+                          start_bracket: (
+                          expression:
+                            numeric_literal: '1'
+                          end_bracket: )
+                    bracketed:
+                      start_bracket: (
+                      expression:
+                        numeric_literal: '2'
+                      end_bracket: )
+                    binary_operator: +
+                    numeric_literal: '1'
+            - statement_terminator: ;
+            - statement:
+                if_then_statement:
+                - if_clause:
+                  - keyword: IF
+                  - expression:
+                      function:
+                        function_name:
+                          function_name_identifier:
+                            function_name_identifier: t_matrix
+                        function_contents:
+                          bracketed:
+                            start_bracket: (
+                            expression:
+                              numeric_literal: '1'
+                            end_bracket: )
+                      bracketed:
+                        start_bracket: (
+                        expression:
+                          numeric_literal: '2'
+                        end_bracket: )
+                      comparison_operator:
+                        raw_comparison_operator: '='
+                      numeric_literal: '10'
+                  - keyword: THEN
+                - statement:
+                    assignment_segment_statement:
+                      object_reference:
+                        naked_identifier: t_total
+                      assignment_operator: :=
+                      expression:
+                        function:
+                          function_name:
+                            function_name_identifier:
+                              function_name_identifier: ABS
+                          function_contents:
+                            bracketed:
+                              start_bracket: (
+                              expression:
+                                function:
+                                  function_name:
+                                    function_name_identifier:
+                                      function_name_identifier: t_matrix
+                                  function_contents:
+                                    bracketed:
+                                      start_bracket: (
+                                      expression:
+                                        numeric_literal: '1'
+                                      end_bracket: )
+                                bracketed:
+                                  start_bracket: (
+                                  expression:
+                                    numeric_literal: '2'
+                                  end_bracket: )
+                              end_bracket: )
+                - statement_terminator: ;
+                - keyword: END
+                - keyword: IF
+            - statement_terminator: ;
+            - keyword: END
+            - object_reference:
+                naked_identifier: UpdateValues
+          - statement_terminator: ;
+      - keyword: END
+      - package_reference:
+          naked_identifier: pkg_collections
+      - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /

@@ -170,6 +170,7 @@ oracle_dialect.insert_lexer_matchers(
 )
 
 oracle_dialect.add(
+    CollectionSubscriptGrammar=Bracketed(Ref("ExpressionSegment")),
     OracleRecordFieldIdentifierGrammar=OneOf(
         Ref("SingleIdentifierGrammar"),
         StringParser("DATE", IdentifierSegment, type="naked_identifier"),
@@ -848,7 +849,18 @@ oracle_dialect.replace(
             Ref("PlusJoinGrammar"),
             Ref("BareFunctionSegment"),
             Ref("OracleValueFunctionSegment"),
-            Ref("FunctionSegment"),
+            Sequence(
+                # The first collection subscript is parsed as a function call.
+                Ref("FunctionSegment"),
+                AnyNumberOf(
+                    Ref(
+                        "CollectionSubscriptGrammar",
+                        exclude=Sequence(
+                            Ref("StartBracketSegment"), Ref("EndBracketSegment")
+                        ),
+                    ),
+                ),
+            ),
             Ref("TriggerCorrelationReferenceSegment"),
             Bracketed(
                 OneOf(

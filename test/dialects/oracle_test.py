@@ -120,6 +120,14 @@ def test_malformed_nested_collection_access_rejected(expression: str) -> None:
     assert _violations(f"BEGIN t_Value := {expression}; END;\n/\n")
 
 
+@pytest.mark.parametrize("subscript", ["()", "(1, 2)", "(1 +)"])
+def test_malformed_chained_subscript_rejected(subscript: str) -> None:
+    """Each additional subscript must contain exactly one complete expression."""
+    assert _violations(
+        f"BEGIN IF t_matrix(1){subscript} = 2 THEN NULL; END IF; END;\n/\n"
+    )
+
+
 @pytest.mark.parametrize(
     "expression",
     [
