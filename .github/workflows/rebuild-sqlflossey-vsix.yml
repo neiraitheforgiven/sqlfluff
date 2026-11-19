@@ -1,0 +1,59 @@
+name: Rebuild SQLFlossey VSIX
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  trigger-bitbucket:
+    if: github.repository == 'neiraitheforgiven/sqlfluff' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger the company Windows release pipeline
+        shell: python
+        env:
+          BITBUCKET_PIPELINE_EMAIL: ${{ secrets.BITBUCKET_PIPELINE_EMAIL }}
+          BITBUCKET_PIPELINE_TOKEN: ${{ secrets.BITBUCKET_PIPELINE_TOKEN }}
+          SQLFLUFF_COMMIT: ${{ github.sha }}
+        run: |
+          import base64
+          import json
+          import os
+          import re
+          import urllib.request
+
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  raise RuntimeError("Refusing to redirect pipeline credentials.")
+
+          email = os.environ["BITBUCKET_PIPELINE_EMAIL"]
+          token = os.environ["BITBUCKET_PIPELINE_TOKEN"]
+          commit = os.environ["SQLFLUFF_COMMIT"]
+          if not email or not token:
+              raise ValueError("Configure the Bitbucket pipeline dispatch secrets.")
+          if not re.fullmatch(r"[0-9a-f]{40}", commit):
+              raise ValueError("Expected the exact fork main commit.")
+          payload = {
+              "target": {
+                  "type": "pipeline_ref_target",
+                  "ref_type": "branch",
+                  "ref_name": "main",
+                  "selector": {"type": "custom", "pattern": "rebuild-vsix"},
+              },
+              "variables": [{"key": "SQLFLUFF_COMMIT", "value": commit, "secured": False}],
+          }
+          credential = base64.b64encode(f"{email}:{token}".encode()).decode("ascii")
+          request = urllib.request.Request(
+              "https://api.bitbucket.org/2.0/repositories/computronix/sqlflossey/pipelines/",
+              data=json.dumps(payload).encode(),
+              headers={"Authorization": f"Basic {credential}", "Content-Type": "application/json"},
+              method="POST",
+          )
+          with urllib.request.build_opener(NoRedirect()).open(request, timeout=60) as response:
+              if response.status != 201:
+                  raise RuntimeError(f"Pipeline dispatch failed: HTTP {response.status}")
+              result = json.load(response)
+          print(f"Triggered SQLFlossey pipeline {result['uuid']} for fork {commit}.")

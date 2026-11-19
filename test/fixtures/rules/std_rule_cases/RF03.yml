@@ -649,6 +649,51 @@ test_pass_placeholder_colon_double_colon_cast:
       placeholder:
         param_style: colon
 
+test_pass_oracle_numeric_loop_iterator_as_collection_index:
+  pass_str: |
+    BEGIN
+      FOR i IN 1 .. t_ObjectIds.count LOOP
+        BEGIN
+          SELECT r.RelationshipId INTO t_RelId
+          FROM query.r_ResendCommContact r
+          WHERE r.CommContactObjectId = t_ObjectIds(i);
+        END;
+      END LOOP;
+    END;
+    /
+  configs:
+    core:
+      dialect: oracle
+
+test_fail_oracle_loop_iterator_exemption_stops_at_loop_boundary:
+  fail_str: |
+    BEGIN
+      FOR i IN (SELECT i FROM indices t WHERE t.enabled = 1) LOOP
+        SELECT object_id INTO t_Id
+        FROM contacts r
+        WHERE r.ContactId = t_ObjectIds(I);
+      END LOOP;
+      SELECT i INTO t_Id
+      FROM contacts r
+      WHERE r.ContactId = 1;
+    END;
+    /
+  fix_str: |
+    BEGIN
+      FOR i IN (SELECT t.i FROM indices t WHERE t.enabled = 1) LOOP
+        SELECT r.object_id INTO t_Id
+        FROM contacts r
+        WHERE r.ContactId = t_ObjectIds(I);
+      END LOOP;
+      SELECT r.i INTO t_Id
+      FROM contacts r
+      WHERE r.ContactId = 1;
+    END;
+    /
+  configs:
+    core:
+      dialect: oracle
+
 test_fail_oracle_qualify_columns_not_plsql_variables:
   # RF03 should qualify true columns but never qualify PL/SQL variables.
   fail_str: |

@@ -23,7 +23,10 @@ from sqlfluff.core.rules import (
 )
 from sqlfluff.core.rules.crawlers import SegmentSeekerCrawler
 from sqlfluff.dialects.dialect_ansi import ObjectReferenceSegment
-from sqlfluff.rules.references._oracle import find_oracle_variable_names
+from sqlfluff.rules.references._oracle import (
+    find_oracle_loop_iterator_names,
+    find_oracle_variable_names,
+)
 from sqlfluff.utils.analysis.query import Query
 from sqlfluff.utils.analysis.select import SelectStatementColumnsAndTables
 
@@ -107,6 +110,7 @@ class Rule_RF03(BaseRule):
         sql_variables: set[str] = set()
         if context.dialect.name == "oracle":
             sql_variables = find_oracle_variable_names(context.parent_stack[0])
+            sql_variables.update(find_oracle_loop_iterator_names(context.parent_stack))
 
         query: Query = Query.from_segment(context.segment, dialect=context.dialect)
         visited: set = set()

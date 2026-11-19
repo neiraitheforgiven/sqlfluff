@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from itertools import pairwise
 
 from sqlfluff.core.parser import BaseSegment
 
@@ -25,6 +26,25 @@ def find_oracle_variable_names(segment: BaseSegment) -> set[str]:
             variable_names.add(param_name.lower())
 
     return variable_names
+
+
+def find_oracle_loop_iterator_names(
+    parent_stack: tuple[BaseSegment, ...],
+) -> set[str]:
+    """Return unquoted FOR iterator names in scope for a nested statement."""
+    names: set[str] = set()
+    for parent, child in pairwise(parent_stack):
+        if not (
+            parent.is_type("for_loop_statement") and child.is_type("loop_statement")
+        ):
+            continue
+        # Only identifiers before IN are bindings, not identifiers in the range.
+        for segment in parent.segments:
+            if segment.is_type("keyword") and segment.raw_upper == "IN":
+                break
+            if segment.is_type("naked_identifier"):
+                names.add(segment.raw.lower())
+    return names
 
 
 def _extract_parameter_name(parameter: BaseSegment) -> str | None:
