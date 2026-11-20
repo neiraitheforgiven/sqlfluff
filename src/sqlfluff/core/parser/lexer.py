@@ -145,6 +145,8 @@ class StringLexer:
         subdivider: Optional[LexerType] = None,
         trim_post_subdivide: Optional[LexerType] = None,
         segment_kwargs: Optional[dict[str, Any]] = None,
+        *,
+        line_start: bool = False,
     ) -> None:
         self.name = name
         self.template = template
@@ -152,6 +154,7 @@ class StringLexer:
         self.subdivider = subdivider
         self.trim_post_subdivide = trim_post_subdivide
         self.segment_kwargs = segment_kwargs or {}
+        self.line_start = line_start
         self.__post_init__()
 
     def __repr__(self) -> str:
@@ -857,6 +860,17 @@ class PyLexer:
             for matcher in lexer_matchers:
                 res = matcher.match(forward_string)
                 if res.elements:
+                    if matcher.line_start:
+                        previous = next(
+                            (
+                                element.raw
+                                for element in reversed(elem_buff)
+                                if element.raw.strip(" \t")
+                            ),
+                            "\n",
+                        )
+                        if previous.rsplit("\n", 1)[-1].strip(" \t"):
+                            continue
                     # If we have new segments then whoop!
                     elem_buff += res.elements
                     forward_string = res.forward_string

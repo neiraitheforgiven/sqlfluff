@@ -1,0 +1,59 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: 40af8f8e8c241ee7f269164aa14326397f066d3f80578ad306b81e255d7b99a2
+file:
+- sqlplus_whenever:
+    raw: WHENEVER SQLERROR EXIT FAILURE
+- sqlplus_whenever:
+    raw: WHENEVER OSERROR EXIT FAILURE
+- batch:
+    statement:
+      begin_end_block:
+      - keyword: BEGIN
+      - statement:
+          null_statement:
+            keyword: 'NULL'
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            numeric_literal: '1'
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                  naked_identifier: dual
+    statement_terminator: ;
+- sqlplus_whenever:
+    raw: whenever sqlerror exit sql.sqlcode rollback
+- sqlplus_whenever:
+    raw: WHENEVER OSERROR CONTINUE NONE
+- batch:
+    statement:
+      select_statement:
+        select_clause:
+          keyword: SELECT
+          select_clause_element:
+            numeric_literal: '2'
+        from_clause:
+          keyword: FROM
+          from_expression:
+            from_expression_element:
+              table_expression:
+                table_reference:
+                  naked_identifier: dual
+    statement_terminator: ;
+- sqlplus_whenever:
+    raw: WHENEVER SQLERROR EXIT :result COMMIT
