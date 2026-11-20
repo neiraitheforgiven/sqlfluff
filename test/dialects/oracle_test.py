@@ -31,6 +31,19 @@ def _violations(sql: str) -> list:
 @pytest.mark.parametrize(
     "sql",
     [
+        "CREATE VIEW v REFRESH FORCE AS SELECT 1 FROM dual;",
+        "CREATE MATERIALIZED VIEW v REFRESH FORCE NEXT AS SELECT 1 FROM dual;",
+        "CREATE MATERIALIZED VIEW v REFRESH FORCE FAST AS SELECT 1 FROM dual;",
+    ],
+)
+def test_invalid_materialized_view_refresh_rejected(sql: str) -> None:
+    """Refresh options are specific to materialized views and must be complete."""
+    assert _violations(sql)
+
+
+@pytest.mark.parametrize(
+    "sql",
+    [
         "WHENEVER SQLERROR\nEXIT FAILURE\nSELECT 1 FROM dual;",
         "WHENEVER OSERROR CONTINUE UNEXPECTED\nSELECT 1 FROM dual;",
         "SELECT 1 FROM dual; WHENEVER OSERROR EXIT FAILURE",

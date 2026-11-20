@@ -1,0 +1,147 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: a504a652a53bd7a242483ab6e7fadc7eb8caf4e947fd3f271df942149c472a3e
+file:
+  batch:
+  - statement:
+      create_view_statement:
+      - keyword: CREATE
+      - keyword: MATERIALIZED
+      - keyword: VIEW
+      - table_reference:
+        - naked_identifier: app
+        - dot: .
+        - naked_identifier: search_mv
+      - keyword: TABLESPACE
+      - naked_identifier: data_ts
+      - materialized_view_refresh_clause:
+        - keyword: REFRESH
+        - keyword: FORCE
+        - keyword: 'ON'
+        - keyword: DEMAND
+        - keyword: START
+        - keyword: WITH
+        - expression:
+            bare_function: SYSDATE
+            binary_operator: +
+            numeric_literal: '0'
+        - keyword: NEXT
+        - expression:
+          - function:
+              function_name:
+                function_name_identifier:
+                  function_name_identifier: TRUNC
+              function_contents:
+                bracketed:
+                  start_bracket: (
+                  expression:
+                    bare_function: SYSDATE
+                  end_bracket: )
+          - binary_operator: +
+          - numeric_literal: '1'
+          - binary_operator: +
+          - numeric_literal: '5'
+          - binary_operator: /
+          - numeric_literal: '24'
+      - keyword: AS
+      - with_compound_statement:
+          keyword: WITH
+          common_table_expression:
+            naked_identifier: source_rows
+            keyword: AS
+            bracketed:
+              start_bracket: (
+              select_statement:
+                select_clause:
+                  keyword: SELECT
+                  select_clause_element:
+                    numeric_literal: '1'
+                    alias_expression:
+                      alias_operator:
+                        keyword: AS
+                      naked_identifier: object_id
+                from_clause:
+                  keyword: FROM
+                  from_expression:
+                    from_expression_element:
+                      table_expression:
+                        table_reference:
+                          naked_identifier: dual
+              end_bracket: )
+          select_statement:
+            select_clause:
+              keyword: SELECT
+              select_clause_element:
+                column_reference:
+                  naked_identifier: object_id
+            from_clause:
+              keyword: FROM
+              from_expression:
+                from_expression_element:
+                  table_expression:
+                    table_reference:
+                      naked_identifier: source_rows
+  - statement_terminator: ;
+  - statement:
+      create_view_statement:
+      - keyword: CREATE
+      - keyword: MATERIALIZED
+      - keyword: VIEW
+      - table_reference:
+        - naked_identifier: app
+        - dot: .
+        - naked_identifier: on_commit_mv
+      - materialized_view_refresh_clause:
+        - keyword: REFRESH
+        - keyword: FAST
+        - keyword: 'ON'
+        - keyword: COMMIT
+      - keyword: AS
+      - select_statement:
+          select_clause:
+            keyword: SELECT
+            select_clause_element:
+              column_reference:
+                naked_identifier: object_id
+          from_clause:
+            keyword: FROM
+            from_expression:
+              from_expression_element:
+                table_expression:
+                  table_reference:
+                  - naked_identifier: app
+                  - dot: .
+                  - naked_identifier: source_table
+  - statement_terminator: ;
+  - statement:
+      create_view_statement:
+      - keyword: CREATE
+      - keyword: MATERIALIZED
+      - keyword: VIEW
+      - table_reference:
+        - naked_identifier: app
+        - dot: .
+        - naked_identifier: unscheduled_mv
+      - materialized_view_refresh_clause:
+        - keyword: NEVER
+        - keyword: REFRESH
+      - keyword: AS
+      - select_statement:
+          select_clause:
+            keyword: SELECT
+            select_clause_element:
+              column_reference:
+                naked_identifier: object_id
+          from_clause:
+            keyword: FROM
+            from_expression:
+              from_expression_element:
+                table_expression:
+                  table_reference:
+                  - naked_identifier: app
+                  - dot: .
+                  - naked_identifier: source_table
+  - statement_terminator: ;
