@@ -3,6 +3,8 @@
 This inherits from the ansi dialect.
 """
 
+from collections.abc import Sequence as SegmentSequence
+
 from sqlfluff.core.dialects import load_raw_dialect
 from sqlfluff.core.parser import (
     AnyNumberOf,
@@ -38,10 +40,12 @@ from sqlfluff.core.parser import (
     TypedParser,
     WordSegment,
 )
+from sqlfluff.core.parser.context import ParseContext
 from sqlfluff.core.parser.grammar.lookbehind import (
     PrecededByMatcher,
     is_distinct_from_lookbehind,
 )
+from sqlfluff.core.parser.match_result import MatchResult
 from sqlfluff.dialects import dialect_ansi as ansi
 from sqlfluff.dialects.dialect_oracle_keywords import (
     oracle_reserved_keywords,
@@ -143,6 +147,17 @@ oracle_dialect.insert_lexer_matchers(
 
 oracle_dialect.insert_lexer_matchers(
     [
+        # SQL*Plus commands do not consume the next line or a trailing comment.
+        RegexLexer(
+            "sqlplus_whenever",
+            r"(?i:WHENEVER[ \t]+(?:SQLERROR|OSERROR)[ \t]+"
+            r"(?:EXIT(?:[ \t]+(?:[+-]?[0-9]+|SQL\.SQLCODE|"
+            r"(?!(?:COMMIT|ROLLBACK)\b):?[\p{L}][\p{L}\p{N}_$#]*))?"
+            r"(?:[ \t]+(?:COMMIT|ROLLBACK))?"
+            r"|CONTINUE(?:[ \t]+(?:COMMIT|ROLLBACK|NONE))?))"
+            r"(?=[ \t]*(?:--|\r?\n|\Z))",
+            CodeSegment,
+        ),
         RegexLexer(
             "prompt_command",
             r"PROMPT([^(\r\n)])*((?=\n)|(?=\r\n))?",
@@ -1477,12 +1492,34 @@ class AlterSessionStatementSegment(BaseSegment):
     )
 
 
+class SqlPlusWheneverSegment(BaseSegment):
+    """A top-level SQL*Plus error-handling directive."""
+
+    type = "sqlplus_whenever"
+    match_grammar = TypedParser("sqlplus_whenever", CodeSegment)
+
+    @classmethod
+    def match(
+        cls,
+        segments: SegmentSequence[BaseSegment],
+        idx: int,
+        parse_context: ParseContext,
+    ) -> MatchResult:
+        """Only match a directive at the start of a physical line."""
+        previous = idx - 1
+        while previous >= 0 and segments[previous].is_type("whitespace"):
+            previous -= 1
+        if previous >= 0 and not segments[previous].is_type("newline"):
+            return MatchResult.empty_at(idx)
+        return super().match(segments, idx, parse_context)
+
+
 class FileSegment(BaseFileSegment):
     """A segment representing a whole file or script.
 
     We override default as Oracle allows concept of several
     batches of commands separated by '/' as well as usual
-    semicolon-separated statement lines and ExecuteFileSegment.
+    semicolon-separated statement lines and SQL*Plus commands.
 
     This is also the default "root" segment of the dialect,
     and so is usually instantiated directly. It therefore
@@ -1493,6 +1530,7 @@ class FileSegment(BaseFileSegment):
         AnyNumberOf(
             Ref("BatchSegment"),
             Ref("ExecuteFileSegment"),
+            Ref("SqlPlusWheneverSegment"),
         ),
     )
 

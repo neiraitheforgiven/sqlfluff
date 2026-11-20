@@ -1,0 +1,13 @@
+WHENEVER SQLERROR EXIT FAILURE
+WHENEVER OSERROR EXIT FAILURE
+
+BEGIN
+    NULL;
+END;
+/
+
+SELECT 1 FROM dual;
+  whenever sqlerror exit sql.sqlcode rollback -- Keep the error status.
+WHENEVER OSERROR CONTINUE NONE
+SELECT 2 FROM dual;
+WHENEVER SQLERROR EXIT :result COMMIT

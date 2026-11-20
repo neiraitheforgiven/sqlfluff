@@ -29,6 +29,19 @@ def _violations(sql: str) -> list:
 
 
 @pytest.mark.parametrize(
+    "sql",
+    [
+        "WHENEVER SQLERROR\nEXIT FAILURE\nSELECT 1 FROM dual;",
+        "WHENEVER OSERROR CONTINUE UNEXPECTED\nSELECT 1 FROM dual;",
+        "SELECT 1 FROM dual; WHENEVER OSERROR EXIT FAILURE",
+    ],
+)
+def test_invalid_sqlplus_whenever_rejected(sql: str) -> None:
+    """Malformed directives and directives sharing a SQL line are rejected."""
+    assert _violations(sql)
+
+
+@pytest.mark.parametrize(
     "suffix",
     [
         "ORDER BY",
