@@ -71,6 +71,9 @@ oracle_dialect.update_keywords_set_from_multiline_string(
 
 oracle_dialect.sets("reserved_keywords").discard("INDEXTYPE")
 oracle_dialect.sets("unreserved_keywords").add("INDEXTYPE")
+oracle_dialect.sets("unreserved_keywords").update(
+    {"COMPLETE", "DEMAND", "FAST", "MATERIALIZED", "NEVER", "NEXT", "STATEMENT"}
+)
 
 oracle_dialect.sets("bare_functions").clear()
 oracle_dialect.sets("bare_functions").update(
@@ -1637,6 +1640,26 @@ class TableReferenceSegment(ansi.ObjectReferenceSegment):
     )
 
 
+class MaterializedViewRefreshClauseSegment(BaseSegment):
+    """Refresh method, trigger and schedule for an Oracle materialized view."""
+
+    type = "materialized_view_refresh_clause"
+    match_grammar = OneOf(
+        Sequence("NEVER", "REFRESH"),
+        Sequence(
+            "REFRESH",
+            AnySetOf(
+                OneOf("FAST", "COMPLETE", "FORCE"),
+                Sequence("ON", OneOf("DEMAND", "COMMIT", "STATEMENT")),
+                Sequence("START", "WITH", Ref("ExpressionSegment")),
+                Sequence("NEXT", Ref("ExpressionSegment")),
+                min_times=1,
+                terminators=[Ref.keyword("AS")],
+            ),
+        ),
+    )
+
+
 class CreateViewStatementSegment(ansi.CreateViewStatementSegment):
     """A `CREATE VIEW` statement."""
 
@@ -1652,12 +1675,23 @@ class CreateViewStatementSegment(ansi.CreateViewStatementSegment):
             "NONEDITIONABLE",
             optional=True,
         ),
-        Ref.keyword("MATERIALIZED", optional=True),
-        "VIEW",
-        Ref("IfNotExistsGrammar", optional=True),
-        Ref("TableReferenceSegment"),
-        # Optional list of column names
-        Ref("BracketedColumnReferenceListGrammar", optional=True),
+        OneOf(
+            Sequence(
+                "MATERIALIZED",
+                "VIEW",
+                Ref("IfNotExistsGrammar", optional=True),
+                Ref("TableReferenceSegment"),
+                Ref("BracketedColumnReferenceListGrammar", optional=True),
+                Sequence("TABLESPACE", Ref("SingleIdentifierGrammar"), optional=True),
+                Ref("MaterializedViewRefreshClauseSegment", optional=True),
+            ),
+            Sequence(
+                "VIEW",
+                Ref("IfNotExistsGrammar", optional=True),
+                Ref("TableReferenceSegment"),
+                Ref("BracketedColumnReferenceListGrammar", optional=True),
+            ),
+        ),
         "AS",
         OptionallyBracketed(
             Ref("SelectableGrammar"), terminators=[Ref("BatchDelimiterGrammar")]
