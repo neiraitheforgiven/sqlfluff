@@ -56,6 +56,7 @@ RuleTimingsType = list[tuple[str, str, float]]
 
 # Instantiate the linter logger
 linter_logger: logging.Logger = logging.getLogger("sqlfluff.linter")
+fix_progress_logger = logging.getLogger("sqlfluff.fix_progress")
 
 
 class Linter:
@@ -530,6 +531,11 @@ class Linter:
                 linter_logger.info(
                     f"\n\nEntering linter phase {phase}, loop {loop + 1}/{loop_limit}\n"
                 )
+                if fix:
+                    fix_progress_logger.info(
+                        "%s pass %s/%s", phase, loop + 1,
+                        loop_limit if phase == "main" else 2,
+                    )
                 changed = False
 
                 if is_first_linter_pass():
@@ -558,6 +564,8 @@ class Linter:
 
                     progress_bar_crawler.set_description(f"rule {crawler.code}")
                     t0 = time.monotonic()
+                    if fix:
+                        fix_progress_logger.info("%s: scanning", crawler.code)
 
                     # fixes should be a dict {} with keys edit, delete, create
                     # delete is just a list of segments to delete
@@ -613,6 +621,9 @@ class Linter:
                             # This is the happy path. We have fixes, now we want to
                             # apply them.
                             last_fixes = fixes
+                            fix_progress_logger.info(
+                                "%s: applying %s edits", crawler.code, len(fixes)
+                            )
                             new_tree, _, _, _valid = apply_fixes(
                                 tree,
                                 config.get("dialect_obj"),

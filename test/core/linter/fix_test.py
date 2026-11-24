@@ -1,12 +1,13 @@
 """Test routines for fixing errors."""
 
 import logging
+from unittest.mock import patch
 
 import pytest
 
 from sqlfluff.core import Linter
 from sqlfluff.core.config import FluffConfig
-from sqlfluff.core.linter.fix import compute_anchor_edit_info
+from sqlfluff.core.linter.fix import apply_fixes, compute_anchor_edit_info
 from sqlfluff.core.linter.patch import (
     FixPatch,
     generate_source_patches,
@@ -15,6 +16,7 @@ from sqlfluff.core.linter.patch import (
 from sqlfluff.core.parser.markers import PositionMarker
 from sqlfluff.core.parser.segments import (
     BaseSegment,
+    NewlineSegment,
     RawSegment,
     TemplateSegment,
 )
@@ -22,6 +24,37 @@ from sqlfluff.core.parser.segments.raw import SourceFix
 from sqlfluff.core.rules.fix import LintFix
 from sqlfluff.core.templaters import RawFileSlice, TemplatedFile
 from sqlfluff.core.templaters.base import TemplatedFileSlice
+
+
+def test_oracle_sparse_fix_preserves_positions_and_skips_untouched_branch():
+    """Unchanged Oracle branches are repositioned without a recursive fix walk."""
+    linter = Linter(dialect="oracle")
+    parsed = linter.parse_string(
+        "select a from dual;\nselect b from dual;\nselect c from dual;\n"
+    )
+    assert not parsed.violations
+    tree = parsed.tree
+    first, untouched, last = tuple(tree.recursive_crawl("select_statement"))
+    anchor = next(first.recursive_crawl("naked_identifier"))
+    last_anchor = next(last.recursive_crawl("naked_identifier"))
+    fixes = compute_anchor_edit_info(
+        [
+            LintFix.create_before(anchor, [NewlineSegment()]),
+            LintFix.replace(last_anchor, [last_anchor.edit(raw="d")]),
+        ]
+    )
+    with patch("sqlfluff.core.linter.fix.apply_fixes", wraps=apply_fixes) as walk:
+        fixed, before, after, valid = walk(
+            tree, linter.dialect, "TEST", fixes, max_parse_depth=0
+        )
+    assert not fixes
+    assert all(call.args[0] is not untouched for call in walk.call_args_list)
+    assert valid and not before and not after
+    assert fixed.raw == "select \na from dual;\nselect b from dual;\nselect d from dual;\n"
+    _, shifted, _ = tuple(fixed.recursive_crawl("select_statement"))
+    assert shifted is not untouched
+    assert shifted.pos_marker.working_loc == (3, 1)
+    assert untouched.pos_marker.working_loc == (2, 1)
 
 
 @pytest.fixture(scope="module")

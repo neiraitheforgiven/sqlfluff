@@ -104,6 +104,23 @@ def compute_anchor_edit_info(fixes: list["LintFix"]) -> dict[int, AnchorEditInfo
     return dict(anchor_info)
 
 
+def _index_fix_subtrees(
+    segment: BaseSegment, fixes: dict[int, AnchorEditInfo]
+) -> dict[int, bool]:
+    """Identify original subtrees containing a fix anchor."""
+    affected: dict[int, bool] = {}
+
+    def visit(node: BaseSegment) -> bool:
+        has_fix = node.uuid in fixes
+        for child in node.segments:
+            has_fix = visit(child) or has_fix
+        affected[id(node)] = has_fix
+        return has_fix
+
+    visit(segment)
+    return affected
+
+
 def apply_fixes(
     segment: BaseSegment,
     dialect: "Dialect",
@@ -112,6 +129,8 @@ def apply_fixes(
     max_parse_depth: int,
     max_parse_nodes: int = 0,
     fix_even_unparsable: bool = False,
+    *,
+    _fix_subtrees: Optional[dict[int, bool]] = None,
 ) -> tuple["BaseSegment", list["BaseSegment"], list["BaseSegment"], bool]:
     """Apply a dictionary of fixes to this segment.
 
@@ -147,6 +166,13 @@ def apply_fixes(
     """
     if not fixes or segment.is_raw():
         return segment, [], [], True
+
+    if dialect.name == "oracle":
+        if _fix_subtrees is None:
+            _fix_subtrees = _index_fix_subtrees(segment, fixes)
+        # New or copied subtrees aren't in the index and must still be visited.
+        if _fix_subtrees.get(id(segment)) is False:
+            return segment, [], [], True
 
     seg_buffer = []
     before = []
@@ -257,6 +283,7 @@ def apply_fixes(
             fixes,
             max_parse_depth=max_parse_depth,
             max_parse_nodes=max_parse_nodes,
+            _fix_subtrees=_fix_subtrees,
         )
         # 'before' and 'after' will usually be empty. Only used when
         # lower-level fixes left 'seg' with non-code (usually
