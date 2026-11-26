@@ -1820,6 +1820,7 @@ class TableEndClauseSegment(BaseSegment):
             Bracketed(Ref("SingleIdentifierGrammar")),
             "STORE",
             "AS",
+            OneOf("SECUREFILE", "BASICFILE", optional=True),
             Bracketed(
                 AnySetOf(
                     Sequence("TABLESPACE", Ref("ObjectReferenceSegment")),
@@ -1864,7 +1865,11 @@ class CreateIndexStatementSegment(ansi.CreateIndexStatementSegment):
                 Ref("IndexColumnDefinitionSegment"),
             ),
         ),
-        Ref("OracleIndexPhysicalAttributesSegment", optional=True),
+        OneOf(
+            Sequence("INDEXTYPE", "IS", Ref("IndexTypeReferenceSegment")),
+            Ref("OracleIndexPhysicalAttributesSegment"),
+            optional=True,
+        ),
     )
 
 

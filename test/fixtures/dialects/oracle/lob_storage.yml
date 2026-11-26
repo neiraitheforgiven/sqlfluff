@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: 5d223a951aa555542e952d777eef360d2882925c512849f19a926f286bd45bb5
+_hash: 81f010599285ef16a6c5783174d227840b7023d859150d5da06902c1c28d3dd5
 file:
   batch:
   - statement:
@@ -144,4 +144,86 @@ file:
               - numeric_literal: '0'
               - end_bracket: )
             end_bracket: )
+  - statement_terminator: ;
+  - statement:
+      create_table_statement:
+      - keyword: CREATE
+      - keyword: TABLE
+      - table_reference:
+          naked_identifier: spatial_features
+      - bracketed:
+        - start_bracket: (
+        - column_definition:
+            naked_identifier: shape
+            data_type:
+              naked_identifier: MDSYS
+              dot: .
+              data_type_identifier: SDO_GEOMETRY
+        - comma: ','
+        - column_definition:
+            naked_identifier: payload
+            data_type:
+              data_type_identifier: BLOB
+        - comma: ','
+        - column_definition:
+            naked_identifier: metadata
+            data_type:
+              data_type_identifier: CLOB
+        - end_bracket: )
+      - oracle_physical_attributes:
+        - keyword: TABLESPACE
+        - object_reference:
+            naked_identifier: data_ts
+        - keyword: LOGGING
+        - keyword: NOCOMPRESS
+      - table_end_clause_segment:
+        - keyword: LOB
+        - bracketed:
+            start_bracket: (
+            naked_identifier: payload
+            end_bracket: )
+        - keyword: STORE
+        - keyword: AS
+        - keyword: SECUREFILE
+        - bracketed:
+            start_bracket: (
+            keyword: TABLESPACE
+            object_reference:
+              naked_identifier: lob_ts
+            end_bracket: )
+        - keyword: LOB
+        - bracketed:
+            start_bracket: (
+            naked_identifier: metadata
+            end_bracket: )
+        - keyword: STORE
+        - keyword: AS
+        - keyword: BASICFILE
+        - bracketed:
+            start_bracket: (
+            keyword: TABLESPACE
+            object_reference:
+              naked_identifier: lob_ts
+            end_bracket: )
+  - statement_terminator: ;
+  - statement:
+      create_index_statement:
+      - keyword: CREATE
+      - keyword: INDEX
+      - index_reference:
+          naked_identifier: spatial_features_ix
+      - keyword: 'ON'
+      - table_reference:
+          naked_identifier: spatial_features
+      - bracketed:
+          start_bracket: (
+          index_column_definition:
+            naked_identifier: shape
+          end_bracket: )
+      - keyword: INDEXTYPE
+      - keyword: IS
+      - indextype_reference:
+        - naked_identifier: MDSYS
+        - dot: .
+        - naked_identifier: SPATIAL_INDEX
   - statement_terminator: ;
