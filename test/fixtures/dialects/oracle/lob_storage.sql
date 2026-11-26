@@ -17,3 +17,19 @@ LOB (payload)
 STORE AS (
     TABLESPACE lob_ts
 );
+
+CREATE TABLE t_lob_storage_extents (
+    id NUMBER,
+    payload BLOB
+)
+TABLESPACE data_ts
+STORAGE (INITIAL 256K NEXT 256K)
+LOB (payload)
+STORE AS (
+    TABLESPACE lob_ts
+    STORAGE (
+        INITIAL 256K NEXT 256K
+        MINEXTENTS 1 MAXEXTENTS UNLIMITED
+        PCTINCREASE 0
+    )
+);

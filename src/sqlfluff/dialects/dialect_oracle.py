@@ -1824,6 +1824,7 @@ class TableEndClauseSegment(BaseSegment):
                 AnySetOf(
                     Sequence("TABLESPACE", Ref("ObjectReferenceSegment")),
                     Sequence("DISABLE", "STORAGE", "IN", "ROW"),
+                    Ref("StorageClauseSegment"),
                 )
             ),
         ),
