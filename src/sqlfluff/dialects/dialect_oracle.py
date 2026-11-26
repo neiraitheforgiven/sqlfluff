@@ -2007,8 +2007,17 @@ class UnorderedSelectStatementSegment(ansi.UnorderedSelectStatementSegment):
     match_grammar = ansi.UnorderedSelectStatementSegment.match_grammar.copy(
         insert=[
             Ref("HierarchicalQueryClauseSegment", optional=True),
+            AnySetOf(
+                Ref("GroupByClauseSegment"),
+                Ref("HavingClauseSegment"),
+                optional=True,
+            ),
         ],
         before=Ref("GroupByClauseSegment", optional=True),
+        remove=[
+            Ref("GroupByClauseSegment", optional=True),
+            Ref("HavingClauseSegment", optional=True),
+        ],
         terminators=[
             "LOG",
         ],

@@ -1,0 +1,106 @@
+# YML test files are auto-generated from SQL files and should not be edited by
+# hand. To help enforce this, the "hash" field in the file must match a hash
+# computed by SQLFluff when running the tests. Please run
+# `python test/generate_parse_fixture_yml.py`  to generate them after adding or
+# altering SQL files.
+_hash: e9146bf61878bcedfc3c500ea107804d14b36195af852a8ea26cb2e725626ba3
+file:
+  batch:
+    statement:
+      begin_end_block:
+      - keyword: BEGIN
+      - statement:
+          for_loop_statement:
+          - keyword: FOR
+          - naked_identifier: rec
+          - keyword: IN
+          - expression:
+              bracketed:
+                start_bracket: (
+                select_statement:
+                  select_clause:
+                  - keyword: SELECT
+                  - select_clause_element:
+                      function:
+                        function_name:
+                          naked_identifier: pkg_contacts
+                          dot: .
+                          function_name_identifier:
+                            function_name_identifier: contact_type
+                        function_contents:
+                          bracketed:
+                            start_bracket: (
+                            expression:
+                              column_reference:
+                              - naked_identifier: c
+                              - dot: .
+                              - naked_identifier: id
+                            end_bracket: )
+                  - comma: ','
+                  - select_clause_element:
+                      function:
+                        function_name:
+                          function_name_identifier:
+                            function_name_identifier: COUNT
+                        function_contents:
+                          bracketed:
+                            start_bracket: (
+                            star: '*'
+                            end_bracket: )
+                  from_clause:
+                    keyword: FROM
+                    from_expression:
+                      from_expression_element:
+                        table_expression:
+                          table_reference:
+                            naked_identifier: contacts
+                        alias_expression:
+                          naked_identifier: c
+                  having_clause:
+                    keyword: HAVING
+                    expression:
+                      function:
+                        function_name:
+                          function_name_identifier:
+                            function_name_identifier: COUNT
+                        function_contents:
+                          bracketed:
+                            start_bracket: (
+                            star: '*'
+                            end_bracket: )
+                      comparison_operator:
+                        raw_comparison_operator: '>'
+                      numeric_literal: '1'
+                  groupby_clause:
+                  - keyword: GROUP
+                  - keyword: BY
+                  - expression:
+                      function:
+                        function_name:
+                          naked_identifier: pkg_contacts
+                          dot: .
+                          function_name_identifier:
+                            function_name_identifier: contact_type
+                        function_contents:
+                          bracketed:
+                            start_bracket: (
+                            expression:
+                              column_reference:
+                              - naked_identifier: c
+                              - dot: .
+                              - naked_identifier: id
+                            end_bracket: )
+                end_bracket: )
+          - loop_statement:
+            - keyword: LOOP
+            - statement:
+                null_statement:
+                  keyword: 'NULL'
+            - statement_terminator: ;
+            - keyword: END
+            - keyword: LOOP
+      - statement_terminator: ;
+      - keyword: END
+    statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
