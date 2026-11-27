@@ -3847,7 +3847,19 @@ class DmlEventClauseSegment(BaseSegment):
             ),
             Ref("TableReferenceSegment"),
         ),
-        Sequence("LOGON", "ON", "DATABASE"),
+        Sequence(
+            "LOGON",
+            "ON",
+            OneOf(
+                "DATABASE",
+                Sequence(
+                    Sequence(
+                        Ref("SingleIdentifierGrammar"), Ref("DotSegment"), optional=True
+                    ),
+                    "SCHEMA",
+                ),
+            ),
+        ),
     )
 
 

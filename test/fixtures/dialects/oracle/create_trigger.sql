@@ -133,3 +133,18 @@ BEGIN
   NULL;
 END;
 /
+
+CREATE OR REPLACE TRIGGER schema_logon_trigger
+  AFTER LOGON
+  ON app_owner.SCHEMA
+BEGIN
+  NULL;
+END;
+/
+
+CREATE OR REPLACE TRIGGER local_logon_trigger
+AFTER LOGON ON SCHEMA
+BEGIN
+  NULL;
+END;
+/

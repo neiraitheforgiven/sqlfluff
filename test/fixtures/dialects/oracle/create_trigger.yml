@@ -3,7 +3,7 @@
 # computed by SQLFluff when running the tests. Please run
 # `python test/generate_parse_fixture_yml.py`  to generate them after adding or
 # altering SQL files.
-_hash: af15325fb1d54e832d29a629df544607a9bee18d086e621ee5658bc9c79917c2
+_hash: a47a85e1f94be8c449728211975c5345f067d4d9553b3b8bb6731d5b4f42b98a
 file:
 - batch:
     statement:
@@ -779,5 +779,57 @@ file:
               - statement_terminator: ;
               - keyword: END
           - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      create_trigger_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: TRIGGER
+      - trigger_reference:
+          naked_identifier: schema_logon_trigger
+      - keyword: AFTER
+      - dml_event_clause:
+        - keyword: LOGON
+        - keyword: 'ON'
+        - naked_identifier: app_owner
+        - dot: .
+        - keyword: SCHEMA
+      - statement:
+          begin_end_block:
+          - keyword: BEGIN
+          - statement:
+              null_statement:
+                keyword: 'NULL'
+          - statement_terminator: ;
+          - keyword: END
+      - statement_terminator: ;
+    slash_buffer_executor:
+      slash: /
+- batch:
+    statement:
+      create_trigger_statement:
+      - keyword: CREATE
+      - keyword: OR
+      - keyword: REPLACE
+      - keyword: TRIGGER
+      - trigger_reference:
+          naked_identifier: local_logon_trigger
+      - keyword: AFTER
+      - dml_event_clause:
+        - keyword: LOGON
+        - keyword: 'ON'
+        - keyword: SCHEMA
+      - statement:
+          begin_end_block:
+          - keyword: BEGIN
+          - statement:
+              null_statement:
+                keyword: 'NULL'
+          - statement_terminator: ;
+          - keyword: END
+      - statement_terminator: ;
     slash_buffer_executor:
       slash: /
