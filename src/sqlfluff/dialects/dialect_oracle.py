@@ -190,9 +190,13 @@ oracle_dialect.insert_lexer_matchers(
 
 oracle_dialect.add(
     CollectionSubscriptGrammar=Bracketed(Ref("ExpressionSegment")),
+    OracleKeywordRecordFieldGrammar=OneOf(
+        StringParser("DATE", IdentifierSegment, type="naked_identifier"),
+        StringParser("ROWS", IdentifierSegment, type="naked_identifier"),
+    ),
     OracleRecordFieldIdentifierGrammar=OneOf(
         Ref("SingleIdentifierGrammar"),
-        StringParser("DATE", IdentifierSegment, type="naked_identifier"),
+        Ref("OracleKeywordRecordFieldGrammar"),
     ),
     InquiryDirectiveSegment=TypedParser(
         "inquiry_directive", LiteralSegment, type="inquiry_directive"
@@ -2237,7 +2241,7 @@ class ObjectReferenceSegment(ansi.ObjectReferenceSegment):
                 ),
             ),
             Ref("ObjectReferenceDelimiterGrammar"),
-            StringParser("DATE", IdentifierSegment, type="naked_identifier"),
+            Ref("OracleKeywordRecordFieldGrammar"),
             AnyNumberOf(
                 Sequence(
                     Ref("ObjectReferenceDelimiterGrammar"),
